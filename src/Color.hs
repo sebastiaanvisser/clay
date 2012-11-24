@@ -5,6 +5,8 @@ import Data.Monoid
 import Data.Text
 import Data.Word
 
+import Property
+
 data Color
   = Rgba Word8 Word8 Word8 Word8
   | Hsla Word8 Word8 Word8 Word8
@@ -26,14 +28,14 @@ grayish g = rgb g g g
 
 -------------------------------------------------------------------------------
 
-render :: Color -> Text
-render clr =
-  case clr of
-    Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,           ")"]
-    Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", p a, ")"]
-    Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,           ")"]
-    Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", p a, ")"]
-  where p = pack . show
+instance Val Color where
+  value clr = Value $
+    case clr of
+      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,           ")"]
+      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", p a, ")"]
+      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,           ")"]
+      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", p a, ")"]
+    where p = pack . show
 
 -------------------------------------------------------------------------------
 

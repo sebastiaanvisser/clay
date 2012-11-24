@@ -1,25 +1,31 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import Data.Monoid
 import Prelude (($), IO)
 
+import qualified Prelude
+
+import Color
 import Element
-import Selector
-import Rules
 import Render
+import Rule
+import Selector
+import Size
+import Style
+
 
 main :: IO ()
-main = renderAndPrint $
+main = css $
 
-  body > div + a `rules`
-    do "font-size" -: "12px"
-       "color"     -: "12px"
-       "color"     -: "12px"
+  do body > div + a ?
+       do color             (rgba 255 0 128 128)
+          border            solid (px 10) red
+          border_left_color green
+          sym margin        (px 10) (px 20)
 
-    <>
+          abbr ? color green
 
-  body > ".section" + a `rules`
-    do "font-size" -: "12px"
-       "color"     -: "12px"
+     body > ".section" + a ?
+       do "font-size" -: px 12
+          color         green
 

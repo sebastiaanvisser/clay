@@ -5,13 +5,13 @@ module Size
 , pt
 , pct
 , em
-
-, render
 )
 where
 
 import Data.Monoid
 import Data.Text (Text, pack)
+
+import Property
 
 data Size
   = Px  Double
@@ -25,13 +25,13 @@ pt  = Pt
 pct = Pct
 em  = Em
 
-render :: Size -> Text
-render s =
-  case s of
-    Px  i -> p (round i :: Integer) <> "px"
-    Pt  i -> p i                    <> "pt"
-    Pct i -> p i                    <> "pct"
-    Em  i -> p i                    <> "em"
-  where p :: Show a => a -> Text
-        p = pack . show
+instance Val Size where
+  value s = Value $
+    case s of
+      Px  i -> p (round i :: Integer) <> "px"
+      Pt  i -> p i                    <> "pt"
+      Pct i -> p i                    <> "pct"
+      Em  i -> p i                    <> "em"
+    where p :: Show a => a -> Text
+          p = pack . show
 

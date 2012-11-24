@@ -1,24 +1,33 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Render where
 
-import Data.Monoid
+import Control.Monad.Writer
+import Data.Either
 import Data.Foldable
+import Data.Text (Text)
 import Data.Text.Lazy.Builder
 
 import qualified Data.Text.Lazy.IO as Text
 
-import Rules    (Property (Property), Rule (Rule))
+import Rule     (Css, Rules (Rules))
 import Selector (Selector (..))
 
+css :: Css -> IO ()
+css = cssIn None
 
-renderAndPrint :: [Rule] -> IO ()
-renderAndPrint = Text.putStr . toLazyText . render
+cssIn :: Selector -> Css -> IO ()
+cssIn top = Text.putStr . toLazyText . rules top . execWriter
 
-render :: [Rule] -> Builder
-render = foldMap rule
+rules :: Selector -> Rules -> Builder
+rules sel (Rules rs) = mconcat
+  [ rule sel (lefts rs)
+  , "\n"
+  , foldMap (\(a, b) -> rules (Deep sel a) b) (rights rs)
+  ]
 
-rule :: Rule -> Builder
-rule (Rule sel props) = mconcat
+rule :: Selector -> [(Text, Text)] -> Builder
+rule _   []    = mempty
+rule sel props = mconcat
   [ selector sel
   , "\n{\n"
   , foldMap property props
@@ -28,17 +37,21 @@ rule (Rule sel props) = mconcat
 selector :: Selector -> Builder
 selector sel =
   case sel of
-    None         -> mempty
-    Star         -> singleton '*'
-    Elem     t   -> fromText t
-    Id       t   -> singleton '#' <> fromText t
-    Class    t   -> singleton '.' <> fromText t
-    Child    a b -> selector a <> " > " <> selector b
-    Deep     a b -> selector a <> "   " <> selector b
-    Adjacent a b -> selector a <> " + " <> selector b
-    Combined a b -> selector a <> " , " <> selector b
+    None            -> mempty
+    Star            -> singleton '*'
+    Elem     t      -> fromText t
+    Id       t      -> singleton '#' <> fromText t
+    Class    t      -> singleton '.' <> fromText t
+    Child    None b -> selector b
+    Deep     None b -> selector b
+    Adjacent None b -> selector b
+    Combined None b -> selector b
+    Child    a    b -> selector a <> " > " <> selector b
+    Deep     a    b -> selector a <> " "   <> selector b
+    Adjacent a    b -> selector a <> " + " <> selector b
+    Combined a    b -> selector a <> " , " <> selector b
 
-property :: Property -> Builder
-property (Property key val) =
+property :: (Text, Text) -> Builder
+property (key, val) =
   mconcat ["  ", fromText key, ": ", fromText val, ";\n"]
 
