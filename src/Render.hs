@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Render where
 
 import Data.Monoid
