@@ -40,5 +40,5 @@ selector sel =
 
 property :: Property -> Builder
 property (Property key val) =
-  fromText key <> ": " <> fromText val <> ";\n"
+  mconcat ["  ", fromText key, ": ", fromText val, ";\n"]
 
