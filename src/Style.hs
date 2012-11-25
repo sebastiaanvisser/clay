@@ -1,15 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Style where
 
+import Data.Text (Text)
+
 import Color
 import Size
 import Property
 import Rule
 
 -------------------------------------------------------------------------------
-
-color :: Color -> Css
-color = key "color"
 
 size, top, left, bottom, right, width, height :: Size -> Css
 size   = key "size"
@@ -19,6 +18,8 @@ bottom = key "bottom"
 right  = key "right"
 width  = key "width"
 height = key "height"
+
+-------------------------------------------------------------------------------
 
 padding, margin :: Size -> Size -> Size -> Size -> Css
 padding = key4 "padding"
@@ -38,6 +39,23 @@ margin_bottom  = key "marginBottom"
 
 sym :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Css
 sym k a b = k a b a b
+
+-------------------------------------------------------------------------------
+
+font :: Text -> Size -> Color -> Css
+font = key3 "font"
+
+font_family :: Text -> Css
+font_family = key "font-family"
+
+font_size :: Size -> Css
+font_size = key "font-family"
+
+color :: Color -> Css
+color = key "color"
+
+font_color :: Color -> Css
+font_color = key "color"
 
 -------------------------------------------------------------------------------
 
