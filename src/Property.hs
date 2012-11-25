@@ -22,6 +22,9 @@ class Val a where
 instance IsString Value where
   fromString = Value . fromString
 
+instance Val Text where
+  value = Value
+
 instance (Val a, Val b) => Val (a, b) where
   value (a, b) =
     case (value a, value b) of
