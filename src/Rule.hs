@@ -4,16 +4,22 @@ module Rule where
 import Data.Text
 import Control.Monad.Writer
 
-import Selector
+import Selector hiding (Child)
 import Property
 
-newtype Rules = Rules [Either (Text, Text) (Selector, Rules)]
-  deriving (Show, Monoid)
+data Rule
+  = Self     Filter
+  | Root     Selector
+  | Pop  Int
+  | Child    Selector
+  | Sub      Selector
+
+newtype Rules = Rules [Either (Text, Text) (Rule, Rules)]
+  deriving Monoid
 
 type Css = Writer Rules ()
 
 infix 4 -:
-infix 3 ?
 
 key :: Val a => Key a -> a -> Css
 key (Key k) v = tell (Rules [Left (k, unValue (value v))])
@@ -27,9 +33,21 @@ key3 k a b c = key k (a, b, c)
 key4 :: (Val a, Val b, Val c, Val d) => Key (a, b, c, d) -> a -> b -> c -> d -> Css
 key4 k a b c d = key k (a, b, c, d)
 
-(-:) :: Val a => Key a -> a -> Css
+(-:) :: Key Text -> Text -> Css
 (-:) = key
 
-(?) :: Selector -> Css -> Css
-(?) sel rs = tell (Rules [Right (sel, execWriter rs)])
+self :: Filter -> Css -> Css
+self p rs = tell (Rules [Right (Self p, execWriter rs)])
+
+root :: Selector -> Css -> Css
+root sel rs = tell (Rules [Right (Root sel, execWriter rs)])
+
+pop :: Int -> Css -> Css
+pop i rs = tell (Rules [Right (Pop i, execWriter rs)])
+
+child :: Selector -> Css -> Css
+child sel rs = tell (Rules [Right (Child sel, execWriter rs)])
+
+rule :: Selector -> Css -> Css
+rule sel rs = tell (Rules [Right (Sub sel, execWriter rs)])
 

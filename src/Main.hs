@@ -1,12 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
+import Data.Monoid
 import Prelude (($), IO)
 
 import qualified Prelude
 
 import Color
-import Element
+import Html
 import Render
 import Rule
 import Selector
@@ -17,15 +18,26 @@ import Style
 main :: IO ()
 main = css $
 
-  do body > div + a ?
-       do color             (rgba 255 0 128 128)
-          border            solid (px 10) red
-          border_left_color green
-          sym margin        (px 10) (px 20)
+  rule body $
+    do color green
+       border            solid (px 10) red
+       border_left_color green
 
-          abbr ? color green
+       rule (div <> abbr) $
+         do color red
+            sym margin (px 10) (px 20)
 
-     body > ".section" + a ?
-       do "font-size" -: px 12
-          color         green
+            self hover $
+              color green
+
+            pop 2 $
+              do color purple
+                 font "Arial, Helvetica, sans-serif" (pt 12) black
+
+            root (html `with` ".open") $
+              margin_left (px 1)
+
+            rule ("#content" <> q) $
+              do color green
+                 "-webkit-box-shadow" -: "10px 10px 0px rgba(12,12,23)"
 
