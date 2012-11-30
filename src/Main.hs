@@ -2,9 +2,7 @@
 module Main where
 
 import Data.Monoid
-import Prelude (($), IO)
-
-import qualified Prelude
+import Prelude hiding (div)
 
 import Color
 import Html
@@ -19,9 +17,9 @@ main :: IO ()
 main = css $
 
   rule body $
-    do color green
+    do color             green
        border            solid (px 10) red
-       border_left_color green
+       borderLeftColor green
 
        rule (div <> abbr) $
          do color red
@@ -35,7 +33,7 @@ main = css $
                  font "Arial, Helvetica, sans-serif" (pt 12) black
 
             root (html `with` ".open") $
-              margin_left (px 1)
+              marginLeft (px 1)
 
             rule ("#content" <> q) $
               do color green
