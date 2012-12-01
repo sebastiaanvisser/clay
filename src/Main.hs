@@ -12,18 +12,22 @@ import Selector
 import Size
 import Style
 
-
 main :: IO ()
 main = css $
 
   rule body $
     do color             green
        border            solid (px 10) red
-       borderLeftColor green
+       borderLeftColor   green
 
        rule (div <> abbr) $
          do color red
-            sym margin (px 10) (px 20)
+            sym margin       (px 10) (px 20)
+            backgroundRepeat repeatX
+            background       red
+            background       (Size (pct 20) (pct 30))
+            backgroundImage  (url "http://www.w3.org/TR/2012/CR-css3-images-20120417/")
+            backgroundSize   (Length (Just (px 4)) Nothing)
 
             self hover $
               color green
