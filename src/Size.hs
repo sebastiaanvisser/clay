@@ -30,7 +30,7 @@ instance Val Size where
     case s of
       Px  i -> p (round i :: Integer) <> "px"
       Pt  i -> p i                    <> "pt"
-      Pct i -> p i                    <> "pct"
+      Pct i -> p i                    <> "%"
       Em  i -> p i                    <> "em"
     where p :: Show a => a -> Text
           p = pack . show
