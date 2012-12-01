@@ -11,6 +11,7 @@ import Rule
 import Selector
 import Size
 import Style
+import Background
 
 main :: IO ()
 main = css $
