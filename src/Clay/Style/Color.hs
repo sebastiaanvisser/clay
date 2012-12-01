@@ -1,11 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Color where
+module Clay.Style.Color where
 
 import Data.Monoid
 import Data.Text
 import Data.Word
 
-import Property
+import Clay.Core.Property
 
 data Color
   = Rgba Word8 Word8 Word8 Word8

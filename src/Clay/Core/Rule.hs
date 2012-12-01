@@ -1,11 +1,11 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-module Rule where
+module Clay.Core.Rule where
 
 import Data.Text
 import Control.Monad.Writer
 
-import Selector hiding (Child)
-import Property
+import Clay.Core.Selector hiding (Child)
+import Clay.Core.Property
 
 data Rule
   = Self     Filter

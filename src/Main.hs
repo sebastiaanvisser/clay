@@ -4,14 +4,14 @@ module Main where
 import Data.Monoid
 import Prelude hiding (div)
 
-import Color
-import Html
-import Render
-import Rule
-import Selector
-import Size
-import Style
-import Background
+import Clay.Core.Render
+import Clay.Core.Rule
+import Clay.Core.Selector
+import Clay.Style.Background
+import Clay.Style.Color
+import Clay.Style.Html
+import Clay.Style.Properties
+import Clay.Style.Size
 
 main :: IO ()
 main = css $

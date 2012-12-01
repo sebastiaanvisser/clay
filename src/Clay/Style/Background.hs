@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings, FlexibleInstances #-}
-module Background where
+module Clay.Style.Background where
 
 import Data.Text (Text)
 import Data.Monoid
 import Data.Maybe
 import Prelude hiding (Left, Right)
 
-import Color
-import Size
-import Property
-import Rule
+import Clay.Style.Color
+import Clay.Style.Size
+import Clay.Core.Property
+import Clay.Core.Rule
 
 data Side = Top | Left | Right | Bottom | Center
 

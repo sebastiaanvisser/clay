@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Html where
+module Clay.Style.Html where
 
 import Data.String
 
-import Selector
+import Clay.Core.Selector
 
 -- From: http://www.whatwg.org/specs/web-apps/current-work/multipage/section-index.html#index
 

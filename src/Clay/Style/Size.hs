@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Size
+module Clay.Style.Size
 ( Size
 , px
 , pt
@@ -11,7 +11,7 @@ where
 import Data.Monoid
 import Data.Text (Text, pack)
 
-import Property
+import Clay.Core.Property
 
 data Size
   = Px  Double

@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings, FlexibleInstances #-}
-module Style where
+module Clay.Style.Properties where
 
 import Data.Text (Text)
 import Prelude hiding (Left, Right)
 
-import Color
-import Size
-import Property
-import Rule
+import Clay.Style.Color
+import Clay.Style.Size
+import Clay.Core.Property
+import Clay.Core.Rule
 
 -------------------------------------------------------------------------------
 
