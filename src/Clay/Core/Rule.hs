@@ -48,6 +48,6 @@ pop i rs = tell (Rules [Right (Pop i, execWriter rs)])
 child :: Selector -> Css -> Css
 child sel rs = tell (Rules [Right (Child sel, execWriter rs)])
 
-rule :: Selector -> Css -> Css
-rule sel rs = tell (Rules [Right (Sub sel, execWriter rs)])
+(?) :: Selector -> Css -> Css
+(?) sel rs = tell (Rules [Right (Sub sel, execWriter rs)])
 
