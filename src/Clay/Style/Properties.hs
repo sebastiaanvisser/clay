@@ -38,8 +38,14 @@ marginLeft    = key "marginLeft"
 marginRight   = key "marginRight"
 marginBottom  = key "marginBottom"
 
-sym :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Css
-sym k a b = k a b a b
+sym4 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Css
+sym4 k a = k a a a a
+
+sym3 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Size -> Css
+sym3 k tb l r = k tb l tb r
+
+sym2 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Css
+sym2 k tb lr = k tb lr tb lr
 
 -------------------------------------------------------------------------------
 
