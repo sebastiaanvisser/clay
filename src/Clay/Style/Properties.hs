@@ -1,14 +1,11 @@
 {-# LANGUAGE OverloadedStrings, FlexibleInstances #-}
 module Clay.Style.Properties where
 
-import Data.Text (Text)
 import Prelude hiding (Left, Right)
 
-import Clay.Style.Color
 import Clay.Style.Size
 import Clay.Core.Property
 import Clay.Core.Rule
-
 
 class Inherit a where
   inherit :: a
@@ -124,65 +121,4 @@ sym3 k tb l r = k tb l tb r
 
 sym2 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Css
 sym2 k tb lr = k tb lr tb lr
-
--------------------------------------------------------------------------------
-
-font :: Text -> Size -> Color -> Css
-font = key3 "font"
-
-fontFamily :: Text -> Css
-fontFamily = key "font-family"
-
-fontSize :: Size -> Css
-fontSize = key "font-family"
-
-color :: Color -> Css
-color = key "color"
-
-fontColor :: Color -> Css
-fontColor = key "color"
-
--------------------------------------------------------------------------------
-
-data Stroke = Solid | Dotted | Dashed
-  deriving Show
-
-solid, dotted, dashed :: Stroke
-solid  = Solid
-dotted = Dotted
-dashed = Dashed
-
-instance Val Stroke where
-  value Solid  = "solid"
-  value Dotted = "dotted"
-  value Dashed = "dashed"
-
-border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size -> Color -> Css
-
-border       = key3 "border"
-borderTop    = key3 "border-top"
-borderLeft   = key3 "border-left"
-borderBottom = key3 "border-bottom"
-borderRight  = key3 "border-right"
-
-borderLeftColor, borderRightColor, borderTopColor, borderBottomColor :: Color -> Css
-
-borderLeftColor   = key "border-left-color"
-borderRightColor  = key "border-right-color"
-borderTopColor    = key "border-top-color"
-borderBottomColor = key "border-bottom-color"
-
-borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle :: Stroke -> Css
-
-borderLeftStyle   = key "border-left-style"
-borderRightStyle  = key "border-right-style"
-borderTopStyle    = key "border-top-style"
-borderBottomStyle = key "border-bottom-style"
-
-borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size -> Css
-
-borderLeftWidth   = key "border-left-width"
-borderRightWidth  = key "border-right-width"
-borderTopWidth    = key "border-top-width"
-borderBottomWidth = key "border-bottom-width"
 

@@ -8,10 +8,12 @@ module Clay
 , module Clay.Style.Attributes
 , module Clay.Style.Elements
 
-, module Clay.Style.Color
-, module Clay.Style.Size
 , module Clay.Style.Background
+, module Clay.Style.Border
+, module Clay.Style.Color
+, module Clay.Style.Font
 , module Clay.Style.Properties
+, module Clay.Style.Size
 )
 where
 
@@ -32,8 +34,10 @@ import Clay.Style.Selectors
 import Clay.Style.Attributes hiding (class_, target, checked, disabled, value, width, height, size)
 import Clay.Style.Elements   hiding (link, em)
 
-import Clay.Style.Color
-import Clay.Style.Size
 import Clay.Style.Background
+import Clay.Style.Border
+import Clay.Style.Color
+import Clay.Style.Font
 import Clay.Style.Properties
+import Clay.Style.Size
 
