@@ -9,6 +9,13 @@ import Clay.Style.Size
 import Clay.Core.Property
 import Clay.Core.Rule
 
+
+class Inherit a where
+  inherit :: a
+
+class None a where
+  none :: a
+
 -------------------------------------------------------------------------------
 
 size, top, left, bottom, right :: Size -> Css
