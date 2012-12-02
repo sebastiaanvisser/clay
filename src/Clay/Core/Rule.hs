@@ -44,8 +44,12 @@ root sel rs = tell (Rules [Right (Root sel, execWriter rs)])
 pop :: Int -> Css -> Css
 pop i rs = tell (Rules [Right (Pop i, execWriter rs)])
 
-(?>) :: Selector -> Css -> Css
-(?>) sel rs = tell (Rules [Right (Child sel, execWriter rs)])
+infixr 5 <?
+infixr 5 ?
+infixr 5 &
+
+(<?) :: Selector -> Css -> Css
+(<?) sel rs = tell (Rules [Right (Child sel, execWriter rs)])
 
 (?) :: Selector -> Css -> Css
 (?) sel rs = tell (Rules [Right (Sub sel, execWriter rs)])
