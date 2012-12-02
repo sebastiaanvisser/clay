@@ -5,6 +5,7 @@ import Data.Monoid
 import Data.Word
 import Data.String
 import Data.Text (Text)
+import Text.Printf
 
 import qualified Data.Text as Text
 import Data.Text.Read as Text
@@ -14,6 +15,7 @@ import Clay.Core.Property
 data Color
   = Rgba Word8 Word8 Word8 Word8
   | Hsla Word8 Word8 Word8 Word8
+  deriving Show
 
 rgba :: Word8 -> Word8 -> Word8 -> Word8 -> Color
 rgba = Rgba
@@ -35,11 +37,12 @@ grayish g = rgb g g g
 instance Val Color where
   value clr = Value $
     case clr of
-      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,           ")"]
-      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", p a, ")"]
-      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,           ")"]
-      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", p a, ")"]
-    where p = pack . show
+      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,               ")"]
+      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", alpha a, ")"]
+      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,               ")"]
+      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", alpha a, ")"]
+    where p = Text.pack . show
+          alpha = Text.pack . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
 instance IsString Color where
   fromString = parse . fromString
