@@ -3,15 +3,7 @@ module Main where
 
 import Data.Monoid
 import Prelude hiding (div)
-
-import Clay.Core.Render
-import Clay.Core.Rule
-import Clay.Core.Selector
-import Clay.Style.Background
-import Clay.Style.Color
-import Clay.Style.Html
-import Clay.Style.Properties
-import Clay.Style.Size
+import Clay
 
 main :: IO ()
 main = css $
@@ -22,6 +14,7 @@ main = css $
        borderLeftColor   green
 
        rule (div <> abbr) $
+
          do color red
             sym margin       (px 10) (px 20)
             backgroundRepeat repeatX
