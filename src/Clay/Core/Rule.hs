@@ -36,8 +36,7 @@ key4 k a b c d = key k (a, b, c, d)
 (-:) :: Key Text -> Text -> Css
 (-:) = key
 
-self :: Filter -> Css -> Css
-self p rs = tell (Rules [Right (Self p, execWriter rs)])
+-------------------------------------------------------------------------------
 
 root :: Selector -> Css -> Css
 root sel rs = tell (Rules [Right (Root sel, execWriter rs)])
@@ -45,9 +44,12 @@ root sel rs = tell (Rules [Right (Root sel, execWriter rs)])
 pop :: Int -> Css -> Css
 pop i rs = tell (Rules [Right (Pop i, execWriter rs)])
 
-child :: Selector -> Css -> Css
-child sel rs = tell (Rules [Right (Child sel, execWriter rs)])
+(?>) :: Selector -> Css -> Css
+(?>) sel rs = tell (Rules [Right (Child sel, execWriter rs)])
 
 (?) :: Selector -> Css -> Css
 (?) sel rs = tell (Rules [Right (Sub sel, execWriter rs)])
+
+(&) :: Filter -> Css -> Css
+(&) p rs = tell (Rules [Right (Self p, execWriter rs)])
 

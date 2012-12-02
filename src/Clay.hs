@@ -24,7 +24,7 @@ import Clay.Core.Property (Key, Value, Val(..))
 import Clay.Core.Rule
   ( Css
   , key, key2, key3, key4, (-:)
-  , self, root, pop, child, (?)
+  , root, pop, (?>), (?), (&)
   )
 import Clay.Core.Render (css, cssIn)
 
