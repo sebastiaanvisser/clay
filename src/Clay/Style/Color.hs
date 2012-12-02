@@ -2,8 +2,12 @@
 module Clay.Style.Color where
 
 import Data.Monoid
-import Data.Text
 import Data.Word
+import Data.String
+import Data.Text (Text)
+
+import qualified Data.Text as Text
+import Data.Text.Read as Text
 
 import Clay.Core.Property
 
@@ -36,6 +40,26 @@ instance Val Color where
       Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,           ")"]
       Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", p a, ")"]
     where p = pack . show
+
+instance IsString Color where
+  fromString = parse . fromString
+
+parse :: Text -> Color
+parse t =
+  case Text.uncons t of
+    Just ('#', cs) | Text.all isHex cs ->
+      case Text.unpack cs of
+        [a, b, c, d, e, f, g, h] -> rgba (hex a b) (hex c d) (hex e f) (hex g h)
+        [a, b, c, d, e, f      ] -> rgb  (hex a b) (hex c d) (hex e f)
+        [a, b, c, d            ] -> rgba (hex a a) (hex b b) (hex c c) (hex d d)
+        [a, b, c               ] -> rgb  (hex a a) (hex b b) (hex c c)
+        _                        -> err
+    _                            -> err
+
+  where
+    hex a b = either err fst (Text.hexadecimal (Text.singleton a <> Text.singleton b))
+    isHex a = (a >= 'a' && a <= 'f') || (a >= 'A' && a <= 'F') || (a >= '0' && a <= '9')
+    err = error "Invalid color string"
 
 -------------------------------------------------------------------------------
 
