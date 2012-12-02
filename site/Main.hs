@@ -7,33 +7,42 @@ import Clay
 
 main :: IO ()
 main = css $
+  do overal
+     theFooter
 
-  rule body $
-    do color             green
-       border            solid (px 10) red
-       borderLeftColor   green
 
-       rule (div <> abbr) $
+overal :: Css
+overal =
+  do (body <> html) ?
+       do height (pct 100)
+          resetSpacing
 
-         do color red
-            sym margin       (px 10) (px 20)
-            backgroundRepeat repeatX
-            background       red
-            background       (Size (pct 20) (pct 30))
-            backgroundImage  (url "http://www.w3.org/TR/2012/CR-css3-images-20120417/")
-            backgroundSize   (Length (Just (px 4)) Nothing)
+     body ?
+       do backgroundColor (grayish 220)
+          fonts
 
-            self hover $
-              color green
+          "#container" ?
+            do minHeight (pct 100)
+               minWidth  (pct 100)
 
-            pop 2 $
-              do color purple
-                 font "Arial, Helvetica, sans-serif" (pt 12) black
 
-            root (html `with` ".open") $
-              marginLeft (px 1)
+fonts :: Css
+fonts =
+  do fontFamily "Helvetica, sans-serif"
+     fontColor  (rgb 40 30 0)
 
-            rule ("#content" <> q) $
-              do color green
-                 "-webkit-box-shadow" -: "10px 10px 0px rgba(12,12,23)"
+theFooter :: Css
+theFooter =
+  footer ?
+    do backgroundColor "#ff8800"
+       color           white
+       position        Absolute
+       bottom          (px 0)
+       width           (pct 100)
+       height          (px 200)
+
+resetSpacing :: Css
+resetSpacing =
+  do sym4 margin  (px 0)
+     sym4 padding (px 0)
 

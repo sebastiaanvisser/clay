@@ -1,47 +1,32 @@
 
-body
+body,
+html
 {
-  color: rgb(0,128,0);
-  border: solid 10px rgb(255,0,0);
-  border-left-color: rgb(0,128,0);
-}
-
-body div,
-body abbr
-{
-  color: rgb(255,0,0);
-  margin: 10px 20px 10px 20px;
-  background-repeat: repeat no-repeat;
-  background: rgb(255,0,0);
-  background: 20.0% 30.0%;
-  background-image: url("http://www.w3.org/TR/2012/CR-css3-images-20120417/");
-  background-size: 4px auto;
-}
-
-body div:hover,
-body abbr:hover
-{
-  color: rgb(0,128,0);
+  height: 100.0%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 body
 {
-  color: rgb(128,0,128);
-  font: Arial, Helvetica, sans-serif 12.0pt rgb(0,0,0);
+  background-color: rgb(220,220,220);
+  font-family: Helvetica, sans-serif;
+  color: rgb(40,30,0);
 }
 
-html.open body div,
-html.open body abbr
+body *#container
 {
-  marginLeft: 1px;
+  min-height: 100.0%;
+  min-width: 100.0%;
 }
 
-body div *#content,
-body div q,
-body abbr *#content,
-body abbr q
+footer
 {
-  color: rgb(0,128,0);
-  -webkit-box-shadow: 10px 10px 0px rgba(12,12,23);
+  background-color: rgb(255,136,0);
+  color: rgb(255,255,255);
+  position: absolute;
+  bottom: 0px;
+  width: 100.0%;
+  height: 200px;
 }
 
