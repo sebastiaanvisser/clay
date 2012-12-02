@@ -11,18 +11,25 @@ import Clay.Core.Rule
 
 -------------------------------------------------------------------------------
 
-size, top, left, bottom, right, width, height :: Size -> Css
-size   = key "size"
-top    = key "top"
-left   = key "left"
-bottom = key "bottom"
-right  = key "right"
-width  = key "width"
-height = key "height"
+size, top, left, bottom, right :: Size -> Css
+
+size      = key "size"
+top       = key "top"
+left      = key "left"
+bottom    = key "bottom"
+right     = key "right"
+
+width, height, minWidth, minHeight :: Size -> Css
+
+width     = key "width"
+height    = key "height"
+minWidth  = key "min-width"
+minHeight = key "min-height"
 
 -------------------------------------------------------------------------------
 
 padding, margin :: Size -> Size -> Size -> Size -> Css
+
 padding = key4 "padding"
 margin  = key4 "margin"
 
