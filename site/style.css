@@ -1,0 +1,47 @@
+
+body
+{
+  color: rgb(0,128,0);
+  border: solid 10px rgb(255,0,0);
+  border-left-color: rgb(0,128,0);
+}
+
+body div,
+body abbr
+{
+  color: rgb(255,0,0);
+  margin: 10px 20px 10px 20px;
+  background-repeat: repeat no-repeat;
+  background: rgb(255,0,0);
+  background: 20.0% 30.0%;
+  background-image: url("http://www.w3.org/TR/2012/CR-css3-images-20120417/");
+  background-size: 4px auto;
+}
+
+body div:hover,
+body abbr:hover
+{
+  color: rgb(0,128,0);
+}
+
+body
+{
+  color: rgb(128,0,128);
+  font: Arial, Helvetica, sans-serif 12.0pt rgb(0,0,0);
+}
+
+html.open body div,
+html.open body abbr
+{
+  marginLeft: 1px;
+}
+
+body div *#content,
+body div q,
+body abbr *#content,
+body abbr q
+{
+  color: rgb(0,128,0);
+  -webkit-box-shadow: 10px 10px 0px rgba(12,12,23);
+}
+
