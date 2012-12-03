@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Style.Geometry where
 
 import Prelude hiding (Left, Right)
@@ -10,22 +10,18 @@ import Clay.Style.Common
 
 -------------------------------------------------------------------------------
 
-data Position
-  = Static
-  | Absolute
-  | Fixed
-  | Relative
-  | InheritPosition
+newtype Position = Position Value
+  deriving Val
 
-instance Val Position where
-  value Static          = "static"
-  value Absolute        = "absolute"
-  value Fixed           = "fixed"
-  value Relative        = "relative"
-  value InheritPosition = "inherit"
+instance Other   Position where other   = Position
+instance Inherit Position where inherit = Position "inherit"
 
-instance Inherit Position where
-  inherit = InheritPosition
+static, absolute, fixed, relative :: Position
+
+static   = Position "static"
+absolute = Position "absolute"
+fixed    = Position "fixed"
+relative = Position "relative"
 
 position :: Position -> Css
 position = key "position"
