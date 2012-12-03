@@ -50,15 +50,17 @@ padding, margin :: Size -> Size -> Size -> Size -> Css
 padding = key4 "padding"
 margin  = key4 "margin"
 
-paddingTop, paddingLeft, paddingRight, paddingBottom,
-  marginTop, marginLeft, marginRight, marginBottom :: Size -> Css
+paddingTop, paddingLeft, paddingRight, paddingBottom :: Size -> Css
 
-paddingTop    = key "paddingTop"
-paddingLeft   = key "paddingLeft"
-paddingRight  = key "paddingRight"
-paddingBottom = key "paddingBottom"
-marginTop     = key "marginTop"
-marginLeft    = key "marginLeft"
-marginRight   = key "marginRight"
-marginBottom  = key "marginBottom"
+paddingTop    = key "padding-top"
+paddingLeft   = key "padding-left"
+paddingRight  = key "padding-right"
+paddingBottom = key "padding-bottom"
+
+marginTop, marginLeft, marginRight, marginBottom :: Size -> Css
+
+marginTop     = key "margin-top"
+marginLeft    = key "margin-left"
+marginRight   = key "margin-right"
+marginBottom  = key "margin-bottom"
 
