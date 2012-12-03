@@ -10,39 +10,45 @@ main = css $
   do overal
      theFooter
 
+  where
 
-overal :: Css
-overal =
-  do (body <> html) ?
-       do height (pct 100)
-          resetSpacing
+    overal =
+      do body <> html ?
+           do height (pct 100)
+              resetSpacing
 
-     body ?
-       do backgroundColor (grayish 220)
-          fonts
+         body <> section ?
+           do backgroundColor (grayish 220)
+              fonts
 
-          "#container" ?
-            do minHeight (pct 100)
-               minWidth  (pct 100)
+              ("href" $= "/page") &
+                color (rgba 255 128 0 80)
 
+              hover &
+                  backgroundColor green
 
-fonts :: Css
-fonts =
-  do fontFamily "Helvetica, sans-serif"
-     fontColor  (rgb 40 30 0)
+              "#container" ?
+                do minHeight (pct 100)
+                   minWidth  (pct 100)
 
-theFooter :: Css
-theFooter =
-  footer ?
-    do backgroundColor "#ff8800"
-       color           white
-       position        Absolute
-       bottom          (px 0)
-       width           (pct 100)
-       height          (px 200)
+    fonts =
+      do fontFamily "Helvetica, sans-serif"
+         fontColor  (rgb 40 30 0)
 
-resetSpacing :: Css
-resetSpacing =
-  do sym4 margin  (px 0)
-     sym4 padding (px 0)
+    theFooter =
+      footer ?
+        do backgroundColor "#ff880020"
+           color           white
+           position        Absolute
+           bottom          (px 0)
+           width           (pct 100)
+           height          (px 200)
+           abbr <? p ? color red
+
+           a ?
+             display inline
+
+    resetSpacing =
+      do sym4 margin  (px 0)
+         sym4 padding (px 0)
 
