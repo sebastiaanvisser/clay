@@ -40,8 +40,10 @@ import Clay.Style.Common
 import Clay.Style.Background
 import Clay.Style.Border
 import Clay.Style.Color
-import Clay.Style.Display hiding (table)
+import Clay.Style.Display  (Display)
+import Clay.Style.Display  hiding (table, Display(..))
 import Clay.Style.Font
-import Clay.Style.Geometry
+import Clay.Style.Geometry (Position)
+import Clay.Style.Geometry hiding (Position(..))
 import Clay.Style.Size
 
