@@ -13,6 +13,9 @@ class Inherit a where
 class None a where
   none :: a
 
+class Other a where
+  other :: Value -> a
+
 -------------------------------------------------------------------------------
 
 data Position
