@@ -1,23 +1,25 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Style.Border where
 
 import Clay.Core.Property
 import Clay.Core.Rule
 import Clay.Style.Color
+import Clay.Style.Common
 import Clay.Style.Size
 
-data Stroke = Solid | Dotted | Dashed
-  deriving Show
+newtype Stroke = Stroke Value
+  deriving Val
+
+instance Auto    Stroke where auto    = Stroke "auto"
+instance Inherit Stroke where inherit = Stroke "inherit"
+instance None    Stroke where none    = Stroke "none"
+instance Other   Stroke where other   = Stroke
 
 solid, dotted, dashed :: Stroke
-solid  = Solid
-dotted = Dotted
-dashed = Dashed
 
-instance Val Stroke where
-  value Solid  = "solid"
-  value Dotted = "dotted"
-  value Dashed = "dashed"
+solid  = Stroke "solid"
+dotted = Stroke "dotted"
+dashed = Stroke "dashed"
 
 border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size Abs -> Color -> Css
 
