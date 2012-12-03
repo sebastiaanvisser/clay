@@ -38,50 +38,6 @@ instance Inherit Position where
 position :: Position -> Css
 position = key "position"
 
-data Display
-  = Inline
-  | Block
-  | ListItem
-  | RunIn
-  | InlineBlock
-  | Table
-  | InlineTable
-  | TableRowGroup
-  | TableHeaderGroup
-  | TableFooterGroup
-  | TableRow
-  | TableColumnGroup
-  | TableColumn
-  | TableCell
-  | TableCaption
-  | DisplayNone
-  | DisplayInherit
-
-instance Inherit Display where inherit = DisplayInherit
-instance None    Display where none    = DisplayNone
-
-instance Val Display where
-  value Inline           = "inline"
-  value Block            = "block"
-  value ListItem         = "list-item"
-  value RunIn            = "runIn"
-  value InlineBlock      = "inline-block"
-  value Table            = "table"
-  value InlineTable      = "inline-table"
-  value TableRowGroup    = "table-row-Group"
-  value TableHeaderGroup = "table-header-group"
-  value TableFooterGroup = "table-footer-group"
-  value TableRow         = "table-row"
-  value TableColumnGroup = "table-column-group"
-  value TableColumn      = "table-column"
-  value TableCell        = "table-cell"
-  value TableCaption     = "table-caption"
-  value DisplayNone      = "none"
-  value DisplayInherit   = "inherit"
-
-display :: Display -> Css
-display = key "display"
-
 size, top, left, bottom, right :: Size -> Css
 
 size      = key "size"
