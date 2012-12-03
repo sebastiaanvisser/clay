@@ -1,86 +1,99 @@
-{-# LANGUAGE OverloadedStrings, FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings, FlexibleInstances, GeneralizedNewtypeDeriving #-}
 module Clay.Style.Background where
 
 import Data.Text (Text)
 import Data.Monoid
 import Data.Maybe
-import Prelude hiding (Left, Right)
+import Prelude hiding (Left, Right, repeat)
 
 import Clay.Core.Property
 import Clay.Core.Rule
 import Clay.Style.Color
+import Clay.Style.Common
 import Clay.Style.Size
-
-data Side = Top | Left | Right | Bottom | Center
-
-instance Val Side where
-  value Top    = "top"
-  value Left   = "left"
-  value Right  = "right"
-  value Bottom = "bottom"
-  value Center = "center"
-
-data BackgroundPosition
-  = Place Side Side
-  | Size  Size Size
-  | Inherit
-
-instance Val BackgroundPosition where
-  value (Place a b) = value (a, b)
-  value (Size  a b) = value (a, b)
-  value Inherit     = "inherit"
-
-data BackgroundSize
-  = Contain
-  | Cover
-  | Length (Maybe Size) (Maybe Size)
-
-instance Val BackgroundSize where
-  value Contain      = "contain"
-  value Cover        = "cover"
-  value (Length a b) = value (maybe "auto" value a, maybe "auto" value b)
-
-data BackgroundRepeat
-  = Repeat
-  | Space
-  | Round
-  | NoRepeat
-
-instance Val BackgroundRepeat where
-  value Repeat   = "repeat"
-  value Space    = "space"
-  value Round    = "round"
-  value NoRepeat = "no-repeat"
-
-repeat :: (BackgroundRepeat, BackgroundRepeat)
-repeat = (Repeat, Repeat)
-
-repeatX :: (BackgroundRepeat, BackgroundRepeat)
-repeatX = (Repeat, NoRepeat)
-
-repeatY :: (BackgroundRepeat, BackgroundRepeat)
-repeatY = (NoRepeat, Repeat)
-
-space :: (BackgroundRepeat, BackgroundRepeat)
-space = (Space, Space)
-
-round :: (BackgroundRepeat, BackgroundRepeat)
-round = (Round, Round)
-
-noRepeat :: (BackgroundRepeat, BackgroundRepeat)
-noRepeat = (NoRepeat, NoRepeat)
 
 backgroundColor :: Color -> Css
 backgroundColor = key "background-color"
 
+-------------------------------------------------------------------------------
+
+newtype Side = Side Value
+  deriving Val
+
+instance Inherit Side where inherit = Side "inherit"
+instance Other   Side where other   = Side
+
+posTop, posLeft, posRight, posBottom, posCenter, posMiddle :: Side
+
+posTop    = Side "top"
+posLeft   = Side "left"
+posRight  = Side "right"
+posBottom = Side "bottom"
+posCenter = Side "center"
+posMiddle = Side "middle"
+
+newtype BackgroundPosition = BackgroundPosition Value
+  deriving Val
+
+placed :: Side -> Side -> BackgroundPosition
+placed a b = BackgroundPosition (value (a, b))
+
+positioned :: Size -> Size -> BackgroundPosition
+positioned a b = BackgroundPosition (value (a, b))
+
+instance Inherit BackgroundPosition where inherit = BackgroundPosition "inherit"
+instance Other   BackgroundPosition where other   = BackgroundPosition
+
 backgroundPosition :: BackgroundPosition -> Css
 backgroundPosition = key "background-position"
+
+-------------------------------------------------------------------------------
+
+newtype BackgroundSize = BackgroundSize Value
+  deriving Val
+
+contain, cover :: BackgroundSize
+
+contain = BackgroundSize "contain"
+cover   = BackgroundSize "cover"
+
+sized :: Size -> Size -> BackgroundSize
+sized a b = BackgroundSize (value (a, b))
+
+instance Inherit BackgroundSize where inherit = BackgroundSize "inherit"
+instance Auto    BackgroundSize where auto    = sized auto auto
+instance Other   BackgroundSize where other   = BackgroundSize
 
 backgroundSize :: BackgroundSize -> Css
 backgroundSize = key "background-size"
 
-backgroundRepeat :: (BackgroundRepeat, BackgroundRepeat) -> Css
+-------------------------------------------------------------------------------
+
+newtype BackgroundRepeat = BackgroundRepeat Value
+  deriving Val
+
+instance Other BackgroundRepeat where other = BackgroundRepeat
+
+repeat, space, round, noRepeat :: BackgroundRepeat
+
+repeat   = BackgroundRepeat "repeat"
+space    = BackgroundRepeat "space"
+round    = BackgroundRepeat "round"
+noRepeat = BackgroundRepeat "no-repeat"
+
+xyRepeat :: BackgroundRepeat -> BackgroundRepeat -> BackgroundRepeat
+xyRepeat a b = BackgroundRepeat (value (a, b))
+
+repeatX :: BackgroundRepeat
+repeatX = xyRepeat repeat noRepeat
+
+repeatY :: BackgroundRepeat
+repeatY = xyRepeat noRepeat repeat
+
+backgroundRepeat :: BackgroundRepeat -> Css
 backgroundRepeat = key "background-repeat"
+
+-------------------------------------------------------------------------------
 
 data Gradient = Grad
 
@@ -97,9 +110,14 @@ instance Val BackgroundImage where
 backgroundImage :: Maybe BackgroundImage -> Css
 backgroundImage = key "background-image"
 
+-------------------------------------------------------------------------------
+
 -- backgroundOrigin     = key "background-origin"
 -- backgroundClip       = key "background-clip"
 -- backgroundAttachment = key "background-attachment"
+
+-------------------------------------------------------------------------------
+-- Background property as a type class.
 
 class Val a => Background a where
   background :: a -> Css
