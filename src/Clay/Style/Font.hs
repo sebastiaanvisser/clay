@@ -8,13 +8,13 @@ import Clay.Core.Rule
 import Clay.Style.Color
 import Clay.Style.Size
 
-font :: Text -> Size -> Color -> Css
+font :: Text -> Size a -> Color -> Css
 font = key3 "font"
 
 fontFamily :: Text -> Css
 fontFamily = key "font-family"
 
-fontSize :: Size -> Css
+fontSize :: Size a -> Css
 fontSize = key "font-family"
 
 color :: Color -> Css

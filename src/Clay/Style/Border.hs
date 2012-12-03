@@ -19,7 +19,7 @@ instance Val Stroke where
   value Dotted = "dotted"
   value Dashed = "dashed"
 
-border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size -> Color -> Css
+border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size Abs -> Color -> Css
 
 border       = key3 "border"
 borderTop    = key3 "border-top"
@@ -41,7 +41,7 @@ borderRightStyle  = key "border-right-style"
 borderTopStyle    = key "border-top-style"
 borderBottomStyle = key "border-bottom-style"
 
-borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size -> Css
+borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size Abs -> Css
 
 borderLeftWidth   = key "border-left-width"
 borderRightWidth  = key "border-right-width"

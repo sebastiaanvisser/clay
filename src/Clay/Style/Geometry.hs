@@ -28,7 +28,7 @@ position = key "position"
 
 -------------------------------------------------------------------------------
 
-size, top, left, bottom, right :: Size -> Css
+size, top, left, bottom, right :: Size Abs -> Css
 
 size      = key "size"
 top       = key "top"
@@ -36,7 +36,7 @@ left      = key "left"
 bottom    = key "bottom"
 right     = key "right"
 
-width, height, minWidth, minHeight :: Size -> Css
+width, height, minWidth, minHeight :: Size a -> Css
 
 width     = key "width"
 height    = key "height"
@@ -45,19 +45,19 @@ minHeight = key "min-height"
 
 -------------------------------------------------------------------------------
 
-padding, margin :: Size -> Size -> Size -> Size -> Css
+padding, margin :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
 
 padding = key4 "padding"
 margin  = key4 "margin"
 
-paddingTop, paddingLeft, paddingRight, paddingBottom :: Size -> Css
+paddingTop, paddingLeft, paddingRight, paddingBottom :: Size Abs -> Css
 
 paddingTop    = key "padding-top"
 paddingLeft   = key "padding-left"
 paddingRight  = key "padding-right"
 paddingBottom = key "padding-bottom"
 
-marginTop, marginLeft, marginRight, marginBottom :: Size -> Css
+marginTop, marginLeft, marginRight, marginBottom :: Size Abs -> Css
 
 marginTop     = key "margin-top"
 marginLeft    = key "margin-left"

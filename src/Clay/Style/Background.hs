@@ -38,7 +38,7 @@ newtype BackgroundPosition = BackgroundPosition Value
 placed :: Side -> Side -> BackgroundPosition
 placed a b = BackgroundPosition (value (a, b))
 
-positioned :: Size -> Size -> BackgroundPosition
+positioned :: Size a -> Size a -> BackgroundPosition
 positioned a b = BackgroundPosition (value (a, b))
 
 instance Inherit BackgroundPosition where inherit = BackgroundPosition "inherit"
@@ -57,7 +57,7 @@ contain, cover :: BackgroundSize
 contain = BackgroundSize "contain"
 cover   = BackgroundSize "cover"
 
-sized :: Size -> Size -> BackgroundSize
+sized :: Size a -> Size a -> BackgroundSize
 sized a b = BackgroundSize (value (a, b))
 
 instance Inherit BackgroundSize where inherit = BackgroundSize "inherit"
