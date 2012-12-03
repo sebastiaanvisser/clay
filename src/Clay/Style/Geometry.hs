@@ -1,20 +1,12 @@
 {-# LANGUAGE OverloadedStrings, FlexibleInstances #-}
-module Clay.Style.Properties where
+module Clay.Style.Geometry where
 
 import Prelude hiding (Left, Right)
 
-import Clay.Style.Size
 import Clay.Core.Property
 import Clay.Core.Rule
-
-class Inherit a where
-  inherit :: a
-
-class None a where
-  none :: a
-
-class Other a where
-  other :: Value -> a
+import Clay.Style.Size
+import Clay.Style.Common
 
 -------------------------------------------------------------------------------
 
@@ -37,6 +29,8 @@ instance Inherit Position where
 
 position :: Position -> Css
 position = key "position"
+
+-------------------------------------------------------------------------------
 
 size, top, left, bottom, right :: Size -> Css
 
@@ -71,13 +65,4 @@ marginTop     = key "marginTop"
 marginLeft    = key "marginLeft"
 marginRight   = key "marginRight"
 marginBottom  = key "marginBottom"
-
-sym4 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Css
-sym4 k a = k a a a a
-
-sym3 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Size -> Css
-sym3 k tb l r = k tb l tb r
-
-sym2 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Size -> Css
-sym2 k tb lr = k tb lr tb lr
 

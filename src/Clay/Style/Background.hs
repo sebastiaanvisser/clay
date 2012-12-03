@@ -6,10 +6,10 @@ import Data.Monoid
 import Data.Maybe
 import Prelude hiding (Left, Right)
 
-import Clay.Style.Color
-import Clay.Style.Size
 import Clay.Core.Property
 import Clay.Core.Rule
+import Clay.Style.Color
+import Clay.Style.Size
 
 data Side = Top | Left | Right | Bottom | Center
 

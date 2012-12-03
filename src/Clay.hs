@@ -7,13 +7,14 @@ module Clay
 , module Clay.Style.Selectors
 , module Clay.Style.Attributes
 , module Clay.Style.Elements
+, module Clay.Style.Common
 
 , module Clay.Style.Background
 , module Clay.Style.Border
 , module Clay.Style.Color
 , module Clay.Style.Display
 , module Clay.Style.Font
-, module Clay.Style.Properties
+, module Clay.Style.Geometry
 , module Clay.Style.Size
 )
 where
@@ -34,12 +35,13 @@ import Clay.Core.Render (css, cssIn)
 import Clay.Style.Selectors
 import Clay.Style.Attributes hiding (class_, target, checked, disabled, value, width, height, size)
 import Clay.Style.Elements   hiding (link, em)
+import Clay.Style.Common
 
 import Clay.Style.Background
 import Clay.Style.Border
 import Clay.Style.Color
 import Clay.Style.Display hiding (table)
 import Clay.Style.Font
-import Clay.Style.Properties
+import Clay.Style.Geometry
 import Clay.Style.Size
 

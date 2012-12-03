@@ -1,11 +1,9 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Style.Display where
 
-import Prelude hiding (Left, Right)
-
 import Clay.Core.Property
 import Clay.Core.Rule
-import Clay.Style.Properties
+import Clay.Style.Common
 
 newtype Display = Display Value
   deriving Val
