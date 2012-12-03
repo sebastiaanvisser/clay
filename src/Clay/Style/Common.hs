@@ -11,6 +11,8 @@ class Inherit a where inherit ::          a
 class None    a where none    ::          a
 class Other   a where other   :: Value -> a
 
+instance Auto Size where auto = Auto
+
 -------------------------------------------------------------------------------
 
 sym4 :: (Size -> Size -> Size -> Size -> Css) -> Size -> Css

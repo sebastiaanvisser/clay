@@ -1,12 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Style.Size
-( Size
-, px
-, pt
-, pct
-, em
-)
-where
+module Clay.Style.Size where
 
 import Data.Monoid
 import Data.Text (Text, pack)
@@ -18,6 +11,7 @@ data Size
   | Pt  Double
   | Pct Double
   | Em  Double
+  | Auto
 
 px, pt, pct, em :: Double -> Size
 px  = Px
@@ -32,6 +26,7 @@ instance Val Size where
       Pt  i -> p i                    <> "pt"
       Pct i -> p i                    <> "%"
       Em  i -> p i                    <> "em"
+      Auto  -> "auto"
     where p :: Show a => a -> Text
           p = pack . show
 
