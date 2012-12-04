@@ -99,7 +99,6 @@ data Gradient = Grad
 
 data BackgroundImage
   = Url Text
-  -- | Gradient Gradient
 
 url :: Text -> Maybe BackgroundImage
 url = Just . Url

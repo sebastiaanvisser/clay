@@ -17,16 +17,14 @@ data Color
   | Hsla Word8 Word8 Word8 Word8
   deriving Show
 
-rgba :: Word8 -> Word8 -> Word8 -> Word8 -> Color
-rgba = Rgba
+rgba, hsla :: Word8 -> Word8 -> Word8 -> Word8 -> Color
 
-hsla :: Word8 -> Word8 -> Word8 -> Word8 -> Color
+rgba = Rgba
 hsla = Hsla
 
-rgb :: Word8 -> Word8 -> Word8 -> Color
-rgb r g b = rgba r g b 255
+rgb, hsl :: Word8 -> Word8 -> Word8 -> Color
 
-hsl :: Word8 -> Word8 -> Word8 -> Color
+rgb r g b = rgba r g b 255
 hsl r g b = hsla r g b 255
 
 grayish :: Word8 -> Color
