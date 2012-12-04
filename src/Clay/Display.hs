@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Style.Display where
+module Clay.Display where
 
-import Clay.Core.Property
-import Clay.Core.Rule
-import Clay.Style.Common
+import Clay.Property
+import Clay.Rule
+import Clay.Common
 
 newtype Display = Display Value
   deriving Val

@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Style.Font where
+module Clay.Font where
 
 import Data.Text (Text)
 import Prelude hiding (Left, Right)
 
-import Clay.Core.Property
-import Clay.Core.Rule
-import Clay.Style.Color
-import Clay.Style.Size
+import Clay.Property
+import Clay.Rule
+import Clay.Color
+import Clay.Size
 
 font :: Text -> Size a -> Color -> Css
 font a b c = key "font" (a ! b ! c)

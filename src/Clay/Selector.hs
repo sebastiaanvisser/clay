@@ -3,7 +3,7 @@
   , FlexibleInstances
   , GeneralizedNewtypeDeriving
   #-}
-module Clay.Core.Selector where
+module Clay.Selector where
 
 import Data.String
 import Prelude hiding (foldl)

@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Core.Render (css, cssIn) where
+module Clay.Render (css, cssIn) where
 
 import Control.Monad.Writer
 import Data.Either
@@ -9,10 +9,10 @@ import Data.Text.Lazy.Builder
 
 import qualified Data.Text.Lazy.IO as Text
 
-import Clay.Core.Rule     (Css, Rule(..), Rules (Rules))
-import Clay.Core.Selector hiding (Child)
+import Clay.Rule     (Css, Rule(..), Rules (Rules))
+import Clay.Selector hiding (Child)
 
-import qualified Clay.Core.Selector as Selector
+import qualified Clay.Selector as Selector
 
 css :: Css -> IO ()
 css = cssIn []

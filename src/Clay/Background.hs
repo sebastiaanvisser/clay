@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings, FlexibleInstances, GeneralizedNewtypeDeriving #-}
-module Clay.Style.Background where
+module Clay.Background where
 
 import Data.Text (Text, pack)
 import Data.Monoid
 import Prelude hiding (Left, Right, repeat)
 
-import Clay.Core.Property
-import Clay.Core.Rule
-import Clay.Style.Color
-import Clay.Style.Common
-import Clay.Style.Size
+import Clay.Property
+import Clay.Rule
+import Clay.Color
+import Clay.Common
+import Clay.Size
 
 -- Background property as a type class.
 

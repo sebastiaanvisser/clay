@@ -1,12 +1,12 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Style.Geometry where
+module Clay.Geometry where
 
 import Prelude hiding (Left, Right)
 
-import Clay.Core.Property
-import Clay.Core.Rule
-import Clay.Style.Size
-import Clay.Style.Common
+import Clay.Property
+import Clay.Rule
+import Clay.Size
+import Clay.Common
 
 -------------------------------------------------------------------------------
 

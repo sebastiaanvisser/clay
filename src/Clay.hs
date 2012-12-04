@@ -1,49 +1,49 @@
 module Clay
-( module Clay.Core.Selector
-, module Clay.Core.Property
-, module Clay.Core.Rule
-, module Clay.Core.Render
+( module Clay.Selector
+, module Clay.Property
+, module Clay.Rule
+, module Clay.Render
 
-, module Clay.Style.Selectors
-, module Clay.Style.Attributes
-, module Clay.Style.Elements
-, module Clay.Style.Common
+, module Clay.Selectors
+, module Clay.Attributes
+, module Clay.Elements
+, module Clay.Common
 
-, module Clay.Style.Background
-, module Clay.Style.Border
-, module Clay.Style.Color
-, module Clay.Style.Display
-, module Clay.Style.Font
-, module Clay.Style.Geometry
-, module Clay.Style.Size
+, module Clay.Background
+, module Clay.Border
+, module Clay.Color
+, module Clay.Display
+, module Clay.Font
+, module Clay.Geometry
+, module Clay.Size
 )
 where
 
-import Clay.Core.Selector
+import Clay.Selector
   ( id_, class_, pseudo
   , func, attr, (@=), ($=), (~=), (|=)
   , star, with, (|>), (|+), deep
   )
-import Clay.Core.Property (Key, Value, Val(..), (!))
-import Clay.Core.Rule
+import Clay.Property (Key, Value, Val(..), (!))
+import Clay.Rule
   ( Css
   , key, (-:)
   , root, pop, (<?), (?), (&)
   )
-import Clay.Core.Render (css, cssIn)
+import Clay.Render (css, cssIn)
 
-import Clay.Style.Selectors
-import Clay.Style.Attributes hiding (class_, target, checked, disabled, value, width, height, size)
-import Clay.Style.Elements   hiding (link, em)
-import Clay.Style.Common
+import Clay.Selectors
+import Clay.Attributes hiding (class_, target, checked, disabled, value, width, height, size)
+import Clay.Elements   hiding (link, em)
+import Clay.Common
 
-import Clay.Style.Background
-import Clay.Style.Border
-import Clay.Style.Color
-import Clay.Style.Display  (Display)
-import Clay.Style.Display  hiding (table, Display(..))
-import Clay.Style.Font
-import Clay.Style.Geometry (Position)
-import Clay.Style.Geometry hiding (Position(..))
-import Clay.Style.Size
+import Clay.Background
+import Clay.Border
+import Clay.Color
+import Clay.Display  (Display)
+import Clay.Display  hiding (table, Display(..))
+import Clay.Font
+import Clay.Geometry (Position)
+import Clay.Geometry hiding (Position(..))
+import Clay.Size
 

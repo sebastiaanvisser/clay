@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Style.Attributes where
+module Clay.Attributes where
 
-import Clay.Core.Selector
+import Clay.Selector
 
 -- From: http://www.whatwg.org/specs/web-apps/current-work/multipage/section-index.html#index
 

@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Style.Common where
+module Clay.Common where
 
-import Clay.Core.Property
-import Clay.Core.Rule
-import Clay.Style.Size
+import Clay.Property
+import Clay.Rule
+import Clay.Size
 
 -------------------------------------------------------------------------------
 

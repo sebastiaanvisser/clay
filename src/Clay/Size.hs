@@ -4,12 +4,12 @@
   , GeneralizedNewtypeDeriving
   , FlexibleInstances
   #-}
-module Clay.Style.Size where
+module Clay.Size where
 
 import Data.Monoid
 import Data.Text (pack)
 
-import Clay.Core.Property
+import Clay.Property
 
 data Rel
 data Abs

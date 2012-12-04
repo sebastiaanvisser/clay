@@ -1,11 +1,11 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Style.Border where
+module Clay.Border where
 
-import Clay.Core.Property
-import Clay.Core.Rule
-import Clay.Style.Color
-import Clay.Style.Common
-import Clay.Style.Size
+import Clay.Property
+import Clay.Rule
+import Clay.Color
+import Clay.Common
+import Clay.Size
 
 newtype Stroke = Stroke Value
   deriving Val

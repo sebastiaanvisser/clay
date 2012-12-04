@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Style.Color where
+module Clay.Color where
 
 import Data.Monoid
 import Data.Word
@@ -10,8 +10,8 @@ import Text.Printf
 import qualified Data.Text as Text
 import Data.Text.Read as Text
 
-import Clay.Core.Property
-import Clay.Style.Common
+import Clay.Property
+import Clay.Common
 
 data Color
   = Rgba Word8 Word8 Word8 Word8

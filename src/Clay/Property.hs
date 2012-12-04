@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Core.Property where
+module Clay.Property where
 
 import Data.String
 import Data.Text (Text, intercalate)

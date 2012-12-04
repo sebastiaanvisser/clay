@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Style.Selectors where
+module Clay.Selectors where
 
 import Data.Text (Text)
 
-import Clay.Core.Selector
+import Clay.Selector
 
 -- List of specific pseudo classes, from:
 -- https://developer.mozilla.org/en-US/docs/CSS/Pseudo-classes
