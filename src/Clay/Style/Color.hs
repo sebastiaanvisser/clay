@@ -11,10 +11,12 @@ import qualified Data.Text as Text
 import Data.Text.Read as Text
 
 import Clay.Core.Property
+import Clay.Style.Common
 
 data Color
   = Rgba Word8 Word8 Word8 Word8
   | Hsla Word8 Word8 Word8 Word8
+  | None
   deriving Show
 
 rgba, hsla :: Word8 -> Word8 -> Word8 -> Word8 -> Color
@@ -39,8 +41,11 @@ instance Val Color where
       Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", alpha a, ")"]
       Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,               ")"]
       Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", alpha a, ")"]
+      None           -> "none"
     where p = Text.pack . show
           alpha = Text.pack . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
+
+instance None Color where none = None
 
 instance IsString Color where
   fromString = parse . fromString
