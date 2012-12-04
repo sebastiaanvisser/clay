@@ -41,5 +41,5 @@ instance (Val a, Val b, Val c, Val d) => Val (a, b, c, d) where
   value (a, b, c, d) = value (a, (b, (c, d)))
 
 instance Val a => Val [a] where
-  value xs = Value (intercalate ", " (map (unValue . value) xs))
+  value xs = Value (intercalate "," (map (unValue . value) xs))
 
