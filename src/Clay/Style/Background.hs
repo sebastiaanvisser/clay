@@ -1,9 +1,8 @@
 {-# LANGUAGE OverloadedStrings, FlexibleInstances, GeneralizedNewtypeDeriving #-}
 module Clay.Style.Background where
 
-import Data.Text (Text)
+import Data.Text (Text, pack)
 import Data.Monoid
-import Data.Maybe
 import Prelude hiding (Left, Right, repeat)
 
 import Clay.Core.Property
@@ -23,14 +22,14 @@ newtype Side = Side Value
 instance Inherit Side where inherit = Side "inherit"
 instance Other   Side where other   = Side
 
-posTop, posLeft, posRight, posBottom, posCenter, posMiddle :: Side
+pTop, pLeft, pRight, pBottom, pCenter, pMiddle :: Side
 
-posTop    = Side "top"
-posLeft   = Side "left"
-posRight  = Side "right"
-posBottom = Side "bottom"
-posCenter = Side "center"
-posMiddle = Side "middle"
+pTop    = Side "top"
+pLeft   = Side "left"
+pRight  = Side "right"
+pBottom = Side "bottom"
+pCenter = Side "center"
+pMiddle = Side "middle"
 
 newtype BackgroundPosition = BackgroundPosition Value
   deriving Val
@@ -95,19 +94,39 @@ backgroundRepeat = key "background-repeat"
 
 -------------------------------------------------------------------------------
 
-data Gradient = Grad
+newtype BackgroundImage = BackgroundImage Value
+  deriving Val
 
-data BackgroundImage
-  = Url Text
+instance Other BackgroundImage where other = BackgroundImage
+instance None  BackgroundImage where none  = BackgroundImage "none"
 
-url :: Text -> Maybe BackgroundImage
-url = Just . Url
+url :: Text -> BackgroundImage
+url u = BackgroundImage (value ("url(\"" <> u <> "\")"))
 
-instance Val BackgroundImage where
-  value (Url u) = Value ("url(\"" <> u <> "\")")
+newtype Direction = Direction Value
+  deriving Val
 
-backgroundImage :: Maybe BackgroundImage -> Css
+from :: Side -> Direction
+from a = Direction (value a)
+
+degrees :: Double -> Direction
+degrees a = Direction (value (pack (show a) <> "deg"))
+
+linearGradient :: Direction -> [(Color, Size Rel)] -> BackgroundImage
+linearGradient d xs = BackgroundImage $
+  "-webkit-linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
+
+hGradient :: Color -> Color -> BackgroundImage
+hGradient f t = linearGradient (from pLeft) [(f, 0), (t, 100)]
+
+vGradient :: Color -> Color -> BackgroundImage
+vGradient f t = linearGradient (from pTop) [(f, 0), (t, 100)]
+
+backgroundImage :: BackgroundImage -> Css
 backgroundImage = key "background-image"
+
+backgroundImages :: [BackgroundImage] -> Css
+backgroundImages = key "background-image"
 
 -------------------------------------------------------------------------------
 
@@ -126,7 +145,9 @@ instance Background Color
 instance Background BackgroundPosition
 instance Background BackgroundImage
 instance Background BackgroundSize
-instance Background (BackgroundPosition, BackgroundPosition)
 instance Background BackgroundRepeat
-instance Background (BackgroundRepeat, BackgroundRepeat)
+instance Background [BackgroundPosition]
+instance Background [BackgroundImage]
+instance Background [BackgroundSize]
+instance Background [BackgroundRepeat]
 
