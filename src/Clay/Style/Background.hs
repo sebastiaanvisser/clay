@@ -18,6 +18,7 @@ class Val a => Background a where
   background = key "background"
 
 instance Background a => Background [a]
+instance (Background a, Background b) => Background (a, b)
 
 instance Background Color
 instance Background BackgroundPosition
@@ -27,15 +28,6 @@ instance Background BackgroundOrigin
 instance Background BackgroundClip
 instance Background BackgroundAttachment
 instance Background BackgroundImage
-instance Background ( Color
-                    , BackgroundPosition
-                    , BackgroundSize
-                    , BackgroundRepeat
-                    , BackgroundOrigin
-                    , BackgroundClip
-                    , BackgroundAttachment
-                    , BackgroundImage
-                    )
 
 -------------------------------------------------------------------------------
 

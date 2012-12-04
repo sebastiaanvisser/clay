@@ -24,10 +24,10 @@ import Clay.Core.Selector
   , func, attr, (@=), ($=), (~=), (|=)
   , star, with, (|>), (|+), deep
   )
-import Clay.Core.Property (Key, Value, Val(..))
+import Clay.Core.Property (Key, Value, Val(..), (!))
 import Clay.Core.Rule
   ( Css
-  , key, key2, key3, key4, (-:)
+  , key, (-:)
   , root, pop, (<?), (?), (&)
   )
 import Clay.Core.Render (css, cssIn)

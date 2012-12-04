@@ -23,11 +23,11 @@ dashed = Stroke "dashed"
 
 border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size Abs -> Color -> Css
 
-border       = key3 "border"
-borderTop    = key3 "border-top"
-borderLeft   = key3 "border-left"
-borderBottom = key3 "border-bottom"
-borderRight  = key3 "border-right"
+border        a b c = key "border"        (a ! b ! c)
+borderTop     a b c = key "border-top"    (a ! b ! c)
+borderLeft    a b c = key "border-left"   (a ! b ! c)
+borderBottom  a b c = key "border-bottom" (a ! b ! c)
+borderRight   a b c = key "border-right"  (a ! b ! c)
 
 borderLeftColor, borderRightColor, borderTopColor, borderBottomColor :: Color -> Css
 

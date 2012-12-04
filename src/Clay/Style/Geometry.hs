@@ -47,8 +47,8 @@ minHeight = key "min-height"
 
 padding, margin :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
 
-padding = key4 "padding"
-margin  = key4 "margin"
+padding a b c d = key "padding" (a ! b ! c ! d)
+margin  a b c d = key "margin"  (a ! b ! c ! d)
 
 paddingTop, paddingLeft, paddingRight, paddingBottom :: Size Abs -> Css
 
