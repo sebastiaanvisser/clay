@@ -1,5 +1,6 @@
 {-# LANGUAGE
-    OverloadedStrings
+    EmptyDataDecls
+  , OverloadedStrings
   , GeneralizedNewtypeDeriving
   , FlexibleInstances
   #-}
