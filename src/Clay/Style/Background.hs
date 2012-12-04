@@ -11,6 +11,34 @@ import Clay.Style.Color
 import Clay.Style.Common
 import Clay.Style.Size
 
+-- Background property as a type class.
+
+class Val a => Background a where
+  background :: a -> Css
+  background = key "background"
+
+instance Background a => Background [a]
+
+instance Background Color
+instance Background BackgroundPosition
+instance Background BackgroundSize
+instance Background BackgroundRepeat
+instance Background BackgroundOrigin
+instance Background BackgroundClip
+instance Background BackgroundAttachment
+instance Background BackgroundImage
+instance Background ( Color
+                    , BackgroundPosition
+                    , BackgroundSize
+                    , BackgroundRepeat
+                    , BackgroundOrigin
+                    , BackgroundClip
+                    , BackgroundAttachment
+                    , BackgroundImage
+                    )
+
+-------------------------------------------------------------------------------
+
 backgroundColor :: Color -> Css
 backgroundColor = key "background-color"
 
@@ -46,6 +74,9 @@ instance Other   BackgroundPosition where other   = BackgroundPosition
 backgroundPosition :: BackgroundPosition -> Css
 backgroundPosition = key "background-position"
 
+backgroundPositions :: [BackgroundPosition] -> Css
+backgroundPositions = key "background-position"
+
 -------------------------------------------------------------------------------
 
 newtype BackgroundSize = BackgroundSize Value
@@ -66,6 +97,9 @@ instance Other   BackgroundSize where other   = BackgroundSize
 backgroundSize :: BackgroundSize -> Css
 backgroundSize = key "background-size"
 
+backgroundSizes :: [BackgroundSize] -> Css
+backgroundSizes = key "background-size"
+
 -------------------------------------------------------------------------------
 
 newtype BackgroundRepeat = BackgroundRepeat Value
@@ -83,14 +117,16 @@ noRepeat = BackgroundRepeat "no-repeat"
 xyRepeat :: BackgroundRepeat -> BackgroundRepeat -> BackgroundRepeat
 xyRepeat a b = BackgroundRepeat (value (a, b))
 
-repeatX :: BackgroundRepeat
-repeatX = xyRepeat repeat noRepeat
+repeatX, repeatY :: BackgroundRepeat
 
-repeatY :: BackgroundRepeat
+repeatX = xyRepeat repeat noRepeat
 repeatY = xyRepeat noRepeat repeat
 
 backgroundRepeat :: BackgroundRepeat -> Css
 backgroundRepeat = key "background-repeat"
+
+backgroundRepeats :: [BackgroundRepeat] -> Css
+backgroundRepeats = key "background-repeat"
 
 -------------------------------------------------------------------------------
 
@@ -116,10 +152,9 @@ linearGradient :: Direction -> [(Color, Size Rel)] -> BackgroundImage
 linearGradient d xs = BackgroundImage $
   "-webkit-linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
 
-hGradient :: Color -> Color -> BackgroundImage
-hGradient f t = linearGradient (from pLeft) [(f, 0), (t, 100)]
+hGradient, vGradient :: Color -> Color -> BackgroundImage
 
-vGradient :: Color -> Color -> BackgroundImage
+hGradient f t = linearGradient (from pLeft) [(f, 0), (t, 100)]
 vGradient f t = linearGradient (from pTop) [(f, 0), (t, 100)]
 
 backgroundImage :: BackgroundImage -> Css
@@ -130,24 +165,55 @@ backgroundImages = key "background-image"
 
 -------------------------------------------------------------------------------
 
--- backgroundOrigin     = key "background-origin"
--- backgroundClip       = key "background-clip"
--- backgroundAttachment = key "background-attachment"
+newtype BoxType = BoxType Value
+  deriving Val
+
+paddingBox, borderBox, contentBox :: BoxType
+
+paddingBox = BoxType "padding-box"
+borderBox  = BoxType "border-box"
+contentBox = BoxType "content-box"
+
+newtype BackgroundOrigin = BackgroundOrigin Value
+  deriving Val
+
+origin :: BoxType -> BackgroundOrigin
+origin b = BackgroundOrigin (value b)
+
+backgroundOrigin :: BackgroundOrigin -> Css
+backgroundOrigin = key "background-origin"
+
+backgroundOrigins :: [BackgroundOrigin] -> Css
+backgroundOrigins = key "background-origin"
 
 -------------------------------------------------------------------------------
--- Background property as a type class.
 
-class Val a => Background a where
-  background :: a -> Css
-  background = key "background"
+newtype BackgroundClip = BackgroundClip Value
+  deriving Val
 
-instance Background Color
-instance Background BackgroundPosition
-instance Background BackgroundImage
-instance Background BackgroundSize
-instance Background BackgroundRepeat
-instance Background [BackgroundPosition]
-instance Background [BackgroundImage]
-instance Background [BackgroundSize]
-instance Background [BackgroundRepeat]
+clip :: BoxType -> BackgroundClip
+clip b = BackgroundClip (value b)
+
+backgroundClip :: BoxType -> Css
+backgroundClip = key "background-clip"
+
+backgroundClips :: [BoxType] -> Css
+backgroundClips = key "background-clip"
+
+-------------------------------------------------------------------------------
+
+newtype BackgroundAttachment = BackgroundAttachment Value
+  deriving Val
+
+instance Inherit BackgroundAttachment where inherit = BackgroundAttachment "inherit"
+
+attachFixed, attachScroll :: BackgroundAttachment
+attachFixed  = BackgroundAttachment "fixed"
+attachScroll = BackgroundAttachment "scroll"
+
+backgroundAttachment :: BackgroundAttachment -> Css
+backgroundAttachment = key "background-attachment"
+
+backgroundAttachments :: [BackgroundAttachment] -> Css
+backgroundAttachments = key "background-attachment"
 
