@@ -32,18 +32,26 @@ hsl r g b = hsla r g b 255
 grayish :: Word8 -> Color
 grayish g = rgb g g g
 
+transparent :: Color
+transparent = rgba 0 0 0 0
+
+alpha :: Word8 -> Color -> Color
+alpha a (Rgba r g b _) = Rgba r g b a
+alpha a (Hsla r g b _) = Hsla r g b a
+alpha _ None           = None
+
 -------------------------------------------------------------------------------
 
 instance Val Color where
   value clr = Value $
     case clr of
-      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,               ")"]
-      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", alpha a, ")"]
-      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,               ")"]
-      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", alpha a, ")"]
+      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,              ")"]
+      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", alph a, ")"]
+      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,              ")"]
+      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", alph a, ")"]
       None           -> "none"
     where p = Text.pack . show
-          alpha = Text.pack . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
+          alph = Text.pack . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
 instance None Color where none = None
 
