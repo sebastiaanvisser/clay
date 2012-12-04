@@ -39,7 +39,7 @@ main = css $
       footer ?
         do backgroundColor "#ff880020"
            color           white
-           position        Absolute
+           position        absolute
            bottom          (px 0)
            width           (pct 100)
            height          (px 200)
