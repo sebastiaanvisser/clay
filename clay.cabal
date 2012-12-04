@@ -1,0 +1,39 @@
+Name:          clay
+Version:       0.0.1
+Author:        Sebastiaan Visser
+Synopsis:      CSS preprocessor as embedded Haskell.
+Description:   CSS preprocessor as embedded Haskell.
+Maintainer:    Sebastiaan Visser <code@fvisser.nl>
+License:       BSD3
+License-File:  LICENSE
+Category:      Web, Style
+Cabal-Version: >= 1.6
+Build-Type:    Simple
+
+Library
+  HS-Source-Dirs: src
+
+  Exposed-Modules:
+    Clay.Core.Property
+    Clay.Core.Render
+    Clay.Core.Rule
+    Clay.Core.Selector
+    Clay.Style.Attributes
+    Clay.Style.Background
+    Clay.Style.Border
+    Clay.Style.Color
+    Clay.Style.Common
+    Clay.Style.Display
+    Clay.Style.Elements
+    Clay.Style.Font
+    Clay.Style.Geometry
+    Clay.Style.Selectors
+    Clay.Style.Size
+    Clay
+
+  GHC-Options: -Wall
+  Build-Depends:
+      base
+    , text
+    , mtl
+
