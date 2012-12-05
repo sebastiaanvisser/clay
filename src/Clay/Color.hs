@@ -2,7 +2,6 @@
 module Clay.Color where
 
 import Data.Monoid
-import Data.Word
 import Data.String
 import Data.Text (Text)
 import Text.Printf
@@ -14,28 +13,46 @@ import Clay.Property
 import Clay.Common
 
 data Color
-  = Rgba Word8 Word8 Word8 Word8
-  | Hsla Word8 Word8 Word8 Word8
+  = Rgba Int Int Int Int
+  | Hsla Int Int Int Int
   | None
   deriving Show
 
-rgba, hsla :: Word8 -> Word8 -> Word8 -> Word8 -> Color
+clamp :: Int -> Int
+clamp i = max (min i 255) 0
+
+(*.) :: Color -> Int -> Color
+(*.) (Rgba r g b a) i = Rgba (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
+(*.) (Hsla r g b a) i = Hsla (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
+(*.) None           _ = None
+
+(+.) :: Color -> Int -> Color
+(+.) (Rgba r g b a) i = Rgba (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
+(+.) (Hsla r g b a) i = Hsla (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
+(+.) None           _ = None
+
+(-.) :: Color -> Int -> Color
+(-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
+(-.) (Hsla r g b a) i = Hsla (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
+(-.) None           _ = None
+
+rgba, hsla :: Int -> Int -> Int -> Int -> Color
 
 rgba = Rgba
 hsla = Hsla
 
-rgb, hsl :: Word8 -> Word8 -> Word8 -> Color
+rgb, hsl :: Int -> Int -> Int -> Color
 
 rgb r g b = rgba r g b 255
 hsl r g b = hsla r g b 255
 
-grayish :: Word8 -> Color
+grayish :: Int -> Color
 grayish g = rgb g g g
 
 transparent :: Color
 transparent = rgba 0 0 0 0
 
-alpha :: Word8 -> Color -> Color
+alpha :: Int -> Color -> Color
 alpha a (Rgba r g b _) = Rgba r g b a
 alpha a (Hsla r g b _) = Hsla r g b a
 alpha _ None           = None
