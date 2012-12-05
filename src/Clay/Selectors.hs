@@ -8,6 +8,11 @@ import Clay.Selector
 -- List of specific pseudo classes, from:
 -- https://developer.mozilla.org/en-US/docs/CSS/Pseudo-classes
 
+after, before :: Filter
+
+after  = ":after"
+before = ":before"
+
 link, visited, active, hover, focus, firstChild :: Filter
 
 link       = ":link"
