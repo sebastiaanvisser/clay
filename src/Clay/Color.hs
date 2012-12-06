@@ -13,46 +13,46 @@ import Clay.Property
 import Clay.Common
 
 data Color
-  = Rgba Int Int Int Int
-  | Hsla Int Int Int Int
+  = Rgba Integer Integer Integer Integer
+  | Hsla Integer Integer Integer Integer
   | None
   deriving Show
 
-clamp :: Int -> Int
+clamp :: Integer -> Integer
 clamp i = max (min i 255) 0
 
-(*.) :: Color -> Int -> Color
+(*.) :: Color -> Integer -> Color
 (*.) (Rgba r g b a) i = Rgba (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
 (*.) (Hsla r g b a) i = Hsla (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
 (*.) None           _ = None
 
-(+.) :: Color -> Int -> Color
+(+.) :: Color -> Integer -> Color
 (+.) (Rgba r g b a) i = Rgba (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
 (+.) (Hsla r g b a) i = Hsla (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
 (+.) None           _ = None
 
-(-.) :: Color -> Int -> Color
+(-.) :: Color -> Integer -> Color
 (-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
 (-.) (Hsla r g b a) i = Hsla (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
 (-.) None           _ = None
 
-rgba, hsla :: Int -> Int -> Int -> Int -> Color
+rgba, hsla :: Integer -> Integer -> Integer -> Integer -> Color
 
 rgba = Rgba
 hsla = Hsla
 
-rgb, hsl :: Int -> Int -> Int -> Color
+rgb, hsl :: Integer -> Integer -> Integer -> Color
 
 rgb r g b = rgba r g b 255
 hsl r g b = hsla r g b 255
 
-grayish :: Int -> Color
+grayish :: Integer -> Color
 grayish g = rgb g g g
 
 transparent :: Color
 transparent = rgba 0 0 0 0
 
-alpha :: Int -> Color -> Color
+alpha :: Integer -> Color -> Color
 alpha a (Rgba r g b _) = Rgba r g b a
 alpha a (Hsla r g b _) = Hsla r g b a
 alpha _ None           = None
