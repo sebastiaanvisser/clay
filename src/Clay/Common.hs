@@ -16,8 +16,8 @@ instance Auto (Size a) where auto = Size "auto"
 
 -------------------------------------------------------------------------------
 
-sym4 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Css
-sym4 k a = k a a a a
+sym :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Css
+sym k a = k a a a a
 
 sym3 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Size a -> Size a -> Css
 sym3 k tb l r = k tb l tb r
