@@ -142,7 +142,7 @@ degrees a = Direction (value (pack (show a) <> "deg"))
 
 linearGradient :: Direction -> [(Color, Size Rel)] -> BackgroundImage
 linearGradient d xs = BackgroundImage $
-  "-webkit-linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
+  "linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
 
 hGradient, vGradient :: Color -> Color -> BackgroundImage
 
