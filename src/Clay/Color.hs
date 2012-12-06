@@ -52,10 +52,25 @@ grayish g = rgb g g g
 transparent :: Color
 transparent = rgba 0 0 0 0
 
-alpha :: Integer -> Color -> Color
-alpha a (Rgba r g b _) = Rgba r g b a
-alpha a (Hsla r g b _) = Hsla r g b a
-alpha _ None           = None
+setR :: Integer -> Color -> Color
+setR r (Rgba _ g b a) = Rgba r g b a
+setR r (Hsla _ g b a) = Hsla r g b a
+setR _ None           = None
+
+setG :: Integer -> Color -> Color
+setG g (Rgba r _ b a) = Rgba r g b a
+setG g (Hsla r _ b a) = Hsla r g b a
+setG _ None           = None
+
+setB :: Integer -> Color -> Color
+setB b (Rgba r g _ a) = Rgba r g b a
+setB b (Hsla r g _ a) = Hsla r g b a
+setB _ None           = None
+
+setA :: Integer -> Color -> Color
+setA a (Rgba r g b _) = Rgba r g b a
+setA a (Hsla r g b _) = Hsla r g b a
+setA _ None           = None
 
 -------------------------------------------------------------------------------
 
