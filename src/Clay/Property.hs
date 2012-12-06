@@ -43,6 +43,9 @@ instance (Val a, Val b) => Val (a, b) where
 instance Val a => Val [a] where
   value xs = Value (intercalate "," (map (unValue . value) xs))
 
+noCommas :: Val a => [a] -> Value
+noCommas xs = Value (intercalate " " (map (unValue . value) xs))
+
 infixr !
 
 (!) :: a -> b -> (a, b)
