@@ -11,6 +11,8 @@ import Data.Text (pack)
 
 import Clay.Property
 
+-------------------------------------------------------------------------------
+
 data Rel
 data Abs
 
@@ -51,4 +53,38 @@ instance Num (Size Rel) where
 
 instance Fractional (Size Rel) where
   fromRational = pct . fromRational
+
+-------------------------------------------------------------------------------
+
+data Deg
+data Rad
+
+newtype Angle a = Angle Value
+  deriving Val
+
+deg :: Double -> Angle Deg
+deg i = Angle (value (pack (show i) <> "deg"))
+
+rad :: Double -> Angle Rad
+rad i = Angle (value (pack (show i) <> "rad"))
+
+instance Num (Angle Deg) where
+  fromInteger = deg . fromInteger
+  (+)    = error   "plus not implemented for Angle"
+  (*)    = error  "times not implemented for Angle"
+  abs    = error    "abs not implemented for Angle"
+  signum = error "signum not implemented for Angle"
+
+instance Fractional (Angle Deg) where
+  fromRational = deg . fromRational
+
+instance Num (Angle Rad) where
+  fromInteger = rad . fromInteger
+  (+)    = error   "plus not implemented for Angle"
+  (*)    = error  "times not implemented for Angle"
+  abs    = error    "abs not implemented for Angle"
+  signum = error "signum not implemented for Angle"
+
+instance Fractional (Angle Rad) where
+  fromRational = rad . fromRational
 
