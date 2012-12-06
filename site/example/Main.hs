@@ -16,7 +16,6 @@ main = css $
 
     logo = "#logo" ?
       do blocked 400 100 (m * 4 + (m + s) * 3) (m * 4 + (m + s) * 3)
-         background (grayish 240)
 
          forM_ [0..3] $ \x ->
            forM_ [0..3] $ \y ->
@@ -28,14 +27,14 @@ main = css $
                                 ] !! fromInteger y
                 square idx (m * y + x * (s + m))
                            (m * x + y * (s + m))
-                           ( clr -. 40 +. (x * 40) )
+                           (clr -. 50 +. (x * 50))
 
-         "-webkit-transform" -: "scaleY(0.5)"
+         transform (scaleY 0.5)
 
          div <?
            do position absolute
               background red
-              "-webkit-transform" -: "rotate(45deg)"
+              transform (rotateZ (deg 45))
 
 
     square i x y c = ".square" `with` nthChild i ?
@@ -64,12 +63,12 @@ main = css $
          before &
            do toTheRight m
               background (vGradient (c -. 10) (c -. 60))
-              "-webkit-transform" -: "translate(0,10px) skew(0deg,45deg)"
+              transforms [translate (px 0) (px 10), skew (deg 0) (deg 45)]
               "-webkit-box-shadow" -: "0 0 40px rgba(80,40,0, 1)"
          after &
            do toTheBottom m
               background (hGradient (c +. 10) (c +. 80))
-              "-webkit-transform" -: "translate(10px,0) skew(45deg,0deg)"
+              transforms [translate (px 10) (px 0), skew (deg 45) (deg 0)]
               "-webkit-box-shadow" -: "0 0 40px rgba(80,40,0, 1)"
 
     blocked x y w h =
