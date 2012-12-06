@@ -50,3 +50,16 @@ borderRightWidth  = key "border-right-width"
 borderTopWidth    = key "border-top-width"
 borderBottomWidth = key "border-bottom-width"
 
+-------------------------------------------------------------------------------
+
+borderRadius :: Size Abs -> Css
+borderRadius = key "border-radius"
+
+borderTopLeftRadius, borderTopRightRadius,
+  borderBottomLeftRadius, borderBottomRightRadius :: Size a -> Size a -> Css
+
+borderTopLeftRadius     a b = key "border-top-left-radius"     (a ! b)
+borderTopRightRadius    a b = key "border-top-right-radius"    (a ! b)
+borderBottomLeftRadius  a b = key "border-bottom-left-radius"  (a ! b)
+borderBottomRightRadius a b = key "border-bottom-right-radius" (a ! b)
+
