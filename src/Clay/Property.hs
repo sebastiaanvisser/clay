@@ -26,7 +26,7 @@ instance Val Value where
   value = id
 
 instance Val a => Val (Maybe a) where
-  value Nothing  = "none"
+  value Nothing  = ""
   value (Just a) = value a
 
 instance (Val a, Val b) => Val (a, b) where
