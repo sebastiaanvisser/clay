@@ -13,7 +13,17 @@ class None    a where none    ::          a
 class Normal  a where normal  ::          a
 class Other   a where other   :: Value -> a
 
-instance Auto (Size a) where auto = Size "auto"
+instance Auto    Value where auto    = "auto"
+instance Inherit Value where inherit = "inherit"
+instance Normal  Value where normal  = "normal"
+instance None    Value where none    = "none"
+instance Other   Value where other   = id
+
+instance Auto    (Size a) where auto    = Size auto
+instance Normal  (Size a) where normal  = Size normal
+instance Inherit (Size a) where inherit = Size inherit
+instance None    (Size a) where none    = Size "0"
+instance Other   (Size a) where other   = Size . other
 
 -------------------------------------------------------------------------------
 
