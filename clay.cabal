@@ -14,6 +14,7 @@ Library
   HS-Source-Dirs: src
 
   Exposed-Modules:
+    Clay
     Clay.Attributes
     Clay.Background
     Clay.Border
@@ -21,15 +22,14 @@ Library
     Clay.Common
     Clay.Display
     Clay.Elements
+    Clay.Filter
     Clay.Font
     Clay.Geometry
     Clay.Property
     Clay.Render
     Clay.Rule
     Clay.Selector
-    Clay.Selectors
     Clay.Size
-    Clay
 
   GHC-Options: -Wall
   Build-Depends:

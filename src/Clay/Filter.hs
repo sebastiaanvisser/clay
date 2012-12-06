@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Selectors where
+module Clay.Filter where
 
 import Data.Text (Text)
 

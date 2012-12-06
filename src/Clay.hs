@@ -4,7 +4,7 @@ module Clay
 , module Clay.Rule
 , module Clay.Render
 
-, module Clay.Selectors
+, module Clay.Filter
 , module Clay.Attributes
 , module Clay.Elements
 , module Clay.Common
@@ -32,7 +32,7 @@ import Clay.Rule
   )
 import Clay.Render (css, cssIn)
 
-import Clay.Selectors
+import Clay.Filter
 import Clay.Attributes hiding (class_, target, checked, disabled, value, width, height, size)
 import Clay.Elements   hiding (link, em)
 import Clay.Common
