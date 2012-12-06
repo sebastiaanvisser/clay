@@ -2,7 +2,7 @@
 module Clay.Property where
 
 import Data.String
-import Data.Text (Text, intercalate)
+import Data.Text (Text, replace, intercalate)
 import Control.Monad.Writer
 
 newtype Key a = Key { unKey :: Text }
@@ -18,6 +18,12 @@ class Val a where
 
 instance Val Text where
   value = Value
+
+newtype Literal = Literal Text
+  deriving (IsString, Monoid)
+
+instance Val Literal where
+  value (Literal t) = Value ("\"" <> replace "\"" "\\\"" t <> "\"")
 
 instance Val Double where
   value = fromString . show
