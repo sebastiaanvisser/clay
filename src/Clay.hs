@@ -42,7 +42,7 @@ import Clay.Border
 import Clay.Color
 import Clay.Display  (Display)
 import Clay.Display  hiding (table, Display(..))
-import Clay.Font
+import Clay.Font     hiding (menu, caption, small, icon)
 import Clay.Geometry (Position)
 import Clay.Geometry hiding (Position(..))
 import Clay.Size
