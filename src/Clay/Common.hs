@@ -10,6 +10,7 @@ import Clay.Size
 class Auto    a where auto    ::          a
 class Inherit a where inherit ::          a
 class None    a where none    ::          a
+class Normal  a where normal  ::          a
 class Other   a where other   :: Value -> a
 
 instance Auto (Size a) where auto = Size "auto"
