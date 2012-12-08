@@ -2,32 +2,46 @@
 *#logo
 {
   position: absolute;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
   left: 400px;
   top: 100px;
-  width: 380px;
-  height: 380px;
-  -webkit-transform: scaleY(0.6);
-  -moz-transform: scaleY(0.6);
-  -ms-transform: scaleY(0.6);
-  -o-transform: scaleY(0.6);
-  transform: scaleY(0.6);
+  width: 660px;
+  height: 660px;
+  -webkit-transform: scaleY(0.5);
+  -moz-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  -o-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
 
 *#logo *.square:nth-child(1)
 {
   position: absolute;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
   left: 0px;
   top: 0px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(0,81,0) 0.0%,rgb(70,181,0) 100.0%);
   background: -moz-linear-gradient(left,rgb(0,81,0) 0.0%,rgb(70,181,0) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(0,81,0) 0.0%,rgb(70,181,0) 100.0%);
+  background: -o-linear-gradient(left,rgb(0,81,0) 0.0%,rgb(70,181,0) 100.0%);
+  background: linear-gradient(left,rgb(0,81,0) 0.0%,rgb(70,181,0) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(70,181,0);
+  -moz-box-shadow: 0px 0px 50px rgb(70,181,0);
+  -ms-box-shadow: 0px 0px 50px rgb(70,181,0);
+  -o-box-shadow: 0px 0px 50px rgb(70,181,0);
+  box-shadow: 0px 0px 50px rgb(70,181,0);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -40,13 +54,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(1) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -58,56 +78,79 @@
 *#logo *.square:nth-child(1):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(60,171,0) 0.0%,rgb(10,121,0) 100.0%);
   background: -moz-linear-gradient(top,rgb(60,171,0) 0.0%,rgb(10,121,0) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(60,171,0) 0.0%,rgb(10,121,0) 100.0%);
+  background: -o-linear-gradient(top,rgb(60,171,0) 0.0%,rgb(10,121,0) 100.0%);
+  background: linear-gradient(top,rgb(60,171,0) 0.0%,rgb(10,121,0) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(1):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(80,191,10) 0.0%,rgb(150,255,80) 100.0%);
   background: -moz-linear-gradient(left,rgb(80,191,10) 0.0%,rgb(150,255,80) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(80,191,10) 0.0%,rgb(150,255,80) 100.0%);
+  background: -o-linear-gradient(left,rgb(80,191,10) 0.0%,rgb(150,255,80) 100.0%);
+  background: linear-gradient(left,rgb(80,191,10) 0.0%,rgb(150,255,80) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(5)
 {
   position: absolute;
-  left: 20px;
-  top: 100px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 60px;
+  top: 140px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(0,30,0) 0.0%,rgb(0,130,34) 100.0%);
   background: -moz-linear-gradient(left,rgb(0,30,0) 0.0%,rgb(0,130,34) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(0,30,0) 0.0%,rgb(0,130,34) 100.0%);
+  background: -o-linear-gradient(left,rgb(0,30,0) 0.0%,rgb(0,130,34) 100.0%);
+  background: linear-gradient(left,rgb(0,30,0) 0.0%,rgb(0,130,34) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(0,130,34);
+  -moz-box-shadow: 0px 0px 50px rgb(0,130,34);
+  -ms-box-shadow: 0px 0px 50px rgb(0,130,34);
+  -o-box-shadow: 0px 0px 50px rgb(0,130,34);
+  box-shadow: 0px 0px 50px rgb(0,130,34);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -120,13 +163,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(5) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -138,56 +187,79 @@
 *#logo *.square:nth-child(5):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(0,120,24) 0.0%,rgb(0,70,0) 100.0%);
   background: -moz-linear-gradient(top,rgb(0,120,24) 0.0%,rgb(0,70,0) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(0,120,24) 0.0%,rgb(0,70,0) 100.0%);
+  background: -o-linear-gradient(top,rgb(0,120,24) 0.0%,rgb(0,70,0) 100.0%);
+  background: linear-gradient(top,rgb(0,120,24) 0.0%,rgb(0,70,0) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(5):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(10,140,44) 0.0%,rgb(80,210,114) 100.0%);
   background: -moz-linear-gradient(left,rgb(10,140,44) 0.0%,rgb(80,210,114) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(10,140,44) 0.0%,rgb(80,210,114) 100.0%);
+  background: -o-linear-gradient(left,rgb(10,140,44) 0.0%,rgb(80,210,114) 100.0%);
+  background: linear-gradient(left,rgb(10,140,44) 0.0%,rgb(80,210,114) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(9)
 {
   position: absolute;
-  left: 40px;
-  top: 200px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 120px;
+  top: 280px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(105,0,0) 0.0%,rgb(205,7,0) 100.0%);
   background: -moz-linear-gradient(left,rgb(105,0,0) 0.0%,rgb(205,7,0) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(105,0,0) 0.0%,rgb(205,7,0) 100.0%);
+  background: -o-linear-gradient(left,rgb(105,0,0) 0.0%,rgb(205,7,0) 100.0%);
+  background: linear-gradient(left,rgb(105,0,0) 0.0%,rgb(205,7,0) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(205,7,0);
+  -moz-box-shadow: 0px 0px 50px rgb(205,7,0);
+  -ms-box-shadow: 0px 0px 50px rgb(205,7,0);
+  -o-box-shadow: 0px 0px 50px rgb(205,7,0);
+  box-shadow: 0px 0px 50px rgb(205,7,0);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -200,13 +272,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(9) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -218,56 +296,79 @@
 *#logo *.square:nth-child(9):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(195,0,0) 0.0%,rgb(145,0,0) 100.0%);
   background: -moz-linear-gradient(top,rgb(195,0,0) 0.0%,rgb(145,0,0) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(195,0,0) 0.0%,rgb(145,0,0) 100.0%);
+  background: -o-linear-gradient(top,rgb(195,0,0) 0.0%,rgb(145,0,0) 100.0%);
+  background: linear-gradient(top,rgb(195,0,0) 0.0%,rgb(145,0,0) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(9):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(215,17,10) 0.0%,rgb(255,87,80) 100.0%);
   background: -moz-linear-gradient(left,rgb(215,17,10) 0.0%,rgb(255,87,80) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(215,17,10) 0.0%,rgb(255,87,80) 100.0%);
+  background: -o-linear-gradient(left,rgb(215,17,10) 0.0%,rgb(255,87,80) 100.0%);
+  background: linear-gradient(left,rgb(215,17,10) 0.0%,rgb(255,87,80) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(13)
 {
   position: absolute;
-  left: 60px;
-  top: 300px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 180px;
+  top: 420px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(72,0,0) 0.0%,rgb(172,0,32) 100.0%);
   background: -moz-linear-gradient(left,rgb(72,0,0) 0.0%,rgb(172,0,32) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(72,0,0) 0.0%,rgb(172,0,32) 100.0%);
+  background: -o-linear-gradient(left,rgb(72,0,0) 0.0%,rgb(172,0,32) 100.0%);
+  background: linear-gradient(left,rgb(72,0,0) 0.0%,rgb(172,0,32) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(172,0,32);
+  -moz-box-shadow: 0px 0px 50px rgb(172,0,32);
+  -ms-box-shadow: 0px 0px 50px rgb(172,0,32);
+  -o-box-shadow: 0px 0px 50px rgb(172,0,32);
+  box-shadow: 0px 0px 50px rgb(172,0,32);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -280,13 +381,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(13) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -298,56 +405,79 @@
 *#logo *.square:nth-child(13):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(162,0,22) 0.0%,rgb(112,0,0) 100.0%);
   background: -moz-linear-gradient(top,rgb(162,0,22) 0.0%,rgb(112,0,0) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(162,0,22) 0.0%,rgb(112,0,0) 100.0%);
+  background: -o-linear-gradient(top,rgb(162,0,22) 0.0%,rgb(112,0,0) 100.0%);
+  background: linear-gradient(top,rgb(162,0,22) 0.0%,rgb(112,0,0) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(13):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(182,10,42) 0.0%,rgb(252,80,112) 100.0%);
   background: -moz-linear-gradient(left,rgb(182,10,42) 0.0%,rgb(252,80,112) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(182,10,42) 0.0%,rgb(252,80,112) 100.0%);
+  background: -o-linear-gradient(left,rgb(182,10,42) 0.0%,rgb(252,80,112) 100.0%);
+  background: linear-gradient(left,rgb(182,10,42) 0.0%,rgb(252,80,112) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(2)
 {
   position: absolute;
-  left: 100px;
-  top: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 140px;
+  top: 60px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(20,131,0) 0.0%,rgb(120,231,50) 100.0%);
   background: -moz-linear-gradient(left,rgb(20,131,0) 0.0%,rgb(120,231,50) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(20,131,0) 0.0%,rgb(120,231,50) 100.0%);
+  background: -o-linear-gradient(left,rgb(20,131,0) 0.0%,rgb(120,231,50) 100.0%);
+  background: linear-gradient(left,rgb(20,131,0) 0.0%,rgb(120,231,50) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(120,231,50);
+  -moz-box-shadow: 0px 0px 50px rgb(120,231,50);
+  -ms-box-shadow: 0px 0px 50px rgb(120,231,50);
+  -o-box-shadow: 0px 0px 50px rgb(120,231,50);
+  box-shadow: 0px 0px 50px rgb(120,231,50);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -360,13 +490,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(2) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -378,56 +514,79 @@
 *#logo *.square:nth-child(2):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(110,221,40) 0.0%,rgb(60,171,0) 100.0%);
   background: -moz-linear-gradient(top,rgb(110,221,40) 0.0%,rgb(60,171,0) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(110,221,40) 0.0%,rgb(60,171,0) 100.0%);
+  background: -o-linear-gradient(top,rgb(110,221,40) 0.0%,rgb(60,171,0) 100.0%);
+  background: linear-gradient(top,rgb(110,221,40) 0.0%,rgb(60,171,0) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(2):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(130,241,60) 0.0%,rgb(200,255,130) 100.0%);
   background: -moz-linear-gradient(left,rgb(130,241,60) 0.0%,rgb(200,255,130) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(130,241,60) 0.0%,rgb(200,255,130) 100.0%);
+  background: -o-linear-gradient(left,rgb(130,241,60) 0.0%,rgb(200,255,130) 100.0%);
+  background: linear-gradient(left,rgb(130,241,60) 0.0%,rgb(200,255,130) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(6)
 {
   position: absolute;
-  left: 120px;
-  top: 120px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 200px;
+  top: 200px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(0,80,0) 0.0%,rgb(50,180,84) 100.0%);
   background: -moz-linear-gradient(left,rgb(0,80,0) 0.0%,rgb(50,180,84) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(0,80,0) 0.0%,rgb(50,180,84) 100.0%);
+  background: -o-linear-gradient(left,rgb(0,80,0) 0.0%,rgb(50,180,84) 100.0%);
+  background: linear-gradient(left,rgb(0,80,0) 0.0%,rgb(50,180,84) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(50,180,84);
+  -moz-box-shadow: 0px 0px 50px rgb(50,180,84);
+  -ms-box-shadow: 0px 0px 50px rgb(50,180,84);
+  -o-box-shadow: 0px 0px 50px rgb(50,180,84);
+  box-shadow: 0px 0px 50px rgb(50,180,84);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -440,13 +599,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(6) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -458,56 +623,79 @@
 *#logo *.square:nth-child(6):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(40,170,74) 0.0%,rgb(0,120,24) 100.0%);
   background: -moz-linear-gradient(top,rgb(40,170,74) 0.0%,rgb(0,120,24) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(40,170,74) 0.0%,rgb(0,120,24) 100.0%);
+  background: -o-linear-gradient(top,rgb(40,170,74) 0.0%,rgb(0,120,24) 100.0%);
+  background: linear-gradient(top,rgb(40,170,74) 0.0%,rgb(0,120,24) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(6):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(60,190,94) 0.0%,rgb(130,255,164) 100.0%);
   background: -moz-linear-gradient(left,rgb(60,190,94) 0.0%,rgb(130,255,164) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(60,190,94) 0.0%,rgb(130,255,164) 100.0%);
+  background: -o-linear-gradient(left,rgb(60,190,94) 0.0%,rgb(130,255,164) 100.0%);
+  background: linear-gradient(left,rgb(60,190,94) 0.0%,rgb(130,255,164) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(10)
 {
   position: absolute;
-  left: 140px;
-  top: 220px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 260px;
+  top: 340px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(155,0,0) 0.0%,rgb(255,57,50) 100.0%);
   background: -moz-linear-gradient(left,rgb(155,0,0) 0.0%,rgb(255,57,50) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(155,0,0) 0.0%,rgb(255,57,50) 100.0%);
+  background: -o-linear-gradient(left,rgb(155,0,0) 0.0%,rgb(255,57,50) 100.0%);
+  background: linear-gradient(left,rgb(155,0,0) 0.0%,rgb(255,57,50) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(255,57,50);
+  -moz-box-shadow: 0px 0px 50px rgb(255,57,50);
+  -ms-box-shadow: 0px 0px 50px rgb(255,57,50);
+  -o-box-shadow: 0px 0px 50px rgb(255,57,50);
+  box-shadow: 0px 0px 50px rgb(255,57,50);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -520,13 +708,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(10) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -538,56 +732,79 @@
 *#logo *.square:nth-child(10):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(245,47,40) 0.0%,rgb(195,0,0) 100.0%);
   background: -moz-linear-gradient(top,rgb(245,47,40) 0.0%,rgb(195,0,0) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(245,47,40) 0.0%,rgb(195,0,0) 100.0%);
+  background: -o-linear-gradient(top,rgb(245,47,40) 0.0%,rgb(195,0,0) 100.0%);
+  background: linear-gradient(top,rgb(245,47,40) 0.0%,rgb(195,0,0) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(10):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(255,67,60) 0.0%,rgb(255,137,130) 100.0%);
   background: -moz-linear-gradient(left,rgb(255,67,60) 0.0%,rgb(255,137,130) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(255,67,60) 0.0%,rgb(255,137,130) 100.0%);
+  background: -o-linear-gradient(left,rgb(255,67,60) 0.0%,rgb(255,137,130) 100.0%);
+  background: linear-gradient(left,rgb(255,67,60) 0.0%,rgb(255,137,130) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(14)
 {
   position: absolute;
-  left: 160px;
-  top: 320px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 320px;
+  top: 480px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(122,0,0) 0.0%,rgb(222,50,82) 100.0%);
   background: -moz-linear-gradient(left,rgb(122,0,0) 0.0%,rgb(222,50,82) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(122,0,0) 0.0%,rgb(222,50,82) 100.0%);
+  background: -o-linear-gradient(left,rgb(122,0,0) 0.0%,rgb(222,50,82) 100.0%);
+  background: linear-gradient(left,rgb(122,0,0) 0.0%,rgb(222,50,82) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(222,50,82);
+  -moz-box-shadow: 0px 0px 50px rgb(222,50,82);
+  -ms-box-shadow: 0px 0px 50px rgb(222,50,82);
+  -o-box-shadow: 0px 0px 50px rgb(222,50,82);
+  box-shadow: 0px 0px 50px rgb(222,50,82);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -600,13 +817,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(14) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -618,56 +841,79 @@
 *#logo *.square:nth-child(14):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(212,40,72) 0.0%,rgb(162,0,22) 100.0%);
   background: -moz-linear-gradient(top,rgb(212,40,72) 0.0%,rgb(162,0,22) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(212,40,72) 0.0%,rgb(162,0,22) 100.0%);
+  background: -o-linear-gradient(top,rgb(212,40,72) 0.0%,rgb(162,0,22) 100.0%);
+  background: linear-gradient(top,rgb(212,40,72) 0.0%,rgb(162,0,22) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(14):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(232,60,92) 0.0%,rgb(255,130,162) 100.0%);
   background: -moz-linear-gradient(left,rgb(232,60,92) 0.0%,rgb(255,130,162) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(232,60,92) 0.0%,rgb(255,130,162) 100.0%);
+  background: -o-linear-gradient(left,rgb(232,60,92) 0.0%,rgb(255,130,162) 100.0%);
+  background: linear-gradient(left,rgb(232,60,92) 0.0%,rgb(255,130,162) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(3)
 {
   position: absolute;
-  left: 200px;
-  top: 40px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 280px;
+  top: 120px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(70,155,0) 0.0%,rgb(170,255,100) 100.0%);
   background: -moz-linear-gradient(left,rgb(70,155,0) 0.0%,rgb(170,255,100) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(70,155,0) 0.0%,rgb(170,255,100) 100.0%);
+  background: -o-linear-gradient(left,rgb(70,155,0) 0.0%,rgb(170,255,100) 100.0%);
+  background: linear-gradient(left,rgb(70,155,0) 0.0%,rgb(170,255,100) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(170,255,100);
+  -moz-box-shadow: 0px 0px 50px rgb(170,255,100);
+  -ms-box-shadow: 0px 0px 50px rgb(170,255,100);
+  -o-box-shadow: 0px 0px 50px rgb(170,255,100);
+  box-shadow: 0px 0px 50px rgb(170,255,100);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -680,13 +926,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(3) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -698,56 +950,79 @@
 *#logo *.square:nth-child(3):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(160,245,90) 0.0%,rgb(110,195,40) 100.0%);
   background: -moz-linear-gradient(top,rgb(160,245,90) 0.0%,rgb(110,195,40) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(160,245,90) 0.0%,rgb(110,195,40) 100.0%);
+  background: -o-linear-gradient(top,rgb(160,245,90) 0.0%,rgb(110,195,40) 100.0%);
+  background: linear-gradient(top,rgb(160,245,90) 0.0%,rgb(110,195,40) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(3):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(180,255,110) 0.0%,rgb(250,255,180) 100.0%);
   background: -moz-linear-gradient(left,rgb(180,255,110) 0.0%,rgb(250,255,180) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(180,255,110) 0.0%,rgb(250,255,180) 100.0%);
+  background: -o-linear-gradient(left,rgb(180,255,110) 0.0%,rgb(250,255,180) 100.0%);
+  background: linear-gradient(left,rgb(180,255,110) 0.0%,rgb(250,255,180) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(7)
 {
   position: absolute;
-  left: 220px;
-  top: 140px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 340px;
+  top: 260px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(0,130,34) 0.0%,rgb(100,230,134) 100.0%);
   background: -moz-linear-gradient(left,rgb(0,130,34) 0.0%,rgb(100,230,134) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(0,130,34) 0.0%,rgb(100,230,134) 100.0%);
+  background: -o-linear-gradient(left,rgb(0,130,34) 0.0%,rgb(100,230,134) 100.0%);
+  background: linear-gradient(left,rgb(0,130,34) 0.0%,rgb(100,230,134) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(100,230,134);
+  -moz-box-shadow: 0px 0px 50px rgb(100,230,134);
+  -ms-box-shadow: 0px 0px 50px rgb(100,230,134);
+  -o-box-shadow: 0px 0px 50px rgb(100,230,134);
+  box-shadow: 0px 0px 50px rgb(100,230,134);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -760,13 +1035,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(7) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -778,56 +1059,79 @@
 *#logo *.square:nth-child(7):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(90,220,124) 0.0%,rgb(40,170,74) 100.0%);
   background: -moz-linear-gradient(top,rgb(90,220,124) 0.0%,rgb(40,170,74) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(90,220,124) 0.0%,rgb(40,170,74) 100.0%);
+  background: -o-linear-gradient(top,rgb(90,220,124) 0.0%,rgb(40,170,74) 100.0%);
+  background: linear-gradient(top,rgb(90,220,124) 0.0%,rgb(40,170,74) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(7):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(110,240,144) 0.0%,rgb(180,255,214) 100.0%);
   background: -moz-linear-gradient(left,rgb(110,240,144) 0.0%,rgb(180,255,214) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(110,240,144) 0.0%,rgb(180,255,214) 100.0%);
+  background: -o-linear-gradient(left,rgb(110,240,144) 0.0%,rgb(180,255,214) 100.0%);
+  background: linear-gradient(left,rgb(110,240,144) 0.0%,rgb(180,255,214) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(11)
 {
   position: absolute;
-  left: 240px;
-  top: 240px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 400px;
+  top: 400px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(155,7,0) 0.0%,rgb(255,107,100) 100.0%);
   background: -moz-linear-gradient(left,rgb(155,7,0) 0.0%,rgb(255,107,100) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(155,7,0) 0.0%,rgb(255,107,100) 100.0%);
+  background: -o-linear-gradient(left,rgb(155,7,0) 0.0%,rgb(255,107,100) 100.0%);
+  background: linear-gradient(left,rgb(155,7,0) 0.0%,rgb(255,107,100) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(255,107,100);
+  -moz-box-shadow: 0px 0px 50px rgb(255,107,100);
+  -ms-box-shadow: 0px 0px 50px rgb(255,107,100);
+  -o-box-shadow: 0px 0px 50px rgb(255,107,100);
+  box-shadow: 0px 0px 50px rgb(255,107,100);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -840,13 +1144,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(11) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -858,56 +1168,79 @@
 *#logo *.square:nth-child(11):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(245,97,90) 0.0%,rgb(195,47,40) 100.0%);
   background: -moz-linear-gradient(top,rgb(245,97,90) 0.0%,rgb(195,47,40) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(245,97,90) 0.0%,rgb(195,47,40) 100.0%);
+  background: -o-linear-gradient(top,rgb(245,97,90) 0.0%,rgb(195,47,40) 100.0%);
+  background: linear-gradient(top,rgb(245,97,90) 0.0%,rgb(195,47,40) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(11):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(255,117,110) 0.0%,rgb(255,187,180) 100.0%);
   background: -moz-linear-gradient(left,rgb(255,117,110) 0.0%,rgb(255,187,180) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(255,117,110) 0.0%,rgb(255,187,180) 100.0%);
+  background: -o-linear-gradient(left,rgb(255,117,110) 0.0%,rgb(255,187,180) 100.0%);
+  background: linear-gradient(left,rgb(255,117,110) 0.0%,rgb(255,187,180) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(15)
 {
   position: absolute;
-  left: 260px;
-  top: 340px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 460px;
+  top: 540px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(155,0,32) 0.0%,rgb(255,100,132) 100.0%);
   background: -moz-linear-gradient(left,rgb(155,0,32) 0.0%,rgb(255,100,132) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(155,0,32) 0.0%,rgb(255,100,132) 100.0%);
+  background: -o-linear-gradient(left,rgb(155,0,32) 0.0%,rgb(255,100,132) 100.0%);
+  background: linear-gradient(left,rgb(155,0,32) 0.0%,rgb(255,100,132) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(255,100,132);
+  -moz-box-shadow: 0px 0px 50px rgb(255,100,132);
+  -ms-box-shadow: 0px 0px 50px rgb(255,100,132);
+  -o-box-shadow: 0px 0px 50px rgb(255,100,132);
+  box-shadow: 0px 0px 50px rgb(255,100,132);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -920,13 +1253,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(15) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -938,56 +1277,79 @@
 *#logo *.square:nth-child(15):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(245,90,122) 0.0%,rgb(195,40,72) 100.0%);
   background: -moz-linear-gradient(top,rgb(245,90,122) 0.0%,rgb(195,40,72) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(245,90,122) 0.0%,rgb(195,40,72) 100.0%);
+  background: -o-linear-gradient(top,rgb(245,90,122) 0.0%,rgb(195,40,72) 100.0%);
+  background: linear-gradient(top,rgb(245,90,122) 0.0%,rgb(195,40,72) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(15):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(255,110,142) 0.0%,rgb(255,180,212) 100.0%);
   background: -moz-linear-gradient(left,rgb(255,110,142) 0.0%,rgb(255,180,212) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(255,110,142) 0.0%,rgb(255,180,212) 100.0%);
+  background: -o-linear-gradient(left,rgb(255,110,142) 0.0%,rgb(255,180,212) 100.0%);
+  background: linear-gradient(left,rgb(255,110,142) 0.0%,rgb(255,180,212) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(4)
 {
   position: absolute;
-  left: 300px;
-  top: 60px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 420px;
+  top: 180px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(120,155,50) 0.0%,rgb(220,255,150) 100.0%);
   background: -moz-linear-gradient(left,rgb(120,155,50) 0.0%,rgb(220,255,150) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(120,155,50) 0.0%,rgb(220,255,150) 100.0%);
+  background: -o-linear-gradient(left,rgb(120,155,50) 0.0%,rgb(220,255,150) 100.0%);
+  background: linear-gradient(left,rgb(120,155,50) 0.0%,rgb(220,255,150) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(220,255,150);
+  -moz-box-shadow: 0px 0px 50px rgb(220,255,150);
+  -ms-box-shadow: 0px 0px 50px rgb(220,255,150);
+  -o-box-shadow: 0px 0px 50px rgb(220,255,150);
+  box-shadow: 0px 0px 50px rgb(220,255,150);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -1000,13 +1362,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(4) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -1018,56 +1386,79 @@
 *#logo *.square:nth-child(4):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(210,245,140) 0.0%,rgb(160,195,90) 100.0%);
   background: -moz-linear-gradient(top,rgb(210,245,140) 0.0%,rgb(160,195,90) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(210,245,140) 0.0%,rgb(160,195,90) 100.0%);
+  background: -o-linear-gradient(top,rgb(210,245,140) 0.0%,rgb(160,195,90) 100.0%);
+  background: linear-gradient(top,rgb(210,245,140) 0.0%,rgb(160,195,90) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(4):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(230,255,160) 0.0%,rgb(255,255,230) 100.0%);
   background: -moz-linear-gradient(left,rgb(230,255,160) 0.0%,rgb(255,255,230) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(230,255,160) 0.0%,rgb(255,255,230) 100.0%);
+  background: -o-linear-gradient(left,rgb(230,255,160) 0.0%,rgb(255,255,230) 100.0%);
+  background: linear-gradient(left,rgb(230,255,160) 0.0%,rgb(255,255,230) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(8)
 {
   position: absolute;
-  left: 320px;
-  top: 160px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 480px;
+  top: 320px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(50,155,84) 0.0%,rgb(150,255,184) 100.0%);
   background: -moz-linear-gradient(left,rgb(50,155,84) 0.0%,rgb(150,255,184) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(50,155,84) 0.0%,rgb(150,255,184) 100.0%);
+  background: -o-linear-gradient(left,rgb(50,155,84) 0.0%,rgb(150,255,184) 100.0%);
+  background: linear-gradient(left,rgb(50,155,84) 0.0%,rgb(150,255,184) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(150,255,184);
+  -moz-box-shadow: 0px 0px 50px rgb(150,255,184);
+  -ms-box-shadow: 0px 0px 50px rgb(150,255,184);
+  -o-box-shadow: 0px 0px 50px rgb(150,255,184);
+  box-shadow: 0px 0px 50px rgb(150,255,184);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -1080,13 +1471,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(8) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -1098,56 +1495,79 @@
 *#logo *.square:nth-child(8):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(140,245,174) 0.0%,rgb(90,195,124) 100.0%);
   background: -moz-linear-gradient(top,rgb(140,245,174) 0.0%,rgb(90,195,124) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(140,245,174) 0.0%,rgb(90,195,124) 100.0%);
+  background: -o-linear-gradient(top,rgb(140,245,174) 0.0%,rgb(90,195,124) 100.0%);
+  background: linear-gradient(top,rgb(140,245,174) 0.0%,rgb(90,195,124) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(8):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(160,255,194) 0.0%,rgb(230,255,255) 100.0%);
   background: -moz-linear-gradient(left,rgb(160,255,194) 0.0%,rgb(230,255,255) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(160,255,194) 0.0%,rgb(230,255,255) 100.0%);
+  background: -o-linear-gradient(left,rgb(160,255,194) 0.0%,rgb(230,255,255) 100.0%);
+  background: linear-gradient(left,rgb(160,255,194) 0.0%,rgb(230,255,255) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(12)
 {
   position: absolute;
-  left: 340px;
-  top: 260px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 540px;
+  top: 460px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(155,57,50) 0.0%,rgb(255,157,150) 100.0%);
   background: -moz-linear-gradient(left,rgb(155,57,50) 0.0%,rgb(255,157,150) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(155,57,50) 0.0%,rgb(255,157,150) 100.0%);
+  background: -o-linear-gradient(left,rgb(155,57,50) 0.0%,rgb(255,157,150) 100.0%);
+  background: linear-gradient(left,rgb(155,57,50) 0.0%,rgb(255,157,150) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(255,157,150);
+  -moz-box-shadow: 0px 0px 50px rgb(255,157,150);
+  -ms-box-shadow: 0px 0px 50px rgb(255,157,150);
+  -o-box-shadow: 0px 0px 50px rgb(255,157,150);
+  box-shadow: 0px 0px 50px rgb(255,157,150);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -1160,13 +1580,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(12) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -1178,56 +1604,79 @@
 *#logo *.square:nth-child(12):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(245,147,140) 0.0%,rgb(195,97,90) 100.0%);
   background: -moz-linear-gradient(top,rgb(245,147,140) 0.0%,rgb(195,97,90) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(245,147,140) 0.0%,rgb(195,97,90) 100.0%);
+  background: -o-linear-gradient(top,rgb(245,147,140) 0.0%,rgb(195,97,90) 100.0%);
+  background: linear-gradient(top,rgb(245,147,140) 0.0%,rgb(195,97,90) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(12):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(255,167,160) 0.0%,rgb(255,237,230) 100.0%);
   background: -moz-linear-gradient(left,rgb(255,167,160) 0.0%,rgb(255,237,230) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(255,167,160) 0.0%,rgb(255,237,230) 100.0%);
+  background: -o-linear-gradient(left,rgb(255,167,160) 0.0%,rgb(255,237,230) 100.0%);
+  background: linear-gradient(left,rgb(255,167,160) 0.0%,rgb(255,237,230) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(16)
 {
   position: absolute;
-  left: 360px;
-  top: 360px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 600px;
+  top: 600px;
   width: 80px;
   height: 80px;
   background: -webkit-linear-gradient(left,rgb(155,50,82) 0.0%,rgb(255,150,182) 100.0%);
   background: -moz-linear-gradient(left,rgb(155,50,82) 0.0%,rgb(255,150,182) 100.0%);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 0.8);
-  box-shadow: 0 0 40px rgba(80,40,0, 0.8);
+  background: -ms-linear-gradient(left,rgb(155,50,82) 0.0%,rgb(255,150,182) 100.0%);
+  background: -o-linear-gradient(left,rgb(155,50,82) 0.0%,rgb(255,150,182) 100.0%);
+  background: linear-gradient(left,rgb(155,50,82) 0.0%,rgb(255,150,182) 100.0%);
+  -webkit-box-shadow: 0px 0px 50px rgb(255,150,182);
+  -moz-box-shadow: 0px 0px 50px rgb(255,150,182);
+  -ms-box-shadow: 0px 0px 50px rgb(255,150,182);
+  -o-box-shadow: 0px 0px 50px rgb(255,150,182);
+  box-shadow: 0px 0px 50px rgb(255,150,182);
   font: bold  italic 50px/60px "Helvetica","sans-serif";
   color: rgba(255,255,255,0.3125);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   padding: 2px 22px 2px 22px;
 }
 
@@ -1240,13 +1689,19 @@
 {
   background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
   background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.3906) 100.0%);
 }
 
 *#logo *.square:nth-child(16) > div
 {
   position: absolute;
-  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
-  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.1563) 100.0%);
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -moz-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -ms-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: -o-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
+  background: linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.2344) 100.0%);
   border-bottom-left-radius: 100.0% 100.0%;
   border-bottom-right-radius: 40.0% 15.0%;
   left: 4px;
@@ -1258,39 +1713,53 @@
 *#logo *.square:nth-child(16):before
 {
   position: absolute;
-  content: '';
+  content: "@";
+  overflow: hidden;
   top: 0px;
   bottom: 0px;
-  right: -20px;
-  width: 20px;
+  right: -60px;
+  width: 60px;
   background: -webkit-linear-gradient(top,rgb(245,140,172) 0.0%,rgb(195,90,122) 100.0%);
   background: -moz-linear-gradient(top,rgb(245,140,172) 0.0%,rgb(195,90,122) 100.0%);
-  -webkit-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -moz-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -ms-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -o-transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  transform: translate(0px,10px) skew(0.0deg,45.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(top,rgb(245,140,172) 0.0%,rgb(195,90,122) 100.0%);
+  background: -o-linear-gradient(top,rgb(245,140,172) 0.0%,rgb(195,90,122) 100.0%);
+  background: linear-gradient(top,rgb(245,140,172) 0.0%,rgb(195,90,122) 100.0%);
+  -webkit-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -moz-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -ms-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -o-transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  transform: translate(0px,30px) skew(0.0deg,45.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo *.square:nth-child(16):after
 {
   position: absolute;
-  content: '';
+  content: "!#!";
+  overflow: hidden;
   left: 0px;
   right: 0px;
-  bottom: -20px;
-  height: 20px;
+  bottom: -60px;
+  height: 60px;
   background: -webkit-linear-gradient(left,rgb(255,160,192) 0.0%,rgb(255,230,255) 100.0%);
   background: -moz-linear-gradient(left,rgb(255,160,192) 0.0%,rgb(255,230,255) 100.0%);
-  -webkit-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -moz-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -ms-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -o-transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  transform: translate(10px,0px) skew(45.0deg,0.0deg);
-  -webkit-box-shadow: 0 0 40px rgba(80,40,0, 1);
-  box-shadow: 0 0 40px rgba(80,40,0, 1);
+  background: -ms-linear-gradient(left,rgb(255,160,192) 0.0%,rgb(255,230,255) 100.0%);
+  background: -o-linear-gradient(left,rgb(255,160,192) 0.0%,rgb(255,230,255) 100.0%);
+  background: linear-gradient(left,rgb(255,160,192) 0.0%,rgb(255,230,255) 100.0%);
+  -webkit-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -moz-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -ms-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -o-transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  transform: translate(30px,0px) skew(45.0deg,0.0deg);
+  -webkit-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -moz-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -ms-box-shadow: 0px 0px 40px rgb(0,0,0);
+  -o-box-shadow: 0px 0px 40px rgb(0,0,0);
+  box-shadow: 0px 0px 40px rgb(0,0,0);
 }
 
 *#logo > div

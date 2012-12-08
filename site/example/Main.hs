@@ -3,8 +3,8 @@ module Main where
 
 import Control.Monad
 import Data.Text (pack)
-import Prelude hiding (div)
-import Clay hiding (i, s)
+import Prelude
+import Clay hiding (i, s, div)
 
 main :: IO ()
 main = css $
@@ -12,7 +12,7 @@ main = css $
 
   where
     s = 80
-    m = 20
+    m = 60
 
     logo = "#logo" ?
       do blocked 400 100 (m * 4 + (m + s) * 3) (m * 4 + (m + s) * 3)
@@ -25,9 +25,9 @@ main = css $
                            (m * x + y * (s + m))
                            (clr -. 50 +. (x * 50))
 
-         transform (scaleY 0.6)
+         transform (scaleY 0.5)
 
-         div <?
+         "div" <?
            do position absolute
               transform (rotateZ (deg 45))
 
@@ -44,12 +44,12 @@ main = css $
 
          hover &
            do color white
-              div <?
+              "div" <?
                 do background (vGradient (setA 0 white) (setA 100 white))
 
-         div <?
+         "div" <?
            do position absolute
-              background (vGradient (setA 0 white) (setA 40 white))
+              background (vGradient (setA 0 white) (setA 60 white))
               borderBottomLeftRadius  (pct 100) (pct 100)
               borderBottomRightRadius (pct  40) (pct  15)
               [left, top, right, bottom] `forM_` ($ 4)
@@ -57,12 +57,12 @@ main = css $
          before &
            do toTheRight m
               background (vGradient (c -. 10) (c -. 60))
-              transforms [translate (px 0) (px 10), skew (deg 0) (deg 45)]
+              transforms [translate (px 0) (px (div m 2)), skew (deg 0) (deg 45)]
               boxShadow 0 0 (px 40) black
          after &
            do toTheBottom m
               background (hGradient (c +. 10) (c +. 80))
-              transforms [translate (px 10) (px 0), skew (deg 45) (deg 0)]
+              transforms [translate (px (div m 2)) (px 0), skew (deg 45) (deg 0)]
               boxShadow 0 0 (px 40) black
 
     blocked x y w h =
@@ -76,7 +76,8 @@ main = css $
 toTheRight :: Integer -> Css
 toTheRight h =
   do position absolute
-     "content" -: "''"
+     content (stringContent "@")
+     overflow hidden
      top    (px 0)
      bottom (px 0)
      right  (px (-h))
@@ -85,7 +86,8 @@ toTheRight h =
 toTheBottom :: Integer -> Css
 toTheBottom h =
   do position absolute
-     "content" -: "''"
+     content (stringContent "!#!")
+     overflow hidden
      left   (px 0)
      right  (px 0)
      bottom (px (-h))
