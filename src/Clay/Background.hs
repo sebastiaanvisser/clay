@@ -176,13 +176,13 @@ backgroundOrigins = key "background-origin"
 newtype BackgroundClip = BackgroundClip Value
   deriving Val
 
-clip :: BoxType -> BackgroundClip
-clip b = BackgroundClip (value b)
+boxClip :: BoxType -> BackgroundClip
+boxClip b = BackgroundClip (value b)
 
-backgroundClip :: BoxType -> Css
+backgroundClip :: BackgroundClip -> Css
 backgroundClip = key "background-clip"
 
-backgroundClips :: [BoxType] -> Css
+backgroundClips :: [BackgroundClip] -> Css
 backgroundClips = key "background-clip"
 
 -------------------------------------------------------------------------------
