@@ -5,10 +5,11 @@ import Data.Text (Text, pack)
 import Data.Monoid
 import Prelude hiding (Left, Right, repeat)
 
-import Clay.Property
-import Clay.Rule
+import Clay.Box
 import Clay.Color
 import Clay.Common
+import Clay.Property
+import Clay.Rule
 import Clay.Size
 
 -- Background property as a type class.
@@ -143,9 +144,7 @@ degrees a = Direction (value (pack (show a) <> "deg"))
 linearGradient :: Direction -> [(Color, Size Rel)] -> BackgroundImage
 linearGradient d xs = BackgroundImage $ Value $
   let Value v = "linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
-  in Prefixed [ ("-webkit-", plain v)
-              , ("-moz-",    plain v)
-              ]
+  in browsers <> v
 
 hGradient, vGradient :: Color -> Color -> BackgroundImage
 
@@ -159,15 +158,6 @@ backgroundImages :: [BackgroundImage] -> Css
 backgroundImages = key "background-image"
 
 -------------------------------------------------------------------------------
-
-newtype BoxType = BoxType Value
-  deriving Val
-
-paddingBox, borderBox, contentBox :: BoxType
-
-paddingBox = BoxType "padding-box"
-borderBox  = BoxType "border-box"
-contentBox = BoxType "content-box"
 
 newtype BackgroundOrigin = BackgroundOrigin Value
   deriving Val
