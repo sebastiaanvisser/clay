@@ -34,19 +34,21 @@ import Clay.Rule
   )
 import Clay.Render (css, cssIn)
 
-import Clay.Attributes hiding (class_, target, checked, disabled, value, width, height, size, translate)
+import Clay.Attributes hiding
+  ( content, class_, target, checked, disabled
+  , value, width, height, size, translate
+  , hidden
+  )
 import Clay.Background
 import Clay.Border
 import Clay.Box
 import Clay.Color
 import Clay.Common
-import Clay.Display  (Display)
-import Clay.Display  hiding (table, Display(..))
-import Clay.Elements   hiding (link, em)
+import Clay.Display  hiding (table)
+import Clay.Elements hiding (link, em)
 import Clay.Filter
 import Clay.Font     hiding (menu, caption, small, icon)
-import Clay.Geometry (Position)
-import Clay.Geometry hiding (Position(..))
+import Clay.Geometry
 import Clay.Size
 import Clay.Text
 import Clay.Transform

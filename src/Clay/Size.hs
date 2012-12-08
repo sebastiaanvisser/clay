@@ -9,7 +9,9 @@ module Clay.Size where
 import Data.Monoid
 import Data.Text (pack)
 
+import Clay.Common
 import Clay.Property
+import Clay.Rule
 
 -------------------------------------------------------------------------------
 
@@ -17,7 +19,7 @@ data Rel
 data Abs
 
 newtype Size a = Size Value
-  deriving Val
+  deriving (Val, Auto, Normal, Inherit, None, Other)
 
 px :: Integer -> Size Abs
 px i = Size (value (pack (show i) <> "px"))
@@ -56,11 +58,22 @@ instance Fractional (Size Rel) where
 
 -------------------------------------------------------------------------------
 
+sym :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Css
+sym k a = k a a a a
+
+sym3 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Size a -> Size a -> Css
+sym3 k tb l r = k tb l tb r
+
+sym2 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Size a -> Css
+sym2 k tb lr = k tb lr tb lr
+
+-------------------------------------------------------------------------------
+
 data Deg
 data Rad
 
 newtype Angle a = Angle Value
-  deriving Val
+  deriving (Val, Auto, Inherit, Other)
 
 deg :: Double -> Angle Deg
 deg i = Angle (value (pack (show i) <> "deg"))
