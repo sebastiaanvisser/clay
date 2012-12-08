@@ -13,10 +13,10 @@ newtype Transform = Transform Value
   deriving (Val, None)
 
 transform :: Transform -> Css
-transform = key "transform"
+transform = prefixed (browsers <> "transform")
 
 transforms :: [Transform] -> Css
-transforms xs = key "transform" (noCommas xs)
+transforms xs = prefixed (browsers <> "transform") (noCommas xs)
 
 -------------------------------------------------------------------------------
 

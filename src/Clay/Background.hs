@@ -141,8 +141,11 @@ degrees :: Double -> Direction
 degrees a = Direction (value (pack (show a) <> "deg"))
 
 linearGradient :: Direction -> [(Color, Size Rel)] -> BackgroundImage
-linearGradient d xs = BackgroundImage $
-  "linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
+linearGradient d xs = BackgroundImage $ Value $
+  let Value v = "linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
+  in Prefixed [ ("-webkit-", plain v)
+              , ("-moz-",    plain v)
+              ]
 
 hGradient, vGradient :: Color -> Color -> BackgroundImage
 
