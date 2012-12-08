@@ -18,6 +18,7 @@ Library
     Clay.Attributes
     Clay.Background
     Clay.Border
+    Clay.Box
     Clay.Color
     Clay.Common
     Clay.Display
@@ -30,6 +31,8 @@ Library
     Clay.Rule
     Clay.Selector
     Clay.Size
+    Clay.Text
+    Clay.Transform
 
   GHC-Options: -Wall
   Build-Depends:
