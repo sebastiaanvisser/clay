@@ -16,6 +16,7 @@ module Clay
 , module Clay.Font
 , module Clay.Geometry
 , module Clay.Size
+, module Clay.Text
 , module Clay.Transform
 )
 where
@@ -47,5 +48,6 @@ import Clay.Font     hiding (menu, caption, small, icon)
 import Clay.Geometry (Position)
 import Clay.Geometry hiding (Position(..))
 import Clay.Size
+import Clay.Text
 import Clay.Transform
 
