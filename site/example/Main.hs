@@ -35,14 +35,11 @@ main = css $
     square i x y c = ".square" `with` nthChild i ?
       do blocked x y s s
          background (hGradient (c -. 100) c)
-         "-webkit-box-shadow" -: "0 0 40px rgba(80,40,0, 0.8)"
-         "box-shadow" -: "0 0 40px rgba(80,40,0, 0.8)"
+         boxShadow 0 0 (px 50) c
          font ( FontOptional (Just bold) Nothing (Just italic)
               , FontMandatory (px 50) (Just (px 60)) ["Helvetica", sansSerif]
               )
          color (setA 80 white)
-         "-webkit-box-sizing" -: "border-box"
-         "-moz-box-sizing" -: "border-box"
          sym2 padding (px 2) (px 22)
 
          hover &
@@ -61,17 +58,16 @@ main = css $
            do toTheRight m
               background (vGradient (c -. 10) (c -. 60))
               transforms [translate (px 0) (px 10), skew (deg 0) (deg 45)]
-              "-webkit-box-shadow" -: "0 0 40px rgba(80,40,0, 1)"
-              "box-shadow" -: "0 0 40px rgba(80,40,0, 1)"
+              boxShadow 0 0 (px 40) black
          after &
            do toTheBottom m
               background (hGradient (c +. 10) (c +. 80))
               transforms [translate (px 10) (px 0), skew (deg 45) (deg 0)]
-              "-webkit-box-shadow" -: "0 0 40px rgba(80,40,0, 1)"
-              "box-shadow" -: "0 0 40px rgba(80,40,0, 1)"
+              boxShadow 0 0 (px 40) black
 
     blocked x y w h =
       do position absolute
+         boxSizing borderBox
          left   (px x)
          top    (px y)
          width  (px w)
