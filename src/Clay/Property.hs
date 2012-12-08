@@ -1,29 +1,62 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Property where
 
-import Data.String
-import Data.Text (Text, replace, intercalate)
+import Control.Arrow (second)
 import Control.Monad.Writer
+import Data.List (partition, sort)
+import Data.Maybe
+import Data.String
+import Data.Text (Text, replace)
 
-newtype Key a = Key { unKey :: Text }
+data Prefixed = Prefixed [(Text, Text)] | Plain Text
+  deriving Show
 
-instance IsString (Key a) where
-  fromString = Key . fromString
+instance IsString Prefixed where
+  fromString s = Plain (fromString s)
 
-newtype Value = Value { unValue :: Text }
-  deriving (Monoid, IsString)
+instance Monoid Prefixed where
+  mempty  = ""
+  mappend = merge
+
+merge :: Prefixed -> Prefixed -> Prefixed
+merge (Plain    x ) (Plain    y ) = Plain (x <> y)
+merge (Plain    x ) (Prefixed ys) = Prefixed (map (second (x <>)) ys)
+merge (Prefixed xs) (Plain    y ) = Prefixed (map (second (<> y)) xs)
+merge (Prefixed xs) (Prefixed ys) =
+  let kys = map fst ys
+      kxs = map fst xs
+   in Prefixed $ zipWith (\(p, a) (_, b) -> (p, a <> b))
+        (sort (fst (partition ((`elem` kys) . fst) xs)))
+        (sort (fst (partition ((`elem` kxs) . fst) ys)))
+
+plain :: Prefixed -> Text
+plain (Prefixed xs) = "" `fromMaybe` lookup "" xs
+plain (Plain    p ) = p
+
+-------------------------------------------------------------------------------
+
+newtype Key a = Key { unKeys :: Prefixed }
+  deriving (Show, Monoid, IsString)
+
+cast :: Key a -> Key ()
+cast (Key k) = Key k
+
+-------------------------------------------------------------------------------
+
+newtype Value = Value { unValue :: Prefixed }
+  deriving (Show, Monoid, IsString)
 
 class Val a where
   value :: a -> Value
 
 instance Val Text where
-  value = Value
+  value t = Value (Plain t)
 
 newtype Literal = Literal Text
-  deriving (IsString, Monoid)
+  deriving (Show, Monoid, IsString)
 
 instance Val Literal where
-  value (Literal t) = Value ("\"" <> replace "\"" "\\\"" t <> "\"")
+  value (Literal t) = Value (Plain ("\"" <> replace "\"" "\\\"" t <> "\""))
 
 instance Val Double where
   value = fromString . show
@@ -36,15 +69,19 @@ instance Val a => Val (Maybe a) where
   value (Just a) = value a
 
 instance (Val a, Val b) => Val (a, b) where
-  value (a, b) =
-    case (value a, value b) of
-      (Value x, Value y) -> Value (x <> " " <> y)
+  value (a, b) = value a <> " " <> value b
 
 instance Val a => Val [a] where
-  value xs = Value (intercalate "," (map (unValue . value) xs))
+  value xs = intersperse "," (map value xs)
+
+intersperse :: Monoid a => a -> [a] -> a
+intersperse _ []     = mempty
+intersperse s (x:xs) = foldl (\a b -> a <> s <> b) x xs
+
+-------------------------------------------------------------------------------
 
 noCommas :: Val a => [a] -> Value
-noCommas xs = Value (intercalate " " (map (unValue . value) xs))
+noCommas xs = intersperse " " (map value xs)
 
 infixr !
 

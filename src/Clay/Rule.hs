@@ -1,7 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Clay.Rule where
 
-import Data.Text
+import Data.Text (Text)
 import Control.Monad.Writer
 
 import Clay.Selector hiding (Child)
@@ -14,13 +14,16 @@ data Rule
   | Child    Selector
   | Sub      Selector
 
-newtype Rules = Rules [Either (Text, Text) (Rule, Rules)]
+newtype Rules = Rules [Either (Key (), Value) (Rule, Rules)]
   deriving Monoid
 
 type Css = Writer Rules ()
 
 key :: Val a => Key a -> a -> Css
-key (Key k) v = tell (Rules [Left (k, unValue (value v))])
+key k v = tell (Rules [Left (cast k, value v)])
+
+prefixed :: Val a => Prefixed -> a -> Css
+prefixed xs = key (Key xs)
 
 infix 4 -:
 

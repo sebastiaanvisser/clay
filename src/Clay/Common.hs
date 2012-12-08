@@ -36,3 +36,14 @@ sym3 k tb l r = k tb l tb r
 sym2 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Size a -> Css
 sym2 k tb lr = k tb lr tb lr
 
+-------------------------------------------------------------------------------
+
+browsers :: Prefixed
+browsers = Prefixed
+  [ ( "-webkit-", "" )
+  , (    "-moz-", "" )
+  , (     "-ms-", "" )
+  , (      "-o-", "" )
+  , (         "", "" )
+  ]
+

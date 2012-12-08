@@ -77,13 +77,13 @@ setA _ None           = None
 instance Val Color where
   value clr = Value $
     case clr of
-      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,              ")"]
-      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", alph a, ")"]
-      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,              ")"]
-      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", alph a, ")"]
+      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,            ")"]
+      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
+      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,            ")"]
+      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", ah a, ")"]
       None           -> "none"
-    where p = Text.pack . show
-          alph = Text.pack . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
+    where p  = fromString . show
+          ah = fromString . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
 instance None Color where none = None
 

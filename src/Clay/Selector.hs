@@ -17,6 +17,8 @@ import Data.Text.Lazy.Builder hiding (fromString)
 
 import qualified Data.Text as Text
 
+import Clay.Property (intersperse)
+
 -- The generic selector DSL.
 
 id_ :: Text -> Filter
@@ -149,11 +151,4 @@ text t = In $
 instance Monoid (Fix Filtered) where
   mempty      = error "Selector is a semigroup"
   mappend a b = In (Filtered mempty (Combined a b))
-
--------------------------------------------------------------------------------
--- Helper functions.
-
-intersperse :: Monoid a => a -> [a] -> a
-intersperse _ []     = mempty
-intersperse s (x:xs) = foldl (\a b -> a <> s <> b) x xs
 

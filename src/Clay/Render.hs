@@ -4,12 +4,12 @@ module Clay.Render (css, cssIn) where
 import Control.Monad.Writer
 import Data.Either
 import Data.Foldable
-import Data.Text (Text)
 import Data.Text.Lazy.Builder
 
 import qualified Data.Text.Lazy.IO as Text
 
-import Clay.Rule     (Css, Rule(..), Rules (Rules))
+import Clay.Rule
+import Clay.Property
 import Clay.Selector hiding (Child)
 
 import qualified Clay.Selector as Selector
@@ -27,7 +27,7 @@ rules sel (Rules rs) = mconcat
   , foldMap (\(a, b) -> rules (a : sel) b) (rights rs)
   ]
 
-rule :: [Rule] -> [(Text, Text)] -> Builder
+rule :: [Rule] -> [(Key (), Value)] -> Builder
 rule _   []    = mempty
 rule sel props = mconcat
   [ renderRule sel
@@ -53,7 +53,14 @@ merger (x:xs) =
     Pop  i  -> merger (drop i (x:xs))
     Self f  -> merger xs `with` f
 
-property :: (Text, Text) -> Builder
-property (key, val) =
-  mconcat ["  ", fromText key, ": ", fromText val, ";\n"]
+property :: (Key (), Value) -> Builder
+property (Key ky, Value vl) =
+  case (ky, vl) of
+    ( Plain    k  , Plain    v  ) -> prop k v
+    ( Prefixed ks , Plain    v  ) -> for ks $ \(p, k) -> prop (p <> k) v
+    ( Plain    k  , Prefixed vs ) -> for vs $ \(p, v) -> prop k (p <> v)
+    ( Prefixed ks , Prefixed vs ) -> for ks $ \(p, k) -> (noImpl p k `maybe` prop (p <> k)) (lookup p vs)
+  where prop k v = mconcat ["  ", fromText k, ": ", fromText v, ";\n"]
+        for = flip foldMap
+        noImpl p k = "  /* no value for " <> fromText p <> fromText k <> " */\n"
 
