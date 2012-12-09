@@ -7,12 +7,16 @@ import Prelude
 import Clay hiding (i, s, div)
 
 main :: IO ()
-main = css $
-  do logo
+main = css logo
 
   where
     s = 80
-    m = 60
+    m = 30
+    cs = [ "#78e700"
+         , "#00b454"
+         , "#ff3900"
+         , "#de0052"
+         ]
 
     logo = "#logo" ?
       do rectangular 400 100 (m * 4 + (m + s) * 3) (m * 4 + (m + s) * 3)
@@ -28,7 +32,7 @@ main = css $
          forM_ [0..3] $ \x ->
            forM_ [0..3] $ \y ->
              do let idx = (pack . show) (1 + y * 4 + x)
-                    clr = cycle [ "#78e700", "#00b454", "#ff3900", "#de0052" ] !! fromInteger y
+                    clr = cycle cs !! fromInteger y
                 squareI idx (m * y + x * (s + m))
                             (m * x + y * (s + m))
                             (clr -. 50 +. (x * 50))
