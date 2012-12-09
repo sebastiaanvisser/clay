@@ -2,11 +2,17 @@
 module Clay.Display where
 
 import Data.Monoid
+import Data.String
 
 import Clay.Size
 import Clay.Property
 import Clay.Rule
 import Clay.Common
+
+-------------------------------------------------------------------------------
+
+zIndex :: Integer -> Css
+zIndex i = key "z-index" (fromString (show i) :: Value)
 
 -------------------------------------------------------------------------------
 

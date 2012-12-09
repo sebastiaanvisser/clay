@@ -27,11 +27,11 @@ import Clay.Selector
 import qualified Clay.Rule as Rule
 
 data Config = Config
-  { indent  :: Builder
-  , newline :: Builder
-  , sep     :: Builder
-  , warn    :: Bool
-  , align   :: Bool
+  { indentation :: Builder
+  , newline     :: Builder
+  , sep         :: Builder
+  , warn        :: Bool
+  , align       :: Bool
   }
 
 pretty :: Config
@@ -96,7 +96,7 @@ collect (Key ky, Value vl) =
 properties :: Config -> [Either Text (Text, Text)] -> Builder
 properties cfg xs =
   let width = 1 + maximum (Text.length . fst <$> rights xs)
-      ind   = indent cfg
+      ind   = indentation cfg
       new   = newline cfg
    in flip foldMap xs $ \p ->
         case p of
