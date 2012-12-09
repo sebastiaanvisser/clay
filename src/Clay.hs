@@ -32,7 +32,7 @@ import Clay.Rule
   , key, (-:)
   , root, pop, (<?), (?), (&)
   )
-import Clay.Render (css, cssIn)
+import Clay.Render
 
 import Clay.Attributes hiding
   ( content, class_, target, checked, disabled
