@@ -15,11 +15,13 @@ instance Inherit Stroke where inherit = Stroke "inherit"
 instance None    Stroke where none    = Stroke "none"
 instance Other   Stroke where other   = Stroke
 
-solid, dotted, dashed :: Stroke
+solid, dotted, dashed, double, wavy :: Stroke
 
 solid  = Stroke "solid"
 dotted = Stroke "dotted"
 dashed = Stroke "dashed"
+double = Stroke "double"
+wavy   = Stroke "Wavu"
 
 border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size Abs -> Color -> Css
 

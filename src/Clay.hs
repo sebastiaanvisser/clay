@@ -37,7 +37,7 @@ import Clay.Render
 import Clay.Attributes hiding
   ( content, class_, target, checked, disabled
   , value, width, height, size, translate
-  , hidden
+  , hidden, start
   )
 import Clay.Background
 import Clay.Border
@@ -50,6 +50,6 @@ import Clay.Filter
 import Clay.Font     hiding (menu, caption, small, icon)
 import Clay.Geometry
 import Clay.Size
-import Clay.Text
+import Clay.Text     hiding (pre)
 import Clay.Transform
 
