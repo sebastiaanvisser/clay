@@ -62,7 +62,7 @@ rule _   _   []    = mempty
 rule cfg sel props =
   let xs = collect =<< props
    in mconcat
-      [ renderRule sel
+      [ selector cfg (merger sel)
       , newline cfg
       , "{"
       , newline cfg
@@ -70,9 +70,6 @@ rule cfg sel props =
       , "}"
       , newline cfg
       ]
-
-renderRule :: [Rule] -> Builder
-renderRule = selector . merger
 
 merger :: [Rule] -> Selector
 merger []     = error "this should be fixed!"
@@ -105,8 +102,8 @@ properties cfg xs =
             let pad = if align cfg then fromText (Text.replicate (width - Text.length k) " ") else ""
              in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, ";", new]
 
-selector :: Selector -> Builder
-selector = intersperse ",\n" . rec
+selector :: Config -> Selector -> Builder
+selector cfg = intersperse ("," <> newline cfg) . rec
   where rec (In (Filtered ft p)) = (<> filter ft) <$>
           case p of
             Star           -> ["*"]
