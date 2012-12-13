@@ -88,6 +88,9 @@ alignSide = TextAlign . value
 alignString :: Char -> TextAlign
 alignString = TextAlign . value . Literal . fromString . return
 
+textAlign :: TextAlign -> Css
+textAlign = key "text-align"
+
 -------------------------------------------------------------------------------
 
 newtype WhiteSpace = WhiteSpace Value
@@ -119,10 +122,10 @@ textDecorationLine :: TextDecoration -> Css
 textDecorationLine = key "text-decoration-line"
 
 textDecorationColor :: Color -> Css
-textDecorationColor = key "text-decoration-line"
+textDecorationColor = key "text-decoration-color"
 
 textDecoration :: TextDecoration -> Css
-textDecoration = key "text-decoration-style"
+textDecoration = key "text-decoration"
 
 textDecorationStyle :: Stroke -> Css
 textDecorationStyle = key "text-decoration-style"
