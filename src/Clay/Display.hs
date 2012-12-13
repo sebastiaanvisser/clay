@@ -4,6 +4,7 @@ module Clay.Display where
 import Data.Monoid
 import Data.String
 
+import Clay.Background
 import Clay.Size
 import Clay.Property
 import Clay.Rule
@@ -13,6 +14,24 @@ import Clay.Common
 
 zIndex :: Integer -> Css
 zIndex i = key "z-index" (fromString (show i) :: Value)
+
+float :: Side -> Css
+float = key "float"
+
+newtype Clear = Clear Value
+  deriving (Val, None, Inherit)
+
+both :: Clear
+both = Clear "both"
+
+clearLeft :: Clear
+clearLeft = Clear "left"
+
+clearRight :: Clear
+clearRight = Clear "right"
+
+clear :: Clear -> Css
+clear = key "clear"
 
 -------------------------------------------------------------------------------
 
