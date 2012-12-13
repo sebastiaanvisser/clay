@@ -44,11 +44,12 @@ css :: Css -> IO ()
 css = cssWith pretty []
 
 cssWith :: Config -> [Rule] -> Css -> IO ()
-cssWith cfg top
+cssWith cfg top (Css c)
   = Text.putStr
   . toLazyText
   . rules cfg top
   . execWriter
+  $ c
 
 rules :: Config -> [Rule] -> Rules -> Builder
 rules cfg sel (Rules rs) = mconcat
