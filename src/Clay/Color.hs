@@ -15,7 +15,7 @@ import Clay.Common
 data Color
   = Rgba Integer Integer Integer Integer
   | Hsla Integer Integer Integer Integer
-  | None
+  | Other Text
   deriving Show
 
 clamp :: Integer -> Integer
@@ -24,17 +24,17 @@ clamp i = max (min i 255) 0
 (*.) :: Color -> Integer -> Color
 (*.) (Rgba r g b a) i = Rgba (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
 (*.) (Hsla r g b a) i = Hsla (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
-(*.) None           _ = None
+(*.) (Other o)      _ = Other o
 
 (+.) :: Color -> Integer -> Color
 (+.) (Rgba r g b a) i = Rgba (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
 (+.) (Hsla r g b a) i = Hsla (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
-(+.) None           _ = None
+(+.) (Other o)      _ = Other o
 
 (-.) :: Color -> Integer -> Color
 (-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
 (-.) (Hsla r g b a) i = Hsla (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
-(-.) None           _ = None
+(-.) (Other o)      _ = Other o
 
 rgba, hsla :: Integer -> Integer -> Integer -> Integer -> Color
 
@@ -55,22 +55,22 @@ transparent = rgba 0 0 0 0
 setR :: Integer -> Color -> Color
 setR r (Rgba _ g b a) = Rgba r g b a
 setR r (Hsla _ g b a) = Hsla r g b a
-setR _ None           = None
+setR _ (Other o)      = Other o
 
 setG :: Integer -> Color -> Color
 setG g (Rgba r _ b a) = Rgba r g b a
 setG g (Hsla r _ b a) = Hsla r g b a
-setG _ None           = None
+setG _ (Other o)      = Other o
 
 setB :: Integer -> Color -> Color
 setB b (Rgba r g _ a) = Rgba r g b a
 setB b (Hsla r g _ a) = Hsla r g b a
-setB _ None           = None
+setB _ (Other o)      = Other o
 
 setA :: Integer -> Color -> Color
 setA a (Rgba r g b _) = Rgba r g b a
 setA a (Hsla r g b _) = Hsla r g b a
-setA _ None           = None
+setA _ (Other o)      = Other o
 
 -------------------------------------------------------------------------------
 
@@ -81,11 +81,13 @@ instance Val Color where
       Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
       Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,            ")"]
       Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", ah a, ")"]
-      None           -> "none"
+      Other o        -> Plain o
     where p  = fromString . show
           ah = fromString . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
-instance None Color where none = None
+instance None    Color where none    = Other "none"
+instance Auto    Color where auto    = Other "auto"
+instance Inherit Color where inherit = Other "inherit"
 
 instance IsString Color where
   fromString = parse . fromString
