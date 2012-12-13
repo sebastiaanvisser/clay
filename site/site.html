@@ -1,0 +1,91 @@
+<html>
+<head>
+  <script src=http://code.jquery.com/jquery-1.8.3.min.js></script>
+  <script type="text/javascript" src="//use.typekit.net/vbq3yfm.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <link href=style.lhs rel=stylesheet type=text/css>
+</head>
+<body>
+
+  <div id=container>
+    <header>
+      <div>
+        <h1>Clay</h1>
+        <h3>Unlimited<sup><a href="#">*</a></sup> CSS</h3>
+      </div>
+    </header>
+
+    <nav>
+      <div>
+        <a href="#">about</a>
+        <a href="#">example</a>
+        <a href="#">download</a>
+        <a href="#">documentation</a>
+        <a href="#">source</a>
+      </div>
+    </nav>
+
+    <section id=about>
+      <div class=two-col>
+        <div>
+          <p><span>Clay</span> is a CSS preprocessor like <span>LESS</span> and
+          <span>Sass</span>, but implemented as an embedded domain specific
+          language (EDSL) in Haskell. This means that all CSS selectors and
+          style rules are first class Haskell functions, which makes reuse and
+          composability easy.</p>
+        </div>
+        <div>
+          <pre>
+theNav :: Css
+theNav =
+  do fontSize (px 24)
+     div &lt;? sym padding 0
+     sym2 padding 20 0
+     textTransform uppercase
+     a ?
+       do paddingRight (px 43)
+          color highlight
+          textDecoration none
+          lastOfType &amp; paddingRight (px 0)
+          hover      &amp; color black
+          </pre>
+        </div>
+        <br>
+      </div>
+    </section>
+
+    <section id=example>
+      <div>
+        example
+      </div>
+    </section>
+
+    <section id=download>
+      <div>
+        download
+      </div>
+    </section>
+
+    <section id=api>
+      <div>
+        api documentation
+      </div>
+    </section>
+
+    <section id=source>
+      <div>
+        project source
+      </div>
+    </section>
+
+    <section id=website>
+      <div>
+        website source
+      </div>
+    </section>
+
+    <footer>
+
+  </div>
+
+</body>
