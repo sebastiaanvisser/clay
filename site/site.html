@@ -10,82 +10,97 @@
   <div id=container>
     <header>
       <div>
-        <h1>Clay</h1>
+        <h1>Cl<span class=a>a</span><span class=y>y<span></h1>
         <h3>Unlimited<sup><a href="#">*</a></sup> CSS</h3>
       </div>
+      <nav>
+        <div>
+          <a href="#about">About</a>
+          <a href="#example">Example</a>
+          <a href="#install">Install</a>
+          <a href="#documentation">Documentation</a>
+          <a href="#source">Source</a>
+        </div>
+      </nav>
     </header>
 
-    <nav>
+    <section id=about name=about>
       <div>
-        <a href="#">about</a>
-        <a href="#">example</a>
-        <a href="#">download</a>
-        <a href="#">documentation</a>
-        <a href="#">source</a>
-      </div>
-    </nav>
-
-    <section id=about>
-      <div class=two-col>
-        <div>
-          <p><span>Clay</span> is a CSS preprocessor like <span>LESS</span> and
-          <span>Sass</span>, but implemented as an embedded domain specific
-          language (EDSL) in Haskell. This means that all CSS selectors and
-          style rules are first class Haskell functions, which makes reuse and
-          composability easy.</p>
+        <div class=two-col>
+          <div>
+            <h4>About</h4>
+            <p><a>Clay</a> is a CSS preprocessor like <a>LESS</a> and
+            <a>Sass</a>, but implemented as an embedded domain specific
+            language (EDSL) in Haskell. This means that all CSS selectors and
+            style rules are first class Haskell functions, which makes reuse
+            and composability easy.</p>
+          </div>
+          <div>
+            <h4>Features</h4>
+            <ul>
+              <li>Recognizable syntax, justl ike CSS.</li>
+              <li>Typed values.</li>
+              <li>First class selectors and style properties.</li>
+              <li>Nested style rules.</li>
+              <li>Functions, mixins, other abtractions. It just Haskell!</li>
+              <li>Size artihmetics.</li>
+              <li>Computing with colors.</li>
+              <li>Near-total coverage of all of CSS.</li>
+              <li>Easy fallback for uncovered parts.</li>
+            </ul>
+          </div>
+          <br>
         </div>
-        <div>
-          <pre>
-theNav :: Css
-theNav =
-  do fontSize (px 24)
-     div &lt;? sym padding 0
-     sym2 padding 20 0
-     textTransform uppercase
-     a ?
-       do paddingRight (px 43)
-          color highlight
-          textDecoration none
-          lastOfType &amp; paddingRight (px 0)
-          hover      &amp; color black
-          </pre>
+      </div>
+    </section>
+
+    <section id=example name=example>
+      <div>
+        <h4>Example</h4>
+      </div>
+      <div class=code>
+        <!--#include virtual=example.html -->
+      </div>
+    </section>
+
+    <section id=install name=install>
+      <div>
+        <h4>Install</h4>
+        <p>The easiest way is to use cabal to install the pacakge from hackage.</p>
+      </div>
+      <div class=code>
+        <pre><span class=symbol>$</span> cabal update
+<span class=symbol>$</span> cabal install clay</pre>
+      </div>
+    </section>
+
+    <section id=documentation name=documentation>
+      <div>
+        <h4>Documentation</h4>
+      </div>
+    </section>
+
+    <section id=source name=source>
+      <div>
+        <div class=two-col>
+          <div>
+            <h4>Project source</h4>
+            <p>Of course, the stylesheet of this website is also implemented in
+            Clay. You can find the sources in the source repository on Github
+            here.</p>
+          </div>
+          <div>
+            <h4>Website source</h4>
+            <p>Of course, the stylesheet of this website is also implemented in
+            Clay. You can find the sources in the source repository on Github
+            here.</p>
+          </div>
         </div>
-        <br>
-      </div>
-    </section>
-
-    <section id=example>
-      <div>
-        example
-      </div>
-    </section>
-
-    <section id=download>
-      <div>
-        download
-      </div>
-    </section>
-
-    <section id=api>
-      <div>
-        api documentation
-      </div>
-    </section>
-
-    <section id=source>
-      <div>
-        project source
-      </div>
-    </section>
-
-    <section id=website>
-      <div>
-        website source
-      </div>
-    </section>
+      </section>
 
     <footer>
 
   </div>
 
 </body>
+<script src=code.js></script>

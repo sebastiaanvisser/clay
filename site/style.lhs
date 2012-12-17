@@ -5,9 +5,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
+import Control.Monad
 import Data.Monoid
 import Prelude hiding (div, span)
-import Clay hiding (i, s)
+import Clay hiding (i, s, id)
 
 main :: IO ()
 main =
@@ -26,26 +27,38 @@ site =
             do sections
                columns
 
-          header   ? theHeader
-          nav      ? theNav
-          "#about" ? theAbout
+          header     ? theHeader
+          nav        ? theNav
+          "#about"   ? theAbout
+          "#example" ? theExample
+          "#source"  ? theSource
 
-          "#about" <> "#download" <> "#source" ?
+          "#about" <> "#install" <> "#source" ?
             backgroundColor "#f8f8f8"
 
   where
 
   sections =
     do boxSizing borderBox
+       borderTop solid (px 1) transparent
+       forM_ [paddingTop, paddingBottom] ($ 40)
+       minHeight (px 400)
+
+       codeBlock
 
        div <?
-         do centerDiv
-            minHeight (px 400)
-            sym2 padding (px 40) 0
-            fontSize (px 18)
+         do centered
+            fontSize (px 20)
+
+       h4 ?
+         do textTransform uppercase
+            color (highlight -. 100)
+            fontWeight bold
+
+       ul ? paddingLeft (px 20)
 
        p ?
-         do span ? color "#0044aa"
+         do a ? color highlight
             lineHeight (px 30)
 
   columns =
@@ -53,10 +66,12 @@ site =
       do div <?
            do width (pct 50)
               boxSizing borderBox
-         div `with` nthChild "1" <? float pLeft
-         div `with` nthChild "2" <? float pRight
-         div `with` nthChild "1" <? backgroundColor (setA 20 red)
-         div `with` nthChild "2" <? backgroundColor (setA 20 blue)
+         div `with` nthChild "1" <?
+           do float pLeft
+              paddingRight (px 20)
+         div `with` nthChild "2" <?
+           do float pRight
+              paddingLeft (px 20)
          br ? clear both
 
 -------------------------------------------------------------------------------
@@ -76,8 +91,8 @@ defaultFont =
        do textDecoration none
           color inherit
 
-centerDiv :: Css
-centerDiv =
+centered :: Css
+centered =
   do width (px 800)
      boxSizing borderBox
      sym2 margin 0 auto
@@ -86,13 +101,49 @@ centerDiv =
 
 theHeader :: Css
 theHeader =
-  do sym2 padding (px 60) (px 20)
-     background (vGradient mainColor (mainColor +. 20))
+  do background (vGradient mainColor (mainColor +. 20))
+     position fixed
+     top (px 0)
+     left (px 0)
+     right (px 0)
+
+     after &
+       do position absolute
+          top    (px 0)
+          bottom (px 0)
+          left   (px 0)
+          right  (px 0)
+          content (stringContent "")
+          "pointer-events" -: "none"
+          "background-size" -: "100% 5px"
+          "background-image" -:
+             ( "-webkit-repeating-linear-gradient(top"
+             <> ", rgba(255,255,255,0.00)   0%"
+             <> ", rgba(255,255,255,0.06)  50%"
+             <> ", rgba(255,255,255,0.00) 100%"
+             <> ");"
+             )
 
      div <?
-       do width (px 800)
-          boxSizing borderBox
-          sym2 margin 0 auto
+       do centered
+          paddingTop (px 60)
+          paddingBottom (px 60)
+          overflow hidden
+
+          position relative
+          before &
+            do position absolute
+               let m = -80
+               top    (px m)
+               bottom (px m)
+               left   (px 0)
+               right  (px 0)
+               content (stringContent "")
+               "pointer-events" -: "none"
+               "background-image" -:
+                  ( "-webkit-radial-gradient(center, ellipse"
+                  <> ", rgba(255,255,0,0.4) 0%,rgba(255,255,0,0) 65%);"
+                  )
 
      h1 <> h3 ?
        do textTransform uppercase
@@ -102,8 +153,10 @@ theHeader =
      h1 ?
        do fontSize (px 90)
           color (setA 220 white)
-          letterSpacing (em 0.4)
-          textShadow 0 0 (px 20) (mainColor -. 10)
+          id                 letterSpacing (em 0.40)
+          span `with` ".a" ? letterSpacing (em 0.36)
+          span `with` ".y" ? letterSpacing (em 0.00)
+          textShadow 0 0 (px 20) (mainColor -. 30)
 
      h3 ?
        do fontSize (px 35)
@@ -114,20 +167,47 @@ theHeader =
                textShadow 0 0 (px 10) white
 
 theAbout :: Css
-theAbout = backgroundColor "#f8f8f8"
+theAbout =
+  do paddingTop (px 400)
 
 theNav :: Css
 theNav =
-  do fontSize (px 24)
-
-     div <? centerDiv
-
+  do background white
+     boxShadow 0 0 (px 60) (setA 20 black)
+     fontSize (px 24)
      sym2 padding 20 0
      textTransform uppercase
-     a ?
-       do paddingRight (px 43)
-          color highlight
-          lastOfType & paddingRight (px 0)
-          hover      & color black
+
+     div <? centered
+     a ? do paddingRight (px 43)
+            color highlight
+            lastOfType & paddingRight (px 0)
+            hover      & color black
+
+theExample :: Css
+theExample = return ()
+
+codeBlock :: Css
+codeBlock = ".code" ?
+
+    do boxSizing       borderBox
+       borderRadius    2
+       width           (px 600)
+       sym padding     20
+       background      (vGradient (highlight -. 160) (highlight -. 140))
+
+       pre ?
+         do sym margin 0
+            fontSize   (px 16)
+            fontFamily ["Monaco", "Courier New", monospace]
+            color (setA 160 white)
+            ".Function" ? color white
+            ".Symbol"   ? color orange
+            ".Keyword"  ? color (highlight +. 20)
+            ".Number"   ? color (setG 100 orange)
+            ".ConId"    ? color (highlight +. 100)
+
+theSource =
+  minHeight (px 1000)
 
 \end{code}
