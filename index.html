@@ -1,1 +1,163 @@
-My GitHub Page
+<doctype html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta name="keywords" content="clay, css, stylesheet, preprocessor, haskell" />
+    <meta name='author' content='Sebastiaan Visser' />
+    <meta name='description' content='A CSS preprocessor as embedded Haskell' />
+    <script src=http://code.jquery.com/jquery-1.8.3.min.js></script>
+    <script type="text/javascript" src="//use.typekit.net/vbq3yfm.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <link href=style.css rel=stylesheet type=text/css>
+  </head>
+
+  <body>
+
+    <div id=container>
+
+      <header>
+        <div>
+          <h1><a href=https://github.com/sebastiaanvisser/clay>Cl<span class=a>a</span><span class=y>y<span></a></h1>
+          <h3>Unlimited<sup><a href="#">*</a></sup> CSS</h3>
+        </div>
+        <nav>
+          <div>
+            <a href="#about">About</a>
+            <a href="#example">Example</a>
+            <a href="#install">Install</a>
+            <a href="#documentation">Documentation</a>
+            <a href="#source">Source</a>
+          </div>
+        </nav>
+      </header>
+
+      <section id=about name=about>
+        <div>
+          <div class=two-col>
+            <div class=text>
+              <h4>About</h4>
+              <p><a href=http://sebastiaanvisser.github.com/clay>Clay</a> is a
+              CSS preprocessor like <a href=http://lesscss.org>LESS</a> and <a
+              href=http://sass-lang.com>Sass</a>, but implemented as an
+              embedded domain specific language (EDSL) in Haskell. This means
+              that all CSS selectors and style rules are first class Haskell
+              functions, which makes reuse and composability easy.</p>
+            </div>
+            <div class=text>
+              <h4>Features</h4>
+              <ul>
+                <li>First class selectors and style properties.</li>
+                <li>Typed values.</li>
+                <li>Nested style rules.</li>
+                <li>Access to outer scopes in nested rules.</li>
+                <li>Modules, functions, mixins, etc.</li>
+                <li>Size and color arithmetics.</li>
+                <li>Recognizable syntax, inspired by CSS.</li>
+                <li>Easily extensible with new functionality.</li>
+                <li>Near-total coverage of all of CSS.</li>
+                <li>Easy fall-back for uncovered parts.</li>
+                <li>Automatic addition of browser prefixes.</li>
+                <li>Both pretty and compact output printers.</li>
+              </ul>
+            </div>
+            <br>
+          </div>
+        </div>
+      </section>
+
+      <section id=example name=example>
+        <div class=text>
+          <h4>Example</h4>
+        </div>
+        <div class=code>
+          <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+<span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">)</span>
+
+<span class="Function">highlight</span> <span class="Symbol">::</span> <span class="ConId">Color</span>
+<span class="Function">highlight</span> <span class="Symbol">=</span> <span class="VarId">rgb</span> <span class="Number">255</span> <span class="Number">128</span> <span class="Number">0</span>
+
+<span class="Function">navigation</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">navigation</span> <span class="Symbol">=</span>
+  <span class="Keyword">do</span> <span class="VarId">fontSize</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">24</span><span class="Symbol">)</span>
+     <span class="VarId">sym2</span> <span class="VarId">padding</span> <span class="Number">20</span> <span class="Number">0</span>
+     <span class="VarId">textTransform</span> <span class="VarId">uppercase</span>
+
+     <span class="VarId">div</span> <span class="Symbol">&lt;?</span> <span class="VarId">centered</span>
+     <span class="VarId">a</span> <span class="Symbol">?</span> <span class="Keyword">do</span> <span class="VarId">paddingRight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">43</span><span class="Symbol">)</span>
+            <span class="VarId">color</span> <span class="Symbol">(</span><span class="VarId">highlight</span> <span class="Symbol">-.</span> <span class="Number">40</span><span class="Symbol">)</span>
+            <span class="VarId">lastOfType</span> <span class="Symbol">&amp;</span> <span class="VarId">paddingRight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
+            <span class="VarId">hover</span>      <span class="Symbol">&amp;</span> <span class="VarId">color</span> <span class="VarId">black</span>
+
+<span class="Function">centered</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">centered</span> <span class="Symbol">=</span>
+  <span class="Keyword">do</span> <span class="VarId">width</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">800</span><span class="Symbol">)</span>
+     <span class="VarId">boxSizing</span> <span class="VarId">borderBox</span>
+     <span class="VarId">sym2</span> <span class="VarId">margin</span> <span class="Number">0</span> <span class="VarId">auto</span>
+
+</pre>
+        </div>
+      </section>
+
+      <section id=install name=install>
+        <div class=text>
+          <h4>Install</h4>
+          <p>Clay is written in Haskell and requires the Glasgow Haskell
+          Compiler (GHC) to get installed. After installing GHC and the
+          acompanying package manager Cabal, you can directly install Clay from
+          Hackage:</p>
+        </div>
+        <div class=code>
+          <pre><span class=symbol>$</span> cabal update
+<span class=symbol>$</span> cabal install clay</pre>
+        </div>
+      </section>
+
+      <section id=documentation name=documentation>
+        <div>
+          <div class=text>
+            <h4>Documentation</h4>
+          </div>
+        </div>
+      </section>
+
+      <section id=source name=source>
+        <div class="two-col text">
+          <div>
+            <h4>Project source</h4>
+            <p>Clay is open source and hosted on GitHub. Every form of
+            feedback, pull requests or other participation is more than
+            welcome. CSS is a big standard containing lots of official and
+            probably even more experimental style properties. Clay's support
+            for all those properties is most likely incomplete. Adding new
+            properties is easy so let me know if things should be added.</p>
+            <p class=goto><a href=https://github.com/sebastiaanvisser/clay>» project source</a></p>
+            <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>» project issue tracker</a></p>
+          </div>
+          <div>
+            <h4>Website source</h4>
+            <p>Of course, the style sheet of this website is also implemented
+            in Clay. You can find the sources in the project source
+            repository on GitHub. Feel free to use this page as template for
+            your own projects.</p>
+            <p class=goto><a href=https://github.com/sebastiaanvisser/clay/tree/gh-pages>» website source</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id=haskell name=haskell>
+        <div>
+          <p>Haskell logo here!</p>
+        </div>
+      </section>
+
+      <footer>
+        <div><sup>*</sup>Within reasonable limits only!</div>
+      </footer>
+
+    </div>
+
+  </body>
+  <script src=code.js></script>
+</html>
+<!-- site generated at Tue Dec 18 11:24:18 CET 2012 -->
