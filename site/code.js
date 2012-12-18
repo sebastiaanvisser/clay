@@ -13,7 +13,10 @@ $("nav a").click
     {
       var target = $("*[name=" + $(ev.target).attr("href").substr(1) + "]");
 
-      $("html, body").animate({ scrollTop: $(target).offset().top - 80 });
+      $("html, body").animate
+        ( { scrollTop : $(target).offset().top - 80 }
+        , ev.shiftKey ? 2500 : 500
+        );
       ev.preventDefault();
       ev.stopPropagation();
     }
