@@ -41,25 +41,33 @@ site =
   sections =
     do boxSizing borderBox
        borderTop solid (px 1) transparent
-       forM_ [paddingTop, paddingBottom] ($ 40)
+       [paddingTop, paddingBottom] `forM_` ($ 60)
        minHeight (px 400)
 
        codeBlock
 
        div <?
          do centered
-            fontSize (px 20)
 
-       h4 ?
-         do textTransform uppercase
-            color (highlight -. 100)
-            fontWeight bold
-
-       ul ? paddingLeft (px 20)
-
-       p ?
-         do a ? color highlight
+       ".text" ?
+         do fontSize (px 20)
             lineHeight (px 30)
+
+            a `with` hover ?
+              do textDecoration underline
+                 color (highlight -. 40)
+
+            h4 ?
+              do textTransform uppercase
+                 color (highlight -. 80)
+                 fontWeight bold
+
+            ul ? paddingLeft (px 20)
+
+            p ?
+               do a ? color highlight
+
+            ".goto" ? paddingLeft (px 40)
 
   columns =
     ".two-col" ?
@@ -101,7 +109,7 @@ centered =
 
 theHeader :: Css
 theHeader =
-  do background (vGradient mainColor (mainColor +. 20))
+  do background (vGradient (mainColor -. 60) (mainColor +. 20))
      position fixed
      top (px 0)
      left (px 0)
@@ -119,7 +127,7 @@ theHeader =
           "background-image" -:
              ( "-webkit-repeating-linear-gradient(top"
              <> ", rgba(255,255,255,0.00)   0%"
-             <> ", rgba(255,255,255,0.06)  50%"
+             <> ", rgba(255,255,255,0.08)  50%"
              <> ", rgba(255,255,255,0.00) 100%"
              <> ");"
              )
@@ -142,7 +150,7 @@ theHeader =
                "pointer-events" -: "none"
                "background-image" -:
                   ( "-webkit-radial-gradient(center, ellipse"
-                  <> ", rgba(255,255,0,0.4) 0%,rgba(255,255,0,0) 65%);"
+                  <> ", rgba(255,255,0,0.6) 0%,rgba(255,255,0,0) 65%);"
                   )
 
      h1 <> h3 ?
@@ -152,18 +160,21 @@ theHeader =
 
      h1 ?
        do fontSize (px 90)
-          color (setA 220 white)
+          color (setA 210 white)
           id                 letterSpacing (em 0.40)
           span `with` ".a" ? letterSpacing (em 0.36)
           span `with` ".y" ? letterSpacing (em 0.00)
-          textShadow 0 0 (px 20) (mainColor -. 30)
+          textShadow 0 0 (px 20) (mainColor -. 60)
+          a ? hover &
+            do color white
+               textShadow 0 0 (px 20) (mainColor -. 120)
 
      h3 ?
        do fontSize (px 35)
-          color (setA 80 black)
+          color (setA 120 black)
           letterSpacing (em 0.3)
           a `with` hover ?
-            do color (setA 200 black)
+            do color (setA 220 black)
                textShadow 0 0 (px 10) white
 
 theAbout :: Css
@@ -179,9 +190,9 @@ theNav =
      textTransform uppercase
 
      div <? centered
-     a ? do paddingRight (px 43)
-            color highlight
+     a ? do paddingRight (px 55)
             lastOfType & paddingRight (px 0)
+            color highlight
             hover      & color black
 
 theExample :: Css
@@ -190,15 +201,15 @@ theExample = return ()
 codeBlock :: Css
 codeBlock = ".code" ?
 
-    do boxSizing       borderBox
-       borderRadius    2
-       width           (px 600)
-       sym padding     20
-       background      (vGradient (highlight -. 160) (highlight -. 140))
+    do boxSizing borderBox
+       borderRadius 2
+       width (px 600)
+       sym padding 20
+       marginTop (px 60)
+       background (vGradient (highlight -. 160) (highlight -. 140))
 
        pre ?
-         do sym margin 0
-            fontSize   (px 16)
+         do fontSize   (px 16)
             fontFamily ["Monaco", "Courier New", monospace]
             color (setA 160 white)
             ".Function" ? color white
@@ -207,6 +218,7 @@ codeBlock = ".code" ?
             ".Number"   ? color (setG 100 orange)
             ".ConId"    ? color (highlight +. 100)
 
+theSource :: Css
 theSource =
   minHeight (px 1000)
 
