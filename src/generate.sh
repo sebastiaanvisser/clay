@@ -15,7 +15,11 @@ done
 echo "Downloading HTML from localhost"
 curl -s http://devoid.local/clay-site/src/index.html > index.html
 
-runhaskell src/Style > style.css
+echo "Generating pretty printed stylesheet"
+runhaskell src/Style pretty   > style-pretty.css
+
+echo "Generating compacted stylesheet"
+runhaskell src/Style compact > style-compact.css
 
 echo "Copying over JavaScript"
 cp src/*.js .

@@ -5,11 +5,17 @@ import Control.Monad
 import Data.Monoid
 import Prelude hiding (div, span)
 import Clay hiding (i, s, id)
+import System.Environment
 
 import qualified Data.Text.Lazy.IO as Text
 
 main :: IO ()
-main = Text.putStr (css site)
+main =
+  do args <- getArgs
+     case args of
+       "compact" : _ -> Text.putStr (cssWith compact [] site)
+       "pretty"  : _ -> Text.putStr (cssWith pretty  [] site)
+       _             -> Text.putStr (css site)
 
 site :: Css
 site =
@@ -185,7 +191,7 @@ theNav =
      textTransform uppercase
 
      div <? centered
-     a ? do paddingRight (px 55)
+     a ? do paddingRight (px 42)
             lastOfType & paddingRight (px 0)
             color highlight
             hover      & color black
