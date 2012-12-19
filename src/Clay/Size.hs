@@ -11,7 +11,7 @@ import Data.Text (pack)
 
 import Clay.Common
 import Clay.Property
-import Clay.Rule
+import Clay.Stylesheet
 
 -------------------------------------------------------------------------------
 

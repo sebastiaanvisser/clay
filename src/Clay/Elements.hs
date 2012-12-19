@@ -7,8 +7,8 @@ import Clay.Selector
 
 -- From: http://www.whatwg.org/specs/web-apps/current-work/multipage/section-index.html#index
 
--- Special cases, these items occur both as an HTML tag and an HTML attribute.
--- We keep those polymorph.
+-- | Special cases, these items occur both as an HTML tag and an HTML
+-- attribute. We keep them polymorph.
 
 abbr, cite, command, data_, form, label, span, style, title :: IsString a => a
 

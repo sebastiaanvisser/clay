@@ -1,52 +1,101 @@
 module Clay
-( module Clay.Selector
-, module Clay.Property
-, module Clay.Rule
-, module Clay.Render
+(
+-- * Rendering stylesheets to CSS.
+  render
+, renderWith
+
+-- * The @Css@ monad for collecting style rules.
+
+, Css
+
+, (?)
+, (<?)
+, (&)
+, root
+, pop
+
+, (-:)
+
+-- * The selector language.
+
+, Selector
+, Refinement
+
+-- ** Elements selectors.
+
+, star
+, element
+, (**)
+, (|>)
+, with
+, (|+)
+
+-- ** Refining selectors.
+
+, byId
+, byClass
+, pseudo
+, func
+
+-- ** Attribute based refining.
+
+, attr
+, (@=)
+, ($=)
+, (~=)
+, (|=)
+
+-- * Pseudo elements and classes.
+
+, module Clay.Pseudo
+
+-- * HTML5 attribute and element names.
 
 , module Clay.Attributes
+, module Clay.Elements
+
+-- * Embedded style properties.
+
 , module Clay.Background
 , module Clay.Border
 , module Clay.Box
 , module Clay.Color
 , module Clay.Common
 , module Clay.Display
-, module Clay.Elements
-, module Clay.Filter
 , module Clay.Font
 , module Clay.Geometry
 , module Clay.Size
 , module Clay.Text
 , module Clay.Transform
+
+-- * Creating custom properties.
+
+, module Clay.Property
+
 )
 where
 
-import Clay.Selector
-  ( id_, class_, pseudo
-  , func, attr, (@=), ($=), (~=), (|=)
-  , star, with, (|>), (|+), deep
-  )
-import Clay.Property (Key, Value, Val(..), (!))
-import Clay.Rule
-  ( Css
-  , key, (-:)
-  , root, pop, (<?), (?), (&)
-  )
-import Clay.Render
+import Prelude hiding ((**))
 
+import Clay.Render
+import Clay.Stylesheet
+import Clay.Selector
+import Clay.Property (Key, Value, Prefixed, Val(..), noCommas, (!))
+
+import Clay.Pseudo
+import Clay.Elements hiding (link, em)
 import Clay.Attributes hiding
   ( content, class_, target, checked, disabled
   , value, width, height, size, translate
   , hidden, start
   )
+
 import Clay.Background
 import Clay.Border
 import Clay.Box
 import Clay.Color
 import Clay.Common
 import Clay.Display  hiding (table)
-import Clay.Elements hiding (link, em)
-import Clay.Filter
 import Clay.Font     hiding (menu, caption, small, icon)
 import Clay.Geometry
 import Clay.Size

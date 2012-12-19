@@ -7,7 +7,7 @@ import Data.String
 import Clay.Background
 import Clay.Size
 import Clay.Property
-import Clay.Rule
+import Clay.Stylesheet
 import Clay.Common
 
 -------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 module Clay.Border where
 
 import Clay.Property
-import Clay.Rule
+import Clay.Stylesheet
 import Clay.Color
 import Clay.Common
 import Clay.Size

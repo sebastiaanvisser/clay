@@ -13,49 +13,78 @@ import Prelude hiding (foldl)
 
 import qualified Data.Text as Text
 
--- The generic selector DSL.
-
-id_ :: Text -> Filter
-id_ = Filter . pure . Id
-
-class_ :: Text -> Filter
-class_ = Filter . pure . Class
-
-pseudo :: Text -> Filter
-pseudo = Filter . pure . Pseudo
-
-func :: Text -> [Text] -> Filter
-func f = Filter . pure . PseudoFunc f
-
-attr :: Text -> Filter
-attr = Filter . pure . Attr
-
-(@=) :: Text -> Text -> Filter
-(@=) a = Filter . pure . AttrVal a
-
-($=) :: Text -> Text -> Filter
-($=) a = Filter . pure . AttrEnds a
-
-(~=) :: Text -> Text -> Filter
-(~=) a = Filter . pure . AttrSpace a
-
-(|=) :: Text -> Text -> Filter
-(|=) a = Filter . pure . AttrHyph a
+-- | The star selector applies to all elements. Maps to @*@ in CSS.
 
 star :: Selector
-star = In (Filtered mempty Star)
+star = In (SelectorF (Refinement []) Star)
 
-with :: Selector -> Filter -> Selector
-with (In (Filtered fs e)) ps = In (Filtered (fs <> ps) e)
+-- | Select elements by name. The preferred syntax is to enable
+-- @OverloadedStrings@ and actually just use @\"element-name\"@ or use one of
+-- the predefined elements from "Clay.Elements".
+
+element :: Text -> Selector
+element e = In (SelectorF (Refinement []) (Elem e))
+
+-- | The deep selector composer. Maps to @sel1 sel2@ in CSS.
+
+(**) :: Selector -> Selector -> Selector
+(**) a b = In (SelectorF (Refinement []) (Deep a b))
+
+-- | The child selector composer. Maps to @sel1 > sel2@ in CSS.
 
 (|>) :: Selector -> Selector -> Selector
-(|>) a b = In (Filtered mempty (Child a b))
+(|>) a b = In (SelectorF (Refinement []) (Child a b))
+
+-- | The adjacent selector composer. Maps to @sel1 + sel2@ in CSS.
 
 (|+) :: Selector -> Selector -> Selector
-(|+) a b = In (Filtered mempty (Adjacent a b))
+(|+) a b = In (SelectorF (Refinement []) (Adjacent a b))
 
-deep :: Selector -> Selector -> Selector
-deep a b = In (Filtered mempty (Deep a b))
+-- | The filter selector composer, adds a filter to a selector. Maps to
+-- something like @sel#filter@ or @sel.filter@ in CSS, depending on the filter.
+
+with :: Selector -> Refinement -> Selector
+with (In (SelectorF (Refinement fs) e)) (Refinement ps) = In (SelectorF (Refinement (fs ++ ps)) e)
+
+-- | Filter elements by id. The preferred syntax is to enable
+-- @OverloadedStrings@ and use @\"#id-name\"@.
+
+byId :: Text -> Refinement
+byId = Refinement . pure . Id
+
+-- | Filter elements by class. The preferred syntax is to enable
+-- @OverloadedStrings@ and use @\".class-name\"@.
+
+byClass :: Text -> Refinement
+byClass = Refinement . pure . Class
+
+-- | Filter elements by pseudo selector or pseudo class. The preferred syntax
+-- is to enable @OverloadedStrings@ and use @\":pseudo-selector\"@ or use one
+-- of the predefined ones from "Clay.Pseudo".
+
+pseudo :: Text -> Refinement
+pseudo = Refinement . pure . Pseudo
+
+-- | Filter elements by pseudo selector functions. The preferred way is to use
+-- one of the predefined functions from "Clay.Pseudo".
+
+func :: Text -> [Text] -> Refinement
+func f = Refinement . pure . PseudoFunc f
+
+attr :: Text -> Refinement
+attr = Refinement . pure . Attr
+
+(@=) :: Text -> Text -> Refinement
+(@=) a = Refinement . pure . AttrVal a
+
+($=) :: Text -> Text -> Refinement
+($=) a = Refinement . pure . AttrEnds a
+
+(~=) :: Text -> Text -> Refinement
+(~=) a = Refinement . pure . AttrSpace a
+
+(|=) :: Text -> Text -> Refinement
+(|=) a = Refinement . pure . AttrHyph a
 
 -------------------------------------------------------------------------------
 
@@ -71,14 +100,13 @@ data Predicate
   | PseudoFunc Text [Text]
   deriving (Eq, Ord, Show)
 
-newtype Filter = Filter { unFilter :: [Predicate] }
-  deriving (Monoid, Eq, Ord, Show)
+newtype Refinement = Refinement { unFilter :: [Predicate] }
 
-instance IsString Filter where
-  fromString = predicateFromText . fromString
+instance IsString Refinement where
+  fromString = filterFromText . fromString
 
-predicateFromText :: Text -> Filter
-predicateFromText t = Filter $
+filterFromText :: Text -> Refinement
+filterFromText t = Refinement $
   case Text.uncons t of
     Just ('#', s) -> [Id     s]
     Just ('.', s) -> [Class  s]
@@ -98,21 +126,21 @@ data Path f
 
 newtype Fix f = In { out :: f (Fix f) }
 
-data Filtered a = Filtered Filter (Path a)
+data SelectorF a = SelectorF Refinement (Path a)
 
-type Selector = Fix Filtered
+type Selector = Fix SelectorF
 
-instance IsString (Fix Filtered) where
+instance IsString (Fix SelectorF) where
   fromString = text . fromString
 
 text :: Text -> Selector
 text t = In $
   case Text.uncons t of
-    Just ('#', s) -> Filtered (Filter [Id s]) Star
-    Just ('.', s) -> Filtered (Filter [Class s]) Star
-    _             -> Filtered mempty (Elem t)
+    Just ('#', s) -> SelectorF (Refinement [Id s]) Star
+    Just ('.', s) -> SelectorF (Refinement [Class s]) Star
+    _             -> SelectorF (Refinement []) (Elem t)
 
-instance Monoid (Fix Filtered) where
+instance Monoid (Fix SelectorF) where
   mempty      = error "Selector is a semigroup"
-  mappend a b = In (Filtered mempty (Combined a b))
+  mappend a b = In (SelectorF (Refinement []) (Combined a b))
 

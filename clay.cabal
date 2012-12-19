@@ -15,21 +15,24 @@ Library
 
   Exposed-Modules:
     Clay
+
+    Clay.Render
+    Clay.Stylesheet
+    Clay.Selector
+    Clay.Property
+
+    Clay.Pseudo
     Clay.Attributes
+    Clay.Elements
+
     Clay.Background
     Clay.Border
     Clay.Box
     Clay.Color
     Clay.Common
     Clay.Display
-    Clay.Elements
-    Clay.Filter
     Clay.Font
     Clay.Geometry
-    Clay.Property
-    Clay.Render
-    Clay.Rule
-    Clay.Selector
     Clay.Size
     Clay.Text
     Clay.Transform

@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.Render
-( Config(..)
+( Config (..)
 , pretty
 , compact
-, css
-, cssWith
+, render
+, renderWith
 )
 where
 
@@ -13,18 +13,19 @@ import Control.Monad.Writer
 import Data.Either
 import Data.Foldable (foldMap)
 import Data.List (sort)
+import Data.Maybe
 import Data.Text (Text)
 import Data.Text.Lazy.Builder
-import Prelude hiding (filter)
+import Prelude hiding (filter, (**))
 
-import qualified Data.Text         as Text
-import qualified Data.Text.Lazy.IO as Text
+import qualified Data.Text      as Text
+import qualified Data.Text.Lazy as Lazy
 
-import Clay.Rule hiding (Child)
+import Clay.Stylesheet hiding (Child)
 import Clay.Property
 import Clay.Selector
 
-import qualified Clay.Rule as Rule
+import qualified Clay.Stylesheet as Rule
 
 data Config = Config
   { indentation :: Builder
@@ -40,25 +41,34 @@ pretty = Config "  " "\n" " " True True
 compact :: Config
 compact = Config "" "" "" False False
 
-css :: Css -> IO ()
-css = cssWith pretty []
+-- | Render a stylesheet with the default configuration. The pretty printer is
+-- used by default.
 
-cssWith :: Config -> [Rule] -> Css -> IO ()
-cssWith cfg top (Css c)
-  = Text.putStr
-  . toLazyText
+render :: Css -> Lazy.Text
+render = renderWith pretty []
+
+-- | Render a stylesheet with a custom configuration and an optional outer
+-- scope.
+
+renderWith :: Config -> [App] -> Css -> Lazy.Text
+renderWith cfg top (S c)
+  = toLazyText
   . rules cfg top
   . execWriter
   $ c
 
-rules :: Config -> [Rule] -> Rules -> Builder
-rules cfg sel (Rules rs) = mconcat
-  [ rule cfg sel (lefts rs)
+rules :: Config -> [App] -> [Rule] -> Builder
+rules cfg sel rs = mconcat
+  [ rule cfg sel (mapMaybe property rs)
   , newline cfg
-  , foldMap (\(a, b) -> rules cfg (a : sel) b) (rights rs)
+  , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested rs
   ]
+  where property (Property k v) = Just (k, v)
+        property _              = Nothing
+        nested   (Nested a ns ) = Just (a, ns)
+        nested   _              = Nothing
 
-rule :: Config -> [Rule] -> [(Key (), Value)] -> Builder
+rule :: Config -> [App] -> [(Key (), Value)] -> Builder
 rule _   _   []    = mempty
 rule cfg sel props =
   let xs = collect =<< props
@@ -72,13 +82,13 @@ rule cfg sel props =
       , newline cfg
       ]
 
-merger :: [Rule] -> Selector
+merger :: [App] -> Selector
 merger []     = error "this should be fixed!"
 merger (x:xs) =
   case x of
     Rule.Child s -> case xs of [] -> s; _  -> merger xs |> s
-    Sub        s  -> case xs of [] -> s; _  -> merger xs `deep` s
-    Root       s  -> s `deep` merger xs
+    Sub        s  -> case xs of [] -> s; _  -> merger xs ** s
+    Root       s  -> s ** merger xs
     Pop        i  -> merger (drop i (x:xs))
     Self       f  -> merger xs `with` f
 
@@ -105,7 +115,7 @@ properties cfg xs =
 
 selector :: Config -> Selector -> Builder
 selector cfg = intersperse ("," <> newline cfg) . rec
-  where rec (In (Filtered ft p)) = (<> filter ft) <$>
+  where rec (In (SelectorF ft p)) = (<> filter ft) <$>
           case p of
             Star           -> ["*"]
             Elem t         -> [fromText t]
@@ -128,6 +138,6 @@ predicate ft = mconcat $
     Pseudo     a   -> [ ":", fromText a                                             ]
     PseudoFunc a p -> [ ":", fromText a, "(", intersperse "," (map fromText p), ")" ]
 
-filter :: Filter -> Builder
+filter :: Refinement -> Builder
 filter = foldMap predicate . sort . unFilter
 

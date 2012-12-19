@@ -18,7 +18,7 @@ accept, acceptCharset, accesskey, action, alt, async, autocomplete, autofocus,
   required, reversed, rows, rowspan, sandbox, scope, scoped, seamless,
   selected, shape, size, sizes, spellcheck, src, srcdoc, srclang, srcset,
   start, step, tabindex, target, translate, type_, typemustmatch, usemap,
-  value, width, wrap :: Filter
+  value, width, wrap :: Refinement
 
 accept = "accept"
 acceptCharset = "accept-charset"

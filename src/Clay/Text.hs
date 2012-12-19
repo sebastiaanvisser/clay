@@ -10,7 +10,7 @@ import Clay.Border
 import Clay.Color
 import Clay.Common
 import Clay.Property
-import Clay.Rule
+import Clay.Stylesheet
 import Clay.Size
 
 -------------------------------------------------------------------------------

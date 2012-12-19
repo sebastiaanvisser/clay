@@ -4,7 +4,7 @@ module Clay.Geometry where
 import Prelude hiding (Left, Right)
 
 import Clay.Property
-import Clay.Rule
+import Clay.Stylesheet
 import Clay.Size
 
 -------------------------------------------------------------------------------
