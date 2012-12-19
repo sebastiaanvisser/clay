@@ -4,6 +4,9 @@ module Clay
   render
 , renderWith
 
+, pretty
+, compact
+
 -- * The @Css@ monad for collecting style rules.
 
 , Css
@@ -54,24 +57,29 @@ module Clay
 , module Clay.Attributes
 , module Clay.Elements
 
+-- * Commonly used value types.
+
+, module Clay.Size
+, module Clay.Color
+
+-- * Values shared between multiple properties.
+
+, module Clay.Common
+
 -- * Embedded style properties.
 
 , module Clay.Background
 , module Clay.Border
 , module Clay.Box
-, module Clay.Color
-, module Clay.Common
 , module Clay.Display
 , module Clay.Font
 , module Clay.Geometry
-, module Clay.Size
 , module Clay.Text
 , module Clay.Transform
 
 -- * Creating custom properties.
 
 , module Clay.Property
-
 )
 where
 
