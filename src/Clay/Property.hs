@@ -71,6 +71,10 @@ instance Val a => Val (Maybe a) where
 instance (Val a, Val b) => Val (a, b) where
   value (a, b) = value a <> " " <> value b
 
+instance (Val a, Val b) => Val (Either a b) where
+  value (Left  a) = value a
+  value (Right a) = value a
+
 instance Val a => Val [a] where
   value xs = intersperse "," (map value xs)
 
