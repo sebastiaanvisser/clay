@@ -1,0 +1,24 @@
+<section id=install name=install>
+  <div class="one-col text">
+    <h4>Installation</h4>
+    <p>Clay is written in Haskell and requires the Glasgow Haskell
+    Compiler (GHC) to get installed. After installing GHC, and the
+    acompanying package manager Cabal, you can directly install Clay from
+    the Hackage package repository:</p>
+  </div>
+  <div class=code>
+    <pre><span class=Symbol>$</span> cabal update
+  <span class=Symbol>$</span> cabal install clay</pre>
+  </div>
+  <div class="one-col text">
+    <h4>Usage</h4>
+    <p>Using Clay requires you to create a Haskell program describing the
+    stylesheet and importing the Clay library. As a starting point we can
+    create a stylesheet to make the background color of your HTML body
+    solid red. Running the <code>main</code> function output the
+    generated CSS to the standard output.</p>
+  </div>
+  <div class=code>
+    <!--#include virtual=highlighted/first-step.hs.html -->
+  </div>
+</section>
