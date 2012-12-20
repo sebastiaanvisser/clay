@@ -46,6 +46,14 @@ module Clay.Display
 -- * Z-index.
 
 , zIndex
+
+-- * Pointer-events.
+
+, PointerEvents
+, pointerEvents
+, visiblePainted, visibleFill, visibleStroke, painted
+, fillEvents, strokeEvents, allEvents
+
 )
 where
 
@@ -168,4 +176,23 @@ rect t r b l = Clip (mconcat ["rect(", value t, ",", value r, ",", value b, ",",
 
 zIndex :: Integer -> Css
 zIndex i = key "z-index" (fromString (show i) :: Value)
+
+-------------------------------------------------------------------------------
+
+newtype PointerEvents = PointerEvents Value
+  deriving (Val, Other, Auto, Visible, None, Inherit)
+
+visiblePainted, visibleFill, visibleStroke, painted,
+  fillEvents, strokeEvents, allEvents :: PointerEvents
+
+visiblePainted = PointerEvents "visiblePainted"
+visibleFill    = PointerEvents "visibleFill"
+visibleStroke  = PointerEvents "visibleStroke"
+painted        = PointerEvents "painted"
+fillEvents     = PointerEvents "fill"
+strokeEvents   = PointerEvents "stroke"
+allEvents      = PointerEvents "all"
+
+pointerEvents :: PointerEvents -> Css
+pointerEvents = key "pointer-events"
 
