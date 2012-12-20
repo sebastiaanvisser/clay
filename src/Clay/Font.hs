@@ -1,5 +1,65 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, FlexibleInstances #-}
-module Clay.Font where
+{-# LANGUAGE
+    OverloadedStrings
+  , GeneralizedNewtypeDeriving
+  , FlexibleInstances
+  #-}
+module Clay.Font
+(
+
+-- * Generic font property.
+
+  Font (font)
+, Optional (..)
+, Required (..)
+
+-- * Color.
+
+, fontColor
+, color
+
+-- * Font-family.
+
+, fontFamily
+, sansSerif
+, serif
+, monospace
+
+-- * Font-size.
+
+, FontSize
+, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
+, fontSize
+, fontSizeCustom
+
+-- * Font-style
+
+, FontStyle
+, italic, oblique
+, fontStyle
+
+-- * Font-variant.
+
+, FontVariant
+, smallCaps
+, fontVariant
+
+-- * Font-weight
+
+, FontWeight
+, bold, bolder, lighter
+, weight
+, fontWeight
+
+-- * Named fonts.
+
+, NamedFont
+, caption, icon, menu, messageBox, smallCaption, statusBar
+
+-- * Line-height.
+
+, lineHeight
+)
+where
 
 import Data.Text (pack)
 import Data.Monoid
@@ -11,27 +71,40 @@ import Clay.Property
 import Clay.Stylesheet
 import Clay.Size
 
--- Background property as a type class.
+-- | We implement the generic font property as a type class that accepts
+-- multiple value types. This allows us to combine different font aspects into
+-- a shorthand syntax. Fonts require a mandatory part and have a optional a
+-- part.
 
 class Val a => Font a where
   font :: a -> Css
   font = key "font"
 
-data FontOptional = FontOptional (Maybe FontWeight) (Maybe FontVariant) (Maybe FontStyle)
+data Optional =
+  Optional
+  (Maybe FontWeight)
+  (Maybe FontVariant)
+  (Maybe FontStyle)
 
-instance Val FontOptional where
-  value (FontOptional a b c) = value (a ! b ! c)
+instance Val Optional where
+  value (Optional a b c) = value (a ! b ! c)
 
-data FontMandatory a = FontMandatory (Size a) (Maybe (Size a)) [Literal]
+data Required a =
+  Required
+  (Size a)
+  (Maybe (Size a))
+  [Literal]
 
-instance Val (FontMandatory a) where
-  value (FontMandatory a Nothing  c) = value (a ! c)
-  value (FontMandatory a (Just b) c) = value ((value a <> "/" <> value b) ! c)
+instance Val (Required a) where
+  value (Required a Nothing  c) = value (a ! c)
+  value (Required a (Just b) c) = value ((value a <> "/" <> value b) ! c)
 
-instance Font (              FontMandatory a)
-instance Font (FontOptional, FontMandatory a)
+instance Font (          Required a)
+instance Font (Optional, Required a)
 
 -------------------------------------------------------------------------------
+
+-- | An alias for color.
 
 fontColor :: Color -> Css
 fontColor = key "color"
