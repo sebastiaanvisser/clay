@@ -76,10 +76,6 @@ module Clay
 , module Clay.Geometry
 , module Clay.Text
 , module Clay.Transform
-
--- * Creating custom properties.
-
-, module Clay.Property
 )
 where
 
@@ -88,7 +84,6 @@ import Prelude hiding ((**))
 import Clay.Render
 import Clay.Stylesheet
 import Clay.Selector
-import Clay.Property (Key, Value, Prefixed, Val(..), noCommas, (!))
 
 import Clay.Pseudo
 import Clay.Elements hiding (link, em)
