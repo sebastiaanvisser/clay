@@ -21,4 +21,3 @@ centered =
   do width (px 800)
      boxSizing borderBox
      sym2 margin 0 auto
-

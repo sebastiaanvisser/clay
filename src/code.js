@@ -8,9 +8,10 @@ $(window).scroll
     }
   );
 
-$("nav a").click
+$("a").click
   ( function (ev)
     {
+      if ($(ev.target).attr("href")[0] != "#") return;
       var target = $("*[name=" + $(ev.target).attr("href").substr(1) + "]");
 
       $("html, body").animate

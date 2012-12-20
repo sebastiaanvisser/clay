@@ -13,9 +13,9 @@ main :: IO ()
 main =
   do args <- getArgs
      case args of
-       "compact" : _ -> Text.putStr (cssWith compact [] site)
-       "pretty"  : _ -> Text.putStr (cssWith pretty  [] site)
-       _             -> Text.putStr (css site)
+       "compact" : _ -> Text.putStr (renderWith compact [] site)
+       "pretty"  : _ -> Text.putStr (renderWith pretty  [] site)
+       _             -> Text.putStr (render site)
 
 site :: Css
 site =
@@ -23,6 +23,8 @@ site =
        do defaultFont
           sym margin  0
           sym padding 0
+
+          "#container" ? paddingTop 360
 
           section ?
             do sections
@@ -33,8 +35,10 @@ site =
           "#about"   ? theAbout
           "#example" ? theExample
           "#source"  ? theSource
+          "#haskell" ? theHaskell
+          footer     ? theFooter
 
-          "#about" <> "#install" <> "#source" ?
+          "#about" <> "#install" <> "#source" <> footer ?
             backgroundColor "#f8f8f8"
 
   where
@@ -54,7 +58,7 @@ site =
          do fontSize (px 20)
             lineHeight (px 30)
 
-            a `with` hover ?
+            a # hover ?
               do textDecoration underline
                  color (highlight -. 40)
 
@@ -71,17 +75,21 @@ site =
             ".goto" ? paddingLeft (px 40)
 
   columns =
-    ".two-col" ?
-      do div <?
-           do width (pct 50)
-              boxSizing borderBox
-         div `with` nthChild "1" <?
-           do float pLeft
-              paddingRight (px 20)
-         div `with` nthChild "2" <?
-           do float pRight
-              paddingLeft (px 20)
-         br ? clear both
+    do ".one-col" ?
+         do width (px 500)
+            boxSizing borderBox
+
+       ".two-col" ?
+         do div <?
+              do width (pct 50)
+                 boxSizing borderBox
+            div # nthChild "1" <?
+              do float sideLeft
+                 paddingRight (px 20)
+            div # nthChild "2" <?
+              do float sideRight
+                 paddingLeft (px 20)
+            br ? clear both
 
 -------------------------------------------------------------------------------
 
@@ -115,72 +123,64 @@ theHeader =
      top (px 0)
      left (px 0)
      right (px 0)
+     height (px 360)
 
-     after &
+     before &
        do position absolute
           top    (px 0)
           bottom (px 0)
           left   (px 0)
           right  (px 0)
           content (stringContent "")
-          "pointer-events" -: "none"
-          "background-size" -: "100% 5px"
-          "background-image" -:
-             ( "-webkit-repeating-linear-gradient(top"
-             <> ", rgba(255,255,255,0.00)   0%"
-             <> ", rgba(255,255,255,0.08)  50%"
-             <> ", rgba(255,255,255,0.00) 100%"
-             <> ");"
-             )
+          pointerEvents none
+          backgroundSize (pct 100 `by` px 5)
+          backgroundImage $
+            repeatingLinearGradient (straight sideTop)
+              [ ( setA  0 white,   0)
+              , ( setA 20 white,  50)
+              , ( setA  0 white, 100)
+              ]
 
      div <?
        do centered
           paddingTop (px 60)
           paddingBottom (px 60)
+          height (pct 100)
           overflow hidden
 
-          position relative
-          before &
-            do position absolute
-               let m = -80
-               top    (px m)
-               bottom (px m)
-               left   (px 0)
-               right  (px 0)
-               content (stringContent "")
-               "pointer-events" -: "none"
-               "background-image" -:
-                  ( "-webkit-radial-gradient(center, ellipse"
-                  <> ", rgba(255,255,0,0.6) 0%,rgba(255,255,0,0) 65%);"
-                  )
+          backgroundImage $
+            radialGradient
+              sideCenter
+              ellipse
+              [ ( setA 150 yellow ,  0 )
+              , ( setA  25 yellow , 50 )
+              , ( setA   0 yellow , 65 )
+              ]
 
-     h1 <> h3 ?
-       do textTransform uppercase
-          textAlign (alignSide pCenter)
-          sym margin 0
+          h1 <> h3 ?
+            do textTransform uppercase
+               textAlign (alignSide sideCenter)
+               sym margin 0
 
-     h1 ?
-       do fontSize (px 90)
-          color (setA 210 white)
-          id                 letterSpacing (em 0.40)
-          span `with` ".a" ? letterSpacing (em 0.36)
-          span `with` ".y" ? letterSpacing (em 0.00)
-          textShadow 0 0 (px 20) (mainColor -. 60)
-          a ? hover &
-            do color white
-               textShadow 0 0 (px 20) (mainColor -. 120)
+          h1 ?
+            do fontSize (px 90)
+               color (setA 200 white)
+               id                 letterSpacing (em 0.40)
+               span # ".a" ? letterSpacing (em 0.36)
+               span # ".y" ? letterSpacing (em 0.00)
+               textShadow 0 0 (px 20) (setA 200 (mainColor -. 80))
+               a ? hover &
+                 do color white
+                    textShadow 0 0 (px 20) (mainColor -. 120)
 
-     h3 ?
-       do fontSize (px 35)
-          color (setA 120 black)
-          letterSpacing (em 0.3)
-          a `with` hover ?
-            do color (setA 220 black)
-               textShadow 0 0 (px 10) white
+          h3 ?
+            do fontSize (px 35)
+               color (setA 120 black)
+               letterSpacing (em 0.3)
+               a # hover ? color (setA 220 black)
 
 theAbout :: Css
-theAbout =
-  do paddingTop (px 400)
+theAbout = return ()
 
 theNav :: Css
 theNav =
@@ -189,6 +189,10 @@ theNav =
      fontSize (px 24)
      sym2 padding 20 0
      textTransform uppercase
+     position absolute
+     left 0
+     right 0
+     bottom 0
 
      div <? centered
      a ? do paddingRight (px 42)
@@ -203,23 +207,37 @@ codeBlock :: Css
 codeBlock = ".code" ?
 
     do boxSizing borderBox
-       borderRadius 2
+       borderRadius (px 2)
        width (px 600)
        sym padding 20
        marginTop (px 60)
-       background (vGradient (highlight -. 160) (highlight -. 140))
+       background (vGradient (highlight -. 150) (highlight -. 140))
 
        pre ?
          do fontSize   (px 16)
             fontFamily ["Monaco", "Courier New", monospace]
+            lineHeight (ex 2.6)
             color (setA 160 white)
+            sym margin 0
+            ".Comment"  ? color (rgb 255 60 100)
             ".Function" ? color white
             ".Symbol"   ? color orange
             ".Keyword"  ? color (highlight +. 20)
             ".Number"   ? color (setG 100 orange)
             ".ConId"    ? color (highlight +. 100)
+            ".String"   ? color (setG 60 orange)
 
 theSource :: Css
-theSource =
-  minHeight (px 1000)
+theSource = return ()
+
+theHaskell :: Css
+theHaskell = minHeight (px 1000)
+
+theFooter :: Css
+theFooter =
+  div <?
+    do centered
+       textAlign (alignSide sideCenter)
+       color (setA 150 black)
+       sym2 padding (px 10) 0
 

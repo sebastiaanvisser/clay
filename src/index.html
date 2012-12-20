@@ -1,4 +1,4 @@
-<doctype html>
+<!doctype html>
 <html>
 
   <head>
@@ -7,8 +7,9 @@
     <meta name='author' content='Sebastiaan Visser' />
     <meta name='description' content='A CSS preprocessor as embedded Haskell' />
     <link href=style-compact.css rel=stylesheet type=text/css>
-    <script src=http://code.jquery.com/jquery-1.8.3.min.js></script>
-    <script type="text/javascript" src="//use.typekit.net/vbq3yfm.js"></script>
+    <script src=jquery.js></script>
+    <script type="text/javascript" account=laszlito src="http://use.typekit.net/wvl3oox.js"></script>
+    <!-- <script type="text/javascript" account=sebas src="://use.typekit.net/wvl3oox.js"></script> -->
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </head>
 
@@ -19,12 +20,12 @@
       <header>
         <div>
           <h1><a href=https://github.com/sebastiaanvisser/clay>Cl<span class=a>a</span><span class=y>y<span></a></h1>
-          <h3>Unlimited<sup><a href="#">*</a></sup> CSS</h3>
+          <h3>Unlimited<sup><a href="#footer">*</a></sup> CSS</h3>
         </div>
         <nav>
           <div>
             <a href="#about">About</a>
-            <a href="#example">Example</a>
+            <a href="#features">Features</a>
             <a href="#install">Install</a>
             <a href="#documentation">Documentation</a>
             <a href="#source">Source</a>
@@ -44,6 +45,17 @@
               that all CSS selectors and style rules are first class Haskell
               functions, which makes reuse and composability easy.</p>
             </div>
+            <div class=code>
+              <!--#include virtual=highlighted/example.hs.html -->
+            </div>
+            <br>
+          </div>
+        </div>
+      </section>
+
+      <section id=features name=features>
+        <div>
+          <div class=two-col>
             <div class=text>
               <h4>Features</h4>
               <ul>
@@ -61,40 +73,45 @@
                 <li>Both pretty and compact output printers.</li>
               </ul>
             </div>
+            <div class=text>
+              <h4>Todos</h4>
+              <ul>
+                <li>...</li>
+                <li>...</li>
+              </ul>
+            </div>
             <br>
           </div>
         </div>
       </section>
 
-      <section id=example name=example>
-        <div class=text>
-          <h4>Example</h4>
-        </div>
-        <div class=code>
-          <!--#include virtual=highlighted/example.hs.html -->
-        </div>
-      </section>
-
       <section id=install name=install>
-        <div class=text>
-          <h4>Install</h4>
+        <div class="one-col text">
+          <h4>Installation</h4>
           <p>Clay is written in Haskell and requires the Glasgow Haskell
-          Compiler (GHC) to get installed. After installing GHC and the
+          Compiler (GHC) to get installed. After installing GHC, and the
           acompanying package manager Cabal, you can directly install Clay from
-          Hackage:</p>
+          the Hackage package repository:</p>
         </div>
         <div class=code>
-          <pre><span class=symbol>$</span> cabal update
-<span class=symbol>$</span> cabal install clay</pre>
+          <pre><span class=Symbol>$</span> cabal update
+<span class=Symbol>$</span> cabal install clay</pre>
+        </div>
+        <div class="one-col text">
+          <h4>Usage</h4>
+          <p>Using Clay requires you to create a Haskell program describing the
+          stylesheet and importing the Clay library. As a starting point we can
+          create a stylesheet to make the background color of your HTML body
+          solid red. Running the <code>main</code> function output the
+          generated CSS to the standard output.</p>
+        </div>
+        <div class=code>
+          <!--#include virtual=highlighted/first-step.hs.html -->
         </div>
       </section>
 
       <section id=documentation name=documentation>
-        <div>
-          <div class=text>
-            <h4>Documentation</h4>
-          </div>
-        </div>
+        <!--#include virtual=documentation.html -->
       </section>
 
       <section id=source name=source>
@@ -120,6 +137,7 @@
             <p class=goto><a href=src/Style.hs>» stylesheet source in Clay</a></p>
             <p class=goto><a href=style-pretty.css>» generated stylesheet</a></p>
           </div>
+          <br>
         </div>
       </section>
 
@@ -130,7 +148,7 @@
       </section>
 
       <footer>
-        <div><sup>*</sup>Within reasonable limits only!</div>
+        <div name=footer><sup>*</sup>Within reasonable limits only!</div>
       </footer>
 
     </div>
