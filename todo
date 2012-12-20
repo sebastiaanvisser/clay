@@ -1,0 +1,21 @@
+meta:
+- First todo: move todos into bug tracker or something.
+- Create simple README with package description and link to website and hackage.
+- Finish up the documentation on the website.
+- Add version boundries on dependencies.
+- Include source repository into cabal file.
+- Cleanup cabal file.
+- Write release notes.
+
+code:
+- Add more size types.
+- Check if we need more color types.
+- Better support for computing with colors.
+- Maybe ditch the Num instances for sizes.
+- Add repeating gradients, radial gradients.
+- Allow mutliple box-shadows.
+- Add animation stuff.
+- Add media query stuff.
+- Add all of CSS, http://www.w3.org/TR/CSS21/propidx.html.
+- More...
+
