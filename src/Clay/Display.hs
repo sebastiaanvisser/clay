@@ -1,5 +1,53 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Display where
+module Clay.Display
+(
+-- * Float.
+
+  float
+, Clear
+, both
+, clearLeft
+, clearRight
+, clear
+
+-- * Position.
+
+, Position
+, static, absolute, fixed, relative
+, position
+
+-- * Display
+
+, Display
+, inline, block, listItem, runIn, inlineBlock, table, inlineTable, tableRowGroup
+, tableHeaderGroup, tableFooterGroup, tableRow, tableColumnGroup, tableColumn
+, tableCell, tableCaption, displayNone, displayInherit, flex
+, inlineFlex, grid, inlineGrid
+, display
+
+-- * Overlow
+
+, Overflow
+, scroll
+, overflow, overflowX, overflowY
+
+-- * Visibility.
+
+, Visibility
+, collapse
+, visibility
+
+-- Clipping.
+
+, Clip
+, clip
+, rect
+
+-- * Z-index.
+
+, zIndex
+)
+where
 
 import Data.Monoid
 import Data.String
@@ -12,14 +60,11 @@ import Clay.Common
 
 -------------------------------------------------------------------------------
 
-zIndex :: Integer -> Css
-zIndex i = key "z-index" (fromString (show i) :: Value)
-
 float :: Side -> Css
 float = key "float"
 
 newtype Clear = Clear Value
-  deriving (Val, None, Inherit)
+  deriving (Val, Other, None, Inherit)
 
 both :: Clear
 both = Clear "both"
@@ -36,10 +81,7 @@ clear = key "clear"
 -------------------------------------------------------------------------------
 
 newtype Position = Position Value
-  deriving Val
-
-instance Other   Position where other   = Position
-instance Inherit Position where inherit = Position "inherit"
+  deriving (Val, Other, Inherit)
 
 static, absolute, fixed, relative :: Position
 
@@ -54,12 +96,12 @@ position = key "position"
 -------------------------------------------------------------------------------
 
 newtype Display = Display Value
-  deriving (Val, None, Inherit, Other)
+  deriving (Val, Other, None, Inherit)
 
 inline, block, listItem, runIn, inlineBlock, table, inlineTable, tableRowGroup,
   tableHeaderGroup, tableFooterGroup, tableRow, tableColumnGroup, tableColumn,
-  tableCell, tableCaption, displayNone, displayInherit, inline, flex,
-  inlineFlex, grid, inlineGrid :: Display
+  tableCell, tableCaption, displayNone, displayInherit, flex, inlineFlex, grid,
+  inlineGrid :: Display
 
 inline           = Display "inline"
 block            = Display "block"
@@ -89,24 +131,21 @@ display = key "display"
 -------------------------------------------------------------------------------
 
 newtype Overflow = Overflow Value
-  deriving (Val, Auto, Inherit, Hidden, Visible)
+  deriving (Val, Other, Auto, Inherit, Hidden, Visible)
 
 scroll :: Overflow
 scroll = Overflow "scroll"
 
-overflow :: Overflow -> Css
-overflow = key "overflow"
+overflow, overflowX, overflowY :: Overflow -> Css
 
-overflowX :: Overflow -> Css
+overflow  = key "overflow"
 overflowX = key "overflow-y"
-
-overflowY :: Overflow -> Css
 overflowY = key "overflow-x"
 
 -------------------------------------------------------------------------------
 
 newtype Visibility = Visibility Value
-  deriving (Val, Auto, Inherit, Hidden, Visible)
+  deriving (Val, Other, Auto, Inherit, Hidden, Visible)
 
 collapse :: Visibility
 collapse = Visibility "collapse"
@@ -117,11 +156,16 @@ visibility = key "overflow"
 -------------------------------------------------------------------------------
 
 newtype Clip = Clip Value
-  deriving (Val, Auto, Inherit)
+  deriving (Val, Other, Auto, Inherit)
 
 clip :: Clip -> Css
 clip = key "clip"
 
 rect :: Size a -> Size a -> Size a -> Size a -> Clip
 rect t r b l = Clip (mconcat ["rect(", value t, ",", value r, ",", value b, ",", value l, ")"])
+
+-------------------------------------------------------------------------------
+
+zIndex :: Integer -> Css
+zIndex i = key "z-index" (fromString (show i) :: Value)
 

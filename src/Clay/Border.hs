@@ -1,5 +1,24 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Border where
+module Clay.Border
+(
+-- * Stroke type.
+  Stroke
+, solid, dotted, dashed, double, wavy
+
+-- * Border properties.
+
+, border, borderTop, borderLeft, borderBottom, borderRight
+, borderColor, borderLeftColor, borderRightColor, borderTopColor, borderBottomColor
+, borderStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle
+, borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth
+
+-- * Border radius.
+
+, borderRadius
+, borderTopLeftRadius, borderTopRightRadius
+, borderBottomLeftRadius, borderBottomRightRadius
+)
+where
 
 import Clay.Property
 import Clay.Stylesheet
@@ -8,12 +27,7 @@ import Clay.Common
 import Clay.Size
 
 newtype Stroke = Stroke Value
-  deriving Val
-
-instance Auto    Stroke where auto    = Stroke "auto"
-instance Inherit Stroke where inherit = Stroke "inherit"
-instance None    Stroke where none    = Stroke "none"
-instance Other   Stroke where other   = Stroke
+  deriving (Val, Other, Inherit, Auto, None)
 
 solid, dotted, dashed, double, wavy :: Stroke
 
@@ -31,22 +45,25 @@ borderLeft    a b c = key "border-left"   (a ! b ! c)
 borderBottom  a b c = key "border-bottom" (a ! b ! c)
 borderRight   a b c = key "border-right"  (a ! b ! c)
 
-borderLeftColor, borderRightColor, borderTopColor, borderBottomColor :: Color -> Css
+borderColor, borderLeftColor, borderRightColor, borderTopColor, borderBottomColor :: Color -> Css
 
+borderColor       = key "border-color"
 borderLeftColor   = key "border-left-color"
 borderRightColor  = key "border-right-color"
 borderTopColor    = key "border-top-color"
 borderBottomColor = key "border-bottom-color"
 
-borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle :: Stroke -> Css
+borderStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle :: Stroke -> Css
 
+borderStyle       = key "border-style"
 borderLeftStyle   = key "border-left-style"
 borderRightStyle  = key "border-right-style"
 borderTopStyle    = key "border-top-style"
 borderBottomStyle = key "border-bottom-style"
 
-borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size Abs -> Css
+borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size Abs -> Css
 
+borderWidth       = key "border-width"
 borderLeftWidth   = key "border-left-width"
 borderRightWidth  = key "border-right-width"
 borderTopWidth    = key "border-top-width"
@@ -54,7 +71,7 @@ borderBottomWidth = key "border-bottom-width"
 
 -------------------------------------------------------------------------------
 
-borderRadius :: Size Abs -> Css
+borderRadius :: Size a -> Css
 borderRadius = key "border-radius"
 
 borderTopLeftRadius, borderTopRightRadius,

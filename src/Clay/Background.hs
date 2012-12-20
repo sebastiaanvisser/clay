@@ -98,8 +98,8 @@ import Clay.Stylesheet
 import Clay.Size
 
 -- | We implement the generic background property as a type class that accepts
--- multiple values types. This allows us to combine different background
--- aspects into a shorthand syntax.
+-- multiple value types. This allows us to combine different background aspects
+-- into a shorthand syntax.
 
 class Val a => Background a where
   background :: a -> Css

@@ -1,5 +1,11 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Box where
+module Clay.Box
+( BoxType
+, paddingBox, borderBox, contentBox
+, boxSizing
+, boxShadow
+)
+where
 
 import Data.Monoid
 
