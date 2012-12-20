@@ -1,4 +1,4 @@
-<doctype html>
+<!doctype html>
 <html>
 
   <head>
@@ -7,8 +7,9 @@
     <meta name='author' content='Sebastiaan Visser' />
     <meta name='description' content='A CSS preprocessor as embedded Haskell' />
     <link href=style-compact.css rel=stylesheet type=text/css>
-    <script src=http://code.jquery.com/jquery-1.8.3.min.js></script>
-    <script type="text/javascript" src="//use.typekit.net/vbq3yfm.js"></script>
+    <script src=jquery.js></script>
+    <script type="text/javascript" account=laszlito src="http://use.typekit.net/wvl3oox.js"></script>
+    <!-- <script type="text/javascript" account=sebas src="://use.typekit.net/wvl3oox.js"></script> -->
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </head>
 
@@ -19,12 +20,12 @@
       <header>
         <div>
           <h1><a href=https://github.com/sebastiaanvisser/clay>Cl<span class=a>a</span><span class=y>y<span></a></h1>
-          <h3>Unlimited<sup><a href="#">*</a></sup> CSS</h3>
+          <h3>Unlimited<sup><a href="#footer">*</a></sup> CSS</h3>
         </div>
         <nav>
           <div>
             <a href="#about">About</a>
-            <a href="#example">Example</a>
+            <a href="#features">Features</a>
             <a href="#install">Install</a>
             <a href="#documentation">Documentation</a>
             <a href="#source">Source</a>
@@ -44,34 +45,8 @@
               that all CSS selectors and style rules are first class Haskell
               functions, which makes reuse and composability easy.</p>
             </div>
-            <div class=text>
-              <h4>Features</h4>
-              <ul>
-                <li>First class selectors and style properties.</li>
-                <li>Typed values.</li>
-                <li>Nested style rules.</li>
-                <li>Access to outer scopes in nested rules.</li>
-                <li>Modules, functions, mixins, etc.</li>
-                <li>Size and color arithmetics.</li>
-                <li>Recognizable syntax, inspired by CSS.</li>
-                <li>Easily extensible with new functionality.</li>
-                <li>Near-total coverage of all of CSS.</li>
-                <li>Easy fall-back for uncovered parts.</li>
-                <li>Automatic addition of browser prefixes.</li>
-                <li>Both pretty and compact output printers.</li>
-              </ul>
-            </div>
-            <br>
-          </div>
-        </div>
-      </section>
-
-      <section id=example name=example>
-        <div class=text>
-          <h4>Example</h4>
-        </div>
-        <div class=code>
-          <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+            <div class=code>
+              <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
 <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">)</span>
 
 <span class="Function">highlight</span> <span class="Symbol">::</span> <span class="ConId">Color</span>
@@ -94,31 +69,103 @@
   <span class="Keyword">do</span> <span class="VarId">width</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">800</span><span class="Symbol">)</span>
      <span class="VarId">boxSizing</span> <span class="VarId">borderBox</span>
      <span class="VarId">sym2</span> <span class="VarId">margin</span> <span class="Number">0</span> <span class="VarId">auto</span>
-
 </pre>
+            </div>
+            <br>
+          </div>
+        </div>
+      </section>
+
+      <section id=features name=features>
+        <div>
+          <div class=two-col>
+            <div class=text>
+              <h4>Features</h4>
+              <ul>
+                <li>First class selectors and style properties.</li>
+                <li>Typed values.</li>
+                <li>Nested style rules.</li>
+                <li>Access to outer scopes in nested rules.</li>
+                <li>Modules, functions, mixins, etc.</li>
+                <li>Size and color arithmetics.</li>
+                <li>Recognizable syntax, inspired by CSS.</li>
+                <li>Easily extensible with new functionality.</li>
+                <li>Near-total coverage of all of CSS.</li>
+                <li>Easy fall-back for uncovered parts.</li>
+                <li>Automatic addition of browser prefixes.</li>
+                <li>Both pretty and compact output printers.</li>
+              </ul>
+            </div>
+            <div class=text>
+              <h4>Todos</h4>
+              <ul>
+                <li>...</li>
+                <li>...</li>
+              </ul>
+            </div>
+            <br>
+          </div>
         </div>
       </section>
 
       <section id=install name=install>
-        <div class=text>
-          <h4>Install</h4>
+        <div class="one-col text">
+          <h4>Installation</h4>
           <p>Clay is written in Haskell and requires the Glasgow Haskell
-          Compiler (GHC) to get installed. After installing GHC and the
+          Compiler (GHC) to get installed. After installing GHC, and the
           acompanying package manager Cabal, you can directly install Clay from
-          Hackage:</p>
+          the Hackage package repository:</p>
         </div>
         <div class=code>
-          <pre><span class=symbol>$</span> cabal update
-<span class=symbol>$</span> cabal install clay</pre>
+          <pre><span class=Symbol>$</span> cabal update
+<span class=Symbol>$</span> cabal install clay</pre>
+        </div>
+        <div class="one-col text">
+          <h4>Usage</h4>
+          <p>Using Clay requires you to create a Haskell program describing the
+          stylesheet and importing the Clay library. As a starting point we can
+          create a stylesheet to make the background color of your HTML body
+          solid red. Running the <code>main</code> function output the
+          generated CSS to the standard output.</p>
+        </div>
+        <div class=code>
+          <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+<span class="Keyword">import</span> <span class="Keyword">qualified</span> <span class="ConId">Data.Text.Lazy.IO</span> <span class="Keyword">as</span> <span class="ConId">Text</span>
+
+<span class="Function">main</span> <span class="Symbol">::</span> <span class="ConId">IO</span> <span class="Symbol">()</span>
+<span class="Function">main</span> <span class="Symbol">=</span> <span class="ConId">Text.</span><span class="VarId">putStr</span> <span class="Symbol">(</span><span class="VarId">render</span> <span class="VarId">myStylesheet</span><span class="Symbol">)</span>
+
+<span class="Function">myStylesheet</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">myStylesheet</span> <span class="Symbol">=</span> <span class="VarId">body</span> <span class="Symbol">?</span> <span class="VarId">background</span> <span class="VarId">red</span>
+</pre>
         </div>
       </section>
 
       <section id=documentation name=documentation>
-        <div>
-          <div class=text>
-            <h4>Documentation</h4>
-          </div>
-        </div>
+        <div class="text one-col">
+  <h4>Documentation</h4>
+  <p>clay is an edsl that uses a monad to collect style rules</p>
+  <p>style rules are combinations of selectors combined with a list of properties</p>
+  <p>style rules be composed and be nested to create a stylesheet</p>
+  <p>stylesheets can be rendered to plain old css.</p>
+  <h4>Types</h4>
+  <p>to get start with clay it is useful to have several concepts clear</p>
+  <p>the most important types to know are Css, Selector, Key and Value, together with the Val type class</p>
+  <p>css is the monadic context in which we collect style rules and properties</p>
+  <p>rules map selectors to list of proprties, optinally combined with nested rules</p>
+</div>
+<div class=code>
+  <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="Keyword">import</span> <span class="ConId">Clay</span><span class="Symbol">;</span> <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">((**),</span> <span class="VarId">div</span><span class="Symbol">)</span>
+
+<span class="Function">myRule</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">myRule</span> <span class="Symbol">=</span> <span class="VarId">html</span> <span class="Symbol">|&gt;</span> <span class="VarId">body</span> <span class="Symbol">**</span> <span class="VarId">div</span> <span class="Symbol">#</span> <span class="String">&quot;.container&quot;</span> <span class="Symbol">?</span>
+  <span class="Keyword">do</span> <span class="VarId">background</span>  <span class="VarId">black</span>
+     <span class="VarId">color</span>       <span class="VarId">white</span>
+     <span class="VarId">border</span>      <span class="VarId">solid</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">1</span><span class="Symbol">)</span> <span class="VarId">green</span>
+</pre>
+</div>
+
       </section>
 
       <section id=source name=source>
@@ -144,6 +191,7 @@
             <p class=goto><a href=src/Style.hs>» stylesheet source in Clay</a></p>
             <p class=goto><a href=style-pretty.css>» generated stylesheet</a></p>
           </div>
+          <br>
         </div>
       </section>
 
@@ -154,7 +202,7 @@
       </section>
 
       <footer>
-        <div><sup>*</sup>Within reasonable limits only!</div>
+        <div name=footer><sup>*</sup>Within reasonable limits only!</div>
       </footer>
 
     </div>
@@ -162,4 +210,4 @@
   </body>
   <script src=code.js></script>
 </html>
-<!-- site generated at Tue Dec 18 12:18:28 CET 2012 -->
+<!-- site generated at Thu Dec 20 20:58:42 CET 2012 -->

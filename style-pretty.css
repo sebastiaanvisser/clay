@@ -14,6 +14,11 @@ body a
   color           : inherit;
 }
 
+body *#container
+{
+  padding-top : 360px;
+}
+
 body section
 {
   -webkit-box-sizing : border-box;
@@ -38,18 +43,25 @@ body section *.code
   width              : 600px;
   padding            : 20px 20px 20px 20px;
   margin-top         : 60px;
-  background         : -webkit-linear-gradient(top,rgb(0,0,30) 0.0%,rgb(0,0,50) 100.0%);
-  background         : -moz-linear-gradient(top,rgb(0,0,30) 0.0%,rgb(0,0,50) 100.0%);
-  background         : -ms-linear-gradient(top,rgb(0,0,30) 0.0%,rgb(0,0,50) 100.0%);
-  background         : -o-linear-gradient(top,rgb(0,0,30) 0.0%,rgb(0,0,50) 100.0%);
-  background         : linear-gradient(top,rgb(0,0,30) 0.0%,rgb(0,0,50) 100.0%);
+  background         : -webkit-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
+  background         : -moz-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
+  background         : -ms-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
+  background         : -o-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
+  background         : linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
 }
 
 body section *.code pre
 {
   font-size   : 16px;
   font-family : "Monaco","Courier New","fixed";
+  line-height : 2.6ex;
   color       : rgba(255,255,255,0.6250);
+  margin      : 0px 0px 0px 0px;
+}
+
+body section *.code pre *.Comment
+{
+  color : rgb(255,60,100);
 }
 
 body section *.code pre *.Function
@@ -75,6 +87,11 @@ body section *.code pre *.Number
 body section *.code pre *.ConId
 {
   color : rgb(156,235,255);
+}
+
+body section *.code pre *.String
+{
+  color : rgb(255,60,0);
 }
 
 body section > div
@@ -123,6 +140,16 @@ body section *.text *.goto
   padding-left : 40px;
 }
 
+body section *.one-col
+{
+  width              : 500px;
+  -webkit-box-sizing : border-box;
+  -moz-box-sizing    : border-box;
+  -ms-box-sizing     : border-box;
+  -o-box-sizing      : border-box;
+  box-sizing         : border-box;
+}
+
 
 body section *.two-col > div
 {
@@ -162,9 +189,10 @@ body header
   top        : 0px;
   left       : 0px;
   right      : 0px;
+  height     : 360px;
 }
 
-body header:after
+body header:before
 {
   position         : absolute;
   top              : 0px;
@@ -173,8 +201,12 @@ body header:after
   right            : 0px;
   content          : "";
   pointer-events   : none;
-  background-size  : 100% 5px;
-  background-image : -webkit-repeating-linear-gradient(top, rgba(255,255,255,0.00)   0%, rgba(255,255,255,0.08)  50%, rgba(255,255,255,0.00) 100%);;
+  background-size  : 100.0% 5px;
+  background-image : -webkit-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.0781) 50.0%,rgba(255,255,255,0.0000) 100.0%);
+  background-image : -moz-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.0781) 50.0%,rgba(255,255,255,0.0000) 100.0%);
+  background-image : -ms-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.0781) 50.0%,rgba(255,255,255,0.0000) 100.0%);
+  background-image : -o-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.0781) 50.0%,rgba(255,255,255,0.0000) 100.0%);
+  background-image : repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.0%,rgba(255,255,255,0.0781) 50.0%,rgba(255,255,255,0.0000) 100.0%);
 }
 
 body header > div
@@ -188,66 +220,58 @@ body header > div
   margin             : 0px auto 0px auto;
   padding-top        : 60px;
   padding-bottom     : 60px;
+  height             : 100.0%;
   overflow           : hidden;
-  position           : relative;
+  background-image   : -webkit-radial-gradient(center,ellipse,rgba(255,255,0,0.5859) 0.0%,rgba(255,255,0,0.0977) 50.0%,rgba(255,255,0,0.0000) 65.0%);
+  background-image   : -moz-radial-gradient(center,ellipse,rgba(255,255,0,0.5859) 0.0%,rgba(255,255,0,0.0977) 50.0%,rgba(255,255,0,0.0000) 65.0%);
+  background-image   : -ms-radial-gradient(center,ellipse,rgba(255,255,0,0.5859) 0.0%,rgba(255,255,0,0.0977) 50.0%,rgba(255,255,0,0.0000) 65.0%);
+  background-image   : -o-radial-gradient(center,ellipse,rgba(255,255,0,0.5859) 0.0%,rgba(255,255,0,0.0977) 50.0%,rgba(255,255,0,0.0000) 65.0%);
+  background-image   : radial-gradient(center,ellipse,rgba(255,255,0,0.5859) 0.0%,rgba(255,255,0,0.0977) 50.0%,rgba(255,255,0,0.0000) 65.0%);
 }
 
-body header > div:before
-{
-  position         : absolute;
-  top              : -80px;
-  bottom           : -80px;
-  left             : 0px;
-  right            : 0px;
-  content          : "";
-  pointer-events   : none;
-  background-image : -webkit-radial-gradient(center, ellipse, rgba(255,255,0,0.6) 0%,rgba(255,255,0,0) 65%);;
-}
-
-body header h1,
-body header h3
+body header > div h1,
+body header > div h3
 {
   text-transform : uppercase;
   text-align     : center;
   margin         : 0px 0px 0px 0px;
 }
 
-body header h1
+body header > div h1
 {
   font-size      : 90px;
-  color          : rgba(255,255,255,0.8203);
+  color          : rgba(255,255,255,0.7813);
   letter-spacing : 0.4em;
-  text-shadow    : 0px 0px 20px rgb(195,100,0);
+  text-shadow    : 0px 0px 20px rgba(175,80,0,0.7813);
 }
 
-body header h1 span.a
+body header > div h1 span.a
 {
   letter-spacing : 0.36em;
 }
 
-body header h1 span.y
+body header > div h1 span.y
 {
   letter-spacing : 0.0em;
 }
 
 
-body header h1 a:hover
+body header > div h1 a:hover
 {
   color       : rgb(255,255,255);
   text-shadow : 0px 0px 20px rgb(135,40,0);
 }
 
-body header h3
+body header > div h3
 {
   font-size      : 35px;
   color          : rgba(0,0,0,0.4688);
   letter-spacing : 0.3em;
 }
 
-body header h3 a:hover
+body header > div h3 a:hover
 {
-  color       : rgba(0,0,0,0.8594);
-  text-shadow : 0px 0px 10px rgb(255,255,255);
+  color : rgba(0,0,0,0.8594);
 }
 
 body nav
@@ -261,6 +285,10 @@ body nav
   font-size          : 24px;
   padding            : 20px 0px 20px 0px;
   text-transform     : uppercase;
+  position           : absolute;
+  left               : 0px;
+  right              : 0px;
+  bottom             : 0px;
 }
 
 body nav > div
@@ -290,21 +318,37 @@ body nav a:hover
   color : rgb(0,0,0);
 }
 
-body *#about
+
+
+
+body *#haskell
 {
-  padding-top : 400px;
+  min-height : 1000px;
 }
 
 
-body *#source
+body footer > div
 {
-  min-height : 1000px;
+  width              : 800px;
+  -webkit-box-sizing : border-box;
+  -moz-box-sizing    : border-box;
+  -ms-box-sizing     : border-box;
+  -o-box-sizing      : border-box;
+  box-sizing         : border-box;
+  margin             : 0px auto 0px auto;
+  text-align         : center;
+  color              : rgba(0,0,0,0.5859);
+  padding            : 10px 0px 10px 0px;
 }
 
 body *#about,
 body *#install,
 body *#about,
-body *#source
+body *#source,
+body *#about,
+body *#install,
+body *#about,
+body footer
 {
   background-color : rgb(248,248,248);
 }
