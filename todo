@@ -12,8 +12,8 @@ code:
 - Check if we need more color types.
 - Better support for computing with colors.
 - Maybe ditch the Num instances for sizes.
-- Add repeating gradients, radial gradients.
 - Allow mutliple box-shadows.
+- Implement better model for gradient. (meh)
 - Add animation stuff.
 - Add media query stuff.
 - Add all of CSS, http://www.w3.org/TR/CSS21/propidx.html.
