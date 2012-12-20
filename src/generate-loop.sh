@@ -4,6 +4,12 @@ while [ 1 ]
 do
   clear
   ./src/generate.sh
-  sleep 2
+  read
+  ./src/generate.sh
+  read
+  ./src/generate.sh
+  read
+  ./src/generate.sh
+  read
 done
 
