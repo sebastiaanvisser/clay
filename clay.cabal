@@ -33,6 +33,7 @@ Library
     Clay.Display
     Clay.Font
     Clay.Geometry
+    Clay.Gradient
     Clay.Size
     Clay.Text
     Clay.Transform

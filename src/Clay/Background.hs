@@ -63,8 +63,6 @@ module Clay.Background
 
 , BackgroundImage
 , url
-, linearGradient
-, hGradient, vGradient
 , backgroundImage
 , backgroundImages
 
@@ -78,17 +76,20 @@ module Clay.Background
 , sideCenter
 , sideMiddle
 
--- * Specifying direction.
+-- * Specifying directions and location.
 
 , Direction
-, from
-, degrees
+, straight
+, angular
+
+, Location
+, Loc
 )
 where
 
-import Data.Text (Text, pack)
+import Data.Text (Text)
 import Data.Monoid
-import Prelude hiding (Left, Right, repeat, round)
+import Prelude hiding (repeat, round)
 
 import Clay.Box
 import Clay.Color
@@ -194,16 +195,6 @@ newtype BackgroundImage = BackgroundImage Value
 url :: Text -> BackgroundImage
 url u = BackgroundImage (value ("url(\"" <> u <> "\")"))
 
-linearGradient :: Direction -> [(Color, Size Rel)] -> BackgroundImage
-linearGradient d xs = BackgroundImage $ Value $
-  let Value v = "linear-gradient(" <> value d <> "," <> value (map (\(a, b) -> value (value a, value b)) xs) <> ")"
-  in browsers <> v
-
-hGradient, vGradient :: Color -> Color -> BackgroundImage
-
-hGradient f t = linearGradient (from sideLeft) [(f, 0), (t, 100)]
-vGradient f t = linearGradient (from sideTop ) [(f, 0), (t, 100)]
-
 backgroundImage :: BackgroundImage -> Css
 backgroundImage = key "background-image"
 
@@ -275,9 +266,20 @@ sideMiddle = Side "middle"
 newtype Direction = Direction Value
   deriving (Val, Other)
 
-from :: Side -> Direction
-from a = Direction (value a)
+straight :: Side -> Direction
+straight a = Direction (value a)
 
-degrees :: Double -> Direction
-degrees a = Direction (value (pack (show a) <> "deg"))
+angular :: Angle a -> Direction
+angular a = Direction (value a)
+
+newtype Location = Location Value
+  deriving (Val, Other)
+
+class Val a => Loc a where
+  location :: a -> Location
+  location = Location . value
+
+instance Loc Side
+instance Loc (Size a)
+instance (Loc a, Loc b) => Loc (a, b)
 
