@@ -27,28 +27,28 @@ module Clay.Font
 -- * Font-size.
 
 , FontSize
-, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
 , fontSize
 , fontSizeCustom
+, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
 
 -- * Font-style
 
 , FontStyle
-, italic, oblique
 , fontStyle
+, italic, oblique
 
 -- * Font-variant.
 
 , FontVariant
-, smallCaps
 , fontVariant
+, smallCaps
 
 -- * Font-weight
 
 , FontWeight
+, fontWeight
 , bold, bolder, lighter
 , weight
-, fontWeight
 
 -- * Named fonts.
 

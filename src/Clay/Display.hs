@@ -4,26 +4,26 @@ module Clay.Display
 -- * Float.
 
   float
+, clear
 , Clear
 , both
 , clearLeft
 , clearRight
-, clear
 
 -- * Position.
 
 , Position
-, static, absolute, fixed, relative
 , position
+, static, absolute, fixed, relative
 
 -- * Display
 
 , Display
+, display
 , inline, block, listItem, runIn, inlineBlock, table, inlineTable, tableRowGroup
 , tableHeaderGroup, tableFooterGroup, tableRow, tableColumnGroup, tableColumn
 , tableCell, tableCaption, displayNone, displayInherit, flex
 , inlineFlex, grid, inlineGrid
-, display
 
 -- * Overlow
 

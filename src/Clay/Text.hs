@@ -9,8 +9,8 @@ module Clay.Text
 -- * Text-rendering.
 
 , TextRendering
-, optimizeSpeed, optimizeLegibility, geometricPrecision
 , textRendering
+, optimizeSpeed, optimizeLegibility, geometricPrecision
 
 -- * Text-shadow.
 
@@ -19,24 +19,24 @@ module Clay.Text
 -- * Text-indent.
 
 , TextIndent
+, textIndent
 , eachLine, hanging
 , indent
-, textIndent
 
 -- * Text-direction.
 
 , TextDirection
+, direction
 , ltr
 , rtl
-, direction
 
 -- * Text-align.
 
 , TextAlign
+, textAlign
 , justify, matchParent, start, end
 , alignSide
 , alignString
-, textAlign
 
 -- * White-space.
 
@@ -47,27 +47,27 @@ module Clay.Text
 -- * Text-decoration.
 
 , TextDecoration
-, underline, overline, lineThrough, blink
-, textDecorationLine
-, textDecorationColor
 , textDecoration
 , textDecorationStyle
+, textDecorationLine
+, textDecorationColor
+, underline, overline, lineThrough, blink
 
 -- * Text-transform.
 
 , TextTransform
-, capitalize, uppercase, lowercase, fullWidth
 , textTransform
+, capitalize, uppercase, lowercase, fullWidth
 
 -- * Content.
 
 , Content
+, content
+, contents
 , attrContent
 , stringContent
 , uriContent
 , openQuote, closeQuote, noOpenQuote, noCloseQuote
-, content
-, contents
 
 )
 where

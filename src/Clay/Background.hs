@@ -16,55 +16,55 @@ module Clay.Background
 -- * The background-position.
 
 , BackgroundPosition
-, placed
-, positioned
 , backgroundPosition
 , backgroundPositions
+, placed
+, positioned
 
 -- * The background-size.
 
 , BackgroundSize
-, contain, cover
-, by
 , backgroundSize
 , backgroundSizes
+, contain, cover
+, by
 
 -- * The background-repeat.
 
 , BackgroundRepeat
+, backgroundRepeat
+, backgroundRepeats
 , repeat, space, round, noRepeat
 , xyRepeat
 , repeatX, repeatY
-, backgroundRepeat
-, backgroundRepeats
 
 -- * The background-origin.
 
 , BackgroundOrigin
-, origin
 , backgroundOrigin
 , backgroundOrigins
+, origin
 
 -- * The background-clip.
 
 , BackgroundClip
-, boxClip
 , backgroundClip
 , backgroundClips
+, boxClip
 
 -- * The background-attachment.
 
 , BackgroundAttachment
-, attachFixed, attachScroll
 , backgroundAttachment
 , backgroundAttachments
+, attachFixed, attachScroll
 
 -- * The background-image.
 
 , BackgroundImage
-, url
 , backgroundImage
 , backgroundImages
+, url
 
 -- * Specifying sides.
 
