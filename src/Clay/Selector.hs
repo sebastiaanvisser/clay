@@ -71,17 +71,33 @@ pseudo = Refinement . pure . Pseudo
 func :: Text -> [Text] -> Refinement
 func f = Refinement . pure . PseudoFunc f
 
+-- | Filter elements based on the presence of a certain attribute. The
+-- preferred syntax is to enable @OverloadedStrings@ and use
+-- @\"\@attr\"@ or use one of the predefined ones from "Clay.Attributes".
+
 attr :: Text -> Refinement
 attr = Refinement . pure . Attr
+
+-- | Filter elements based on the presence of a certain attribute with the
+-- specified value.
 
 (@=) :: Text -> Text -> Refinement
 (@=) a = Refinement . pure . AttrVal a
 
+-- | Filter elements based on the presence of a certain attribute that ends
+-- with the specified value.
+
 ($=) :: Text -> Text -> Refinement
 ($=) a = Refinement . pure . AttrEnds a
 
+-- | Filter elements based on the presence of a certain attribute that have the
+-- specified value contained in a space separated list.
+
 (~=) :: Text -> Text -> Refinement
 (~=) a = Refinement . pure . AttrSpace a
+
+-- | Filter elements based on the presence of a certain attribute that have the
+-- specified value contained in a hyphen separated list.
 
 (|=) :: Text -> Text -> Refinement
 (|=) a = Refinement . pure . AttrHyph a
