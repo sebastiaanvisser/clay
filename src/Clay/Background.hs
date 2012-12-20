@@ -25,7 +25,7 @@ module Clay.Background
 
 , BackgroundSize
 , contain, cover
-, sized
+, by
 , backgroundSize
 , backgroundSizes
 
@@ -145,15 +145,15 @@ backgroundPositions = key "background-position"
 newtype BackgroundSize = BackgroundSize Value
   deriving (Val, Other, Inherit)
 
-instance Auto BackgroundSize where auto = sized auto auto
+instance Auto BackgroundSize where auto = auto `by` auto
 
 contain, cover :: BackgroundSize
 
 contain = BackgroundSize "contain"
 cover   = BackgroundSize "cover"
 
-sized :: Size a -> Size a -> BackgroundSize
-sized a b = BackgroundSize (value (a, b))
+by :: Size a -> Size b -> BackgroundSize
+by a b = BackgroundSize (value (a, b))
 
 backgroundSize :: BackgroundSize -> Css
 backgroundSize = key "background-size"
