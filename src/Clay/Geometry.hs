@@ -1,5 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Clay.Geometry where
+module Clay.Geometry
+(
+-- * Positioning.
+  size, top, left, bottom, right
+
+-- * Sizing.
+, width, height, minWidth, minHeight
+
+-- * Padding.
+, padding
+, paddingTop, paddingLeft, paddingRight, paddingBottom
+
+-- * Margin.
+, margin
+, marginTop, marginLeft, marginRight, marginBottom
+)
+where
 
 import Prelude hiding (Left, Right)
 
@@ -26,10 +42,8 @@ minHeight = key "min-height"
 
 -------------------------------------------------------------------------------
 
-padding, margin :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
-
+padding :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
 padding a b c d = key "padding" (a ! b ! c ! d)
-margin  a b c d = key "margin"  (a ! b ! c ! d)
 
 paddingTop, paddingLeft, paddingRight, paddingBottom :: Size Abs -> Css
 
@@ -37,6 +51,11 @@ paddingTop    = key "padding-top"
 paddingLeft   = key "padding-left"
 paddingRight  = key "padding-right"
 paddingBottom = key "padding-bottom"
+
+-------------------------------------------------------------------------------
+
+margin :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+margin a b c d = key "margin"  (a ! b ! c ! d)
 
 marginTop, marginLeft, marginRight, marginBottom :: Size Abs -> Css
 

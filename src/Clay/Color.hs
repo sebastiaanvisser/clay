@@ -12,29 +12,15 @@ import Data.Text.Read as Text
 import Clay.Property
 import Clay.Common
 
+-- * Color datatype.
+
 data Color
   = Rgba Integer Integer Integer Integer
   | Hsla Integer Integer Integer Integer
   | Other Text
   deriving Show
 
-clamp :: Integer -> Integer
-clamp i = max (min i 255) 0
-
-(*.) :: Color -> Integer -> Color
-(*.) (Rgba r g b a) i = Rgba (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
-(*.) (Hsla r g b a) i = Hsla (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
-(*.) (Other o)      _ = Other o
-
-(+.) :: Color -> Integer -> Color
-(+.) (Rgba r g b a) i = Rgba (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
-(+.) (Hsla r g b a) i = Hsla (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
-(+.) (Other o)      _ = Other o
-
-(-.) :: Color -> Integer -> Color
-(-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
-(-.) (Hsla r g b a) i = Hsla (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
-(-.) (Other o)      _ = Other o
+-- * Color constructors.
 
 rgba, hsla :: Integer -> Integer -> Integer -> Integer -> Color
 
@@ -51,6 +37,8 @@ grayish g = rgb g g g
 
 transparent :: Color
 transparent = rgba 0 0 0 0
+
+-- * Setting individual color components.
 
 setR :: Integer -> Color -> Color
 setR r (Rgba _ g b a) = Rgba r g b a
@@ -71,6 +59,26 @@ setA :: Integer -> Color -> Color
 setA a (Rgba r g b _) = Rgba r g b a
 setA a (Hsla r g b _) = Hsla r g b a
 setA _ (Other o)      = Other o
+
+-- * Computing with colors.
+
+(*.) :: Color -> Integer -> Color
+(*.) (Rgba r g b a) i = Rgba (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
+(*.) (Hsla r g b a) i = Hsla (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
+(*.) (Other o)      _ = Other o
+
+(+.) :: Color -> Integer -> Color
+(+.) (Rgba r g b a) i = Rgba (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
+(+.) (Hsla r g b a) i = Hsla (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
+(+.) (Other o)      _ = Other o
+
+(-.) :: Color -> Integer -> Color
+(-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
+(-.) (Hsla r g b a) i = Hsla (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
+(-.) (Other o)      _ = Other o
+
+clamp :: Integer -> Integer
+clamp i = max (min i 255) 0
 
 -------------------------------------------------------------------------------
 
@@ -110,6 +118,8 @@ parse t =
     err = error "Invalid color string"
 
 -------------------------------------------------------------------------------
+
+-- * List of color values by name.
 
 aliceblue, antiquewhite, aqua, aquamarine, azure, beige, bisque, black,
   blanchedalmond, blue, blueviolet, brown, burlywood, cadetblue, chartreuse,

@@ -1,5 +1,43 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Transform where
+module Clay.Transform
+(
+
+-- * The transform propery.
+
+  Transformation
+, transform
+, transforms
+
+-- * Translating.
+
+, translate
+, translateX, translateY, translateZ
+, translate3d
+
+-- * Scaling.
+
+, scale
+, scaleX, scaleY, scaleZ
+, scale3d
+
+-- * Rotating.
+
+, rotate
+, rotateX, rotateY, rotateZ
+, rotate3d
+
+-- * Skewing.
+
+, skew
+, skewX, skewY
+
+-- * Custom 3D transformations.
+
+, perspective
+, matrix
+, matrix3d 
+)
+where
 
 import Data.Monoid
 import Prelude hiding (Left, Right)
@@ -9,95 +47,85 @@ import Clay.Stylesheet
 import Clay.Size
 import Clay.Common
 
-newtype Transform = Transform Value
+newtype Transformation = Transformation Value
   deriving (Val, None)
 
-transform :: Transform -> Css
+transform :: Transformation -> Css
 transform = prefixed (browsers <> "transform")
 
-transforms :: [Transform] -> Css
+transforms :: [Transformation] -> Css
 transforms xs = prefixed (browsers <> "transform") (noCommas xs)
 
 -------------------------------------------------------------------------------
 
-scale :: Double -> Double -> Transform
-scale x y = Transform ("scale(" <> value [x, y] <> ")")
+scale :: Double -> Double -> Transformation
+scale x y = Transformation ("scale(" <> value [x, y] <> ")")
 
-scaleX :: Double -> Transform
-scaleX x = Transform ("scaleX(" <> value x <> ")")
+scaleX, scaleY, scaleZ :: Double -> Transformation
 
-scaleY :: Double -> Transform
-scaleY y = Transform ("scaleY(" <> value y <> ")")
+scaleX x = Transformation ("scaleX(" <> value x <> ")")
+scaleY y = Transformation ("scaleY(" <> value y <> ")")
+scaleZ z = Transformation ("scaleZ(" <> value z <> ")")
 
-scaleZ :: Double -> Transform
-scaleZ z = Transform ("scaleZ(" <> value z <> ")")
-
-scale3d :: Double -> Double -> Double -> Transform
-scale3d x y z = Transform ("scale3d(" <> value [x, y, z] <> ")")
+scale3d :: Double -> Double -> Double -> Transformation
+scale3d x y z = Transformation ("scale3d(" <> value [x, y, z] <> ")")
 
 -------------------------------------------------------------------------------
 
-rotate :: Angle a -> Angle a -> Transform
-rotate x y = Transform ("rotate(" <> value [x, y] <> ")")
+rotate :: Angle a -> Angle a -> Transformation
+rotate x y = Transformation ("rotate(" <> value [x, y] <> ")")
 
-rotateX :: Angle a -> Transform
-rotateX x = Transform ("rotateX(" <> value x <> ")")
+rotateX, rotateY, rotateZ :: Angle a -> Transformation
 
-rotateY :: Angle a -> Transform
-rotateY y = Transform ("rotateY(" <> value y <> ")")
+rotateX x = Transformation ("rotateX(" <> value x <> ")")
+rotateY y = Transformation ("rotateY(" <> value y <> ")")
+rotateZ z = Transformation ("rotateZ(" <> value z <> ")")
 
-rotateZ :: Angle a -> Transform
-rotateZ z = Transform ("rotateZ(" <> value z <> ")")
-
-rotate3d :: Double -> Double -> Double -> Angle a -> Transform
-rotate3d x y z a = Transform ("rotate3d(" <> value [value x, value y, value z, value a] <> ")")
+rotate3d :: Double -> Double -> Double -> Angle a -> Transformation
+rotate3d x y z a = Transformation ("rotate3d(" <> value [value x, value y, value z, value a] <> ")")
 
 -------------------------------------------------------------------------------
 
-translate :: Size Abs -> Size Abs -> Transform
-translate x y = Transform ("translate(" <> value [x, y] <> ")")
+translate :: Size Abs -> Size Abs -> Transformation
+translate x y = Transformation ("translate(" <> value [x, y] <> ")")
 
-translateX :: Size Abs -> Transform
-translateX x = Transform ("translateX(" <> value x <> ")")
+translateX, translateY, translateZ :: Size Abs -> Transformation
 
-translateY :: Size Abs -> Transform
-translateY y = Transform ("translateY(" <> value y <> ")")
+translateX x = Transformation ("translateX(" <> value x <> ")")
+translateY y = Transformation ("translateY(" <> value y <> ")")
+translateZ z = Transformation ("translateZ(" <> value z <> ")")
 
-translateZ :: Size Abs -> Transform
-translateZ z = Transform ("translateZ(" <> value z <> ")")
-
-translate3d :: Size Abs -> Size Abs -> Size Abs -> Transform
-translate3d x y z = Transform ("translate3d(" <> value [x, y, z] <> ")")
+translate3d :: Size Abs -> Size Abs -> Size Abs -> Transformation
+translate3d x y z = Transformation ("translate3d(" <> value [x, y, z] <> ")")
 
 -------------------------------------------------------------------------------
 
-skew :: Angle a -> Angle a -> Transform
-skew x y = Transform ("skew(" <> value [x, y] <> ")")
+skew :: Angle a -> Angle a -> Transformation
+skew x y = Transformation ("skew(" <> value [x, y] <> ")")
 
-skewX :: Angle a -> Transform
-skewX x = Transform ("skewX(" <> value x <> ")")
+skewX, skewY :: Angle a -> Transformation
 
-skewY :: Angle a -> Transform
-skewY y = Transform ("skewY(" <> value y <> ")")
+skewX x = Transformation ("skewX(" <> value x <> ")")
+skewY y = Transformation ("skewY(" <> value y <> ")")
 
 -------------------------------------------------------------------------------
 
-perspective :: Double -> Transform
-perspective p = Transform ("perspective(" <> value p <> ")")
+perspective :: Double -> Transformation
+perspective p = Transformation ("perspective(" <> value p <> ")")
 
-matrix :: Double -> Double -> Double -> Double -> Double -> Double -> Transform
-matrix u v w x y z = Transform ("matrix3d(" <> value [ u, v, w, x, y, z ] <> ")")
+matrix :: Double -> Double -> Double -> Double -> Double -> Double -> Transformation
+matrix u v w x y z = Transformation ("matrix3d(" <> value [ u, v, w, x, y, z ] <> ")")
 
 matrix3d :: Double -> Double -> Double -> Double
          -> Double -> Double -> Double -> Double
          -> Double -> Double -> Double -> Double
          -> Double -> Double -> Double -> Double
-         -> Transform
+         -> Transformation
 matrix3d w0 x0 y0 z0
          w1 x1 y1 z1
          w2 x2 y2 z2
          w3 x3 y3 z3 =
-  Transform ("matrix3d(" <> value
+  Transformation ("matrix3d(" <> value
        [ w0, x0, y0, z0
        , w1, x1, y1, z1
        , w2, x2, y2, z2

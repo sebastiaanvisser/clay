@@ -1,5 +1,76 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
-module Clay.Text where
+module Clay.Text
+(
+-- * Letter and word-spacing.
+
+  letterSpacing
+, wordSpacing
+
+-- * Text-rendering.
+
+, TextRendering
+, optimizeSpeed, optimizeLegibility, geometricPrecision
+, textRendering
+
+-- * Text-shadow.
+
+, textShadow
+
+-- * Text-indent.
+
+, TextIndent
+, eachLine, hanging
+, indent
+, textIndent
+
+-- * Text-direction.
+
+, TextDirection
+, ltr
+, rtl
+, direction
+
+-- * Text-align.
+
+, TextAlign
+, justify, matchParent, start, end
+, alignSide
+, alignString
+, textAlign
+
+-- * White-space.
+
+, WhiteSpace
+, whiteSpace
+, pre, nowrap, preWrap, preLine
+
+-- * Text-decoration.
+
+, TextDecoration
+, underline, overline, lineThrough, blink
+, textDecorationLine
+, textDecorationColor
+, textDecoration
+, textDecorationStyle
+
+-- * Text-transform.
+
+, TextTransform
+, capitalize, uppercase, lowercase, fullWidth
+, textTransform
+
+-- * Content.
+
+, Content
+, attrContent
+, stringContent
+, uriContent
+, openQuote, closeQuote, noOpenQuote, noCloseQuote
+, content
+, contents
+
+)
+where
 
 import Data.Monoid
 import Data.String
