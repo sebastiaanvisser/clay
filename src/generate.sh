@@ -21,8 +21,12 @@ runhaskell src/Style pretty   > style-pretty.css
 echo "Generating compacted stylesheet"
 runhaskell src/Style compact > style-compact.css
 
+echo "Downloading newest jQuery"
+curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/jquery.js ||
+  rm src/jquery.js
+
 echo "Copying over JavaScript"
-cp src/*.js .
+cp -v src/*.js .
 
 echo "Site generated at $(date)"
 echo "<!-- site generated at $(date) -->" >> index.html
