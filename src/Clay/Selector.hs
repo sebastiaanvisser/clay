@@ -25,26 +25,41 @@ star = In (SelectorF (Refinement []) Star)
 element :: Text -> Selector
 element e = In (SelectorF (Refinement []) (Elem e))
 
+-- | Named alias for `**`.
+
+deep :: Selector -> Selector -> Selector
+deep a b = In (SelectorF (Refinement []) (Deep a b))
+
 -- | The deep selector composer. Maps to @sel1 sel2@ in CSS.
 
 (**) :: Selector -> Selector -> Selector
-(**) a b = In (SelectorF (Refinement []) (Deep a b))
+(**) = deep
+
+-- | Named alias for `|>`.
+
+child :: Selector -> Selector -> Selector
+child a b = In (SelectorF (Refinement []) (Child a b))
 
 -- | The child selector composer. Maps to @sel1 > sel2@ in CSS.
 
 (|>) :: Selector -> Selector -> Selector
-(|>) a b = In (SelectorF (Refinement []) (Child a b))
+(|>) = child
 
 -- | The adjacent selector composer. Maps to @sel1 + sel2@ in CSS.
 
 (|+) :: Selector -> Selector -> Selector
 (|+) a b = In (SelectorF (Refinement []) (Adjacent a b))
 
--- | The filter selector composer, adds a filter to a selector. Maps to
--- something like @sel#filter@ or @sel.filter@ in CSS, depending on the filter.
+-- | Named alias for `#`.
 
 with :: Selector -> Refinement -> Selector
 with (In (SelectorF (Refinement fs) e)) (Refinement ps) = In (SelectorF (Refinement (fs ++ ps)) e)
+
+-- | The filter selector composer, adds a filter to a selector. Maps to
+-- something like @sel#filter@ or @sel.filter@ in CSS, depending on the filter.
+
+(#) :: Selector -> Refinement -> Selector
+(#) = with
 
 -- | Filter elements by id. The preferred syntax is to enable
 -- @OverloadedStrings@ and use @\"#id-name\"@.

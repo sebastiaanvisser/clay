@@ -30,7 +30,7 @@ module Clay
 , element
 , (**)
 , (|>)
-, with
+, (#)
 , (|+)
 
 -- ** Refining selectors.
