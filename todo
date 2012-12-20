@@ -14,6 +14,7 @@ code:
 - Maybe ditch the Num instances for sizes.
 - Allow mutliple box-shadows.
 - Implement better model for gradient. (meh)
+- Fix the Direction/Position/Sided/Location mess.
 - Add animation stuff.
 - Add media query stuff.
 - Add all of CSS, http://www.w3.org/TR/CSS21/propidx.html.
