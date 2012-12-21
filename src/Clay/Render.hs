@@ -4,6 +4,7 @@ module Clay.Render
 , pretty
 , compact
 , render
+, putCss
 , renderWith
 )
 where
@@ -18,8 +19,9 @@ import Data.Text (Text)
 import Data.Text.Lazy.Builder
 import Prelude hiding (filter, (**))
 
-import qualified Data.Text      as Text
-import qualified Data.Text.Lazy as Lazy
+import qualified Data.Text         as Text
+import qualified Data.Text.Lazy    as Lazy
+import qualified Data.Text.Lazy.IO as Lazy
 
 import Clay.Stylesheet hiding (Child)
 import Clay.Property
@@ -40,6 +42,9 @@ pretty = Config "  " "\n" " " True True
 
 compact :: Config
 compact = Config "" "" "" False False
+
+putCss :: Css -> IO ()
+putCss = Lazy.putStr . render
 
 -- | Render a stylesheet with the default configuration. The pretty printer is
 -- used by default.

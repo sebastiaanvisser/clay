@@ -3,6 +3,7 @@ module Clay
 -- * Rendering stylesheets to CSS.
   render
 , renderWith
+, putCss
 
 , pretty
 , compact
