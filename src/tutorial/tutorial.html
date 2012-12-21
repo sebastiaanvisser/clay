@@ -1,0 +1,65 @@
+<section id=tutorial name=tutorial>
+  <div class="text one-col">
+    <h4>Tutorial</h4>
+    <p>Clay is an EDSL that uses a writer monad to collect style rules. Rules
+    are combinations of CSS selectors associated style properties. Multiple
+    style rules can be composed and nested to form a stylehseet. Stylesheets
+    can be rendered to plain old CSS and served to your browser.</p>
+  </div>
+
+  <div class="text one-col">
+    <p>There are several methods of assigning style properties to selectors.
+    The most important one is the <code>?</code> operator:</p>
+  </div>
+  <div class="code haskell">
+    <!--#include virtual=../highlighted/questionmark.clay.hs.html -->
+  </div>
+  <div class="code css">
+    <!--#include virtual=../highlighted/questionmark.clay.hs.output.html -->
+  </div>
+
+  <div class="text one-col">
+    <p>Style rules can be easily be composed and nested by just adding more
+    rules using the monad syntax:</p>
+  </div>
+  <div class="code haskell">
+    <!--#include virtual=../highlighted/nesting.clay.hs.html -->
+  </div>
+  <div class="code css">
+    <!--#include virtual=../highlighted/nesting.clay.hs.output.html -->
+  </div>
+
+  <div class="text one-col">
+    <p>Basic selectors can be composed with several combinators to construct
+    more complicated selectors:</p>
+  </div>
+  <div class="code haskell">
+    <!--#include virtual=../highlighted/selectors.clay.hs.html -->
+  </div>
+  <div class="code css">
+    <!--#include virtual=../highlighted/selectors.clay.hs.output.html -->
+  </div>
+
+  <div class="text one-col">
+    <p>Using <code>OverloadedStrings</code> allows us to create selectors for
+    classes, ids, pseudo classes, attributes etc:</p>
+  </div>
+  <div class="code haskell">
+    <!--#include virtual=../highlighted/overloadedstrings.clay.hs.html -->
+  </div>
+  <div class="code css">
+    <!--#include virtual=../highlighted/overloadedstrings.clay.hs.output.html -->
+  </div>
+
+  <div class="text one-col">
+    <p>Or we can use some build in functions to avoid to much string
+    literals:</p>
+  </div>
+  <div class="code haskell">
+    <!--#include virtual=../highlighted/nostrings.clay.hs.html -->
+  </div>
+  <div class="code css">
+    <!--#include virtual=../highlighted/nostrings.clay.hs.output.html -->
+  </div>
+
+</section>

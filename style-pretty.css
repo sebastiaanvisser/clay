@@ -39,15 +39,10 @@ body section *.code
   -ms-box-sizing     : border-box;
   -o-box-sizing      : border-box;
   box-sizing         : border-box;
-  border-radius      : 2px;
   width              : 600px;
   padding            : 20px 20px 20px 20px;
   margin-top         : 60px;
-  background         : -webkit-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
-  background         : -moz-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
-  background         : -ms-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
-  background         : -o-linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
-  background         : linear-gradient(top,rgb(0,0,40) 0.0%,rgb(0,0,50) 100.0%);
+  margin-bottom      : 60px;
 }
 
 body section *.code pre
@@ -55,43 +50,101 @@ body section *.code pre
   font-size   : 16px;
   font-family : "Monaco","Courier New","fixed";
   line-height : 2.6ex;
-  color       : rgba(255,255,255,0.6250);
   margin      : 0px 0px 0px 0px;
 }
 
-body section *.code pre *.Comment
+body section *.code.haskell,
+body section *.code.shell
+{
+  background : rgb(0,0,40);
+}
+
+body section *.code.haskell pre,
+body section *.code.shell pre
+{
+  color : rgba(255,255,255,0.6250);
+}
+
+body section *.code.haskell pre *.Comment,
+body section *.code.shell pre *.Comment
 {
   color : rgb(255,60,100);
 }
 
-body section *.code pre *.Function
-{
-  color : rgb(255,255,255);
-}
-
-body section *.code pre *.Symbol
-{
-  color : rgb(255,165,0);
-}
-
-body section *.code pre *.Keyword
-{
-  color : rgb(76,155,210);
-}
-
-body section *.code pre *.Number
-{
-  color : rgb(255,100,0);
-}
-
-body section *.code pre *.ConId
+body section *.code.haskell pre *.ConId,
+body section *.code.shell pre *.ConId
 {
   color : rgb(156,235,255);
 }
 
-body section *.code pre *.String
+body section *.code.haskell pre *.Function,
+body section *.code.shell pre *.Function
+{
+  color : rgb(255,255,255);
+}
+
+body section *.code.haskell pre *.Keyword,
+body section *.code.shell pre *.Keyword
+{
+  color : rgb(76,155,210);
+}
+
+body section *.code.haskell pre *.Number,
+body section *.code.shell pre *.Number
+{
+  color : rgb(255,100,0);
+}
+
+body section *.code.haskell pre *.String,
+body section *.code.shell pre *.String
 {
   color : rgb(255,60,0);
+}
+
+body section *.code.haskell pre *.Symbol,
+body section *.code.shell pre *.Symbol
+{
+  color : rgb(255,165,0);
+}
+
+body section *.code.css
+{
+  background-color : rgb(238,238,238);
+}
+
+body section *.code.css pre
+{
+  color : rgb(68,85,102);
+}
+
+body section *.code.css pre *.Number
+{
+  color : rgb(255,0,0);
+}
+
+body section *.code.css pre *.Property
+{
+  color : rgb(0,0,0);
+}
+
+body section *.code.css pre *.Selector
+{
+  color : rgb(0,75,130);
+}
+
+body section *.code.css pre *.String
+{
+  color : rgb(255,0,0);
+}
+
+body section *.code.css pre *.Symbol
+{
+  color : rgb(195,105,0);
+}
+
+body section *.code + *.code
+{
+  margin-top : -60px;
 }
 
 body section > div
@@ -135,6 +188,11 @@ body section *.text p a
   color : rgb(56,135,190);
 }
 
+body section *.text code
+{
+  color : rgb(255,68,34);
+}
+
 body section *.text *.goto
 {
   padding-left : 40px;
@@ -164,13 +222,13 @@ body section *.two-col > div
 body section *.two-col > div:nth-child(1)
 {
   float         : left;
-  padding-right : 20px;
+  padding-right : 30px;
 }
 
 body section *.two-col > div:nth-child(2)
 {
   float        : right;
-  padding-left : 20px;
+  padding-left : 30px;
 }
 
 body section *.two-col br
@@ -189,7 +247,7 @@ body header
   top        : 0px;
   left       : 0px;
   right      : 0px;
-  height     : 360px;
+  height     : 288px;
 }
 
 body header:before
@@ -276,7 +334,7 @@ body header > div h3 a:hover
 
 body nav
 {
-  background         : rgb(255,255,255);
+  background         : rgba(255,255,255,0.9805);
   -webkit-box-shadow : 0px 0px 60px rgba(0,0,0,0.0781);
   -moz-box-shadow    : 0px 0px 60px rgba(0,0,0,0.0781);
   -ms-box-shadow     : 0px 0px 60px rgba(0,0,0,0.0781);
@@ -288,7 +346,7 @@ body nav
   position           : absolute;
   left               : 0px;
   right              : 0px;
-  bottom             : 0px;
+  bottom             : -72px;
 }
 
 body nav > div

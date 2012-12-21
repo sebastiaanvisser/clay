@@ -13,7 +13,7 @@ do
   echo done
 done
 
-for hs in `find src -name '*.html.hs'`
+for hs in `find src -name '*.clay.hs'`
 do
   file=$(basename $hs)
   echo -n "Syntax highlighting output of: ${file} "
