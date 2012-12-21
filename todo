@@ -1,4 +1,5 @@
-meta:
+# Meta:
+
 - First todo: move todos into bug tracker or something.
 - Create simple README with package description and link to website and hackage.
 - Finish up the documentation on the website.
@@ -7,16 +8,23 @@ meta:
 - Cleanup cabal file.
 - Write release notes.
 
-code:
+# Pretty printing:
+
+- Don't pretty print redundant * before refinements.
+- Fix mostly harmless but annoying expotential blowup when using mappend
+  multiple times in selectors.
+- Print rgb values to #ffffff syntax.
+
+# Style rules:
+
+- Maybe ditch the Num instances for sizes.
 - Add more size types.
 - Check if we need more color types.
 - Better support for computing with colors.
-- Maybe ditch the Num instances for sizes.
 - Allow mutliple box-shadows.
 - Implement better model for gradient. (meh)
 - Fix the Direction/Position/Sided/Location mess.
 - Add animation stuff.
 - Add media query stuff.
 - Add all of CSS, http://www.w3.org/TR/CSS21/propidx.html.
-- More...
 
