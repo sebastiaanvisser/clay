@@ -72,6 +72,8 @@ site =
             p ?
                do a ? color highlight
 
+            code ? color "#ff4422"
+
             ".goto" ? paddingLeft (px 40)
 
   columns =
@@ -85,10 +87,10 @@ site =
                  boxSizing borderBox
             div # nthChild "1" <?
               do float sideLeft
-                 paddingRight (px 20)
+                 paddingRight (px 30)
             div # nthChild "2" <?
               do float sideRight
-                 paddingLeft (px 20)
+                 paddingLeft (px 30)
             br ? clear both
 
 -------------------------------------------------------------------------------
@@ -115,15 +117,16 @@ centered =
      sym2 margin 0 auto
 
 -------------------------------------------------------------------------------
+-- Styling for specific sections.
 
 theHeader :: Css
 theHeader =
   do background (vGradient (mainColor -. 60) (mainColor +. 20))
      position fixed
-     top (px 0)
-     left (px 0)
-     right (px 0)
-     height (px 360)
+     top    (px 0)
+     left   (px 0)
+     right  (px 0)
+     height (px 288)
 
      before &
        do position absolute
@@ -184,7 +187,7 @@ theAbout = return ()
 
 theNav :: Css
 theNav =
-  do background white
+  do background (setA 251 white)
      boxShadow 0 0 (px 60) (setA 20 black)
      fontSize (px 24)
      sym2 padding 20 0
@@ -192,7 +195,7 @@ theNav =
      position absolute
      left 0
      right 0
-     bottom 0
+     bottom (px (-72))
 
      div <? centered
      a ? do paddingRight (px 42)
@@ -202,30 +205,6 @@ theNav =
 
 theExample :: Css
 theExample = return ()
-
-codeBlock :: Css
-codeBlock = ".code" ?
-
-    do boxSizing borderBox
-       borderRadius (px 2)
-       width (px 600)
-       sym padding 20
-       marginTop (px 60)
-       background (vGradient (highlight -. 150) (highlight -. 140))
-
-       pre ?
-         do fontSize   (px 16)
-            fontFamily ["Monaco", "Courier New", monospace]
-            lineHeight (ex 2.6)
-            color (setA 160 white)
-            sym margin 0
-            ".Comment"  ? color (rgb 255 60 100)
-            ".Function" ? color white
-            ".Symbol"   ? color orange
-            ".Keyword"  ? color (highlight +. 20)
-            ".Number"   ? color (setG 100 orange)
-            ".ConId"    ? color (highlight +. 100)
-            ".String"   ? color (setG 60 orange)
 
 theSource :: Css
 theSource = return ()
@@ -240,4 +219,49 @@ theFooter =
        textAlign (alignSide sideCenter)
        color (setA 150 black)
        sym2 padding (px 10) 0
+
+-------------------------------------------------------------------------------
+-- Syntax highlighted code blocks.
+
+codeBlock :: Css
+codeBlock =
+
+  do ".code" ?
+       do boxSizing borderBox
+          width (px 600)
+          sym padding 20
+          marginTop    (px 60)
+          marginBottom (px 60)
+
+          pre ?
+            do fontSize   (px 16)
+               fontFamily ["Monaco", "Courier New", monospace]
+               lineHeight (ex 2.6)
+               sym margin 0
+
+     (".code" # ".haskell") <>
+       (".code" # ".shell") ?
+       do background (highlight -. 150)
+          pre ?
+            do color (setA 160 white)
+               ".Comment"  ? color (rgb 255 60 100)
+               ".ConId"    ? color (highlight +. 100)
+               ".Function" ? color white
+               ".Keyword"  ? color (highlight +. 20)
+               ".Number"   ? color (setG 100 orange)
+               ".String"   ? color (setG 60 orange)
+               ".Symbol"   ? color orange
+
+     ".code" # ".css" ?
+       do backgroundColor "#eee"
+          pre ?
+            do color "#456"
+               ".Number"   ? color red
+               ".Property" ? color black
+               ".Selector" ? color (highlight -. 60)
+               ".String"   ? color red
+               ".Symbol"   ? color (orange -. 60)
+
+     ".code" |+ ".code" ?
+       do marginTop (px (-60))
 
