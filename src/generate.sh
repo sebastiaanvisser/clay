@@ -8,7 +8,17 @@ do
   illuminate ${hs} \
     --syntax=haskell \
     --fragment \
-    --to=xhtmlcss > src/highlighted/${file}.html
+    --to=xhtmlcss > \
+    src/highlighted/${file}.html
+  echo done
+done
+
+for hs in `find src -name '*.html.hs'`
+do
+  file=$(basename $hs)
+  echo -n "Syntax highlighting output of: ${file} "
+  runhaskell $hs | grep -v "^\s*$" | illuminate --syntax=css --fragment --to=xhtmlcss > \
+    src/highlighted/${file}.output.html
   echo done
 done
 
@@ -16,7 +26,7 @@ echo "Downloading HTML from localhost"
 curl -s http://devoid.local/clay-site/src/index.html > index.html
 
 echo "Generating pretty printed stylesheet"
-runhaskell src/Style pretty   > style-pretty.css
+runhaskell src/Style pretty > style-pretty.css
 
 echo "Generating compacted stylesheet"
 runhaskell src/Style compact > style-compact.css
