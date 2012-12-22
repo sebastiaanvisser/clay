@@ -53,7 +53,7 @@
     </div>
 
     <p>
-      Or we can use some build in functions to avoid to much string literals:
+      Or we can use some build in functions to avoid too much string literals:
     </p>
     <div class="code haskell">
       <!--#include virtual=../highlighted/nostrings.clay.hs.html -->
@@ -66,7 +66,8 @@
       Sometimes browsers implement exotic style properties or values that Clay
       doesn't yet know of. For most value type it is easy to supply a custom
       value using the <code>Other</code> type class. We can even escape from
-      the type world entirely by using the fallback operator <code>-:</code>.
+      the typed world entirely by using the fallback operator <code>-:</code>
+      and use strings:
     </p>
     <div class="code haskell">
       <!--#include virtual=../highlighted/escape.clay.hs.html -->
@@ -77,8 +78,9 @@
 
     <p>
       Not every browser implements the full CSS standard and some browsers
-      introduce experimental features that are not yet in the standard. Most
-      experimental properties are automatically prefixed with vendor prefixes.
+      introduce experimental features that are not yet in the standard. In
+      Clay, most experimental properties are automatically prefixed with vendor
+      prefixes:
     </p>
     <div class="code haskell">
       <!--#include virtual=../highlighted/prefixes.clay.hs.html -->
