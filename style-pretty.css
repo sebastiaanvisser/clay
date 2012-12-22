@@ -14,7 +14,8 @@ body a
   color           : inherit;
 }
 
-body *#container
+
+body.index *#container
 {
   padding-top : 360px;
 }
@@ -39,10 +40,14 @@ body section *.code
   -ms-box-sizing     : border-box;
   -o-box-sizing      : border-box;
   box-sizing         : border-box;
-  width              : 600px;
   padding            : 20px 20px 20px 20px;
   margin-top         : 60px;
   margin-bottom      : 60px;
+  -webkit-box-shadow : 0px 0px 60px rgba(0,0,0,0.0781);
+  -moz-box-shadow    : 0px 0px 60px rgba(0,0,0,0.0781);
+  -ms-box-shadow     : 0px 0px 60px rgba(0,0,0,0.0781);
+  -o-box-shadow      : 0px 0px 60px rgba(0,0,0,0.0781);
+  box-shadow         : 0px 0px 60px rgba(0,0,0,0.0781);
 }
 
 body section *.code pre
@@ -107,10 +112,6 @@ body section *.code.shell pre *.Symbol
   color : rgb(255,165,0);
 }
 
-body section *.code.css
-{
-  background-color : rgb(238,238,238);
-}
 
 body section *.code.css pre
 {
@@ -144,7 +145,7 @@ body section *.code.css pre *.Symbol
 
 body section *.code + *.code
 {
-  margin-top : -60px;
+  margin-top : -40px;
 }
 
 body section > div
@@ -200,7 +201,7 @@ body section *.text *.goto
 
 body section *.one-col
 {
-  width              : 500px;
+  width              : 550px;
   -webkit-box-sizing : border-box;
   -moz-box-sizing    : border-box;
   -ms-box-sizing     : border-box;
@@ -362,7 +363,7 @@ body nav > div
 
 body nav a
 {
-  padding-right : 42px;
+  padding-right : 45px;
   color         : rgb(56,135,190);
 }
 
@@ -399,14 +400,8 @@ body footer > div
   padding            : 10px 0px 10px 0px;
 }
 
-body *#about,
-body *#install,
-body *#about,
-body *#source,
-body *#about,
-body *#install,
-body *#about,
-body footer
+body section:nth-child(odd),
+body footer:nth-child(odd)
 {
   background-color : rgb(248,248,248);
 }

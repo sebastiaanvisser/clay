@@ -14,7 +14,7 @@
 
   </head>
 
-  <body>
+  <body class=index>
     <div id=container>
       <header>
   <div>
@@ -26,7 +26,8 @@
       <a href="#about">About</a>
       <a href="#features">Features</a>
       <a href="#install">Install</a>
-      <a href="#documentation">Documentation</a>
+      <a href="#documentation">Docs</a>
+      <a href="#tutorial">Tutorial</a>
       <a href="#source">Source</a>
     </div>
   </nav>
@@ -37,15 +38,19 @@
     <div class=two-col>
       <div class=text>
         <h4>About</h4>
-        <p><a href=http://sebastiaanvisser.github.com/clay>Clay</a> is a
-        CSS preprocessor like <a href=http://lesscss.org>LESS</a> and <a
-        href=http://sass-lang.com>Sass</a>, but implemented as an
-        embedded domain specific language (EDSL) in Haskell. This means
-        that all CSS selectors and style rules are first class Haskell
-        functions, which makes reuse and composability easy.</p>
+        <p>
+          <a href=http://sebastiaanvisser.github.com/clay>Clay</a> is a CSS
+          preprocessor like <a href=http://lesscss.org>LESS</a> and <a
+          href=http://sass-lang.com>Sass</a>, but implemented as an embedded
+          domain specific language (EDSL) in Haskell. This means that all CSS
+          selectors and style rules are first class Haskell functions, which
+          makes reuse and composability easy.
+        </p>
       </div>
-      <div class="code haskell">
-        <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+      <div class=text>
+        <h4>In action</h4>
+        <div class="code haskell">
+          <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
 <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">)</span>
 
 <span class="Function">highlight</span> <span class="Symbol">::</span> <span class="ConId">Color</span>
@@ -69,6 +74,7 @@
      <span class="VarId">boxSizing</span> <span class="VarId">borderBox</span>
      <span class="VarId">sym2</span> <span class="VarId">margin</span> <span class="Number">0</span> <span class="VarId">auto</span>
 </pre>
+        </div>
       </div>
       <br>
     </div>
@@ -114,33 +120,45 @@
       <section id=install name=install>
   <div class="one-col text">
     <h4>Installation</h4>
-    <p>Clay is written in Haskell and requires the Glasgow Haskell
-    Compiler (GHC) to get installed. After installing GHC, and the
-    acompanying package manager Cabal, you can directly install Clay from
-    the Hackage package repository:</p>
-  </div>
-  <div class="code shell">
+    <p>
+      Clay is written in Haskell and requires the Glasgow Haskell Compiler
+      (GHC) to get installed. After installing GHC, and the acompanying package
+      manager Cabal, you can directly install Clay from the Hackage package
+      repository:
+    </p>
+    <div class="code shell">
     <pre><span class=Symbol>$</span> cabal update
 <span class=Symbol>$</span> cabal install clay</pre>
-  </div>
-  <div class="one-col text">
+    </div>
     <h4>Usage</h4>
-    <p>Using Clay requires you to create a Haskell program describing the
-    stylesheet and importing the Clay library. As a starting point we can
-    create a stylesheet to make the background color of your HTML body
-    solid red. Running the <code>main</code> function output the
-    generated CSS to the standard output.</p>
-  </div>
-  <div class="code haskell">
-    <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
-<span class="Keyword">import</span> <span class="Keyword">qualified</span> <span class="ConId">Data.Text.Lazy.IO</span> <span class="Keyword">as</span> <span class="ConId">Text</span>
+    <p>
+      Clay is written as an embedded language and requires you to write a
+      Haskell program that models the stylesheet. You only need to import the
+      <code>Clay</code> module to get started. As a first demonstration we
+      create the `Hello world' of the stylesheets, a style definition that sets
+      the background color of HTML body to red.
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">main</span> <span class="Symbol">::</span> <span class="ConId">IO</span> <span class="Symbol">()</span>
-<span class="Function">main</span> <span class="Symbol">=</span> <span class="ConId">Text.</span><span class="VarId">putStr</span> <span class="Symbol">(</span><span class="VarId">render</span> <span class="VarId">myStylesheet</span><span class="Symbol">)</span>
+<span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="VarId">myStylesheet</span>
 
 <span class="Function">myStylesheet</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">myStylesheet</span> <span class="Symbol">=</span> <span class="VarId">body</span> <span class="Symbol">?</span> <span class="VarId">background</span> <span class="VarId">red</span>
 </pre>
+    </div>
+    <p>
+      Running the <code>putCss</code> function directly outputs the generated
+      CSS to the standard output resulting in:
+    </p>
+    <div class="code css">
+      <pre class="sourceCode">body
+<span class="CBracket">{</span>
+  <span class="Property">background</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
+<span class="CBracket">}</span>
+</pre>
+    </div>
   </div>
 </section>
 
@@ -161,14 +179,13 @@
     are combinations of CSS selectors associated style properties. Multiple
     style rules can be composed and nested to form a stylehseet. Stylesheets
     can be rendered to plain old CSS and served to your browser.</p>
-  </div>
 
-  <div class="text one-col">
-    <p>There are several methods of assigning style properties to selectors.
-    The most important one is the <code>?</code> operator:</p>
-  </div>
-  <div class="code haskell">
-    <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+    <p>
+      There are several methods of assigning style properties to selectors.
+      The most important one is the <code>?</code> operator:
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
   <span class="VarId">body</span> <span class="Symbol">?</span>
@@ -176,23 +193,23 @@
        <span class="VarId">color</span>       <span class="VarId">green</span>
        <span class="VarId">border</span>      <span class="VarId">dashed</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">2</span><span class="Symbol">)</span> <span class="VarId">yellow</span>
 </pre>
-  </div>
-  <div class="code css">
-    <pre class="sourceCode">body
+    </div>
+    <div class="code css">
+      <pre class="sourceCode">body
 <span class="CBracket">{</span>
   <span class="Property">background</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
   <span class="Property">color</span>      <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">128</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
   <span class="Property">border</span>     <span class="Symbol">:</span> dashed <span class="Number">2</span>px rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
 <span class="CBracket">}</span>
 </pre>
-  </div>
+    </div>
 
-  <div class="text one-col">
-    <p>Style rules can be easily be composed and nested by just adding more
-    rules using the monad syntax:</p>
-  </div>
-  <div class="code haskell">
-    <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+    <p>
+      Style rules can be easily be composed and nested by just adding more
+      rules using the monad syntax:
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
   <span class="Keyword">do</span> <span class="VarId">p</span> <span class="Symbol">?</span> <span class="VarId">color</span> <span class="VarId">red</span>
@@ -201,9 +218,9 @@
        <span class="Keyword">do</span> <span class="VarId">strong</span> <span class="Symbol">?</span> <span class="VarId">background</span> <span class="VarId">black</span>
           <span class="VarId">abbr</span>  <span class="Symbol">&lt;?</span> <span class="VarId">fontVariant</span> <span class="VarId">smallCaps</span>
 </pre>
-  </div>
-  <div class="code css">
-    <pre class="sourceCode">p
+    </div>
+    <div class="code css">
+      <pre class="sourceCode">p
 <span class="CBracket">{</span>
   <span class="Property">color</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
 <span class="CBracket">}</span>
@@ -220,14 +237,14 @@ b
   <span class="Property">font-variant</span> <span class="Symbol">:</span> small<span class="Symbol">-</span>caps<span class="Symbol">;</span>
 <span class="CBracket">}</span>
 </pre>
-  </div>
+    </div>
 
-  <div class="text one-col">
-    <p>Basic selectors can be composed with several combinators to construct
-    more complicated selectors:</p>
-  </div>
-  <div class="code haskell">
-    <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Data.Monoid</span>
+    <p>
+      Basic selectors can be composed with several combinators to construct
+      more complicated selectors:
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Data.Monoid</span>
 <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">((**))</span>
 <span class="Keyword">import</span> <span class="ConId">Clay</span>
 
@@ -235,9 +252,9 @@ b
   <span class="Symbol">(</span><span class="VarId">body</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">article</span><span class="Symbol">)</span> <span class="Symbol">**</span> <span class="VarId">p</span> <span class="Symbol">|&gt;</span> <span class="Symbol">(</span><span class="VarId">a</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">b</span><span class="Symbol">)</span> <span class="Symbol">#</span> <span class="VarId">lastOfType</span> <span class="Symbol">?</span>
       <span class="VarId">color</span> <span class="VarId">red</span>
 </pre>
-  </div>
-  <div class="code css">
-    <pre class="sourceCode"><span class="String">body</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">a</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
+    </div>
+    <div class="code css">
+      <pre class="sourceCode"><span class="String">body</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">a</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
 <span class="String">body</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">b</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
 <span class="String">article</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">a</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
 <span class="String">article</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">b</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span>type
@@ -245,14 +262,14 @@ b
   <span class="Property">color</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
 <span class="CBracket">}</span>
 </pre>
-  </div>
+    </div>
 
-  <div class="text one-col">
-    <p>Using <code>OverloadedStrings</code> allows us to create selectors for
-    classes, ids, pseudo classes, attributes etc:</p>
-  </div>
-  <div class="code haskell">
-    <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
+    <p>
+      Using <code>OverloadedStrings</code> allows us to create selectors for
+      classes, ids, pseudo classes, attributes etc:
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
 <span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
@@ -262,9 +279,9 @@ b
          <span class="Keyword">do</span> <span class="VarId">textDecoration</span> <span class="VarId">underline</span>
             <span class="String">&quot;:hover&quot;</span> <span class="Symbol">&amp;</span> <span class="VarId">fontWeight</span> <span class="VarId">bold</span>
 </pre>
-  </div>
-  <div class="code css">
-    <pre class="sourceCode"><span class="String">section</span><span class="Selector">#open</span> <span class="Symbol">&gt;</span> <span class="Symbol">*</span><span class="Selector">.link</span>
+    </div>
+    <div class="code css">
+      <pre class="sourceCode"><span class="String">section</span><span class="Selector">#open</span> <span class="Symbol">&gt;</span> <span class="Symbol">*</span><span class="Selector">.link</span>
 <span class="CBracket">{</span>
   <span class="Property">text-decoration</span> <span class="Symbol">:</span> none<span class="Symbol">;</span>
 <span class="CBracket">}</span>
@@ -277,33 +294,34 @@ b
   <span class="Property">font-weight</span> <span class="Symbol">:</span> bold<span class="Symbol">;</span>
 <span class="CBracket">}</span>
 </pre>
-  </div>
+    </div>
 
-  <div class="text one-col">
-    <p>Or we can use some build in functions to avoid to much string
-    literals:</p>
-  </div>
-  <div class="code haskell">
-    <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Data.Monoid</span>
+    <p>
+      Or we can use some build in functions to avoid to much string literals:
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Data.Monoid</span>
 <span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
   <span class="VarId">a</span> <span class="Symbol">#</span> <span class="VarId">href</span> <span class="Symbol">#</span> <span class="VarId">hover</span> <span class="Symbol">?</span> <span class="VarId">textDecoration</span> <span class="VarId">none</span>
 </pre>
-  </div>
-  <div class="code css">
-    <pre class="sourceCode"><span class="String">a</span><span class="Symbol">[</span><span class="String">href</span><span class="Symbol">]:</span>hover
+    </div>
+    <div class="code css">
+      <pre class="sourceCode"><span class="String">a</span><span class="Symbol">[</span><span class="String">href</span><span class="Symbol">]:</span>hover
 <span class="CBracket">{</span>
   <span class="Property">text-decoration</span> <span class="Symbol">:</span> none<span class="Symbol">;</span>
 <span class="CBracket">}</span>
 </pre>
+    </div>
+
   </div>
 
 </section>
 
       <section id=source name=source>
-  <div class="two-col text">
-    <div>
+  <div class=two-col>
+    <div class=text>
       <h4>Project source</h4>
       <p>Clay is open source and hosted on GitHub. Every form of
       feedback, pull requests or other participation is more than
@@ -312,17 +330,27 @@ b
       for all those properties is most likely incomplete. Adding new
       properties is easy so let me know if things should be added.</p>
       <p class=goto><a href=https://github.com/sebastiaanvisser/clay>» project source repository</a></p>
-      <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>» project issue tracker</a></p>
+      <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>
+        » project issue tracker</a>
+      </p>
     </div>
-    <div>
+    <div class=text>
       <h4>Website source</h4>
-      <p>Of course, the style sheet of this website is also implemented
-      in Clay. You can find the sources in the project source
-      repository on GitHub. Feel free to use this page as template for
-      your own projects.</p>
+      <p>
+        Of course, the style sheet of this website is also implemented in Clay.
+        You can find the sources in the project source repository on GitHub.
+        Feel free to use this page as template for your own projects.
+      </p>
+      <p class=goto><a href=code.html>» stylesheet source in Clay</a></p>
       <p class=goto><a href=https://github.com/sebastiaanvisser/clay/tree/gh-pages>» website source repository</a></p>
-      <p class=goto><a href=src/Style.hs>» stylesheet source in Clay</a></p>
-      <p class=goto><a href=style-pretty.css>» generated stylesheet</a></p>
+      <h4>Generated CSS</h4>
+      <p>
+        You can take a look at the generated stylesheet for this website. We
+        have both a pretty printed and compacted version, of which the
+        compacted version is directly used by this site.
+      </p>
+      <p class=goto><a href=style-pretty.css>» pretty printed CSS</a></p>
+      <p class=goto><a href=style-compact.css>» compacted CSS</a></p>
     </div>
     <br>
   </div>
@@ -344,4 +372,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Fri Dec 21 23:39:33 CET 2012 -->
+<!-- site generated at Sat Dec 22 12:05:49 CET 2012 -->
