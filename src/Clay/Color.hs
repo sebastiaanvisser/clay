@@ -17,7 +17,7 @@ import Clay.Common
 data Color
   = Rgba Integer Integer Integer Integer
   | Hsla Integer Integer Integer Integer
-  | Other Text
+  | Other Value
   deriving Show
 
 -- * Color constructors.
@@ -83,19 +83,20 @@ clamp i = max (min i 255) 0
 -------------------------------------------------------------------------------
 
 instance Val Color where
-  value clr = Value $
+  value clr =
     case clr of
-      Rgba r g b 255 -> mconcat ["rgb(",  p r, ",", p g, ",", p b,            ")"]
-      Rgba r g b a   -> mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
-      Hsla h s l 255 -> mconcat ["hsl(",  p h, ",", p s, ",", p l,            ")"]
-      Hsla h s l a   -> mconcat ["hsla(", p h, ",", p s, ",", p l, ",", ah a, ")"]
-      Other o        -> Plain o
+      Rgba r g b 255 -> Value $mconcat ["rgb(",  p r, ",", p g, ",", p b,            ")"]
+      Rgba r g b a   -> Value $mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
+      Hsla h s l 255 -> Value $mconcat ["hsl(",  p h, ",", p s, ",", p l,            ")"]
+      Hsla h s l a   -> Value $mconcat ["hsla(", p h, ",", p s, ",", p l, ",", ah a, ")"]
+      Other o        -> o
     where p  = fromString . show
           ah = fromString . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
 instance None    Color where none    = Other "none"
 instance Auto    Color where auto    = Other "auto"
 instance Inherit Color where inherit = Other "inherit"
+instance Other   Color where other   = Other
 
 instance IsString Color where
   fromString = parse . fromString
