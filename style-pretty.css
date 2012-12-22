@@ -48,6 +48,7 @@ body section *.code
   -ms-box-shadow     : 0px 0px 60px rgba(0,0,0,0.0781);
   -o-box-shadow      : 0px 0px 60px rgba(0,0,0,0.0781);
   box-shadow         : 0px 0px 60px rgba(0,0,0,0.0781);
+  overflow-y         : auto;
 }
 
 body section *.code pre
@@ -115,7 +116,8 @@ body section *.code.shell pre *.Symbol
 
 body section *.code.css pre
 {
-  color : rgb(68,85,102);
+  font-size : 14px;
+  color     : rgb(68,85,102);
 }
 
 body section *.code.css pre *.Number

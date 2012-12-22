@@ -107,7 +107,7 @@
         and needs a lot more work. Most missing features, bugs and plans for
         the future are documented in a little <code>todo</code> file in the
         source repository.</p>
-        <p class=goto><a href=xxx>» the todo list</a></p>
+        <p class=goto><a href=https://github.com/sebastiaanvisser/clay/blob/master/todo>» the todo list</a></p>
         <p>The most important point on the list is to move all the items into
         the issue tracker.</p>
         <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>» project issue tracker</a></p>
@@ -175,10 +175,12 @@
       <section id=tutorial name=tutorial>
   <div class="text one-col">
     <h4>Tutorial</h4>
-    <p>Clay is an EDSL that uses a writer monad to collect style rules. Rules
-    are combinations of CSS selectors associated style properties. Multiple
-    style rules can be composed and nested to form a stylehseet. Stylesheets
-    can be rendered to plain old CSS and served to your browser.</p>
+    <p>
+      Clay is an EDSL that uses a monad to collect style rules. Rules are
+      combinations of CSS selectors with associated style properties. Multiple
+      style rules can be composed and nested to form a stylehseet. Stylesheets
+      can be rendered to plain old CSS and served to your browser.
+    </p>
 
     <p>
       There are several methods of assigning style properties to selectors.
@@ -315,6 +317,149 @@ b
 </pre>
     </div>
 
+    <p>
+      Sometimes browsers implement exotic style properties or values that Clay
+      doesn't yet know of. For most value type it is easy to supply a custom
+      value using the <code>Other</code> type class. We can even escape from
+      the type world entirely by using the fallback operator <code>-:</code>.
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="Keyword">import</span> <span class="ConId">Clay</span>
+
+<span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
+  <span class="VarId">star</span> <span class="Symbol">?</span>
+    <span class="Keyword">do</span> <span class="VarId">color</span> <span class="Symbol">(</span><span class="VarId">other</span> <span class="String">&quot;ultraviolet&quot;</span><span class="Symbol">)</span>
+       <span class="String">&quot;-ms-lens-flare-style&quot;</span> <span class="Symbol">-:</span> <span class="String">&quot;really-shiny&quot;</span>
+</pre>
+    </div>
+    <div class="code css">
+      <pre class="sourceCode"><span class="Symbol">*</span>
+<span class="CBracket">{</span>
+  <span class="Property">color</span>                <span class="Symbol">:</span> ultraviolet<span class="Symbol">;</span>
+  <span class="Symbol">-</span>ms<span class="Symbol">-</span>lens<span class="Symbol">-</span>flare<span class="Symbol">-</span>style <span class="Symbol">:</span> really<span class="Symbol">-</span>shiny<span class="Symbol">;</span>
+<span class="CBracket">}</span>
+</pre>
+    </div>
+
+    <p>
+      Not every browser implements the full CSS standard and some browsers
+      introduce experimental features that are not yet in the standard. Most
+      experimental properties in Clay are automatically prefixed with vendor
+      prefixes.
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
+
+<span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
+  <span class="VarId">body</span> <span class="Symbol">?</span>
+    <span class="Keyword">do</span> <span class="Keyword">let</span> <span class="VarId">rot</span> <span class="Symbol">=</span> <span class="VarId">deg</span> <span class="Number">30</span>
+       <span class="VarId">transform</span> <span class="Symbol">(</span><span class="VarId">rotateX</span> <span class="VarId">rot</span><span class="Symbol">)</span>
+       <span class="VarId">background</span> <span class="Symbol">$</span>
+         <span class="VarId">linearGradient</span> <span class="Symbol">(</span><span class="VarId">angular</span> <span class="VarId">rot</span><span class="Symbol">)</span>
+           <span class="Symbol">[</span> <span class="Symbol">(</span> <span class="VarId">red</span>    <span class="Symbol">,</span>   <span class="Number">0</span> <span class="Symbol">)</span>
+           <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">yellow</span> <span class="Symbol">,</span>  <span class="Number">40</span> <span class="Symbol">)</span>
+           <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">blue</span>   <span class="Symbol">,</span> <span class="Number">100</span> <span class="Symbol">)</span>
+           <span class="Symbol">]</span>
+</pre>
+    </div>
+    <div class="code css">
+      <pre class="sourceCode">body
+<span class="CBracket">{</span>
+  <span class="Symbol">-</span>webkit<span class="Symbol">-</span>transform <span class="Symbol">:</span> rotateX<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">);</span>
+  <span class="Symbol">-</span>moz<span class="Symbol">-</span>transform    <span class="Symbol">:</span> rotateX<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">);</span>
+  <span class="Symbol">-</span>ms<span class="Symbol">-</span>transform     <span class="Symbol">:</span> rotateX<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">);</span>
+  <span class="Symbol">-</span>o<span class="Symbol">-</span>transform      <span class="Symbol">:</span> rotateX<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">);</span>
+  transform         <span class="Symbol">:</span> rotateX<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">);</span>
+  <span class="Property">background</span>        <span class="Symbol">:</span> <span class="Symbol">-</span>webkit<span class="Symbol">-</span>linear<span class="Symbol">-</span>gradient<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">0</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">40</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">)</span> <span class="Number">100</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%);</span>
+  <span class="Property">background</span>        <span class="Symbol">:</span> <span class="Symbol">-</span>moz<span class="Symbol">-</span>linear<span class="Symbol">-</span>gradient<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">0</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">40</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">)</span> <span class="Number">100</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%);</span>
+  <span class="Property">background</span>        <span class="Symbol">:</span> <span class="Symbol">-</span>ms<span class="Symbol">-</span>linear<span class="Symbol">-</span>gradient<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">0</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">40</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">)</span> <span class="Number">100</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%);</span>
+  <span class="Property">background</span>        <span class="Symbol">:</span> <span class="Symbol">-</span>o<span class="Symbol">-</span>linear<span class="Symbol">-</span>gradient<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">0</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">40</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">)</span> <span class="Number">100</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%);</span>
+  <span class="Property">background</span>        <span class="Symbol">:</span> linear<span class="Symbol">-</span>gradient<span class="Symbol">(</span><span class="Number">30</span><span class="Symbol">.</span><span class="Number">0</span>deg<span class="Symbol">,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">0</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">)</span> <span class="Number">40</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%,</span>rgb<span class="Symbol">(</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">)</span> <span class="Number">100</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%);</span>
+<span class="CBracket">}</span>
+</pre>
+    </div>
+
+    <p>
+      Because Clay is just Haskell we can do some really nice tricks that might
+      take a lot of effort in other CSS preprocessors. Functions, mixins,
+      control structures, colors and size calculation, all is easy. The
+      following (somewhat contrived) example shows how to use the
+      expressiveness of Haskell to produce more advanced stylesheets:
+    </p>
+    <div class="code haskell">
+      <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="Keyword">import</span> <span class="ConId">Clay</span>
+<span class="Keyword">import</span> <span class="ConId">Control.Monad</span>
+<span class="Keyword">import</span> <span class="ConId">Data.String</span>
+
+<span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
+  <span class="VarId">article</span> <span class="Symbol">?</span> <span class="VarId">forM_</span> <span class="Symbol">[</span><span class="Number">0</span><span class="Symbol">..</span><span class="Number">4</span><span class="Symbol">]</span> <span class="VarId">mySection</span>
+
+<span class="Function">myShade</span> <span class="Symbol">::</span> <span class="ConId">Color</span>
+<span class="Function">myShade</span> <span class="Symbol">=</span> <span class="String">&quot;#f80&quot;</span>
+
+<span class="Function">mySection</span> <span class="Symbol">::</span> <span class="ConId">Integer</span> <span class="Symbol">-&gt;</span> <span class="ConId">Css</span>
+<span class="Function">mySection</span> <span class="VarId">n</span> <span class="Symbol">=</span>
+  <span class="Keyword">let</span> <span class="VarId">idx</span> <span class="Symbol">=</span> <span class="VarId">fromString</span> <span class="Symbol">(</span><span class="VarId">show</span> <span class="VarId">n</span><span class="Symbol">)</span>
+   <span class="Keyword">in</span> <span class="VarId">section</span> <span class="Symbol">#</span> <span class="VarId">nthChild</span> <span class="VarId">idx</span> <span class="Symbol">?</span>
+      <span class="Keyword">do</span> <span class="VarId">backgroundColor</span> <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Symbol">(</span><span class="VarId">n</span> <span class="Symbol">*</span> <span class="Number">40</span><span class="Symbol">)</span> <span class="VarId">myShade</span><span class="Symbol">)</span>
+         <span class="Keyword">let</span> <span class="VarId">w</span> <span class="Symbol">=</span> <span class="Number">20</span> <span class="Symbol">*</span> <span class="VarId">fromIntegral</span> <span class="VarId">n</span>
+         <span class="VarId">backgroundSize</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span> <span class="Symbol">`</span><span class="VarId">by</span><span class="Symbol">`</span> <span class="VarId">pct</span> <span class="VarId">w</span><span class="Symbol">)</span>
+         <span class="VarId">p</span> <span class="Symbol">?</span> <span class="Keyword">if</span> <span class="VarId">n</span> <span class="Symbol">&gt;</span> <span class="Number">2</span>
+               <span class="Keyword">then</span> <span class="VarId">textDecoration</span> <span class="VarId">underline</span>
+               <span class="Keyword">else</span> <span class="VarId">color</span> <span class="VarId">yellow</span>
+</pre>
+    </div>
+    <div class="code css">
+      <pre class="sourceCode"><span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">0</span><span class="Symbol">)</span>
+<span class="CBracket">{</span>
+  <span class="Property">background-color</span> <span class="Symbol">:</span> rgba<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">136</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">.</span><span class="Number">0000</span><span class="Symbol">);</span>
+  background<span class="Symbol">-</span><span class="Property">size</span>  <span class="Symbol">:</span> <span class="Number">20</span>px <span class="Number">0</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%;</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">0</span><span class="Symbol">)</span> p
+<span class="CBracket">{</span>
+  <span class="Property">color</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">1</span><span class="Symbol">)</span>
+<span class="CBracket">{</span>
+  <span class="Property">background-color</span> <span class="Symbol">:</span> rgba<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">136</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">.</span><span class="Number">1563</span><span class="Symbol">);</span>
+  background<span class="Symbol">-</span><span class="Property">size</span>  <span class="Symbol">:</span> <span class="Number">20</span>px <span class="Number">20</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%;</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">1</span><span class="Symbol">)</span> p
+<span class="CBracket">{</span>
+  <span class="Property">color</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">2</span><span class="Symbol">)</span>
+<span class="CBracket">{</span>
+  <span class="Property">background-color</span> <span class="Symbol">:</span> rgba<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">136</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">.</span><span class="Number">3125</span><span class="Symbol">);</span>
+  background<span class="Symbol">-</span><span class="Property">size</span>  <span class="Symbol">:</span> <span class="Number">20</span>px <span class="Number">40</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%;</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">2</span><span class="Symbol">)</span> p
+<span class="CBracket">{</span>
+  <span class="Property">color</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">3</span><span class="Symbol">)</span>
+<span class="CBracket">{</span>
+  <span class="Property">background-color</span> <span class="Symbol">:</span> rgba<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">136</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">.</span><span class="Number">4688</span><span class="Symbol">);</span>
+  background<span class="Symbol">-</span><span class="Property">size</span>  <span class="Symbol">:</span> <span class="Number">20</span>px <span class="Number">60</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%;</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">3</span><span class="Symbol">)</span> p
+<span class="CBracket">{</span>
+  <span class="Property">text-decoration</span> <span class="Symbol">:</span> underline<span class="Symbol">;</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">4</span><span class="Symbol">)</span>
+<span class="CBracket">{</span>
+  <span class="Property">background-color</span> <span class="Symbol">:</span> rgba<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">136</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">.</span><span class="Number">6250</span><span class="Symbol">);</span>
+  background<span class="Symbol">-</span><span class="Property">size</span>  <span class="Symbol">:</span> <span class="Number">20</span>px <span class="Number">80</span><span class="Symbol">.</span><span class="Number">0</span><span class="Symbol">%;</span>
+<span class="CBracket">}</span>
+<span class="String">article</span> <span class="String">section</span><span class="Symbol">:</span><span class="String">nth</span><span class="Symbol">-</span><span class="String">child</span><span class="Symbol">(</span><span class="String">4</span><span class="Symbol">)</span> p
+<span class="CBracket">{</span>
+  <span class="Property">text-decoration</span> <span class="Symbol">:</span> underline<span class="Symbol">;</span>
+<span class="CBracket">}</span>
+</pre>
+    </div>
+
   </div>
 
 </section>
@@ -372,4 +517,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sat Dec 22 12:05:49 CET 2012 -->
+<!-- site generated at Sat Dec 22 12:52:33 CET 2012 -->
