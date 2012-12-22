@@ -17,7 +17,7 @@ for hs in `find src -name '*.clay.hs'`
 do
   file=$(basename $hs)
   echo -n "Syntax highlighting output of: ${file} "
-  runhaskell $hs | grep -v "^\s*$" | illuminate --syntax=css --fragment --to=xhtmlcss > \
+  runhaskell -isrc $hs | grep -v "^\s*$" | illuminate --syntax=css --fragment --to=xhtmlcss > \
     src/highlighted/${file}.output.html
   echo done
 done
@@ -32,10 +32,10 @@ do
 done
 
 echo "Generating pretty printed stylesheet"
-runhaskell src/Style pretty > style-pretty.css
+runhaskell -isrc src/Style pretty > style-pretty.css
 
 echo "Generating compacted stylesheet"
-runhaskell src/Style compact > style-compact.css
+runhaskell -isrc src/Style compact > style-compact.css
 
 echo "Downloading newest jQuery"
 curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/jquery.js ||
