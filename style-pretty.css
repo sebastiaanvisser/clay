@@ -93,11 +93,11 @@ section div.code
   padding            : 20px 20px 20px 20px;
   margin-top         : 60px;
   margin-bottom      : 60px;
-  -webkit-box-shadow : 0px 0px 60px rgba(0,0,0,0.0781);
-  -moz-box-shadow    : 0px 0px 60px rgba(0,0,0,0.0781);
-  -ms-box-shadow     : 0px 0px 60px rgba(0,0,0,0.0781);
-  -o-box-shadow      : 0px 0px 60px rgba(0,0,0,0.0781);
-  box-shadow         : 0px 0px 60px rgba(0,0,0,0.0781);
+  -webkit-box-shadow : 0px 0px 60px rgba(0,0,0,0.1172);
+  -moz-box-shadow    : 0px 0px 60px rgba(0,0,0,0.1172);
+  -ms-box-shadow     : 0px 0px 60px rgba(0,0,0,0.1172);
+  -o-box-shadow      : 0px 0px 60px rgba(0,0,0,0.1172);
+  box-shadow         : 0px 0px 60px rgba(0,0,0,0.1172);
 }
 
 section div.code pre
@@ -319,7 +319,7 @@ header:before
 
 header nav
 {
-  background         : rgba(255,255,255,0.9805);
+  background         : rgba(255,255,255,0.9727);
   -webkit-box-shadow : 0px 0px 60px rgba(0,0,0,0.0781);
   -moz-box-shadow    : 0px 0px 60px rgba(0,0,0,0.0781);
   -ms-box-shadow     : 0px 0px 60px rgba(0,0,0,0.0781);
@@ -393,8 +393,8 @@ header > *#logo h1
 {
   font-size      : 90px;
   color          : rgba(255,255,255,0.7813);
-  letter-spacing : 0.4em;
   text-shadow    : 0px 0px 20px rgba(175,80,0,0.7813);
+  letter-spacing : 0.4em;
 }
 
 header > *#logo h1 span.a
@@ -405,13 +405,6 @@ header > *#logo h1 span.a
 header > *#logo h1 span.y
 {
   letter-spacing : 0.0em;
-}
-
-
-header > *#logo h1 a:hover
-{
-  color       : rgb(255,255,255);
-  text-shadow : 0px 0px 20px rgb(135,40,0);
 }
 
 header > *#logo h2

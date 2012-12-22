@@ -4,11 +4,13 @@
   <head>
     <title>Clay, CSS Preprocessor</title>
     <meta charset='utf-8'>
-    <meta name="keywords" content="clay, css, stylesheet, preprocessor, haskell" />
-    <meta name='author' content='Sebastiaan Visser' />
-    <meta name='description' content='A CSS preprocessor as embedded Haskell' />
-    <link href=style-compact.css rel=stylesheet type=text/css>
-    <script src=jquery.js></script>
+<meta name="keywords" content="clay, css, stylesheet, preprocessor, haskell" />
+<meta name='author' content='Sebastiaan Visser' />
+<meta name='description' content='A CSS preprocessor as embedded Haskell' />
+<link href=style-compact.css rel=stylesheet type=text/css>
+<script src=jquery.js></script>
+
+
     <script type="text/javascript" account=laszlito src="http://use.typekit.net/wvl3oox.js"></script>
 <!-- <script type="text/javascript" account=sebas src="://use.typekit.net/wvl3oox.js"></script> -->
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -51,29 +53,21 @@
       <div class=text>
         <h3>In action</h3>
         <div class="code haskell">
-          <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
-<span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">)</span>
+          <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="Keyword">import</span> <span class="ConId">Clay</span>
 
-<span class="Function">highlight</span> <span class="Symbol">::</span> <span class="ConId">Color</span>
-<span class="Function">highlight</span> <span class="Symbol">=</span> <span class="VarId">rgb</span> <span class="Number">255</span> <span class="Number">128</span> <span class="Number">0</span>
-
-<span class="Function">navigation</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
-<span class="Function">navigation</span> <span class="Symbol">=</span>
-  <span class="Keyword">do</span> <span class="VarId">fontSize</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">24</span><span class="Symbol">)</span>
-     <span class="VarId">sym2</span> <span class="VarId">padding</span> <span class="Number">20</span> <span class="Number">0</span>
-     <span class="VarId">textTransform</span> <span class="VarId">uppercase</span>
-
-     <span class="VarId">div</span> <span class="Symbol">&lt;?</span> <span class="VarId">centered</span>
-     <span class="VarId">a</span> <span class="Symbol">?</span> <span class="Keyword">do</span> <span class="VarId">paddingRight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">43</span><span class="Symbol">)</span>
-            <span class="VarId">color</span> <span class="Symbol">(</span><span class="VarId">highlight</span> <span class="Symbol">-.</span> <span class="Number">40</span><span class="Symbol">)</span>
-            <span class="VarId">lastOfType</span> <span class="Symbol">&amp;</span> <span class="VarId">paddingRight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-            <span class="VarId">hover</span>      <span class="Symbol">&amp;</span> <span class="VarId">color</span> <span class="VarId">black</span>
-
-<span class="Function">centered</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
-<span class="Function">centered</span> <span class="Symbol">=</span>
-  <span class="Keyword">do</span> <span class="VarId">width</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">800</span><span class="Symbol">)</span>
-     <span class="VarId">boxSizing</span> <span class="VarId">borderBox</span>
-     <span class="VarId">sym2</span> <span class="VarId">margin</span> <span class="Number">0</span> <span class="VarId">auto</span>
+<span class="Function">menu</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">menu</span> <span class="Symbol">=</span> <span class="VarId">header</span> <span class="Symbol">|&gt;</span> <span class="VarId">nav</span> <span class="Symbol">?</span>
+  <span class="Keyword">do</span> <span class="VarId">background</span>     <span class="VarId">white</span>
+     <span class="VarId">boxShadow</span>      <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
+                    <span class="String">&quot;#00000018&quot;</span>
+     <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">24</span><span class="Symbol">)</span>
+     <span class="VarId">sym2</span> <span class="VarId">padding</span>   <span class="Number">20</span> <span class="Number">0</span>
+     <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
+     <span class="VarId">position</span>       <span class="VarId">absolute</span>
+     <span class="VarId">left</span>           <span class="Number">0</span>
+     <span class="VarId">right</span>          <span class="Number">0</span>
+     <span class="VarId">bottom</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="Symbol">(-</span><span class="Number">72</span><span class="Symbol">))</span>
 </pre>
         </div>
       </div>
@@ -106,9 +100,9 @@
         <h3>Todo</h3>
         <p>Despite the amazing amount of features, Clay is far from finished
         and needs a lot more work. Most missing features, bugs and plans for
-        the future are documented in a little <code>todo</code> file in the
+        the future are documented in a little <code>todo.md</code> file in the
         source repository.</p>
-        <p class=goto><a href=https://github.com/sebastiaanvisser/clay/blob/master/todo>» the todo list</a></p>
+        <p class=goto><a href=https://github.com/sebastiaanvisser/clay/blob/master/todo.md>» the todo list</a></p>
         <p>The most important point on the list is to move all the items into
         the issue tracker.</p>
         <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>» project issue tracker</a></p>
@@ -208,8 +202,8 @@
     </div>
 
     <p>
-      Style rules can be easily be composed and nested by just adding more
-      rules using the monad syntax:
+      Style rules can easily be composed and nested by just adding more rules
+      using the monad syntax:
     </p>
     <div class="code haskell">
       <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
@@ -346,8 +340,7 @@ b
     <p>
       Not every browser implements the full CSS standard and some browsers
       introduce experimental features that are not yet in the standard. Most
-      experimental properties in Clay are automatically prefixed with vendor
-      prefixes.
+      experimental properties are automatically prefixed with vendor prefixes.
     </p>
     <div class="code haskell">
       <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
@@ -506,12 +499,6 @@ b
   </div>
 </section>
 
-      <section id=haskell name=haskell>
-  <div>
-    <p>Haskell logo here!</p>
-  </div>
-</section>
-
       <footer>
   <div name=footer><sup>*</sup>Within reasonable limits only!</div>
 </footer>
@@ -522,4 +509,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sat Dec 22 16:06:46 CET 2012 -->
+<!-- site generated at Sat Dec 22 17:37:21 CET 2012 -->
