@@ -19,7 +19,7 @@ codeblocks =
           marginTop     (px 60)
           marginBottom  (px 60)
           boxShadow     0 0 (px 60)
-                        (setA 20 black)
+                        (setA 30 black)
 
           pre ?
             do sym margin 0

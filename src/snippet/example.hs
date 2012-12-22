@@ -1,23 +1,15 @@
+{-# LANGUAGE OverloadedStrings #-}
 import Clay
-import Prelude hiding (div)
 
-highlight :: Color
-highlight = rgb 255 128 0
-
-navigation :: Css
-navigation =
-  do fontSize (px 24)
-     sym2 padding 20 0
-     textTransform uppercase
-
-     div <? centered
-     a ? do paddingRight (px 43)
-            color (highlight -. 40)
-            lastOfType & paddingRight (px 0)
-            hover      & color black
-
-centered :: Css
-centered =
-  do width (px 800)
-     boxSizing borderBox
-     sym2 margin 0 auto
+menu :: Css
+menu = header |> nav ?
+  do background     white
+     boxShadow      0 0 (px 60)
+                    "#00000018"
+     fontSize       (px 24)
+     sym2 padding   20 0
+     textTransform  uppercase
+     position       absolute
+     left           0
+     right          0
+     bottom         (px (-72))

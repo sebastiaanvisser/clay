@@ -49,7 +49,7 @@ theHeader =
 theMenu :: Css
 theMenu =
 
-  do background     (setA 251 white)
+  do background     (setA 249 white)
      boxShadow      0 0 (px 60) (setA 20 black)
      fontSize       (px 24)
      sym2 padding   20 0
@@ -101,10 +101,6 @@ theLogo =
           letterSpacing                (em 0.40)
           span # ".a" ? letterSpacing  (em 0.36)
           span # ".y" ? letterSpacing  (em 0.00)
-
-          a ? hover &
-            do color       white
-               textShadow  0 0 (px 20) (fstColor -. 120)
 
      h2 ?
        do fontSize       (px 35)
