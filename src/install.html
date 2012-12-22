@@ -1,24 +1,33 @@
 <section id=install name=install>
   <div class="one-col text">
     <h4>Installation</h4>
-    <p>Clay is written in Haskell and requires the Glasgow Haskell
-    Compiler (GHC) to get installed. After installing GHC, and the
-    acompanying package manager Cabal, you can directly install Clay from
-    the Hackage package repository:</p>
-  </div>
-  <div class="code shell">
+    <p>
+      Clay is written in Haskell and requires the Glasgow Haskell Compiler
+      (GHC) to get installed. After installing GHC, and the acompanying package
+      manager Cabal, you can directly install Clay from the Hackage package
+      repository:
+    </p>
+    <div class="code shell">
     <pre><span class=Symbol>$</span> cabal update
 <span class=Symbol>$</span> cabal install clay</pre>
-  </div>
-  <div class="one-col text">
+    </div>
     <h4>Usage</h4>
-    <p>Using Clay requires you to create a Haskell program describing the
-    stylesheet and importing the Clay library. As a starting point we can
-    create a stylesheet to make the background color of your HTML body
-    solid red. Running the <code>main</code> function output the
-    generated CSS to the standard output.</p>
-  </div>
-  <div class="code haskell">
-    <!--#include virtual=highlighted/first-step.hs.html -->
+    <p>
+      Clay is written as an embedded language and requires you to write a
+      Haskell program that models the stylesheet. You only need to import the
+      <code>Clay</code> module to get started. As a first demonstration we
+      create the `Hello world' of the stylesheets, a style definition that sets
+      the background color of HTML body to red.
+    </p>
+    <div class="code haskell">
+      <!--#include virtual=highlighted/usage.clay.hs.html -->
+    </div>
+    <p>
+      Running the <code>putCss</code> function directly outputs the generated
+      CSS to the standard output resulting in:
+    </p>
+    <div class="code css">
+      <!--#include virtual=highlighted/usage.clay.hs.output.html -->
+    </div>
   </div>
 </section>
