@@ -14,6 +14,7 @@ codeblocks =
           -- when needed and a slight shadow.
 
           boxSizing     borderBox
+          borderRadius  (px 2)
           overflowX     auto
           sym padding   20
           marginTop     (px 60)
@@ -41,7 +42,7 @@ codeblocks =
 isCode :: Selector
 isCode = div # ".code"
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 -- Haskell code we highlight with a dark background by default.
 
@@ -58,7 +59,7 @@ haskell =
           ".String"   ? color (setG 40 red)
           ".Symbol"   ? color orange
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 -- CSS code we highlight with a lighter background by default and we make
 -- the font a bit smaller because the generated CSS tends to grow.

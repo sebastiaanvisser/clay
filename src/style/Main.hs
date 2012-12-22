@@ -26,7 +26,7 @@ main =
           -> Text.putStr (renderWith compact [] theStylesheet)
        _  -> putCss theStylesheet
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 theStylesheet :: Css
 theStylesheet =
@@ -46,7 +46,7 @@ theStylesheet =
      header ? theHeader
      footer ? theFooter
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 -- Generic styling that every section shares.
 
@@ -62,8 +62,12 @@ theSections =
           -- section.
           borderTop solid (px 1) transparent
 
-          -- Horizontally center the content div inside a section.
-          div <? centered
+          div <?
+            do -- Horizontally center the content div inside a section.
+               centered
+
+               -- Allow a bit of spacing even when the screen is small.
+               sym2 padding 0 (px 10)
 
           -- Add some style aspects to the sections.
           ".one-col" ? oneColumn
@@ -81,8 +85,8 @@ theSections =
 
 oneColumn :: Css
 oneColumn =
-  do width      (px 550)
-     boxSizing  borderBox
+  do width (px 550)
+     boxSizing borderBox
 
 oneOrTwoColumns :: Css
 oneOrTwoColumns =
@@ -109,7 +113,7 @@ twoColumns =
             do float  side
                pad    (px 30)
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 -- Content blocks containing running texts.
 
@@ -134,11 +138,12 @@ textblocks = ".text" ?
      -- Slightly indent the goto links.
      ".goto" ? paddingLeft (px 25)
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 theFooter :: Css
 theFooter = div <?
   do centered
+     width          (px 550)
      textFont
      fontSize       (px 12)
      textTransform  uppercase
