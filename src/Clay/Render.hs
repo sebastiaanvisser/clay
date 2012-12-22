@@ -23,7 +23,7 @@ import qualified Data.Text         as Text
 import qualified Data.Text.Lazy    as Lazy
 import qualified Data.Text.Lazy.IO as Lazy
 
-import Clay.Stylesheet hiding (Child)
+import Clay.Stylesheet hiding (Child, query)
 import Clay.Property
 import Clay.Selector
 
@@ -74,11 +74,53 @@ rules cfg sel rs = mconcat
   [ rule cfg sel (mapMaybe property rs)
   , newline cfg
   , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested rs
+  , (\(a, b) -> query cfg  a   sel  b) `foldMap` mapMaybe queries rs
   ]
   where property (Property k v) = Just (k, v)
         property _              = Nothing
         nested   (Nested a ns ) = Just (a, ns)
         nested   _              = Nothing
+        queries  (Query q ns  ) = Just (q, ns)
+        queries  _              = Nothing
+
+query :: Config -> MediaQuery -> [App] -> [Rule] -> Builder
+query cfg q sel rs =
+  mconcat
+    [ mediaQuery q
+    , newline cfg
+    , "{"
+    , newline cfg
+    , rules cfg sel rs
+    , "}"
+    , newline cfg
+    ]
+
+mediaQuery :: MediaQuery -> Builder
+mediaQuery (MediaQuery no ty fs) =
+  mconcat
+  [ "@media "
+  , case no of
+      Nothing -> ""
+      Just Not -> "not "
+      Just Only -> "only "
+  , mediaType ty
+  , mconcat ((" and " <>) . feature <$> fs)
+  ]
+
+mediaType :: MediaType -> Builder
+mediaType (MediaType (Value v)) = fromText (plain v)
+
+feature :: Feature -> Builder
+feature (Feature k mv) =
+  case mv of
+    Nothing        -> fromText k
+    Just (Value v) -> mconcat
+                      [ "("
+                      , fromText k
+                      , ": "
+                      , fromText (plain v)
+                      , ")"
+                      ]
 
 rule :: Config -> [App] -> [(Key (), Value)] -> Builder
 rule _   _   []    = mempty

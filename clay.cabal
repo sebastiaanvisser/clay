@@ -46,6 +46,7 @@ Library
     Clay.Font
     Clay.Geometry
     Clay.Gradient
+    Clay.Media
     Clay.Property
     Clay.Pseudo
     Clay.Render

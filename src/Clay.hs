@@ -49,6 +49,13 @@ module Clay
 , (~=)
 , (|=)
 
+-- * Apply media queries.
+-- $media
+
+, query
+, queryNot
+, queryOnly
+
 -- * Pseudo elements and classes.
 
 , module Clay.Pseudo
@@ -111,4 +118,10 @@ import Clay.Size
 import Clay.Text     hiding (pre)
 import Clay.Transform
 import Clay.Transition
+
+-- $media
+--
+-- Because a large part of the names export by "Clay.Media" clash with names
+-- export by other modules we don't re-export it here and recommend you to
+-- import the module qualified.
 

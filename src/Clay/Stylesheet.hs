@@ -6,6 +6,17 @@ import Control.Monad.Writer
 
 import Clay.Selector hiding (Child)
 import Clay.Property
+import Clay.Common
+
+newtype MediaType = MediaType Value
+  deriving (Val, Other)
+
+data NotOrOnly = Not | Only
+data MediaQuery = MediaQuery (Maybe NotOrOnly) MediaType [Feature]
+
+data Feature = Feature Text (Maybe Value)
+
+----------------------------------------------------
 
 data App
   = Self   Refinement
@@ -17,6 +28,7 @@ data App
 data Rule
   = Property (Key ()) Value
   | Nested   App [Rule]
+  | Query    MediaQuery [Rule]
 
 newtype StyleM a = S (Writer [Rule] a)
   deriving Monad
@@ -83,4 +95,21 @@ root sel (S rs) = S (tell [Nested (Root sel) (execWriter rs)])
 
 pop :: Int -> Css -> Css
 pop i (S rs) = S (tell [Nested (Pop i) (execWriter rs)])
+
+-------------------------------------------------------------------------------
+
+-- | Apply a set of style rules when the media type and feature queries apply.
+
+query :: MediaType -> [Feature] -> Css -> Css
+query ty fs (S rs) = S (tell [Query (MediaQuery Nothing ty fs) (execWriter rs)])
+
+-- | Apply a set of style rules when the media type and feature queries do not apply.
+
+queryNot :: MediaType -> [Feature] -> Css -> Css
+queryNot ty fs (S rs) = S (tell [Query (MediaQuery (Just Not) ty fs) (execWriter rs)])
+
+-- | Apply a set of style rules only when the media type and feature queries apply.
+
+queryOnly :: MediaType -> [Feature] -> Css -> Css
+queryOnly ty fs (S rs) = S (tell [Query (MediaQuery (Just Only) ty fs) (execWriter rs)])
 
