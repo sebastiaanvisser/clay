@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Sections where
+module Header where
 
 import Clay hiding (i, s, id)
 import Data.Monoid

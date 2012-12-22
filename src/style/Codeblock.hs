@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Code (codeblocks) where
+module Codeblock where
 
 import Prelude hiding (div)
 import Clay

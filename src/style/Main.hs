@@ -9,9 +9,9 @@ import System.Environment
 
 import qualified Data.Text.Lazy.IO as Text
 
+import Codeblock
 import Common
-import Code
-import Sections
+import Header
 
 -- When running the stylesheet we allow the generation of compacted CSS by
 -- using 'compact' as the first argument. Otherwise we dump the default
@@ -104,6 +104,8 @@ twoColumns = ".two-col" ?
           div # nthChild i <?
             do float  side
                pad    (px 30)
+
+----------------------------------------------------------------------------
 
 -- Content blocks containing running texts.
 

@@ -32,10 +32,10 @@ do
 done
 
 echo "Generating pretty printed stylesheet"
-runhaskell -isrc src/Style pretty > style-pretty.css
+runhaskell -isrc/style Main pretty > style-pretty.css
 
 echo "Generating compacted stylesheet"
-runhaskell -isrc src/Style compact > style-compact.css
+runhaskell -isrc/style Main compact > style-compact.css
 
 echo "Downloading newest jQuery"
 curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/jquery.js ||
@@ -44,6 +44,6 @@ curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/jquery.js ||
 echo "Copying over JavaScript"
 cp -v src/*.js .
 
-echo "DONE!"
 echo
+echo "DONE!"
 
