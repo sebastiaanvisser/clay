@@ -131,3 +131,12 @@ textblocks = ".text" ?
 
      ".goto" ? paddingLeft (px 40)
 
+----------------------------------------------------------------------------
+
+theFooter :: Css
+theFooter = div <?
+  do centered
+     textAlign     (alignSide sideCenter)
+     color         (setA 150 black)
+     sym2 padding  (px 10) 0
+
