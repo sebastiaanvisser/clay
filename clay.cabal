@@ -1,46 +1,63 @@
-Name:          clay
-Version:       0.0.1
+Name:     clay
+Version:  0.0.1
+Synopsis: CSS preprocessor as embedded Haskell.
+Description:
+  Clay is a CSS preprocessor like LESS and Sass, but implemented as an embedded
+  domain specific language (EDSL) in Haskell. This means that all CSS selectors
+  and style rules are first class Haskell functions, which makes reuse and
+  composability easy.
+
+  .
+
+  The project is described on <http://sebastiaanvisser.github.com/clay>.
+
+  .
+
+  The API documentation can be found in the top level module "Clay".
+
 Author:        Sebastiaan Visser
-Synopsis:      CSS preprocessor as embedded Haskell.
-Description:   CSS preprocessor as embedded Haskell.
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
+Homepage:      http://sebastiaanvisser.github.com/clay
+Bug-Reports:   http://github.com/sebastiaanvisser/clay/issues
+
 License:       BSD3
 License-File:  LICENSE
-Category:      Web, Style
+Category:      Web, Graphics
 Cabal-Version: >= 1.6
 Build-Type:    Simple
+
+Source-Repository head
+  Type:     git
+  Location: git://github.com/sebastiaanvisser/clay.git
 
 Library
   HS-Source-Dirs: src
 
   Exposed-Modules:
     Clay
-
-    Clay.Render
-    Clay.Stylesheet
-    Clay.Selector
-    Clay.Property
-
-    Clay.Pseudo
     Clay.Attributes
-    Clay.Elements
-
     Clay.Background
     Clay.Border
     Clay.Box
     Clay.Color
     Clay.Common
     Clay.Display
+    Clay.Elements
     Clay.Font
     Clay.Geometry
     Clay.Gradient
+    Clay.Property
+    Clay.Pseudo
+    Clay.Render
+    Clay.Selector
     Clay.Size
+    Clay.Stylesheet
     Clay.Text
     Clay.Transform
 
   GHC-Options: -Wall
   Build-Depends:
-      base
-    , text
-    , mtl
+    base  >= 4    && < 5,
+    mtl   >= 1    && < 2.2,
+    text  >= 0.11 && < 0.12
 
