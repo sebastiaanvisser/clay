@@ -10,6 +10,8 @@
   multiple times in selectors.
 - Print RGB values to hex syntax, only use RGBA for non opaque colors.
 - Try to strip even more whitespace from compacted version.
+- Try to avoid changing order too much when printing either nested rules or
+  media queries.
 
 # Style rules:
 
@@ -21,8 +23,6 @@
 - Allow multiple box-shadows.
 - Implement better model for gradient. (meh)
 - Fix the Direction/Position/Sided/Location mess.
-- Add animation stuff.
-- Add media query stuff.
 - Add all of CSS, http://www.w3.org/TR/CSS21/propidx.html.
 
 # Future:
@@ -32,4 +32,5 @@
 - Can we validate the styles against an HTML file?
 - Give hints for fusing rules using classes?
 - Can we run Clay in the client using Fay?
+- Add dynamic values like scrollTop and pageWidth?
 
