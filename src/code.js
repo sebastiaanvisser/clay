@@ -3,7 +3,7 @@ $(window).scroll
     {
       $( "header" ).css
         ( "top"
-        , Math.max(-280, Math.min(0, -$("body").scrollTop()))
+        , Math.max(-280, Math.min(0, -$($.browser.mozilla ? window : "body").scrollTop()))
         );
     }
   );
