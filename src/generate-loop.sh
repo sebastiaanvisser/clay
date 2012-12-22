@@ -5,11 +5,5 @@ do
   clear
   ./src/generate.sh
   read
-  ./src/generate.sh
-  read
-  ./src/generate.sh
-  read
-  ./src/generate.sh
-  read
 done
 

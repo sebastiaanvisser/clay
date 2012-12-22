@@ -22,8 +22,14 @@ do
   echo done
 done
 
-echo "Downloading HTML from localhost"
-curl -s http://devoid.local/clay-site/src/index.html > index.html
+htmls="index.html code.html"
+
+for h in $htmls
+do
+  echo "Downloading $h files from localhost"
+  curl -s http://devoid.local/clay-site/src/$h > $h
+  echo "<!-- site generated at $(date) -->" >> $h
+done
 
 echo "Generating pretty printed stylesheet"
 runhaskell src/Style pretty > style-pretty.css
@@ -38,6 +44,6 @@ curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/jquery.js ||
 echo "Copying over JavaScript"
 cp -v src/*.js .
 
-echo "Site generated at $(date)"
-echo "<!-- site generated at $(date) -->" >> index.html
+echo "DONE!"
+echo
 
