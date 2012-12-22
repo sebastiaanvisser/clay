@@ -7,21 +7,15 @@ import Prelude hiding (div, span)
 
 import Common
 
--- Helper rule to horizontally center content divs.
-
-centered :: Css
-centered =
-  do width        (px 800)
-     boxSizing    borderBox
-     sym2 margin  0 auto
-
 ----------------------------------------------------------------------------
 
--- Styling for specific sections.
+-- Styling for the header section.
 
 theHeader :: Css
 theHeader =
-  do background  (vGradient (fstColor -. 60) (fstColor +. 20))
+  do background  $ vGradient
+                   (fstColor -. 80)
+                   (fstColor +. 20)
      position    fixed
      top         (px 0)
      left        (px 0)
@@ -59,11 +53,15 @@ theMenu =
      right          0
      bottom         (px (-72))
 
+
      div <? centered
 
-     a ? do paddingRight (px 45)
+     a ? do paddingRight    (px 45)
+            transition      "color" (sec 0.4) ease (sec 0)
+            textDecoration  none
+            color           sndColor
+
             lastOfType & paddingRight (px 0)
-            color sndColor
             hover & color black
 
 ----------------------------------------------------------------------------
@@ -85,6 +83,9 @@ theLogo =
          , ( setA  25 yellow , 50 )
          , ( setA   0 yellow , 65 )
          ]
+
+     a ? do textDecoration none
+            color inherit
 
      h1 <> h2 ?
        do textTransform  uppercase

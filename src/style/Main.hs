@@ -114,9 +114,9 @@ textblocks = ".text" ?
   do fontSize   (px 20)
      lineHeight (px 30)
 
-     a # hover ?
-       do textDecoration  underline
-          color           (sndColor -. 40)
+     anchors
+--      a # hover ?
+--        do color           (sndColor -. 40)
 
      h3 ?
        do textTransform  uppercase
