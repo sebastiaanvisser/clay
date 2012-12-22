@@ -2,6 +2,7 @@
 <html>
 
   <head>
+    <title>Clay, CSS Preprocessor</title>
     <meta charset='utf-8'>
     <meta name="keywords" content="clay, css, stylesheet, preprocessor, haskell" />
     <meta name='author' content='Sebastiaan Visser' />
@@ -17,9 +18,9 @@
   <body class=index>
     <div id=container>
       <header>
-  <div>
+  <div id=logo>
     <h1><a href=https://github.com/sebastiaanvisser/clay>Cl<span class=a>a</span><span class=y>y<span></a></h1>
-    <h3>Unlimited<sup><a href="#footer">*</a></sup> CSS</h3>
+    <h2>Unlimited<sup><a href="#footer">*</a></sup> CSS</h2>
   </div>
   <nav>
     <div>
@@ -37,7 +38,7 @@
   <div>
     <div class=two-col>
       <div class=text>
-        <h4>About</h4>
+        <h3>About</h3>
         <p>
           <a href=http://sebastiaanvisser.github.com/clay>Clay</a> is a CSS
           preprocessor like <a href=http://lesscss.org>LESS</a> and <a
@@ -48,7 +49,7 @@
         </p>
       </div>
       <div class=text>
-        <h4>In action</h4>
+        <h3>In action</h3>
         <div class="code haskell">
           <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
 <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">)</span>
@@ -85,7 +86,7 @@
   <div>
     <div class=two-col>
       <div class=text>
-        <h4>Features</h4>
+        <h3>Features</h3>
         <ul>
           <li>First class selectors and style properties.</li>
           <li>Typed values.</li>
@@ -102,7 +103,7 @@
         </ul>
       </div>
       <div class=text>
-        <h4>Todo</h4>
+        <h3>Todo</h3>
         <p>Despite the amazing amount of features, Clay is far from finished
         and needs a lot more work. Most missing features, bugs and plans for
         the future are documented in a little <code>todo</code> file in the
@@ -119,7 +120,7 @@
 
       <section id=install name=install>
   <div class="one-col text">
-    <h4>Installation</h4>
+    <h3>Installation</h3>
     <p>
       Clay is written in Haskell and requires the Glasgow Haskell Compiler
       (GHC) to get installed. After installing GHC, and the acompanying package
@@ -130,7 +131,7 @@
     <pre><span class=Symbol>$</span> cabal update
 <span class=Symbol>$</span> cabal install clay</pre>
     </div>
-    <h4>Usage</h4>
+    <h3>Usage</h3>
     <p>
       Clay is written as an embedded language and requires you to write a
       Haskell program that models the stylesheet. You only need to import the
@@ -164,7 +165,7 @@
 
       <section id=documentation name=documentation>
   <div class="text one-col">
-    <h4>API documentation</h4>
+    <h3>API documentation</h3>
     The Clay API documentation can be found on Hackage. For most uses only the
     <code>Clay</code> top level module is of any relevance. It re-exports all
     the code that is needed to write your stylesheet.</p>
@@ -174,7 +175,7 @@
 
       <section id=tutorial name=tutorial>
   <div class="text one-col">
-    <h4>Tutorial</h4>
+    <h3>Tutorial</h3>
     <p>
       Clay is an EDSL that uses a monad to collect style rules. Rules are
       combinations of CSS selectors with associated style properties. Multiple
@@ -460,6 +461,10 @@ b
 </pre>
     </div>
 
+    <p>
+      More examples comming soon!
+    </p>
+
   </div>
 
 </section>
@@ -467,7 +472,7 @@ b
       <section id=source name=source>
   <div class=two-col>
     <div class=text>
-      <h4>Project source</h4>
+      <h3>Project source</h3>
       <p>Clay is open source and hosted on GitHub. Every form of
       feedback, pull requests or other participation is more than
       welcome. CSS is a big standard containing lots of official and
@@ -480,7 +485,7 @@ b
       </p>
     </div>
     <div class=text>
-      <h4>Website source</h4>
+      <h3>Website source</h3>
       <p>
         Of course, the style sheet of this website is also implemented in Clay.
         You can find the sources in the project source repository on GitHub.
@@ -488,7 +493,7 @@ b
       </p>
       <p class=goto><a href=code.html>» stylesheet source in Clay</a></p>
       <p class=goto><a href=https://github.com/sebastiaanvisser/clay/tree/gh-pages>» website source repository</a></p>
-      <h4>Generated CSS</h4>
+      <h3>Generated CSS</h3>
       <p>
         You can take a look at the generated stylesheet for this website. We
         have both a pretty printed and compacted version, of which the
@@ -517,4 +522,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sat Dec 22 12:52:33 CET 2012 -->
+<!-- site generated at Sat Dec 22 16:06:46 CET 2012 -->
