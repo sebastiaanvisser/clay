@@ -15,6 +15,7 @@
 <!-- <script type="text/javascript" account=sebas src="://use.typekit.net/wvl3oox.js"></script> -->
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
+    <meta name="viewport" content="width=device-width">
   </head>
 
   <body class=index>
@@ -37,78 +38,83 @@
 </header>
 
       <section id=about name=about>
-  <div>
-    <div class=two-col>
-      <div class=text>
-        <h3>About</h3>
-        <p>
-          <a href=http://sebastiaanvisser.github.com/clay>Clay</a> is a CSS
-          preprocessor like <a href=http://lesscss.org>LESS</a> and <a
-          href=http://sass-lang.com>Sass</a>, but implemented as an embedded
-          domain specific language (EDSL) in Haskell. This means that all CSS
-          selectors and style rules are first class Haskell functions, which
-          makes reuse and composability easy.
-        </p>
-      </div>
-      <div class=text>
-        <h3>In action</h3>
-        <div class="code haskell">
-          <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
+  <div class=two-col>
+    <div class=text>
+      <h3>About</h3>
+      <p>
+        <a href=http://sebastiaanvisser.github.com/clay>Clay</a> is a CSS
+        preprocessor like <a href=http://lesscss.org>LESS</a> and <a
+        href=http://sass-lang.com>Sass</a>, but implemented as an embedded
+        domain specific language (EDSL) in Haskell. This means that all CSS
+        selectors and style rules are first class Haskell functions, which
+        makes reuse and composability easy.
+      </p>
+      <p>
+        Clay doesn't really use any clever Haskell tricks which makes it easy
+        to work with, even without a lot of Haskell experience.
+      </p>
+    </div>
+    <div class=text>
+      <h3>In action</h3>
+      <div class="code haskell">
+        <pre class="sourceCode"><span class="Comment">{-# LANGUAGE</span>
+<span class="Comment">    OverloadedStrings</span>
+<span class="Comment">  #-}</span>
 <span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">menu</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">menu</span> <span class="Symbol">=</span> <span class="VarId">header</span> <span class="Symbol">|&gt;</span> <span class="VarId">nav</span> <span class="Symbol">?</span>
-  <span class="Keyword">do</span> <span class="VarId">background</span>     <span class="VarId">white</span>
-     <span class="VarId">boxShadow</span>      <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
-                    <span class="String">&quot;#00000018&quot;</span>
-     <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">24</span><span class="Symbol">)</span>
-     <span class="VarId">sym2</span> <span class="VarId">padding</span>   <span class="Number">20</span> <span class="Number">0</span>
-     <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
-     <span class="VarId">position</span>       <span class="VarId">absolute</span>
-     <span class="VarId">left</span>           <span class="Number">0</span>
-     <span class="VarId">right</span>          <span class="Number">0</span>
-     <span class="VarId">bottom</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="Symbol">(-</span><span class="Number">72</span><span class="Symbol">))</span>
+ <span class="Keyword">do</span> <span class="VarId">background</span>    <span class="VarId">white</span>
+    <span class="VarId">color</span>         <span class="String">&quot;#04a&quot;</span>
+    <span class="VarId">fontSize</span>      <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">24</span><span class="Symbol">)</span>
+    <span class="VarId">padding</span>       <span class="Number">20</span> <span class="Number">0</span> <span class="Number">20</span> <span class="Number">0</span>
+    <span class="VarId">textTransform</span> <span class="VarId">uppercase</span>
+    <span class="VarId">position</span>      <span class="VarId">absolute</span>
+    <span class="VarId">left</span>          <span class="Number">0</span>
+    <span class="VarId">right</span>         <span class="Number">0</span>
+    <span class="VarId">bottom</span>        <span class="Symbol">(</span><span class="VarId">px</span> <span class="Symbol">(-</span><span class="Number">72</span><span class="Symbol">))</span>
 </pre>
-        </div>
       </div>
-      <br>
     </div>
+    <br>
   </div>
 </section>
 
       <section id=features name=features>
-  <div>
-    <div class=two-col>
-      <div class=text>
-        <h3>Features</h3>
-        <ul>
-          <li>First class selectors and style properties.</li>
-          <li>Typed values.</li>
-          <li>Nested style rules.</li>
-          <li>Access to outer scopes in nested rules.</li>
-          <li>Modules, functions, mixins, etc.</li>
-          <li>Size and color arithmetics.</li>
-          <li>Recognizable syntax, inspired by CSS.</li>
-          <li>Easily extensible with new functionality.</li>
-          <li>Near-total coverage of all of CSS.</li>
-          <li>Easy fall-back for uncovered parts.</li>
-          <li>Automatic addition of browser prefixes.</li>
-          <li>Both pretty and compact output printers.</li>
-        </ul>
-      </div>
-      <div class=text>
-        <h3>Todo</h3>
-        <p>Despite the amazing amount of features, Clay is far from finished
-        and needs a lot more work. Most missing features, bugs and plans for
-        the future are documented in a little <code>todo.md</code> file in the
-        source repository.</p>
-        <p class=goto><a href=https://github.com/sebastiaanvisser/clay/blob/master/todo.md>» the todo list</a></p>
-        <p>The most important point on the list is to move all the items into
-        the issue tracker.</p>
-        <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>» project issue tracker</a></p>
-      </div>
-      <br>
+  <div class=two-col>
+    <div class=text>
+      <h3>Features</h3>
+      <ul>
+        <li>First class style properties.</li>
+        <li>First class selectors.</li>
+        <li>Typed values.</li>
+        <li>Nested style rules.</li>
+        <li>Access to outer scopes in nested rules.</li>
+        <li>Modules, functions, mixins, etc.</li>
+        <li>Support for media queries.</li>
+        <li>Size and color arithmetics.</li>
+        <li>Recognizable syntax, inspired by CSS.</li>
+        <li>Easily extensible with new functionality.</li>
+        <li>Near-total coverage of CSS.</li>
+        <li>Easy fall-back for uncovered parts.</li>
+        <li>Automatic addition of browser prefixes.</li>
+        <li>Both pretty and compact output printers.</li>
+      </ul>
     </div>
+    <div class=text>
+      <h3>Todo</h3>
+      <p>
+        Despite the amazing amount of features, Clay is far from finished and
+        needs a lot more work. Most missing features, bugs, and plans for the
+        future are documented in a little <code>todo.md</code> file in the
+        source repository.
+      </p>
+      <p class=goto><a href=https://github.com/sebastiaanvisser/clay/blob/master/todo.md>» the todo list</a></p>
+      <p>The most important point on the list is to move all the items into
+      the issue tracker.</p>
+      <p class=goto><a href=https://github.com/sebastiaanvisser/clay/issues?direction=desc&sort=created&state=open>» project issue tracker</a></p>
+    </div>
+    <br>
   </div>
 </section>
 
@@ -131,7 +137,7 @@
       Haskell program that models the stylesheet. You only need to import the
       <code>Clay</code> module to get started. As a first demonstration we
       create the `Hello world' of the stylesheets, a style definition that sets
-      the background color of HTML body to red.
+      the background color of the HTML body to red.
     </p>
     <div class="code haskell">
       <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
@@ -294,7 +300,7 @@ b
     </div>
 
     <p>
-      Or we can use some build in functions to avoid to much string literals:
+      Or we can use some build in functions to avoid too much string literals:
     </p>
     <div class="code haskell">
       <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Data.Monoid</span>
@@ -316,7 +322,8 @@ b
       Sometimes browsers implement exotic style properties or values that Clay
       doesn't yet know of. For most value type it is easy to supply a custom
       value using the <code>Other</code> type class. We can even escape from
-      the type world entirely by using the fallback operator <code>-:</code>.
+      the typed world entirely by using the fallback operator <code>-:</code>
+      and use strings:
     </p>
     <div class="code haskell">
       <pre class="sourceCode"><span class="Comment">{-# LANGUAGE OverloadedStrings #-}</span>
@@ -339,8 +346,9 @@ b
 
     <p>
       Not every browser implements the full CSS standard and some browsers
-      introduce experimental features that are not yet in the standard. Most
-      experimental properties are automatically prefixed with vendor prefixes.
+      introduce experimental features that are not yet in the standard. In
+      Clay, most experimental properties are automatically prefixed with vendor
+      prefixes:
     </p>
     <div class="code haskell">
       <pre class="sourceCode"><span class="Keyword">import</span> <span class="ConId">Clay</span>
@@ -509,4 +517,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sat Dec 22 17:37:21 CET 2012 -->
+<!-- site generated at Sat Dec 22 22:19:08 CET 2012 -->

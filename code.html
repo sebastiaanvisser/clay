@@ -33,6 +33,7 @@
 <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">,</span> <span class="VarId">span</span><span class="Symbol">)</span>
 <span class="Keyword">import</span> <span class="ConId">System.Environment</span>
 
+<span class="Keyword">import</span> <span class="Keyword">qualified</span> <span class="ConId">Clay.Media</span>        <span class="Keyword">as</span> <span class="ConId">Media</span>
 <span class="Keyword">import</span> <span class="Keyword">qualified</span> <span class="ConId">Data.Text.Lazy.IO</span> <span class="Keyword">as</span> <span class="ConId">Text</span>
 
 <span class="Keyword">import</span> <span class="ConId">Codeblock</span>
@@ -51,15 +52,14 @@
           <span class="Symbol">-&gt;</span> <span class="ConId">Text.</span><span class="VarId">putStr</span> <span class="Symbol">(</span><span class="VarId">renderWith</span> <span class="VarId">compact</span> <span class="Symbol">[]</span> <span class="VarId">theStylesheet</span><span class="Symbol">)</span>
        <span class="VarId">_</span>  <span class="Symbol">-&gt;</span> <span class="VarId">putCss</span> <span class="VarId">theStylesheet</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Function">theStylesheet</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">theStylesheet</span> <span class="Symbol">=</span>
 
   <span class="Keyword">do</span> <span class="Comment">-- Overall site-wide styling rules.</span>
      <span class="VarId">body</span> <span class="Symbol">?</span>
-       <span class="Keyword">do</span> <span class="VarId">textFont</span>
-          <span class="VarId">sym</span> <span class="VarId">margin</span>  <span class="Number">0</span>
+       <span class="Keyword">do</span> <span class="VarId">sym</span> <span class="VarId">margin</span>  <span class="Number">0</span>
           <span class="VarId">sym</span> <span class="VarId">padding</span> <span class="Number">0</span> 
           <span class="String">&quot;.index&quot;</span> <span class="Symbol">&amp;</span> <span class="String">&quot;#container&quot;</span> <span class="Symbol">?</span>
             <span class="VarId">paddingTop</span> <span class="Number">360</span>
@@ -72,7 +72,7 @@
      <span class="VarId">header</span> <span class="Symbol">?</span> <span class="VarId">theHeader</span>
      <span class="VarId">footer</span> <span class="Symbol">?</span> <span class="VarId">theFooter</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Comment">-- Generic styling that every section shares.</span>
 
@@ -83,18 +83,21 @@
 
        <span class="Keyword">do</span> <span class="VarId">boxSizing</span> <span class="VarId">borderBox</span>
           <span class="Symbol">[</span><span class="VarId">paddingTop</span><span class="Symbol">,</span> <span class="VarId">paddingBottom</span><span class="Symbol">]</span> <span class="Symbol">`</span><span class="VarId">forM_</span><span class="Symbol">`</span> <span class="Symbol">($</span> <span class="Number">60</span><span class="Symbol">)</span>
-          <span class="VarId">minHeight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">400</span><span class="Symbol">)</span>
 
           <span class="Comment">-- Hack to prevent margin collapse between headers and previous</span>
           <span class="Comment">-- section.</span>
           <span class="VarId">borderTop</span> <span class="VarId">solid</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">1</span><span class="Symbol">)</span> <span class="VarId">transparent</span>
 
-          <span class="Comment">-- Horizontally center the content div inside a section.</span>
-          <span class="VarId">div</span> <span class="Symbol">&lt;?</span> <span class="VarId">centered</span>
+          <span class="VarId">div</span> <span class="Symbol">&lt;?</span>
+            <span class="Keyword">do</span> <span class="Comment">-- Horizontally center the content div inside a section.</span>
+               <span class="VarId">centered</span>
+
+               <span class="Comment">-- Allow a bit of spacing even when the screen is small.</span>
+               <span class="VarId">sym2</span> <span class="VarId">padding</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">10</span><span class="Symbol">)</span>
 
           <span class="Comment">-- Add some style aspects to the sections.</span>
-          <span class="VarId">oneColumn</span>
-          <span class="VarId">twoColumns</span>
+          <span class="String">&quot;.one-col&quot;</span> <span class="Symbol">?</span> <span class="VarId">oneColumn</span>
+          <span class="String">&quot;.two-col&quot;</span> <span class="Symbol">?</span> <span class="VarId">oneOrTwoColumns</span>
           <span class="VarId">codeblocks</span>
           <span class="VarId">textblocks</span>
 
@@ -107,12 +110,17 @@
 <span class="Comment">-- One and two column layouts.</span>
 
 <span class="Function">oneColumn</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
-<span class="Function">oneColumn</span> <span class="Symbol">=</span> <span class="String">&quot;.one-col&quot;</span> <span class="Symbol">?</span>
-  <span class="Keyword">do</span> <span class="VarId">width</span>      <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">550</span><span class="Symbol">)</span>
-     <span class="VarId">boxSizing</span>  <span class="VarId">borderBox</span>
+<span class="Function">oneColumn</span> <span class="Symbol">=</span>
+  <span class="Keyword">do</span> <span class="VarId">width</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">550</span><span class="Symbol">)</span>
+     <span class="VarId">boxSizing</span> <span class="VarId">borderBox</span>
+
+<span class="Function">oneOrTwoColumns</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">oneOrTwoColumns</span> <span class="Symbol">=</span>
+  <span class="Keyword">do</span> <span class="VarId">query</span> <span class="ConId">Media.</span><span class="VarId">all</span> <span class="Symbol">[</span><span class="ConId">Media.</span><span class="VarId">minWidth</span> <span class="Number">800</span><span class="Symbol">]</span> <span class="VarId">twoColumns</span>
+     <span class="VarId">query</span> <span class="ConId">Media.</span><span class="VarId">all</span> <span class="Symbol">[</span><span class="ConId">Media.</span><span class="VarId">maxWidth</span> <span class="Number">800</span><span class="Symbol">]</span> <span class="VarId">oneColumn</span>
 
 <span class="Function">twoColumns</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
-<span class="Function">twoColumns</span> <span class="Symbol">=</span> <span class="String">&quot;.two-col&quot;</span> <span class="Symbol">?</span>
+<span class="Function">twoColumns</span> <span class="Symbol">=</span>
 
   <span class="Keyword">do</span> <span class="Comment">-- Both columns are have the size of their parent.</span>
      <span class="VarId">div</span> <span class="Symbol">&lt;?</span>
@@ -131,40 +139,43 @@
             <span class="Keyword">do</span> <span class="VarId">float</span>  <span class="VarId">side</span>
                <span class="VarId">pad</span>    <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">30</span><span class="Symbol">)</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Comment">-- Content blocks containing running texts.</span>
 
 <span class="Function">textblocks</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">textblocks</span> <span class="Symbol">=</span> <span class="String">&quot;.text&quot;</span> <span class="Symbol">?</span>
-  <span class="Keyword">do</span> <span class="VarId">fontSize</span>   <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span><span class="Symbol">)</span>
-     <span class="VarId">lineHeight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">30</span><span class="Symbol">)</span>
 
-     <span class="VarId">a</span> <span class="Symbol">#</span> <span class="VarId">hover</span> <span class="Symbol">?</span>
-       <span class="Keyword">do</span> <span class="VarId">textDecoration</span>  <span class="VarId">underline</span>
-          <span class="VarId">color</span>           <span class="Symbol">(</span><span class="VarId">sndColor</span> <span class="Symbol">-.</span> <span class="Number">40</span><span class="Symbol">)</span>
+  <span class="Keyword">do</span> <span class="VarId">textFont</span>
+     <span class="VarId">anchors</span>
 
+     <span class="Comment">-- Small caps for anchors.</span>
      <span class="VarId">h3</span> <span class="Symbol">?</span>
        <span class="Keyword">do</span> <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
           <span class="VarId">color</span>          <span class="Symbol">(</span><span class="VarId">sndColor</span> <span class="Symbol">-.</span> <span class="Number">80</span><span class="Symbol">)</span>
           <span class="VarId">fontWeight</span>     <span class="VarId">bold</span>
 
+     <span class="Comment">-- A bit less padding for lists.</span>
      <span class="VarId">ul</span> <span class="Symbol">?</span> <span class="VarId">paddingLeft</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span><span class="Symbol">)</span>
 
-     <span class="VarId">p</span> <span class="Symbol">?</span> <span class="VarId">a</span> <span class="Symbol">?</span> <span class="VarId">color</span> <span class="VarId">sndColor</span>
-
+     <span class="Comment">-- Inline code snippets.</span>
      <span class="VarId">code</span> <span class="Symbol">?</span> <span class="VarId">color</span> <span class="String">&quot;#ff4422&quot;</span>
 
-     <span class="String">&quot;.goto&quot;</span> <span class="Symbol">?</span> <span class="VarId">paddingLeft</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">40</span><span class="Symbol">)</span>
+     <span class="Comment">-- Slightly indent the goto links.</span>
+     <span class="String">&quot;.goto&quot;</span> <span class="Symbol">?</span> <span class="VarId">paddingLeft</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">25</span><span class="Symbol">)</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Function">theFooter</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">theFooter</span> <span class="Symbol">=</span> <span class="VarId">div</span> <span class="Symbol">&lt;?</span>
   <span class="Keyword">do</span> <span class="VarId">centered</span>
-     <span class="VarId">textAlign</span>     <span class="Symbol">(</span><span class="VarId">alignSide</span> <span class="VarId">sideCenter</span><span class="Symbol">)</span>
-     <span class="VarId">color</span>         <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">150</span> <span class="VarId">black</span><span class="Symbol">)</span>
-     <span class="VarId">sym2</span> <span class="VarId">padding</span>  <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">10</span><span class="Symbol">)</span> <span class="Number">0</span>
+     <span class="VarId">width</span>          <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">550</span><span class="Symbol">)</span>
+     <span class="VarId">textFont</span>
+     <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">12</span><span class="Symbol">)</span>
+     <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
+     <span class="VarId">textAlign</span>      <span class="Symbol">(</span><span class="VarId">alignSide</span> <span class="VarId">sideCenter</span><span class="Symbol">)</span>
+     <span class="VarId">color</span>          <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">150</span> <span class="VarId">black</span><span class="Symbol">)</span>
+     <span class="VarId">sym2</span> <span class="VarId">padding</span>   <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">10</span><span class="Symbol">)</span> <span class="Number">0</span>
 
 </pre>
           </div>
@@ -186,20 +197,22 @@
 
 <span class="Symbol">---------------------------------------------------------------------------</span>
 
-<span class="Function">textFont</span><span class="Symbol">,</span> <span class="VarId">headerFont</span><span class="Symbol">,</span> <span class="VarId">codeFont</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">textFont</span><span class="Symbol">,</span> <span class="VarId">headerFont</span><span class="Symbol">,</span> <span class="VarId">codeFont</span><span class="Symbol">,</span> <span class="VarId">anchors</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 
 <span class="Comment">-- Font used for default text blocks.</span>
 
 <span class="Function">textFont</span> <span class="Symbol">=</span>
-  <span class="Keyword">do</span> <span class="VarId">fontFamily</span>     <span class="Symbol">[</span><span class="String">&quot;Europa&quot;</span><span class="Symbol">,</span> <span class="String">&quot;Helvetica&quot;</span><span class="Symbol">,</span> <span class="VarId">sansSerif</span><span class="Symbol">]</span>
+  <span class="Keyword">do</span> <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span><span class="Symbol">)</span>
+     <span class="VarId">lineHeight</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">30</span><span class="Symbol">)</span>
+     <span class="VarId">fontFamily</span>     <span class="Symbol">[</span><span class="String">&quot;Europa&quot;</span><span class="Symbol">,</span> <span class="String">&quot;Helvetica&quot;</span><span class="Symbol">,</span> <span class="VarId">sansSerif</span><span class="Symbol">]</span>
      <span class="VarId">textRendering</span>  <span class="VarId">optimizeLegibility</span>
      <span class="VarId">color</span> <span class="String">&quot;#222&quot;</span>
-     <span class="VarId">a</span> <span class="Symbol">?</span> <span class="Keyword">do</span> <span class="VarId">textDecoration</span>  <span class="VarId">none</span>
-            <span class="VarId">color</span>           <span class="VarId">inherit</span>
 
-<span class="Comment">-- For now the header uses the default font.</span>
+<span class="Comment">-- For now the header uses the default font without the line-height.</span>
 
-<span class="Function">headerFont</span> <span class="Symbol">=</span> <span class="VarId">textFont</span>
+<span class="Function">headerFont</span> <span class="Symbol">=</span>
+  <span class="Keyword">do</span> <span class="VarId">textFont</span>
+     <span class="VarId">lineHeight</span> <span class="VarId">inherit</span>
 
 <span class="Comment">-- Font used for code blocks.</span>
 
@@ -208,6 +221,31 @@
      <span class="VarId">fontFamily</span>     <span class="Symbol">[</span><span class="String">&quot;Monaco&quot;</span><span class="Symbol">,</span> <span class="String">&quot;Courier New&quot;</span><span class="Symbol">,</span> <span class="VarId">monospace</span><span class="Symbol">]</span>
      <span class="VarId">lineHeight</span>     <span class="Symbol">(</span><span class="VarId">ex</span> <span class="Number">2.6</span><span class="Symbol">)</span>
      <span class="VarId">textRendering</span>  <span class="VarId">optimizeLegibility</span>
+
+<span class="Comment">-- Generic anchor styling.</span>
+
+<span class="Function">anchors</span> <span class="Symbol">=</span>
+  <span class="VarId">a</span> <span class="Symbol">?</span> <span class="Keyword">do</span> <span class="VarId">textDecoration</span>  <span class="VarId">none</span>
+
+         <span class="Comment">-- Subtle transition.</span>
+         <span class="VarId">transitions</span> <span class="Symbol">[</span> <span class="Symbol">(</span><span class="String">&quot;background-color&quot;</span> <span class="Symbol">,</span> <span class="VarId">sec</span> <span class="Number">0.5</span><span class="Symbol">,</span> <span class="VarId">ease</span><span class="Symbol">,</span> <span class="VarId">sec</span> <span class="Number">0</span><span class="Symbol">)</span>
+                     <span class="Symbol">,</span> <span class="Symbol">(</span><span class="String">&quot;color&quot;</span>            <span class="Symbol">,</span> <span class="VarId">sec</span> <span class="Number">0.2</span><span class="Symbol">,</span> <span class="VarId">ease</span><span class="Symbol">,</span> <span class="VarId">sec</span> <span class="Number">0</span><span class="Symbol">)</span>
+                     <span class="Symbol">]</span>
+
+         <span class="VarId">backgroundColor</span>         <span class="Symbol">(</span><span class="VarId">setA</span>   <span class="Number">0</span> <span class="VarId">yellow</span><span class="Symbol">)</span>
+         <span class="VarId">hover</span> <span class="Symbol">&amp;</span> <span class="VarId">backgroundColor</span> <span class="Symbol">(</span><span class="VarId">setA</span>  <span class="Number">60</span> <span class="VarId">yellow</span><span class="Symbol">)</span>
+         <span class="VarId">color</span>                   <span class="VarId">sndColor</span>
+         <span class="VarId">hover</span> <span class="Symbol">&amp;</span> <span class="VarId">color</span>           <span class="VarId">black</span>
+
+<span class="Symbol">---------------------------------------------------------------------------</span>
+
+<span class="Comment">-- Helper rule to horizontally center content divs.</span>
+
+<span class="Function">centered</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">centered</span> <span class="Symbol">=</span>
+  <span class="Keyword">do</span> <span class="VarId">width</span>        <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">800</span><span class="Symbol">)</span>
+     <span class="VarId">boxSizing</span>    <span class="VarId">borderBox</span>
+     <span class="VarId">sym2</span> <span class="VarId">margin</span>  <span class="Number">0</span> <span class="VarId">auto</span>
 
 </pre>
           </div>
@@ -230,6 +268,7 @@
           <span class="Comment">-- when needed and a slight shadow.</span>
 
           <span class="VarId">boxSizing</span>     <span class="VarId">borderBox</span>
+          <span class="VarId">borderRadius</span>  <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">2</span><span class="Symbol">)</span>
           <span class="VarId">overflowX</span>     <span class="VarId">auto</span>
           <span class="VarId">sym</span> <span class="VarId">padding</span>   <span class="Number">20</span>
           <span class="VarId">marginTop</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
@@ -257,7 +296,7 @@
 <span class="Function">isCode</span> <span class="Symbol">::</span> <span class="ConId">Selector</span>
 <span class="Function">isCode</span> <span class="Symbol">=</span> <span class="VarId">div</span> <span class="Symbol">#</span> <span class="String">&quot;.code&quot;</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Comment">-- Haskell code we highlight with a dark background by default.</span>
 
@@ -274,7 +313,7 @@
           <span class="String">&quot;.String&quot;</span>   <span class="Symbol">?</span> <span class="VarId">color</span> <span class="Symbol">(</span><span class="VarId">setG</span> <span class="Number">40</span> <span class="VarId">red</span><span class="Symbol">)</span>
           <span class="String">&quot;.Symbol&quot;</span>   <span class="Symbol">?</span> <span class="VarId">color</span> <span class="VarId">orange</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Comment">-- CSS code we highlight with a lighter background by default and we make</span>
 <span class="Comment">-- the font a bit smaller because the generated CSS tends to grow.</span>
@@ -300,71 +339,90 @@
 <span class="Keyword">module</span> <span class="ConId">Header</span> <span class="Keyword">where</span>
 
 <span class="Keyword">import</span> <span class="ConId">Clay</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">i</span><span class="Symbol">,</span> <span class="VarId">s</span><span class="Symbol">,</span> <span class="VarId">id</span><span class="Symbol">)</span>
+<span class="Keyword">import</span> <span class="ConId">Control.Monad</span>
 <span class="Keyword">import</span> <span class="ConId">Data.Monoid</span>
 <span class="Keyword">import</span> <span class="ConId">Prelude</span> <span class="Keyword">hiding</span> <span class="Symbol">(</span><span class="VarId">div</span><span class="Symbol">,</span> <span class="VarId">span</span><span class="Symbol">)</span>
 
 <span class="Keyword">import</span> <span class="ConId">Common</span>
 
-<span class="Comment">-- Helper rule to horizontally center content divs.</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
-<span class="Function">centered</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
-<span class="Function">centered</span> <span class="Symbol">=</span>
-  <span class="Keyword">do</span> <span class="VarId">width</span>        <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">800</span><span class="Symbol">)</span>
-     <span class="VarId">boxSizing</span>    <span class="VarId">borderBox</span>
-     <span class="VarId">sym2</span> <span class="VarId">margin</span>  <span class="Number">0</span> <span class="VarId">auto</span>
-
-<span class="Symbol">----------------------------------------------------------------------------</span>
-
-<span class="Comment">-- Styling for specific sections.</span>
+<span class="Comment">-- Styling for the header section.</span>
 
 <span class="Function">theHeader</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">theHeader</span> <span class="Symbol">=</span>
-  <span class="Keyword">do</span> <span class="VarId">background</span>  <span class="Symbol">(</span><span class="VarId">vGradient</span> <span class="Symbol">(</span><span class="VarId">fstColor</span> <span class="Symbol">-.</span> <span class="Number">60</span><span class="Symbol">)</span> <span class="Symbol">(</span><span class="VarId">fstColor</span> <span class="Symbol">+.</span> <span class="Number">20</span><span class="Symbol">))</span>
-     <span class="VarId">position</span>    <span class="VarId">fixed</span>
-     <span class="VarId">top</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-     <span class="VarId">left</span>        <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-     <span class="VarId">right</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-     <span class="VarId">height</span>      <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">288</span><span class="Symbol">)</span>
 
-     <span class="VarId">before</span> <span class="Symbol">&amp;</span>
-       <span class="Keyword">do</span> <span class="VarId">position</span>        <span class="VarId">absolute</span>
-          <span class="VarId">top</span>             <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-          <span class="VarId">bottom</span>          <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-          <span class="VarId">left</span>            <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-          <span class="VarId">right</span>           <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-          <span class="VarId">content</span>         <span class="Symbol">(</span><span class="VarId">stringContent</span> <span class="String">&quot;&quot;</span><span class="Symbol">)</span>
-          <span class="VarId">pointerEvents</span>   <span class="VarId">none</span>
-          <span class="VarId">backgroundSize</span>  <span class="Symbol">(</span><span class="VarId">pct</span> <span class="Number">100</span> <span class="Symbol">`</span><span class="VarId">by</span><span class="Symbol">`</span> <span class="VarId">px</span> <span class="Number">5</span><span class="Symbol">)</span>
-          <span class="VarId">backgroundImage</span> <span class="Symbol">$</span> <span class="VarId">repeatingLinearGradient</span> <span class="Symbol">(</span><span class="VarId">straight</span> <span class="VarId">sideTop</span><span class="Symbol">)</span>
-                            <span class="Symbol">[</span> <span class="Symbol">(</span> <span class="VarId">setA</span>  <span class="Number">0</span> <span class="VarId">white</span><span class="Symbol">,</span>   <span class="Number">0</span><span class="Symbol">)</span>
-                            <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span> <span class="Number">20</span> <span class="VarId">white</span><span class="Symbol">,</span>  <span class="Number">50</span><span class="Symbol">)</span>
-                            <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>  <span class="Number">0</span> <span class="VarId">white</span><span class="Symbol">,</span> <span class="Number">100</span><span class="Symbol">)</span>
-                            <span class="Symbol">]</span>
+  <span class="Keyword">do</span> <span class="Comment">-- Make header stick on top of the page.</span>
+     <span class="VarId">position</span>  <span class="VarId">fixed</span>
+     <span class="VarId">top</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
+     <span class="VarId">left</span>      <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
+     <span class="VarId">right</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
+     <span class="VarId">height</span>    <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">240</span><span class="Symbol">)</span>
+
+     <span class="VarId">background</span> <span class="Symbol">(</span><span class="VarId">vGradient</span> <span class="Symbol">(</span><span class="VarId">fstColor</span> <span class="Symbol">-.</span> <span class="Number">80</span><span class="Symbol">)</span> <span class="Symbol">(</span><span class="VarId">fstColor</span> <span class="Symbol">+.</span> <span class="Number">20</span><span class="Symbol">))</span>
+     <span class="VarId">headerFont</span>
+
+     <span class="Comment">-- Overlay the interlaced effect.</span>
+     <span class="VarId">before</span> <span class="Symbol">&amp;</span> <span class="VarId">interlaced</span>
 
      <span class="VarId">nav</span>      <span class="Symbol">?</span> <span class="VarId">theMenu</span>
      <span class="String">&quot;#logo&quot;</span> <span class="Symbol">&lt;?</span> <span class="VarId">theLogo</span>
 
+<span class="Function">interlaced</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
+<span class="Function">interlaced</span> <span class="Symbol">=</span>
+
+  <span class="Keyword">do</span> <span class="VarId">mapM_</span> <span class="Symbol">($</span> <span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
+       <span class="Symbol">[</span> <span class="VarId">top</span>
+       <span class="Symbol">,</span> <span class="VarId">bottom</span>
+       <span class="Symbol">,</span> <span class="VarId">left</span>
+       <span class="Symbol">,</span> <span class="VarId">right</span>
+       <span class="Symbol">]</span>
+     <span class="VarId">position</span>         <span class="VarId">absolute</span>
+
+     <span class="VarId">content</span>          <span class="Symbol">(</span><span class="VarId">stringContent</span> <span class="String">&quot;&quot;</span><span class="Symbol">)</span>
+     <span class="VarId">pointerEvents</span>    <span class="VarId">none</span>
+     <span class="VarId">backgroundSize</span>   <span class="Symbol">(</span><span class="VarId">pct</span> <span class="Number">100</span> <span class="Symbol">`</span><span class="VarId">by</span><span class="Symbol">`</span> <span class="VarId">px</span> <span class="Number">5</span><span class="Symbol">)</span>
+     <span class="VarId">backgroundImage</span>  <span class="Symbol">(</span> <span class="VarId">repeatingLinearGradient</span> <span class="Symbol">(</span><span class="VarId">straight</span> <span class="VarId">sideTop</span><span class="Symbol">)</span>
+                        <span class="Symbol">[</span> <span class="Symbol">(</span> <span class="VarId">setA</span>  <span class="Number">0</span> <span class="VarId">white</span><span class="Symbol">,</span>   <span class="Number">0</span><span class="Symbol">)</span>
+                        <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span> <span class="Number">20</span> <span class="VarId">white</span><span class="Symbol">,</span>  <span class="Number">50</span><span class="Symbol">)</span>
+                        <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>  <span class="Number">0</span> <span class="VarId">white</span><span class="Symbol">,</span> <span class="Number">100</span><span class="Symbol">)</span>
+                        <span class="Symbol">]</span>
+                      <span class="Symbol">)</span>
+
+<span class="Symbol">---------------------------------------------------------------------------</span>
+
 <span class="Function">theMenu</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">theMenu</span> <span class="Symbol">=</span>
 
-  <span class="Keyword">do</span> <span class="VarId">background</span>     <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">249</span> <span class="VarId">white</span><span class="Symbol">)</span>
-     <span class="VarId">boxShadow</span>      <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span> <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">20</span> <span class="VarId">black</span><span class="Symbol">)</span>
-     <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">24</span><span class="Symbol">)</span>
-     <span class="VarId">sym2</span> <span class="VarId">padding</span>   <span class="Number">20</span> <span class="Number">0</span>
-     <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
+  <span class="Keyword">do</span> <span class="Keyword">let</span> <span class="VarId">h</span> <span class="Symbol">=</span> <span class="Number">60</span>
+     <span class="VarId">boxSizing</span>      <span class="VarId">borderBox</span>
      <span class="VarId">position</span>       <span class="VarId">absolute</span>
      <span class="VarId">left</span>           <span class="Number">0</span>
      <span class="VarId">right</span>          <span class="Number">0</span>
-     <span class="VarId">bottom</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="Symbol">(-</span><span class="Number">72</span><span class="Symbol">))</span>
+     <span class="VarId">bottom</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="Symbol">(-</span><span class="VarId">h</span><span class="Symbol">))</span>
+     <span class="VarId">height</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="VarId">h</span><span class="Symbol">)</span>
 
-     <span class="VarId">div</span> <span class="Symbol">&lt;?</span> <span class="VarId">centered</span>
+     <span class="VarId">background</span>     <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">249</span> <span class="VarId">white</span><span class="Symbol">)</span>
+     <span class="VarId">boxShadow</span>      <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span> <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">20</span> <span class="VarId">black</span><span class="Symbol">)</span>
 
-     <span class="VarId">a</span> <span class="Symbol">?</span> <span class="Keyword">do</span> <span class="VarId">paddingRight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">45</span><span class="Symbol">)</span>
+     <span class="VarId">lineHeight</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="VarId">h</span><span class="Symbol">)</span>
+     <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span><span class="Symbol">)</span>
+     <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
+
+
+     <span class="VarId">div</span> <span class="Symbol">&lt;?</span>
+       <span class="Keyword">do</span> <span class="VarId">centered</span>
+          <span class="VarId">width</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">530</span><span class="Symbol">)</span>
+
+     <span class="VarId">a</span> <span class="Symbol">?</span> <span class="Keyword">do</span> <span class="VarId">paddingRight</span>    <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">10</span><span class="Symbol">)</span>
+            <span class="VarId">transition</span>      <span class="String">&quot;color&quot;</span> <span class="Symbol">(</span><span class="VarId">sec</span> <span class="Number">0.4</span><span class="Symbol">)</span> <span class="VarId">ease</span> <span class="Symbol">(</span><span class="VarId">sec</span> <span class="Number">0</span><span class="Symbol">)</span>
+            <span class="VarId">textDecoration</span>  <span class="VarId">none</span>
+            <span class="VarId">color</span>           <span class="VarId">sndColor</span>
+
             <span class="VarId">lastOfType</span> <span class="Symbol">&amp;</span> <span class="VarId">paddingRight</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">0</span><span class="Symbol">)</span>
-            <span class="VarId">color</span> <span class="VarId">sndColor</span>
             <span class="VarId">hover</span> <span class="Symbol">&amp;</span> <span class="VarId">color</span> <span class="VarId">black</span>
 
-<span class="Symbol">----------------------------------------------------------------------------</span>
+<span class="Symbol">---------------------------------------------------------------------------</span>
 
 <span class="Comment">-- The site logo.</span>
 
@@ -372,8 +430,9 @@
 <span class="Function">theLogo</span> <span class="Symbol">=</span>
 
   <span class="Keyword">do</span> <span class="VarId">centered</span>
-     <span class="VarId">paddingTop</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
-     <span class="VarId">paddingBottom</span>  <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
+     <span class="VarId">width</span>          <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">550</span><span class="Symbol">)</span>
+
+     <span class="VarId">paddingTop</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">40</span><span class="Symbol">)</span>
      <span class="VarId">height</span>         <span class="Symbol">(</span><span class="VarId">pct</span> <span class="Number">100</span><span class="Symbol">)</span>
      <span class="VarId">overflow</span>       <span class="VarId">hidden</span>
 
@@ -381,8 +440,12 @@
        <span class="VarId">radialGradient</span> <span class="VarId">sideCenter</span> <span class="VarId">ellipse</span>
          <span class="Symbol">[</span> <span class="Symbol">(</span> <span class="VarId">setA</span> <span class="Number">150</span> <span class="VarId">yellow</span> <span class="Symbol">,</span>  <span class="Number">0</span> <span class="Symbol">)</span>
          <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>  <span class="Number">25</span> <span class="VarId">yellow</span> <span class="Symbol">,</span> <span class="Number">50</span> <span class="Symbol">)</span>
-         <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>   <span class="Number">0</span> <span class="VarId">yellow</span> <span class="Symbol">,</span> <span class="Number">65</span> <span class="Symbol">)</span>
+         <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>   <span class="Number">0</span> <span class="VarId">yellow</span> <span class="Symbol">,</span> <span class="Number">75</span> <span class="Symbol">)</span>
          <span class="Symbol">]</span>
+
+     <span class="VarId">a</span> <span class="Symbol">?</span>
+       <span class="Keyword">do</span> <span class="VarId">textDecoration</span> <span class="VarId">none</span>
+          <span class="VarId">color</span> <span class="VarId">inherit</span>
 
      <span class="VarId">h1</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">h2</span> <span class="Symbol">?</span>
        <span class="Keyword">do</span> <span class="VarId">textTransform</span>  <span class="VarId">uppercase</span>
@@ -392,8 +455,7 @@
      <span class="VarId">h1</span> <span class="Symbol">?</span>
        <span class="Keyword">do</span> <span class="VarId">fontSize</span>    <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">90</span><span class="Symbol">)</span>
           <span class="VarId">color</span>       <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">200</span> <span class="VarId">white</span><span class="Symbol">)</span>
-          <span class="VarId">textShadow</span>  <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span><span class="Symbol">)</span>
-                      <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">200</span> <span class="Symbol">(</span><span class="VarId">fstColor</span> <span class="Symbol">-.</span> <span class="Number">80</span><span class="Symbol">))</span>
+          <span class="VarId">textShadow</span>  <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">20</span><span class="Symbol">)</span> <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">200</span> <span class="Symbol">(</span><span class="VarId">fstColor</span> <span class="Symbol">-.</span> <span class="Number">80</span><span class="Symbol">))</span>
 
           <span class="Comment">-- Some custom kerning.</span>
           <span class="VarId">letterSpacing</span>                <span class="Symbol">(</span><span class="VarId">em</span> <span class="Number">0.40</span><span class="Symbol">)</span>
@@ -404,8 +466,7 @@
        <span class="Keyword">do</span> <span class="VarId">fontSize</span>       <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">35</span><span class="Symbol">)</span>
           <span class="VarId">color</span>          <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">120</span> <span class="VarId">black</span><span class="Symbol">)</span>
           <span class="VarId">letterSpacing</span>  <span class="Symbol">(</span><span class="VarId">em</span> <span class="Number">0.3</span><span class="Symbol">)</span>
-          <span class="VarId">a</span> <span class="Symbol">#</span> <span class="VarId">hover</span> <span class="Symbol">?</span>
-            <span class="VarId">color</span> <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">220</span> <span class="VarId">black</span><span class="Symbol">)</span>
+          <span class="VarId">a</span> <span class="Symbol">#</span> <span class="VarId">hover</span> <span class="Symbol">?</span> <span class="VarId">color</span> <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">220</span> <span class="VarId">black</span><span class="Symbol">)</span>
 
 </pre>
           </div>
@@ -417,4 +478,4 @@
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sat Dec 22 17:37:21 CET 2012 -->
+<!-- site generated at Sat Dec 22 22:19:08 CET 2012 -->
