@@ -1,20 +1,11 @@
 # Meta:
 
 - First todo: move todos into bug tracker or something.
-- Create simple README with package description and link to website and Hackage.
-- Finish up the documentation on the website.
 - Test project site in other browsers + mobile.
-
-# Package:
-
-- Add version boundaries on dependencies.
-- Include source repository into cabal file.
-- Cleanup cabal file.
-- Write release notes.
 
 # Pretty printing:
 
-- Don't pretty print redundant * before refinements.
+- Do not pretty print redundant * before refinements.
 - Fix mostly harmless but annoying exponential blowup when using <>
   multiple times in selectors.
 - Print RGB values to hex syntax, only use RGBA for non opaque colors.
