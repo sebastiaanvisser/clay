@@ -20,7 +20,7 @@ theHeader =
      top       (px 0)
      left      (px 0)
      right     (px 0)
-     height    (px 288)
+     height    (px 240)
 
      background (vGradient (fstColor -. 80) (fstColor +. 20))
      headerFont
@@ -75,9 +75,9 @@ theMenu =
 
      div <?
        do centered
-          width (px 550)
+          width (px 530)
 
-     a ? do paddingRight    (px 15)
+     a ? do paddingRight    (px 10)
             transition      "color" (sec 0.4) ease (sec 0)
             textDecoration  none
             color           sndColor
@@ -95,8 +95,7 @@ theLogo =
   do centered
      width          (px 550)
 
-     paddingTop     (px 60)
-     paddingBottom  (px 60)
+     paddingTop     (px 40)
      height         (pct 100)
      overflow       hidden
 
