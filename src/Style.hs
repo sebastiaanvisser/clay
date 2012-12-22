@@ -13,9 +13,11 @@ main :: IO ()
 main =
   do args <- getArgs
      case args of
-       "compact" : _ -> Text.putStr (renderWith compact [] site)
-       "pretty"  : _ -> Text.putStr (renderWith pretty  [] site)
-       _             -> Text.putStr (render site)
+       "compact" : _
+          -> Text.putStr (renderWith compact [] site)
+       _  -> putCss site
+
+----------------------------------------------------------------------------
 
 site :: Css
 site =
@@ -24,7 +26,7 @@ site =
           sym margin  0
           sym padding 0
 
-          "#container" ? paddingTop 360
+          ".index" & "#container" ? paddingTop 360
 
           section ?
             do sections
@@ -38,7 +40,7 @@ site =
           "#haskell" ? theHaskell
           footer     ? theFooter
 
-          "#about" <> "#install" <> "#source" <> footer ?
+          (section <> footer) # nthChild "odd" ?
             backgroundColor "#f8f8f8"
 
   where
@@ -78,7 +80,7 @@ site =
 
   columns =
     do ".one-col" ?
-         do width (px 500)
+         do width (px 550)
             boxSizing borderBox
 
        ".two-col" ?
@@ -93,7 +95,7 @@ site =
                  paddingLeft (px 30)
             br ? clear both
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------
 
 mainColor :: Color
 mainColor = rgb 255 160 50
@@ -116,7 +118,7 @@ centered =
      boxSizing borderBox
      sym2 margin 0 auto
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------
 -- Styling for specific sections.
 
 theHeader :: Css
@@ -198,7 +200,7 @@ theNav =
      bottom (px (-72))
 
      div <? centered
-     a ? do paddingRight (px 42)
+     a ? do paddingRight (px 45)
             lastOfType & paddingRight (px 0)
             color highlight
             hover      & color black
@@ -220,7 +222,7 @@ theFooter =
        color (setA 150 black)
        sym2 padding (px 10) 0
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------
 -- Syntax highlighted code blocks.
 
 codeBlock :: Css
@@ -228,10 +230,10 @@ codeBlock =
 
   do ".code" ?
        do boxSizing borderBox
-          width (px 600)
           sym padding 20
           marginTop    (px 60)
           marginBottom (px 60)
+          boxShadow 0 0 (px 60) (setA 20 black)
 
           pre ?
             do fontSize   (px 16)
@@ -252,9 +254,7 @@ codeBlock =
                ".String"   ? color (setG 60 orange)
                ".Symbol"   ? color orange
 
-     ".code" # ".css" ?
-       do backgroundColor "#eee"
-          pre ?
+     ".code" # ".css" ? pre ?
             do color "#456"
                ".Number"   ? color red
                ".Property" ? color black
@@ -263,5 +263,5 @@ codeBlock =
                ".Symbol"   ? color (orange -. 60)
 
      ".code" |+ ".code" ?
-       do marginTop (px (-60))
+       do marginTop (px (-40))
 
