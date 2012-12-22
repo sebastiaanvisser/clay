@@ -62,6 +62,7 @@ module Clay
 
 , module Clay.Size
 , module Clay.Color
+, module Clay.Time
 
 -- * Values shared between multiple properties.
 
@@ -78,6 +79,7 @@ module Clay
 , module Clay.Gradient
 , module Clay.Text
 , module Clay.Transform
+, module Clay.Transition
 )
 where
 
@@ -99,6 +101,7 @@ import Clay.Background
 import Clay.Border
 import Clay.Box
 import Clay.Color
+import Clay.Time
 import Clay.Common
 import Clay.Display  hiding (table)
 import Clay.Font     hiding (menu, caption, small, icon)
@@ -107,4 +110,5 @@ import Clay.Gradient
 import Clay.Size
 import Clay.Text     hiding (pre)
 import Clay.Transform
+import Clay.Transition
 

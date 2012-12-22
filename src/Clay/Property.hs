@@ -58,6 +58,9 @@ newtype Literal = Literal Text
 instance Val Literal where
   value (Literal t) = Value (Plain ("\"" <> replace "\"" "\\\"" t <> "\""))
 
+instance Val Integer where
+  value = fromString . show
+
 instance Val Double where
   value = fromString . show
 

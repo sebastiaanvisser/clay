@@ -53,7 +53,9 @@ Library
     Clay.Size
     Clay.Stylesheet
     Clay.Text
+    Clay.Time
     Clay.Transform
+    Clay.Transition
 
   GHC-Options: -Wall
   Build-Depends:
