@@ -7,6 +7,7 @@ import Data.Monoid
 import Prelude hiding (div, span)
 import System.Environment
 
+import qualified Clay.Media        as Media
 import qualified Data.Text.Lazy.IO as Text
 
 import Codeblock
@@ -32,8 +33,7 @@ theStylesheet =
 
   do -- Overall site-wide styling rules.
      body ?
-       do textFont
-          sym margin  0
+       do sym margin  0
           sym padding 0 
           ".index" & "#container" ?
             paddingTop 360
@@ -57,7 +57,6 @@ theSections =
 
        do boxSizing borderBox
           [paddingTop, paddingBottom] `forM_` ($ 60)
-          minHeight (px 400)
 
           -- Hack to prevent margin collapse between headers and previous
           -- section.
@@ -67,8 +66,8 @@ theSections =
           div <? centered
 
           -- Add some style aspects to the sections.
-          oneColumn
-          twoColumns
+          ".one-col" ? oneColumn
+          ".two-col" ? oneOrTwoColumns
           codeblocks
           textblocks
 
@@ -81,12 +80,17 @@ theSections =
 -- One and two column layouts.
 
 oneColumn :: Css
-oneColumn = ".one-col" ?
+oneColumn =
   do width      (px 550)
      boxSizing  borderBox
 
+oneOrTwoColumns :: Css
+oneOrTwoColumns =
+  do query Media.all [Media.minWidth 800] twoColumns
+     query Media.all [Media.maxWidth 800] oneColumn
+
 twoColumns :: Css
-twoColumns = ".two-col" ?
+twoColumns =
 
   do -- Both columns are have the size of their parent.
      div <?
@@ -111,32 +115,34 @@ twoColumns = ".two-col" ?
 
 textblocks :: Css
 textblocks = ".text" ?
-  do fontSize   (px 20)
-     lineHeight (px 30)
 
+  do textFont
      anchors
---      a # hover ?
---        do color           (sndColor -. 40)
 
+     -- Small caps for anchors.
      h3 ?
        do textTransform  uppercase
           color          (sndColor -. 80)
           fontWeight     bold
 
+     -- A bit less padding for lists.
      ul ? paddingLeft (px 20)
 
-     p ? a ? color sndColor
-
+     -- Inline code snippets.
      code ? color "#ff4422"
 
-     ".goto" ? paddingLeft (px 40)
+     -- Slightly indent the goto links.
+     ".goto" ? paddingLeft (px 25)
 
 ----------------------------------------------------------------------------
 
 theFooter :: Css
 theFooter = div <?
   do centered
-     textAlign     (alignSide sideCenter)
-     color         (setA 150 black)
-     sym2 padding  (px 10) 0
+     textFont
+     fontSize       (px 12)
+     textTransform  uppercase
+     textAlign      (alignSide sideCenter)
+     color          (setA 150 black)
+     sym2 padding   (px 10) 0
 

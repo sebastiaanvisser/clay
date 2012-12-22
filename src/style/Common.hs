@@ -18,13 +18,17 @@ textFont, headerFont, codeFont, anchors :: Css
 -- Font used for default text blocks.
 
 textFont =
-  do fontFamily     ["Europa", "Helvetica", sansSerif]
+  do fontSize       (px 20)
+     lineHeight     (px 30)
+     fontFamily     ["Europa", "Helvetica", sansSerif]
      textRendering  optimizeLegibility
      color "#222"
 
--- For now the header uses the default font.
+-- For now the header uses the default font without the line-height.
 
-headerFont = textFont
+headerFont =
+  do textFont
+     lineHeight inherit
 
 -- Font used for code blocks.
 
@@ -46,6 +50,7 @@ anchors =
 
          backgroundColor         (setA   0 yellow)
          hover & backgroundColor (setA  60 yellow)
+         color                   sndColor
          hover & color           black
 
 ----------------------------------------------------------------------------
