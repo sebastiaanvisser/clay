@@ -38,11 +38,11 @@ echo "Generating compacted stylesheet"
 runhaskell -isrc/style Main compact > style-compact.css
 
 echo "Downloading newest jQuery"
-curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/jquery.js ||
-  rm src/jquery.js
+curl -s http://code.jquery.com/jquery-1.8.3.min.js > src/src/jquery.js ||
+  rm src/src/jquery.js
 
 echo "Copying over JavaScript"
-cp -v src/*.js .
+cp -v src/src/*.js .
 
 echo
 echo "DONE!"
