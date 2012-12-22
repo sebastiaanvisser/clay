@@ -1,10 +1,12 @@
 <section id=tutorial name=tutorial>
   <div class="text one-col">
     <h4>Tutorial</h4>
-    <p>Clay is an EDSL that uses a writer monad to collect style rules. Rules
-    are combinations of CSS selectors associated style properties. Multiple
-    style rules can be composed and nested to form a stylehseet. Stylesheets
-    can be rendered to plain old CSS and served to your browser.</p>
+    <p>
+      Clay is an EDSL that uses a monad to collect style rules. Rules are
+      combinations of CSS selectors with associated style properties. Multiple
+      style rules can be composed and nested to form a stylehseet. Stylesheets
+      can be rendered to plain old CSS and served to your browser.
+    </p>
 
     <p>
       There are several methods of assigning style properties to selectors.
@@ -58,6 +60,46 @@
     </div>
     <div class="code css">
       <!--#include virtual=../highlighted/nostrings.clay.hs.output.html -->
+    </div>
+
+    <p>
+      Sometimes browsers implement exotic style properties or values that Clay
+      doesn't yet know of. For most value type it is easy to supply a custom
+      value using the <code>Other</code> type class. We can even escape from
+      the type world entirely by using the fallback operator <code>-:</code>.
+    </p>
+    <div class="code haskell">
+      <!--#include virtual=../highlighted/escape.clay.hs.html -->
+    </div>
+    <div class="code css">
+      <!--#include virtual=../highlighted/escape.clay.hs.output.html -->
+    </div>
+
+    <p>
+      Not every browser implements the full CSS standard and some browsers
+      introduce experimental features that are not yet in the standard. Most
+      experimental properties in Clay are automatically prefixed with vendor
+      prefixes.
+    </p>
+    <div class="code haskell">
+      <!--#include virtual=../highlighted/prefixes.clay.hs.html -->
+    </div>
+    <div class="code css">
+      <!--#include virtual=../highlighted/prefixes.clay.hs.output.html -->
+    </div>
+
+    <p>
+      Because Clay is just Haskell we can do some really nice tricks that might
+      take a lot of effort in other CSS preprocessors. Functions, mixins,
+      control structures, colors and size calculation, all is easy. The
+      following (somewhat contrived) example shows how to use the
+      expressiveness of Haskell to produce more advanced stylesheets:
+    </p>
+    <div class="code haskell">
+      <!--#include virtual=../highlighted/advanced.clay.hs.html -->
+    </div>
+    <div class="code css">
+      <!--#include virtual=../highlighted/advanced.clay.hs.output.html -->
     </div>
 
   </div>
