@@ -37,11 +37,18 @@ data Config = Config
   , align       :: Bool
   }
 
+-- | Configuration to print to a pretty human readable CSS output.
+
 pretty :: Config
 pretty = Config "  " "\n" " " True True
 
+-- | Configuration to print to a compacted unreadable CSS output.
+
 compact :: Config
 compact = Config "" "" "" False False
+
+-- | Render to CSS using the default configuration (`pretty`) and directly
+-- print to the standard output.
 
 putCss :: Css -> IO ()
 putCss = Lazy.putStr . render
