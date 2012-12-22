@@ -234,6 +234,7 @@ codeBlock =
           marginTop    (px 60)
           marginBottom (px 60)
           boxShadow 0 0 (px 60) (setA 20 black)
+          overflowX auto
 
           pre ?
             do fontSize   (px 16)
@@ -255,7 +256,8 @@ codeBlock =
                ".Symbol"   ? color orange
 
      ".code" # ".css" ? pre ?
-            do color "#456"
+            do fontSize (px 14)
+               color "#456"
                ".Number"   ? color red
                ".Property" ? color black
                ".Selector" ? color (highlight -. 60)
