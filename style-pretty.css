@@ -364,7 +364,7 @@ header nav
   -o-box-shadow      : 0px 0px 60px rgba(0,0,0,0.0781);
   box-shadow         : 0px 0px 60px rgba(0,0,0,0.0781);
   line-height        : 60px;
-  font-size          : 20px;
+  font-size          : 19px;
   text-transform     : uppercase;
 }
 
@@ -378,11 +378,12 @@ header nav > div
   box-sizing         : border-box;
   margin             : 0px auto 0px auto;
   width              : 530px;
+  text-align         : center;
 }
 
 header nav a
 {
-  padding-right      : 10px;
+  padding-right      : 5px;
   -webkit-transition : color 0.4s ease 0.0s;
   -moz-transition    : color 0.4s ease 0.0s;
   -ms-transition     : color 0.4s ease 0.0s;
@@ -441,6 +442,7 @@ header > *#logo h1
   font-size      : 90px;
   color          : rgba(255,255,255,0.7813);
   text-shadow    : 0px 0px 20px rgba(175,80,0,0.7813);
+  font-weight    : normal;
   letter-spacing : 0.4em;
 }
 

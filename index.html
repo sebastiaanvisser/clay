@@ -179,7 +179,7 @@
     <p>
       Clay is an EDSL that uses a monad to collect style rules. Rules are
       combinations of CSS selectors with associated style properties. Multiple
-      style rules can be composed and nested to form a stylehseet. Stylesheets
+      style rules can be composed and nested to form a stylesheet. Stylesheets
       can be rendered to plain old CSS and served to your browser.
     </p>
 
@@ -252,15 +252,15 @@ b
 <span class="Keyword">import</span> <span class="ConId">Clay</span>
 
 <span class="Function">main</span> <span class="Symbol">=</span> <span class="VarId">putCss</span> <span class="Symbol">$</span>
-  <span class="Symbol">(</span><span class="VarId">body</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">article</span><span class="Symbol">)</span> <span class="Symbol">**</span> <span class="VarId">p</span> <span class="Symbol">|&gt;</span> <span class="Symbol">(</span><span class="VarId">a</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">b</span><span class="Symbol">)</span> <span class="Symbol">#</span> <span class="VarId">lastOfType</span> <span class="Symbol">?</span>
+  <span class="Symbol">(</span><span class="VarId">body</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">abbr</span><span class="Symbol">)</span> <span class="Symbol">**</span> <span class="VarId">p</span> <span class="Symbol">|&gt;</span> <span class="Symbol">(</span><span class="VarId">a</span> <span class="Symbol">&lt;&gt;</span> <span class="VarId">b</span><span class="Symbol">)</span> <span class="Symbol">#</span> <span class="VarId">lastOfType</span> <span class="Symbol">?</span>
       <span class="VarId">color</span> <span class="VarId">red</span>
 </pre>
     </div>
     <div class="code css">
       <pre class="sourceCode"><span class="String">body</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">a</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
 <span class="String">body</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">b</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
-<span class="String">article</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">a</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
-<span class="String">article</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">b</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span>type
+<span class="String">abbr</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">a</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span><span class="String">type</span><span class="Symbol">,</span>
+<span class="String">abbr</span> <span class="String">p</span> <span class="Symbol">&gt;</span> <span class="String">b</span><span class="Symbol">:</span><span class="String">last</span><span class="Symbol">-</span><span class="String">of</span><span class="Symbol">-</span>type
 <span class="CBracket">{</span>
   <span class="Property">color</span> <span class="Symbol">:</span> rgb<span class="Symbol">(</span><span class="Number">255</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">,</span><span class="Number">0</span><span class="Symbol">);</span>
 <span class="CBracket">}</span>
@@ -463,7 +463,7 @@ b
     </div>
 
     <p>
-      More examples comming soon!
+      More examples coming soon!
     </p>
 
   </div>
@@ -517,4 +517,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sat Dec 22 22:19:08 CET 2012 -->
+<!-- site generated at Sun Dec 23 12:19:27 CET 2012 -->
