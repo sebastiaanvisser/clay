@@ -33,4 +33,5 @@
 - Give hints for fusing rules using classes?
 - Can we run Clay in the client using Fay?
 - Add dynamic values like scrollTop and pageWidth?
-
+- Create output printer to concise Less, to be able to liberate your style from Haskell.
+- Add quasi-quoter (or just parser) to parse real CSS? (in a different package)
