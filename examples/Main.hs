@@ -5,9 +5,10 @@ import Control.Monad
 import Data.Text (pack)
 import Prelude
 import Clay hiding (i, s, div)
+import Clay.Selector (with)
 
 main :: IO ()
-main = css logo
+main = putCss logo
 
   where
     s = 80
@@ -38,8 +39,8 @@ main = css logo
                             (clr -. 50 +. (x * 50))
 
     square = ".square" ?
-      do font ( FontOptional (Just bold) Nothing (Just italic)
-              , FontMandatory (px 50) (Just (px 60)) ["Helvetica", sansSerif]
+      do font ( Optional (Just bold) Nothing (Just italic)
+              , Required (px 50) (Just (px 60)) ["Helvetica", sansSerif]
               )
          color (setA 80 white)
          sym2 padding (px 2) (px 22)
