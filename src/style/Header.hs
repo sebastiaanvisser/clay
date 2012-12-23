@@ -69,15 +69,16 @@ theMenu =
      boxShadow      0 0 (px 60) (setA 20 black)
 
      lineHeight     (px h)
-     fontSize       (px 20)
+     fontSize       (px 19)
      textTransform  uppercase
 
 
      div <?
        do centered
-          width (px 530)
+          width      (px 530)
+          textAlign  (alignSide sideCenter)
 
-     a ? do paddingRight    (px 10)
+     a ? do paddingRight    (px 5)
             transition      "color" (sec 0.4) ease (sec 0)
             textDecoration  none
             color           sndColor
@@ -119,6 +120,7 @@ theLogo =
        do fontSize    (px 90)
           color       (setA 200 white)
           textShadow  0 0 (px 20) (setA 200 (fstColor -. 80))
+          fontWeight  normal
 
           -- Some custom kerning.
           letterSpacing                (em 0.40)
