@@ -123,14 +123,21 @@
     <h3>Installation</h3>
     <p>
       Clay is written in Haskell and requires the Glasgow Haskell Compiler
-      (GHC) to get installed. After installing GHC, and the accompanying package
-      manager Cabal, you can directly install Clay from the Hackage package
-      repository:
+      (GHC) to get installed. After installing GHC, and the accompanying
+      package manager Cabal, you can directly install Clay from the Hackage
+      package repository:
     </p>
     <div class="code shell">
     <pre><span class=Symbol>$</span> cabal update
 <span class=Symbol>$</span> cabal install clay</pre>
     </div>
+    <p>
+      When you don't have GHC installed yet, it's probably best to install the
+      Haskell Platform. The platform includes GHC and a basic set of Haskell
+      tools and libraries, including Cabal. After installing the platform you
+      can install Clay using cabal install.
+    </p>
+    <p class=goto><a href=http://www.haskell.org/platform>» The Haskell Platform</a></p>
     <h3>Usage</h3>
     <p>
       Clay is written as an embedded language and requires you to write a
@@ -517,4 +524,4 @@ b
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Sun Dec 23 13:27:48 CET 2012 -->
+<!-- site generated at Mon Dec 24 01:27:15 CET 2012 -->
