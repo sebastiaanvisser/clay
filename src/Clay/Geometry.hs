@@ -5,7 +5,7 @@ module Clay.Geometry
   size, top, left, bottom, right
 
 -- * Sizing.
-, width, height, minWidth, minHeight
+, width, height, minWidth, minHeight, maxWidth, maxHeight
 
 -- * Padding.
 , padding
@@ -33,12 +33,14 @@ left      = key "left"
 bottom    = key "bottom"
 right     = key "right"
 
-width, height, minWidth, minHeight :: Size a -> Css
+width, height, minWidth, minHeight, maxWidth, maxHeight :: Size a -> Css
 
 width     = key "width"
 height    = key "height"
 minWidth  = key "min-width"
 minHeight = key "min-height"
+maxWidth  = key "max-width"
+maxHeight = key "max-height"
 
 -------------------------------------------------------------------------------
 
