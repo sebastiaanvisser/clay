@@ -144,7 +144,7 @@ merger (x:xs) =
     Sub        s -> case xs of [] -> s; _  -> merger xs ** s
     Root       s -> s ** merger xs
     Pop        i -> merger (drop i (x:xs))
-    Self       f -> merger xs `with` f
+    Self       f -> case xs of [] -> star `with` f; _ -> merger xs `with` f
 
 collect :: (Key (), Value) -> [Either Text (Text, Text)]
 collect (Key ky, Value vl) =
