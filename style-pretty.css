@@ -6,7 +6,7 @@ body
 }
 
 
-body.index *#container
+body.index #container
 {
   padding-top : 360px;
 }
@@ -35,7 +35,7 @@ section > div
   padding            : 0px 10px 0px 10px;
 }
 
-section *.one-col
+section .one-col
 {
   width              : 550px;
   -webkit-box-sizing : border-box;
@@ -49,7 +49,7 @@ section *.one-col
 @media all and (min-width: 800px)
 {
 
-section *.two-col > div
+section .two-col > div
 {
   width              : 50.0%;
   -webkit-box-sizing : border-box;
@@ -59,19 +59,19 @@ section *.two-col > div
   box-sizing         : border-box;
 }
 
-section *.two-col > div:nth-child(1)
+section .two-col > div:nth-child(1)
 {
   float         : left;
   padding-right : 30px;
 }
 
-section *.two-col > div:nth-child(2)
+section .two-col > div:nth-child(2)
 {
   float        : right;
   padding-left : 30px;
 }
 
-section *.two-col br
+section .two-col br
 {
   clear : both;
 }
@@ -79,7 +79,7 @@ section *.two-col br
 }
 @media all and (max-width: 800px)
 {
-section *.two-col
+section .two-col
 {
   width              : 550px;
   -webkit-box-sizing : border-box;
@@ -98,7 +98,7 @@ section div.code
   -o-box-sizing      : border-box;
   box-sizing         : border-box;
   border-radius      : 2px;
-  overflow-y         : auto;
+  overflow-x         : auto;
   padding            : 20px 20px 20px 20px;
   margin-top         : 60px;
   margin-bottom      : 60px;
@@ -113,7 +113,7 @@ section div.code pre
 {
   margin         : 0px 0px 0px 0px;
   font-size      : 16px;
-  font-family    : "Monaco","Courier New","fixed";
+  font-family    : "Monaco","Courier New" fixed;
   line-height    : 2.6ex;
   text-rendering : optimizeLegibility;
 }
@@ -128,37 +128,37 @@ section div.code.haskell pre
   color : rgba(255,255,255,0.6250);
 }
 
-section div.code.haskell pre *.Comment
+section div.code.haskell pre .Comment
 {
   color : rgba(0,255,0,0.6641);
 }
 
-section div.code.haskell pre *.ConId
+section div.code.haskell pre .ConId
 {
   color : rgb(156,235,255);
 }
 
-section div.code.haskell pre *.Function
+section div.code.haskell pre .Function
 {
   color : rgb(255,255,255);
 }
 
-section div.code.haskell pre *.Keyword
+section div.code.haskell pre .Keyword
 {
   color : rgb(76,155,210);
 }
 
-section div.code.haskell pre *.Number
+section div.code.haskell pre .Number
 {
   color : rgb(255,100,0);
 }
 
-section div.code.haskell pre *.String
+section div.code.haskell pre .String
 {
   color : rgb(255,40,0);
 }
 
-section div.code.haskell pre *.Symbol
+section div.code.haskell pre .Symbol
 {
   color : rgb(255,165,0);
 }
@@ -173,37 +173,37 @@ section div.code.shell pre
   color : rgba(255,255,255,0.6250);
 }
 
-section div.code.shell pre *.Comment
+section div.code.shell pre .Comment
 {
   color : rgba(0,255,0,0.6641);
 }
 
-section div.code.shell pre *.ConId
+section div.code.shell pre .ConId
 {
   color : rgb(156,235,255);
 }
 
-section div.code.shell pre *.Function
+section div.code.shell pre .Function
 {
   color : rgb(255,255,255);
 }
 
-section div.code.shell pre *.Keyword
+section div.code.shell pre .Keyword
 {
   color : rgb(76,155,210);
 }
 
-section div.code.shell pre *.Number
+section div.code.shell pre .Number
 {
   color : rgb(255,100,0);
 }
 
-section div.code.shell pre *.String
+section div.code.shell pre .String
 {
   color : rgb(255,40,0);
 }
 
-section div.code.shell pre *.Symbol
+section div.code.shell pre .Symbol
 {
   color : rgb(255,165,0);
 }
@@ -219,27 +219,27 @@ section div.code.css pre
   color     : rgb(68,85,102);
 }
 
-section div.code.css pre *.Number
+section div.code.css pre .Number
 {
   color : rgb(255,0,0);
 }
 
-section div.code.css pre *.Property
+section div.code.css pre .Property
 {
   color : rgb(0,0,0);
 }
 
-section div.code.css pre *.Selector
+section div.code.css pre .Selector
 {
   color : rgb(0,75,130);
 }
 
-section div.code.css pre *.String
+section div.code.css pre .String
 {
   color : rgb(255,0,0);
 }
 
-section div.code.css pre *.Symbol
+section div.code.css pre .Symbol
 {
   color : rgb(195,105,0);
 }
@@ -249,16 +249,16 @@ section div.code + div.code
   margin-top : -40px;
 }
 
-section *.text
+section .text
 {
   font-size      : 20px;
   line-height    : 30px;
-  font-family    : "Europa","Helvetica","sans-serif";
+  font-family    : "Europa","Helvetica" sans-serif;
   text-rendering : optimizeLegibility;
   color          : rgb(34,34,34);
 }
 
-section *.text a
+section .text a
 {
   text-decoration    : none;
   -webkit-transition : background-color 0.5s ease 0.0s,color 0.2s ease 0.0s;
@@ -270,34 +270,34 @@ section *.text a
   color              : rgb(56,135,190);
 }
 
-section *.text a:hover
+section .text a:hover
 {
   background-color : rgba(255,255,0,0.2344);
 }
 
-section *.text a:hover
+section .text a:hover
 {
   color : rgb(0,0,0);
 }
 
-section *.text h3
+section .text h3
 {
   text-transform : uppercase;
   color          : rgb(0,55,110);
   font-weight    : bold;
 }
 
-section *.text ul
+section .text ul
 {
   padding-left : 20px;
 }
 
-section *.text code
+section .text code
 {
   color : rgb(255,68,34);
 }
 
-section *.text *.goto
+section .text .goto
 {
   padding-left : 25px;
 }
@@ -322,7 +322,7 @@ header
   background     : linear-gradient(top,rgb(175,80,0) 0.0%,rgb(255,180,70) 100.0%);
   font-size      : 20px;
   line-height    : 30px;
-  font-family    : "Europa","Helvetica","sans-serif";
+  font-family    : "Europa","Helvetica" sans-serif;
   text-rendering : optimizeLegibility;
   color          : rgb(34,34,34);
   line-height    : inherit;
@@ -403,7 +403,7 @@ header nav a:hover
   color : rgb(0,0,0);
 }
 
-header > *#logo
+header > #logo
 {
   width              : 800px;
   -webkit-box-sizing : border-box;
@@ -423,21 +423,21 @@ header > *#logo
   background-image   : radial-gradient(center,ellipse,rgba(255,255,0,0.5859) 0.0%,rgba(255,255,0,0.0977) 50.0%,rgba(255,255,0,0.0000) 75.0%);
 }
 
-header > *#logo a
+header > #logo a
 {
   text-decoration : none;
   color           : inherit;
 }
 
-header > *#logo h1,
-header > *#logo h2
+header > #logo h1,
+header > #logo h2
 {
   text-transform : uppercase;
   text-align     : center;
   margin         : 0px 0px 0px 0px;
 }
 
-header > *#logo h1
+header > #logo h1
 {
   font-size      : 90px;
   color          : rgba(255,255,255,0.7813);
@@ -446,24 +446,24 @@ header > *#logo h1
   letter-spacing : 0.4em;
 }
 
-header > *#logo h1 span.a
+header > #logo h1 span.a
 {
   letter-spacing : 0.36em;
 }
 
-header > *#logo h1 span.y
+header > #logo h1 span.y
 {
   letter-spacing : 0.0em;
 }
 
-header > *#logo h2
+header > #logo h2
 {
   font-size      : 35px;
   color          : rgba(0,0,0,0.4688);
   letter-spacing : 0.3em;
 }
 
-header > *#logo h2 a:hover
+header > #logo h2 a:hover
 {
   color : rgba(0,0,0,0.8594);
 }
@@ -481,7 +481,7 @@ footer > div
   width              : 550px;
   font-size          : 20px;
   line-height        : 30px;
-  font-family        : "Europa","Helvetica","sans-serif";
+  font-family        : "Europa","Helvetica" sans-serif;
   text-rendering     : optimizeLegibility;
   color              : rgb(34,34,34);
   font-size          : 12px;
