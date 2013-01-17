@@ -1,7 +1,10 @@
 {-# LANGUAGE
     OverloadedStrings
   , FlexibleInstances
+  , FlexibleContexts
   , GeneralizedNewtypeDeriving
+  , StandaloneDeriving
+  , UndecidableInstances
   #-}
 module Clay.Selector where
 
@@ -132,6 +135,7 @@ data Predicate
   deriving (Eq, Ord, Show)
 
 newtype Refinement = Refinement { unFilter :: [Predicate] }
+  deriving Show
 
 instance IsString Refinement where
   fromString = filterFromText . fromString
@@ -154,10 +158,14 @@ data Path f
   | Deep      f f
   | Adjacent  f f
   | Combined  f f
+  deriving Show
 
 newtype Fix f = In { out :: f (Fix f) }
 
+deriving instance Show (f (Fix f)) => Show (Fix f)
+
 data SelectorF a = SelectorF Refinement (Path a)
+  deriving Show
 
 type Selector = Fix SelectorF
 

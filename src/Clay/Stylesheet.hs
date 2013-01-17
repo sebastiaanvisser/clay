@@ -8,15 +8,21 @@ import Clay.Selector hiding (Child)
 import Clay.Property
 import Clay.Common
 
+-------------------------------------------------------------------------------
+
 newtype MediaType = MediaType Value
-  deriving (Val, Other)
+  deriving (Val, Other, Show)
 
 data NotOrOnly = Not | Only
+  deriving Show
+
 data MediaQuery = MediaQuery (Maybe NotOrOnly) MediaType [Feature]
+  deriving Show
 
 data Feature = Feature Text (Maybe Value)
+  deriving Show
 
-----------------------------------------------------
+-------------------------------------------------------------------------------
 
 data App
   = Self   Refinement
@@ -24,11 +30,13 @@ data App
   | Pop    Int
   | Child  Selector
   | Sub    Selector
+  deriving Show
 
 data Rule
   = Property (Key ()) Value
   | Nested   App [Rule]
   | Query    MediaQuery [Rule]
+  deriving Show
 
 newtype StyleM a = S (Writer [Rule] a)
   deriving Monad
