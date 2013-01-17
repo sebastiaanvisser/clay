@@ -147,8 +147,8 @@ scroll = Overflow "scroll"
 overflow, overflowX, overflowY :: Overflow -> Css
 
 overflow  = key "overflow"
-overflowX = key "overflow-y"
-overflowY = key "overflow-x"
+overflowX = key "overflow-x"
+overflowY = key "overflow-y"
 
 -------------------------------------------------------------------------------
 
