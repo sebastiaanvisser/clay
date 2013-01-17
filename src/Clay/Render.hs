@@ -176,7 +176,7 @@ selector cfg = intersperse ("," <> newline cfg) . rec
             Child      a b -> ins " > " <$> rec a <*> rec b
             Deep       a b -> ins " "   <$> rec a <*> rec b
             Adjacent   a b -> ins " + " <$> rec a <*> rec b
-            Combined   a b -> join ((:) <$> rec a <*> (pure <$> rec b))
+            Combined   a b -> rec a ++ rec b
           where ins s a b = (a <> s <> b)
 
 predicate :: Predicate -> Builder
