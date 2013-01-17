@@ -17,7 +17,7 @@ import Data.List (sort)
 import Data.Maybe
 import Data.Text (Text)
 import Data.Text.Lazy.Builder
-import Prelude hiding (filter, (**))
+import Prelude hiding ((**))
 
 import qualified Data.Text         as Text
 import qualified Data.Text.Lazy    as Lazy
@@ -169,9 +169,9 @@ properties cfg xs =
 
 selector :: Config -> Selector -> Builder
 selector cfg = intersperse ("," <> newline cfg) . rec
-  where rec (In (SelectorF ft p)) = (<> filter ft) <$>
+  where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
-            Star           -> ["*"]
+            Star           -> if length ft == 0 then ["*"] else [""]
             Elem t         -> [fromText t]
             Child      a b -> ins " > " <$> rec a <*> rec b
             Deep       a b -> ins " "   <$> rec a <*> rec b
@@ -191,7 +191,4 @@ predicate ft = mconcat $
     AttrHyph   a v -> [ "[", fromText a, "|='", fromText v, "']"                    ]
     Pseudo     a   -> [ ":", fromText a                                             ]
     PseudoFunc a p -> [ ":", fromText a, "(", intersperse "," (map fromText p), ")" ]
-
-filter :: Refinement -> Builder
-filter = foldMap predicate . sort . unFilter
 
