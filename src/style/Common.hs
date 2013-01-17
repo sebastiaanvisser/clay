@@ -20,7 +20,7 @@ textFont, headerFont, codeFont, anchors :: Css
 textFont =
   do fontSize       (px 20)
      lineHeight     (px 30)
-     fontFamily     ["Europa", "Helvetica", sansSerif]
+     fontFamily     ["Europa", "Helvetica"] [sansSerif]
      textRendering  optimizeLegibility
      color "#222"
 
@@ -34,7 +34,7 @@ headerFont =
 
 codeFont =
   do fontSize       (px 16)
-     fontFamily     ["Monaco", "Courier New", monospace]
+     fontFamily     ["Monaco", "Courier New"] [monospace]
      lineHeight     (ex 2.6)
      textRendering  optimizeLegibility
 
