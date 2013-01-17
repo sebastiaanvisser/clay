@@ -141,10 +141,10 @@ merger []     = error "this should be fixed!"
 merger (x:xs) =
   case x of
     Rule.Child s -> case xs of [] -> s; _  -> merger xs |> s
-    Sub        s  -> case xs of [] -> s; _  -> merger xs ** s
-    Root       s  -> s ** merger xs
-    Pop        i  -> merger (drop i (x:xs))
-    Self       f  -> merger xs `with` f
+    Sub        s -> case xs of [] -> s; _  -> merger xs ** s
+    Root       s -> s ** merger xs
+    Pop        i -> merger (drop i (x:xs))
+    Self       f -> merger xs `with` f
 
 collect :: (Key (), Value) -> [Either Text (Text, Text)]
 collect (Key ky, Value vl) =
