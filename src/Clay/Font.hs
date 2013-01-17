@@ -23,7 +23,6 @@ module Clay.Font
 , sansSerif
 , serif
 , monospace
-, family
 
 -- * Font-size.
 
@@ -62,6 +61,7 @@ module Clay.Font
 )
 where
 
+import Control.Applicative
 import Data.Text (pack)
 import Data.Monoid
 import Prelude hiding (Left, Right)
@@ -95,11 +95,12 @@ data Required a =
   Required
   (Size a)
   (Maybe (Size a))
-  [FontFamily]
+  [Text]
+  [Text]
 
 instance Val (Required a) where
-  value (Required a Nothing  c) = value (a ! c)
-  value (Required a (Just b) c) = value ((value a <> "/" <> value b) ! c)
+  value (Required a Nothing  c d) = value (a ! (Literal <$> c) ! d)
+  value (Required a (Just b) c d) = value ((value a <> "/" <> value b) ! (Literal <$> c) ! d)
 
 instance Font (          Required a)
 instance Font (Optional, Required a)
@@ -116,14 +117,8 @@ color = key "color"
 
 -------------------------------------------------------------------------------
 
-newtype FontFamily = FontFamily Value
-  deriving (Val, Inherit, Auto)
-
-family :: Text -> FontFamily
-family = FontFamily . value . Literal
-
-fontFamily :: [Literal] -> [Text] -> Css
-fontFamily a b = key "font-family" (value a, value b)
+fontFamily :: [Text] -> [Text] -> Css
+fontFamily a b = key "font-family" (value (Literal <$> a) ! value b)
 
 sansSerif :: Text
 sansSerif = "sans-serif"
