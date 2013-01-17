@@ -40,7 +40,7 @@ main = putCss logo
 
     square = ".square" ?
       do font ( Optional (Just bold) Nothing (Just italic)
-              , Required (px 50) (Just (px 60)) ["Helvetica", sansSerif]
+              , Required (px 50) (Just (px 60)) ["Helvetica"] [sansSerif]
               )
          color (setA 80 white)
          sym2 padding (px 2) (px 22)
