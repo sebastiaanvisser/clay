@@ -159,7 +159,7 @@ collapse :: Visibility
 collapse = Visibility "collapse"
 
 visibility :: Visibility -> Css
-visibility = key "overflow"
+visibility = key "visibility"
 
 -------------------------------------------------------------------------------
 
