@@ -1,5 +1,9 @@
 CHANGELOG
 
+  0.1 -> 0.1.1
+    - Fixed bug in visibility property.
+    Thanks to Conrad Indiono for the pull request.
+
   0.0.1 -> 0.1
 
     - Fixed bug in combined selector rendering.
@@ -10,6 +14,6 @@ CHANGELOG
     - Added some show instance for debugging purposes.
     - Don't print the star (*) selector in the case of refinements.
     - Refinements applied to the top level magically introduce star selector.
-    Thank to listx, bergmark, Cynede, chrisdone, Primigenus, Sigrlami for the
+    Thanks to listx, bergmark, Cynede, chrisdone, Primigenus, Sigrlami for the
     pull requests and bug reports.
 

@@ -1,5 +1,5 @@
 Name:     clay
-Version:  0.1
+Version:  0.1.1
 Synopsis: CSS preprocessor as embedded Haskell.
 Description:
   Clay is a CSS preprocessor like LESS and Sass, but implemented as an embedded
@@ -11,15 +11,9 @@ Description:
   .
   The API documentation can be found in the top level module "Clay".
   .
-  > 0.0.1 -> 0.1
-  >   - Fixed bug in combined selector rendering.
-  >   - Fixed bug in font familty fallback category rendering.
-  >   - Added maxWidth and maxHeight.
-  >   - Fixed example code.
-  >   - Fixed overflowX/overflowY bug.
-  >   - Added some show instance for debugging purposes.
-  >   - Don't print the star (*) selector in the case of refinements.
-  >   - Refinements applied to the top level magically introduce star selector.
+  > 0.1 -> 0.1.1
+  >   - Fixed bug in visibility property.
+  >   Thanks to Conrad Indiono for the pull request.
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
