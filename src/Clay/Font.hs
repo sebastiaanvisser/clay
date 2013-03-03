@@ -127,7 +127,7 @@ serif :: Text
 serif = "serif"
 
 monospace :: Text
-monospace = "fixed"
+monospace = "monospace"
 
 -------------------------------------------------------------------------------
 
