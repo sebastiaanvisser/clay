@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Border
 (
--- * Stroke type.
+-- * Stroke type, used for border-style and outline-style.
   Stroke
-, solid, dotted, dashed, double, wavy
+, solid, dotted, dashed, double, wavy, groove, ridge, inset, outset
 
 -- * Border properties.
 
@@ -11,6 +11,14 @@ module Clay.Border
 , borderColor, borderLeftColor, borderRightColor, borderTopColor, borderBottomColor
 , borderStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle
 , borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth
+
+-- * Outline properties.
+
+, outline, outlineTop, outlineLeft, outlineBottom, outlineRight
+, outlineColor, outlineLeftColor, outlineRightColor, outlineTopColor, outlineBottomColor
+, outlineStyle, outlineLeftStyle, outlineRightStyle, outlineTopStyle, outlineBottomStyle
+, outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth
+, outlineOffset
 
 -- * Border radius.
 
@@ -29,13 +37,19 @@ import Clay.Size
 newtype Stroke = Stroke Value
   deriving (Val, Other, Inherit, Auto, None)
 
-solid, dotted, dashed, double, wavy :: Stroke
+solid, dotted, dashed, double, wavy, groove, ridge, inset, outset :: Stroke
 
 solid  = Stroke "solid"
 dotted = Stroke "dotted"
 dashed = Stroke "dashed"
 double = Stroke "double"
-wavy   = Stroke "Wavu"
+wavy   = Stroke "wavy"
+groove = Stroke "groove"
+ridge  = Stroke "ridge"
+inset  = Stroke "inset"
+outset = Stroke "outset"
+
+-------------------------------------------------------------------------------
 
 border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size Abs -> Color -> Css
 
@@ -68,6 +82,43 @@ borderLeftWidth   = key "border-left-width"
 borderRightWidth  = key "border-right-width"
 borderTopWidth    = key "border-top-width"
 borderBottomWidth = key "border-bottom-width"
+
+-------------------------------------------------------------------------------
+
+outline, outlineTop, outlineLeft, outlineBottom, outlineRight :: Stroke -> Size Abs -> Color -> Css
+
+outline        a b c = key "outline"        (a ! b ! c)
+outlineTop     a b c = key "outline-top"    (a ! b ! c)
+outlineLeft    a b c = key "outline-left"   (a ! b ! c)
+outlineBottom  a b c = key "outline-bottom" (a ! b ! c)
+outlineRight   a b c = key "outline-right"  (a ! b ! c)
+
+outlineColor, outlineLeftColor, outlineRightColor, outlineTopColor, outlineBottomColor :: Color -> Css
+
+outlineColor       = key "outline-color"
+outlineLeftColor   = key "outline-left-color"
+outlineRightColor  = key "outline-right-color"
+outlineTopColor    = key "outline-top-color"
+outlineBottomColor = key "outline-bottom-color"
+
+outlineStyle, outlineLeftStyle, outlineRightStyle, outlineTopStyle, outlineBottomStyle :: Stroke -> Css
+
+outlineStyle       = key "outline-style"
+outlineLeftStyle   = key "outline-left-style"
+outlineRightStyle  = key "outline-right-style"
+outlineTopStyle    = key "outline-top-style"
+outlineBottomStyle = key "outline-bottom-style"
+
+outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth :: Size Abs -> Css
+
+outlineWidth       = key "outline-width"
+outlineLeftWidth   = key "outline-left-width"
+outlineRightWidth  = key "outline-right-width"
+outlineTopWidth    = key "outline-top-width"
+outlineBottomWidth = key "outline-bottom-width"
+
+outlineOffset :: Size Abs -> Css
+outlineOffset = key "outline-offset"
 
 -------------------------------------------------------------------------------
 
