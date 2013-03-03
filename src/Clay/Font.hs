@@ -118,7 +118,7 @@ color = key "color"
 -------------------------------------------------------------------------------
 
 fontFamily :: [Text] -> [Text] -> Css
-fontFamily a b = key "font-family" (value (Literal <$> a) ! value b)
+fontFamily a b = key "font-family" (value (Literal <$> a) <> if null b then "" else (", " <> value b))
 
 sansSerif :: Text
 sansSerif = "sans-serif"
