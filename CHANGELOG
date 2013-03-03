@@ -1,5 +1,10 @@
 CHANGELOG
 
+  0.1.1 -> 0.2
+    - Rotate takes only one argument.
+    - Added opacity property.
+    - Print Clay banner in CSS comments by default.
+
   0.1 -> 0.1.1
     - Fixed bug in visibility property.
     Thanks to Conrad Indiono for the pull request.
