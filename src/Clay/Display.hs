@@ -43,6 +43,10 @@ module Clay.Display
 , clip
 , rect
 
+-- * Opacity.
+
+, opacity
+
 -- * Z-index.
 
 , zIndex
@@ -173,6 +177,9 @@ rect :: Size a -> Size a -> Size a -> Size a -> Clip
 rect t r b l = Clip (mconcat ["rect(", value t, ",", value r, ",", value b, ",", value l, ")"])
 
 -------------------------------------------------------------------------------
+
+opacity :: Double -> Css
+opacity = key "opacity"
 
 zIndex :: Integer -> Css
 zIndex i = key "z-index" (fromString (show i) :: Value)
