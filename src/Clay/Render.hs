@@ -35,17 +35,18 @@ data Config = Config
   , sep         :: Builder
   , warn        :: Bool
   , align       :: Bool
+  , banner      :: Bool
   }
 
 -- | Configuration to print to a pretty human readable CSS output.
 
 pretty :: Config
-pretty = Config "  " "\n" " " True True
+pretty = Config "  " "\n" " " True True True
 
 -- | Configuration to print to a compacted unreadable CSS output.
 
 compact :: Config
-compact = Config "" "" "" False False
+compact = Config "" "" "" False False True
 
 -- | Render to CSS using the default configuration (`pretty`) and directly
 -- print to the standard output.
@@ -64,10 +65,17 @@ render = renderWith pretty []
 
 renderWith :: Config -> [App] -> Css -> Lazy.Text
 renderWith cfg top (S c)
-  = toLazyText
+  = renderBanner cfg
+  . toLazyText
   . rules cfg top
   . execWriter
   $ c
+
+renderBanner :: Config -> Lazy.Text -> Lazy.Text
+renderBanner cfg =
+  if banner cfg
+  then (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
+  else id
 
 rules :: Config -> [App] -> [Rule] -> Builder
 rules cfg sel rs = mconcat
