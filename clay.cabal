@@ -16,6 +16,8 @@ Description:
   >   - Added opacity property.
   >   - Print Clay banner in CSS comments by default.
   >   - Fixed bug in font-family rendering (Firefox only).
+  >   - Added outline related properties.
+  >   - Fixed bug in monospace font family.
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
