@@ -72,8 +72,8 @@ scale3d x y z = Transformation ("scale3d(" <> value [x, y, z] <> ")")
 
 -------------------------------------------------------------------------------
 
-rotate :: Angle a -> Angle a -> Transformation
-rotate x y = Transformation ("rotate(" <> value [x, y] <> ")")
+rotate :: Angle a -> Transformation
+rotate x = Transformation ("rotate(" <> value x <> ")")
 
 rotateX, rotateY, rotateZ :: Angle a -> Transformation
 
