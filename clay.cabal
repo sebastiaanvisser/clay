@@ -15,6 +15,7 @@ Description:
   >   - Rotate takes only one argument.
   >   - Added opacity property.
   >   - Print Clay banner in CSS comments by default.
+  >   - Fixed bug in font-family rendering (Firefox only).
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
