@@ -1,5 +1,11 @@
 CHANGELOG
 
+  0.2 -> 0.3
+    - Fixed value grammar of radial gradients.
+    - Added mask related properties.
+    - Allow multiple box-shadows.
+    - Added filter property.
+
   0.1.1 -> 0.2
     - Rotate takes only one argument.
     - Added opacity property.

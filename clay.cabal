@@ -11,13 +11,11 @@ Description:
   .
   The API documentation can be found in the top level module "Clay".
   .
-  > 0.1.1 -> 0.2
-  >   - Rotate takes only one argument.
-  >   - Added opacity property.
-  >   - Print Clay banner in CSS comments by default.
-  >   - Fixed bug in font-family rendering (Firefox only).
-  >   - Added outline related properties.
-  >   - Fixed bug in monospace font family.
+  > 0.2 -> 0.3
+  >   - Fixed value grammar of radial gradients.
+  >   - Added mask related properties.
+  >   - Allow multiple box-shadows.
+  >   - Added filter property.
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
