@@ -4,6 +4,7 @@ module Clay.Box
 , paddingBox, borderBox, contentBox
 , boxSizing
 , boxShadow
+, boxShadows
 )
 where
 
@@ -35,4 +36,7 @@ boxSizing = prefixed (browsers <> "box-sizing")
 
 boxShadow :: Size a -> Size a -> Size a -> Color -> Css
 boxShadow x y w c = prefixed (browsers <> "box-shadow") (x ! y ! w ! c)
+
+boxShadows :: [(Size a, Size a, Size a, Color)] -> Css
+boxShadows = prefixed (browsers <> "box-shadow") . map (\(a, b, c, d) -> a ! b ! c ! d)
 
