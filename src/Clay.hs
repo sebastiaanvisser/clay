@@ -112,12 +112,12 @@ import Clay.Box
 import Clay.Color
 import Clay.Time
 import Clay.Common
-import Clay.Display  hiding (table)
-import Clay.Font     hiding (menu, caption, small, icon)
+import Clay.Display    hiding (table)
+import Clay.Font       hiding (menu, caption, small, icon)
 import Clay.Geometry
 import Clay.Gradient
 import Clay.Size
-import Clay.Text     hiding (pre)
+import Clay.Text       hiding (pre)
 import Clay.Transform
 import Clay.Transition
 import Clay.Mask       hiding (clear)
