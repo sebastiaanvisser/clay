@@ -88,6 +88,7 @@ module Clay
 , module Clay.Transform
 , module Clay.Transition
 , module Clay.Mask
+, module Clay.Filter
 )
 where
 
@@ -120,6 +121,7 @@ import Clay.Text     hiding (pre)
 import Clay.Transform
 import Clay.Transition
 import Clay.Mask       hiding (clear)
+import Clay.Filter     hiding (url, opacity)
 
 -- $media
 --

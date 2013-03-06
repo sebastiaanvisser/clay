@@ -47,6 +47,7 @@ Library
     Clay.Common
     Clay.Display
     Clay.Elements
+    Clay.Filter
     Clay.Font
     Clay.Geometry
     Clay.Gradient
