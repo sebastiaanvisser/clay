@@ -1,12 +1,23 @@
 {-# LANGUAGE
     OverloadedStrings
   , FlexibleInstances
+  , GeneralizedNewtypeDeriving
   #-}
 module Clay.Mask
 (
 -- * Generic mask property.
 
   Mask (mask)
+
+-- * The mask-composite.
+
+, MaskComposite
+, clearComposite, copy
+, sourceOver, sourceIn, sourceOut, sourceAtop
+, destinationOver, destinationIn, destinationOut, destinationAtop
+, xor
+, maskComposite
+, maskComposites
 
 -- * The mask-position.
 
@@ -53,6 +64,11 @@ import Clay.Common
 import Clay.Property
 import Clay.Stylesheet
 
+pkey :: Val a => Prefixed -> a -> Css
+pkey k = prefixed (browsers <> k)
+
+-------------------------------------------------------------------------------
+
 -- | We implement the generic mask property as a type class that accepts
 -- multiple value types. This allows us to combine different mask aspects into
 -- a shorthand syntax.
@@ -64,6 +80,7 @@ class Val a => Mask a where
 instance Mask a => Mask [a]
 instance (Mask a, Mask b) => Mask (a, b)
 
+instance Mask MaskComposite
 instance Mask BackgroundPosition
 instance Mask BackgroundSize
 instance Mask BackgroundRepeat
@@ -72,8 +89,33 @@ instance Mask BackgroundClip
 instance Mask BackgroundAttachment
 instance Mask BackgroundImage
 
-pkey :: Val a => Prefixed -> a -> Css
-pkey k = prefixed (browsers <> k)
+-------------------------------------------------------------------------------
+
+newtype MaskComposite = MaskComposite Value
+  deriving (Val, Other, Inherit, None)
+
+clearComposite, copy
+  , sourceOver, sourceIn, sourceOut, sourceAtop
+  , destinationOver, destinationIn, destinationOut, destinationAtop
+  , xor :: MaskComposite
+
+clearComposite       = other "clear"
+copy                 = other "copy"
+sourceOver           = other "source-over"
+sourceIn             = other "source-in"
+sourceOut            = other "source-out"
+sourceAtop           = other "source-atop"
+destinationOver      = other "destination-over"
+destinationIn        = other "destination-in"
+destinationOut       = other "destination-out"
+destinationAtop      = other "destination-atop"
+xor                  = other "xor"
+
+maskComposite :: MaskComposite -> Css
+maskComposite = pkey "mask-composite"
+
+maskComposites :: [MaskComposite] -> Css
+maskComposites = pkey "mask-composite"
 
 -------------------------------------------------------------------------------
 
