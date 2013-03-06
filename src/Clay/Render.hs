@@ -160,7 +160,7 @@ collect (Key ky, Value vl) =
     ( Plain    k  , Plain    v  ) -> [prop k v]
     ( Prefixed ks , Plain    v  ) -> flip map ks $ \(p, k) -> prop (p <> k) v
     ( Plain    k  , Prefixed vs ) -> flip map vs $ \(p, v) -> prop k (p <> v)
-    ( Prefixed ks , Prefixed vs ) -> flip map ks $ \(p, k) -> (Left (p <> k) `maybe` prop (p <> k)) (lookup p vs)
+    ( Prefixed ks , Prefixed vs ) -> flip map ks $ \(p, k) -> (Left (p <> k) `maybe` (prop (p <> k) . mappend p)) (lookup p vs)
   where prop k v = Right (k, v)
 
 properties :: Config -> [Either Text (Text, Text)] -> Builder
