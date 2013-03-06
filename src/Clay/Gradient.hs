@@ -21,6 +21,9 @@ module Clay.Gradient
 , circle, ellipse
 , circular, elliptical
 
+, Extend (..)
+, closestSide, closestCorner, farthestSide, farthestCorner
+
 -- , Extend
 -- , closestSide, closestCorner, farthestSide, farthestCorner
 
@@ -75,19 +78,17 @@ vRepeatingGradient = shortcut (repeatingLinearGradient (straight sideTop ))
 newtype Radial = Radial Value
   deriving (Val, Other)
 
-circle :: Radial
-circle = Radial "circle"
+circle :: Extend -> Radial
+circle ext = Radial ("circle " <> value ext)
 
-ellipse :: Radial
-ellipse = Radial "ellipse"
+ellipse :: Extend -> Radial
+ellipse ext = Radial ("ellipse " <> value ext)
 
 circular :: Size Abs -> Radial
-circular radius = Radial ("circle " <> value radius)
+circular radius = Radial (value (radius, radius))
 
 elliptical :: Size a -> Size a -> Radial
-elliptical radx rady = Radial (value ("ellipse " <> value (radx, rady)))
-
-{-
+elliptical radx rady = Radial (value (radx, rady))
 
 newtype Extend = Extend Value
   deriving (Val, Other)
@@ -99,20 +100,16 @@ closestCorner  = Extend "closest-corner"
 farthestSide   = Extend "farthest-side"
 farthestCorner = Extend "farthest-corner"
 
--}
-
 -------------------------------------------------------------------------------
 
 radialGradient :: Loc l => l -> Radial -> Ramp -> BackgroundImage
 radialGradient d r xs = other $ Value $
-  let Value v = "radial-gradient("
-             <> value [value d, value r, ramp xs] <> ")"
+  let Value v = "radial-gradient(" <> value [value d, value r, ramp xs] <> ")"
    in browsers <> v
 
 repeatingRadialGradient :: Loc l => l -> Radial -> Ramp -> BackgroundImage
 repeatingRadialGradient d r xs = other $ Value $
-  let Value v = "repeating-radial-gradient("
-             <> value [value d, value r, ramp xs] <> ")"
+  let Value v = "repeating-radial-gradient(" <> value [value d, value r, ramp xs] <> ")"
    in browsers <> v
 
 -------------------------------------------------------------------------------
