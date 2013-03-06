@@ -12,7 +12,7 @@ module Clay.Mask
 -- * The mask-composite.
 
 , MaskComposite
-, clearComposite, copy
+, clear, copy
 , sourceOver, sourceIn, sourceOut, sourceAtop
 , destinationOver, destinationIn, destinationOut, destinationAtop
 , xor
@@ -94,12 +94,12 @@ instance Mask BackgroundImage
 newtype MaskComposite = MaskComposite Value
   deriving (Val, Other, Inherit, None)
 
-clearComposite, copy
+clear, copy
   , sourceOver, sourceIn, sourceOut, sourceAtop
   , destinationOver, destinationIn, destinationOut, destinationAtop
   , xor :: MaskComposite
 
-clearComposite       = other "clear"
+clear                = other "clear"
 copy                 = other "copy"
 sourceOver           = other "source-over"
 sourceIn             = other "source-in"

@@ -119,7 +119,7 @@ import Clay.Size
 import Clay.Text     hiding (pre)
 import Clay.Transform
 import Clay.Transition
-import Clay.Mask
+import Clay.Mask       hiding (clear)
 
 -- $media
 --
