@@ -1,0 +1,133 @@
+{-# LANGUAGE
+    OverloadedStrings
+  , FlexibleInstances
+  #-}
+module Clay.Mask
+(
+-- * Generic mask property.
+
+  Mask (mask)
+
+-- * The mask-position.
+
+, maskPosition
+, maskPositions
+
+-- * The mask-size.
+
+, maskSize
+, maskSizes
+
+-- * The mask-repeat.
+
+, maskRepeat
+, maskRepeats
+
+-- * The mask-origin.
+
+, maskOrigin
+, maskOrigins
+
+-- * The mask-clip.
+
+, maskClip
+, maskClips
+
+-- * The mask-attachment.
+
+, maskAttachment
+, maskAttachments
+
+-- * The mask-image.
+
+, maskImage
+, maskImages
+
+)
+where
+
+import Data.Monoid
+
+import Clay.Background
+import Clay.Common
+import Clay.Property
+import Clay.Stylesheet
+
+-- | We implement the generic mask property as a type class that accepts
+-- multiple value types. This allows us to combine different mask aspects into
+-- a shorthand syntax.
+
+class Val a => Mask a where
+  mask :: a -> Css
+  mask = pkey "mask"
+
+instance Mask a => Mask [a]
+instance (Mask a, Mask b) => Mask (a, b)
+
+instance Mask BackgroundPosition
+instance Mask BackgroundSize
+instance Mask BackgroundRepeat
+instance Mask BackgroundOrigin
+instance Mask BackgroundClip
+instance Mask BackgroundAttachment
+instance Mask BackgroundImage
+
+pkey :: Val a => Prefixed -> a -> Css
+pkey k = prefixed (browsers <> k)
+
+-------------------------------------------------------------------------------
+
+maskPosition :: BackgroundPosition -> Css
+maskPosition = pkey "mask-position"
+
+maskPositions :: [BackgroundPosition] -> Css
+maskPositions = pkey "mask-position"
+
+-------------------------------------------------------------------------------
+
+maskSize :: BackgroundSize -> Css
+maskSize = pkey "mask-size"
+
+maskSizes :: [BackgroundSize] -> Css
+maskSizes = pkey "mask-size"
+
+-------------------------------------------------------------------------------
+
+maskRepeat :: BackgroundRepeat -> Css
+maskRepeat = pkey "mask-repeat"
+
+maskRepeats :: [BackgroundRepeat] -> Css
+maskRepeats = pkey "mask-repeat"
+
+-------------------------------------------------------------------------------
+
+maskImage :: BackgroundImage -> Css
+maskImage = pkey "mask-image"
+
+maskImages :: [BackgroundImage] -> Css
+maskImages = pkey "mask-image"
+
+-------------------------------------------------------------------------------
+
+maskOrigin :: BackgroundOrigin -> Css
+maskOrigin = pkey "mask-origin"
+
+maskOrigins :: [BackgroundOrigin] -> Css
+maskOrigins = pkey "mask-origin"
+
+-------------------------------------------------------------------------------
+
+maskClip :: BackgroundClip -> Css
+maskClip = pkey "mask-clip"
+
+maskClips :: [BackgroundClip] -> Css
+maskClips = pkey "mask-clip"
+
+-------------------------------------------------------------------------------
+
+maskAttachment :: BackgroundAttachment -> Css
+maskAttachment = pkey "mask-attachment"
+
+maskAttachments :: [BackgroundAttachment] -> Css
+maskAttachments = pkey "mask-attachment"
+

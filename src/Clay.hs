@@ -87,6 +87,7 @@ module Clay
 , module Clay.Text
 , module Clay.Transform
 , module Clay.Transition
+, module Clay.Mask
 )
 where
 
@@ -118,6 +119,7 @@ import Clay.Size
 import Clay.Text     hiding (pre)
 import Clay.Transform
 import Clay.Transition
+import Clay.Mask
 
 -- $media
 --

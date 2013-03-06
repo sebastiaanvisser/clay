@@ -51,6 +51,7 @@ Library
     Clay.Geometry
     Clay.Gradient
     Clay.Media
+    Clay.Mask
     Clay.Property
     Clay.Pseudo
     Clay.Render
