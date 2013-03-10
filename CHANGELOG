@@ -5,6 +5,7 @@ CHANGELOG
     - Added mask related properties.
     - Allow multiple box-shadows.
     - Added filter property.
+    - Also render value prefix when both key and value are prefixed.
 
   0.1.1 -> 0.2
     - Rotate takes only one argument.

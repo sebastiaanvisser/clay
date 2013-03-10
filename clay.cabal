@@ -16,6 +16,7 @@ Description:
   >   - Added mask related properties.
   >   - Allow multiple box-shadows.
   >   - Added filter property.
+  >   - Also render value prefix when both key and value are prefixed.
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
