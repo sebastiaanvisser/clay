@@ -7,6 +7,7 @@ import Data.List (partition, sort)
 import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
+import Text.Printf
 
 data Prefixed = Prefixed [(Text, Text)] | Plain Text
   deriving Show
@@ -62,7 +63,7 @@ instance Val Integer where
   value = fromString . show
 
 instance Val Double where
-  value = fromString . show
+  value = fromString . printf "%.5f"
 
 instance Val Value where
   value = id
