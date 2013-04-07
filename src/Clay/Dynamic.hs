@@ -62,7 +62,7 @@ userModify = prefixed (browsers <> "user-modify")
 -- | Selection mode.
 
 newtype UserModify = UserModify Value
-  deriving (Val, Inherit, None)
+  deriving (Val, Inherit)
 
 -- | Selection mode.
 
@@ -97,7 +97,7 @@ selectElements = UserSelect "elements"
 --------------------------------------------------------------------------------
 -- Focus selection behavior of the contents of an element: the 'user-focus' property
 
--- | Content focusion granularity.
+-- | Content focusing granularity.
 
 userFocus :: UserFocus -> Css
 userFocus = prefixed (browsers <> "user-focus")
@@ -105,9 +105,11 @@ userFocus = prefixed (browsers <> "user-focus")
 -- | Focus behaviour.
 
 newtype UserFocus = UserFocus Value
-  deriving (Val, Inherit, None, Normal, Other, All)
+  deriving (Val, Inherit, None, Normal, Auto)
 
--- | Focusion mode.
+instance All UserFocus where all = UserFocus "select-all"
+
+-- | Focus mode.
 
 selectBefore, selectAfter, selectSame, selectMenu :: UserFocus
 
@@ -115,4 +117,3 @@ selectBefore = UserFocus "select-before"
 selectAfter  = UserFocus "select-after"
 selectSame   = UserFocus "select-same"
 selectMenu   = UserFocus "select-menu"
-
