@@ -81,6 +81,7 @@ module Clay
 , module Clay.Border
 , module Clay.Box
 , module Clay.Display
+, module Clay.Dynamic
 , module Clay.Font
 , module Clay.Geometry
 , module Clay.Gradient
@@ -113,6 +114,7 @@ import Clay.Color
 import Clay.Time
 import Clay.Common
 import Clay.Display    hiding (table)
+import Clay.Dynamic
 import Clay.Font       hiding (menu, caption, small, icon)
 import Clay.Geometry
 import Clay.Gradient
@@ -128,4 +130,3 @@ import Clay.Filter     hiding (url, opacity)
 -- Because a large part of the names export by "Clay.Media" clash with names
 -- export by other modules we don't re-export it here and recommend you to
 -- import the module qualified.
-
