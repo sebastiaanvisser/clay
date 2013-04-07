@@ -21,11 +21,8 @@ module Clay.Gradient
 , circle, ellipse
 , circular, elliptical
 
-, Extend (..)
+, Extend
 , closestSide, closestCorner, farthestSide, farthestCorner
-
--- , Extend
--- , closestSide, closestCorner, farthestSide, farthestCorner
 
 , radialGradient
 
