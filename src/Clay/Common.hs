@@ -13,6 +13,7 @@ import Clay.Property
 
 -------------------------------------------------------------------------------
 
+class All     a where all     ::          a
 class Auto    a where auto    ::          a
 class Inherit a where inherit ::          a
 class None    a where none    ::          a
@@ -26,6 +27,7 @@ class Hidden  a where hidden  ::          a
 
 class Other   a where other   :: Value -> a
 
+instance All     Value where all     = "all"
 instance Auto    Value where auto    = "auto"
 instance Inherit Value where inherit = "inherit"
 instance Normal  Value where normal  = "normal"

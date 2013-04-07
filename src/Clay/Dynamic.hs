@@ -22,16 +22,13 @@ module Clay.Dynamic
 
   -- * User focus
 , userFocus, UserFocus, selectBefore, selectAfter, selectSame, selectMenu
-
-  -- * Common
-, SelectAll(..)
 )
 where
 
 import Clay.Common
 import Clay.Property
 import Clay.Stylesheet
-import Data.Monoid
+import Data.Monoid hiding (All)
 import Prelude (($))
 
 --------------------------------------------------------------------------------
@@ -86,7 +83,7 @@ userSelect = prefixed (browsers <> "user-select")
 -- | Selection mode.
 
 newtype UserSelect = UserSelect Value
-  deriving (Val, Inherit, None)
+  deriving (Val, Inherit, None, All)
 
 -- | Selection mode.
 
@@ -96,10 +93,6 @@ selectText     = UserSelect "text"
 selectToggle   = UserSelect "toggle"
 selectElement  = UserSelect "element"
 selectElements = UserSelect "elements"
-
--- | user-select: all
-
-instance SelectAll UserSelect where selectAll = UserSelect "all"
 
 --------------------------------------------------------------------------------
 -- Focus selection behavior of the contents of an element: the 'user-focus' property
@@ -112,7 +105,7 @@ userFocus = prefixed (browsers <> "user-focus")
 -- | Focus behaviour.
 
 newtype UserFocus = UserFocus Value
-  deriving (Val, Inherit, None, Normal, Other)
+  deriving (Val, Inherit, None, Normal, Other, All)
 
 -- | Focusion mode.
 
@@ -122,16 +115,4 @@ selectBefore = UserFocus "select-before"
 selectAfter  = UserFocus "select-after"
 selectSame   = UserFocus "select-same"
 selectMenu   = UserFocus "select-menu"
-
--- | user-focus: select-all
-
-instance SelectAll UserFocus where selectAll = UserFocus "all"
-
---------------------------------------------------------------------------------
--- Common components
-
--- | Just a way to share the @selectAll@ name.
-
-class SelectAll a where
-  selectAll :: a
 

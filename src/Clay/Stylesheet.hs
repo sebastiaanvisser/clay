@@ -2,7 +2,7 @@
 module Clay.Stylesheet where
 
 import Data.Text (Text)
-import Control.Monad.Writer
+import Control.Monad.Writer hiding (All)
 
 import Clay.Selector hiding (Child)
 import Clay.Property
@@ -11,7 +11,7 @@ import Clay.Common
 -------------------------------------------------------------------------------
 
 newtype MediaType = MediaType Value
-  deriving (Val, Other, Show)
+  deriving (Val, Other, Show, All)
 
 data NotOrOnly = Not | Only
   deriving Show

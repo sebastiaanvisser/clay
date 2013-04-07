@@ -4,7 +4,7 @@ module Clay.Media
 
 -- * Media types.
 
-  all, aural, braille, handheld, print, projection
+  aural, braille, handheld, print, projection
 , screen, tty, tv, embossed
 
 -- * Geometrical features.
@@ -49,10 +49,9 @@ import Prelude hiding (all, print)
 
 -------------------------------------------------------------------------------
 
-all, aural, braille, handheld, print, projection
+aural, braille, handheld, print, projection
   , screen, tty, tv, embossed :: MediaType
 
-all        = MediaType "all"
 aural      = MediaType "aural"
 braille    = MediaType "braille"
 handheld   = MediaType "handheld"
