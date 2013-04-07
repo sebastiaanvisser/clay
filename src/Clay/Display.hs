@@ -4,6 +4,9 @@ module Clay.Display
 -- * Float.
 
   float
+, FloatStyle
+, floatLeft
+, floatRight
 , clear
 , Clear
 , both
@@ -64,7 +67,6 @@ where
 import Data.Monoid
 import Data.String
 
-import Clay.Background
 import Clay.Size
 import Clay.Property
 import Clay.Stylesheet
@@ -72,8 +74,15 @@ import Clay.Common
 
 -------------------------------------------------------------------------------
 
-float :: Side -> Css
+float :: FloatStyle -> Css
 float = key "float"
+
+newtype FloatStyle = FloatStyle Value
+  deriving (Val,None,Inherit)
+
+floatLeft, floatRight :: FloatStyle
+floatLeft = FloatStyle "left"
+floatRight = FloatStyle "right"
 
 newtype Clear = Clear Value
   deriving (Val, Other, None, Inherit)
@@ -202,4 +211,3 @@ allEvents      = PointerEvents "all"
 
 pointerEvents :: PointerEvents -> Css
 pointerEvents = key "pointer-events"
-
