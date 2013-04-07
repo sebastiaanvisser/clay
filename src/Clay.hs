@@ -90,6 +90,10 @@ module Clay
 , module Clay.Transition
 , module Clay.Mask
 , module Clay.Filter
+
+-- * Writing your own properties.
+
+, module Clay.Property
 )
 where
 
@@ -98,6 +102,7 @@ import Prelude hiding ((**))
 import Clay.Render
 import Clay.Stylesheet
 import Clay.Selector
+import Clay.Property
 
 import Clay.Pseudo
 import Clay.Elements hiding (link, em)
