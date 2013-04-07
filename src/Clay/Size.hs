@@ -11,6 +11,7 @@ module Clay.Size
   Size
 , Abs
 , Rel
+, nil
 
 -- * Size constructors.
 
@@ -57,6 +58,9 @@ data Abs
 
 newtype Size a = Size Value
   deriving (Val, Auto, Normal, Inherit, None, Other)
+
+nil :: Size a
+nil = Size "0"
 
 -- | Size in pixels.
 
