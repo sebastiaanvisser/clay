@@ -1,5 +1,13 @@
 CHANGELOG
 
+  0.3 -> 0.4
+    - Added dynamic presentation. (thanks to chrisdone)
+    - Float now has its own value, don't incorrectly share side. (thanks to chrisdone)
+    - Added nil size constructor.
+    - Slightly improved the gradient syntax.
+    - Expose the Propery module by default.
+    - Introduced shared 'all' value.
+
   0.2 -> 0.3
     - Fixed value grammar of radial gradients.
     - Added mask related properties.

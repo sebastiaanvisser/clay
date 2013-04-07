@@ -11,12 +11,13 @@ Description:
   .
   The API documentation can be found in the top level module "Clay".
   .
-  > 0.2 -> 0.3
-  >   - Fixed value grammar of radial gradients.
-  >   - Added mask related properties.
-  >   - Allow multiple box-shadows.
-  >   - Added filter property.
-  >   - Also render value prefix when both key and value are prefixed.
+  > 0.3 -> 0.4
+  >   - Added dynamic presentation. (thanks to chrisdone)
+  >   - Float now has its own value, don't incorrectly share side. (thanks to chrisdone)
+  >   - Added nil size constructor.
+  >   - Slightly improved the gradient syntax.
+  >   - Expose the Propery module by default.
+  >   - Introduced shared 'all' value.
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
