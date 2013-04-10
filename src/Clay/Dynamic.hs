@@ -12,16 +12,24 @@
 module Clay.Dynamic
 (
   -- * User input
-  userInput, UserInput, inputEnabled, inputDisabled
+  UserInput
+, userInput
+, inputEnabled, inputDisabled
 
   -- * User modifiability
-, userModify, UserModify, readOnly, readWrite, writeOnly
+, UserModify
+, userModify
+, readOnly, readWrite, writeOnly
 
   -- * User selection
-, userSelect, UserSelect, selectText, selectToggle, selectElement, selectElements
+, UserSelect
+, userSelect
+, selectText, selectToggle, selectElement, selectElements
 
   -- * User focus
-, userFocus, UserFocus, selectBefore, selectAfter, selectSame, selectMenu
+, UserFocus
+, userFocus
+, selectAll, selectBefore, selectAfter, selectSame, selectMenu
 )
 where
 
@@ -107,13 +115,13 @@ userFocus = prefixed (browsers <> "user-focus")
 newtype UserFocus = UserFocus Value
   deriving (Val, Inherit, None, Normal, Auto)
 
-instance All UserFocus where all = UserFocus "select-all"
-
 -- | Focus mode.
 
-selectBefore, selectAfter, selectSame, selectMenu :: UserFocus
+selectAll, selectBefore, selectAfter, selectSame, selectMenu :: UserFocus
 
+selectAll    = UserFocus "select-all"
 selectBefore = UserFocus "select-before"
 selectAfter  = UserFocus "select-after"
 selectSame   = UserFocus "select-same"
 selectMenu   = UserFocus "select-menu"
+
