@@ -122,8 +122,8 @@ outlineOffset = key "outline-offset"
 
 -------------------------------------------------------------------------------
 
-borderRadius :: Size a -> Css
-borderRadius = key "border-radius"
+borderRadius :: Size a -> Size a -> Size a -> Size a -> Css
+borderRadius a b c d = key "border-radius" (a ! b ! c ! d)
 
 borderTopLeftRadius, borderTopRightRadius,
   borderBottomLeftRadius, borderBottomRightRadius :: Size a -> Size a -> Css
