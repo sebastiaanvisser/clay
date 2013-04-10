@@ -1,5 +1,9 @@
 CHANGELOG
 
+  0.4 -> 0.5
+    - Generalized the borderRadius function.
+    - Fixed some small issues in Dynamic.
+
   0.3 -> 0.4
     - Added dynamic presentation. (thanks to chrisdone)
     - Float now has its own value, don't incorrectly share side. (thanks to chrisdone)
