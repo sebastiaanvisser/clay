@@ -118,7 +118,9 @@ color = key "color"
 -------------------------------------------------------------------------------
 
 fontFamily :: [Text] -> [Text] -> Css
-fontFamily a b = key "font-family" (value (Literal <$> a) <> if null b then "" else (", " <> value b))
+fontFamily a b = key "font-family" $
+  let sep = if null a || null b then "" else ", "
+   in value (Literal <$> a) <> sep <> value b
 
 sansSerif :: Text
 sansSerif = "sans-serif"
