@@ -42,7 +42,6 @@ module Clay.Size
 where
 
 import Data.Monoid
-import Data.Text (pack)
 
 import Clay.Common
 import Clay.Property
@@ -65,27 +64,27 @@ nil = Size "0"
 -- | Size in pixels.
 
 px :: Integer -> Size Abs
-px i = Size (value (pack (show i) <> "px"))
+px i = Size (value i <> "px")
 
 -- | Size in points.
 
 pt :: Double -> Size Abs
-pt i = Size (value (pack (show i) <> "pt"))
+pt i = Size (value i <> "pt")
 
 -- | Size in em's.
 
 em :: Double -> Size Abs
-em i = Size (value (pack (show i) <> "em"))
+em i = Size (value i <> "em")
 
 -- | Size in ex'es.
 
 ex :: Double -> Size Abs
-ex i = Size (value (pack (show i) <> "ex"))
+ex i = Size (value i <> "ex")
 
 -- | Size in percentages.
 
 pct :: Double -> Size Rel
-pct i = Size (value (pack (show i) <> "%"))
+pct i = Size (value i <> "%")
 
 instance Num (Size Abs) where
   fromInteger = px
@@ -129,12 +128,12 @@ newtype Angle a = Angle Value
 -- | Angle in degrees.
 
 deg :: Double -> Angle Deg
-deg i = Angle (value (pack (show i) <> "deg"))
+deg i = Angle (value i <> "deg")
 
 -- | Angle in radians.
 
 rad :: Double -> Angle Rad
-rad i = Angle (value (pack (show i) <> "rad"))
+rad i = Angle (value i <> "rad")
 
 instance Num (Angle Deg) where
   fromInteger = deg . fromInteger
