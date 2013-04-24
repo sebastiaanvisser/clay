@@ -1,4 +1,7 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE
+    OverloadedStrings
+  , GeneralizedNewtypeDeriving
+  #-}
 
 -- | A bunch of type classes representing common values shared between multiple
 -- CSS properties, like `Auto`, `Inherit`, `None`, `Normal` and several more.
@@ -10,6 +13,7 @@
 module Clay.Common where
 
 import Clay.Property
+import Data.Text (Text)
 
 -------------------------------------------------------------------------------
 
@@ -50,3 +54,30 @@ browsers = Prefixed
   , (         "", "" )
   ]
 
+-------------------------------------------------------------------------------
+
+newtype FontStyle = FontStyle Value
+  deriving (Show, Val, Inherit, Normal)
+
+newtype FontVariant = FontVariant Value
+  deriving (Show, Val, Inherit, Normal)
+
+newtype FontWeight = FontWeight Value
+  deriving (Show, Val, Inherit, Normal)
+
+
+data FontFaceFormat = WOFF | TrueType | OpenType | EmbeddedOpenType | SVG
+  deriving Show
+
+data FontFaceSrc
+  = FontFaceSrcUrl Text (Maybe FontFaceFormat)
+  | FontFaceSrcLocal Text
+  deriving Show
+
+data FontFace = FontFace
+  { fontFaceFamily  :: Text
+  , fontFaceSrc     :: [FontFaceSrc]
+  , fontFaceVariant :: Maybe FontVariant
+  , fontFaceWeight  :: Maybe FontWeight
+  , fontFaceStyle   :: Maybe FontStyle
+  } deriving Show

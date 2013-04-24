@@ -36,6 +36,7 @@ data Rule
   = Property (Key ()) Value
   | Nested   App [Rule]
   | Query    MediaQuery [Rule]
+  | Face     FontFace
   deriving Show
 
 newtype StyleM a = S (Writer [Rule] a)
@@ -121,3 +122,9 @@ queryNot ty fs (S rs) = S (tell [Query (MediaQuery (Just Not) ty fs) (execWriter
 queryOnly :: MediaType -> [Feature] -> Css -> Css
 queryOnly ty fs (S rs) = S (tell [Query (MediaQuery (Just Only) ty fs) (execWriter rs)])
 
+-------------------------------------------------------------------------------
+
+-- | Define a new font-face.
+
+fontFace :: FontFace -> Css
+fontFace ff = S (tell [Face ff])

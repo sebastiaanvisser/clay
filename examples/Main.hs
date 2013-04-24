@@ -5,7 +5,9 @@ import Control.Monad
 import Data.Text (pack)
 import Prelude
 import Clay hiding (i, s, div)
+import qualified Clay.Media as Media (print, color)
 import Clay.Selector (with)
+import Clay.Common
 
 main :: IO ()
 main = putCss logo
@@ -24,6 +26,30 @@ main = putCss logo
          position absolute
          boxSizing borderBox
          transform (scaleY 0.5)
+
+         query Media.print [Media.color] $ do
+           "foo" ? do
+              position absolute
+
+
+           fontFace (FontFace
+              { fontFaceFamily = "Comic Sans"
+              , fontFaceSrc =
+                  [ FontFaceSrcLocal "Comic Sans"
+                  , FontFaceSrcUrl "http://comic.sans.com" Nothing
+                  ]
+              , fontFaceVariant = Just smallCaps
+              , fontFaceWeight = Nothing
+              , fontFaceStyle = Nothing
+              })
+
+         fontFace $ FontFace
+            { fontFaceFamily = "Times"
+            , fontFaceSrc = [FontFaceSrcUrl "http://www.google.com" Nothing]
+            , fontFaceVariant = Nothing
+            , fontFaceWeight = Nothing
+            , fontFaceStyle = Nothing
+            }
 
          "div" <?
            do position absolute
