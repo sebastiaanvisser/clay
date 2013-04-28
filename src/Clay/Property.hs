@@ -34,6 +34,9 @@ plain :: Prefixed -> Text
 plain (Prefixed xs) = "" `fromMaybe` lookup "" xs
 plain (Plain    p ) = p
 
+quote :: Text -> Text
+quote t = "\"" <> replace "\"" "\\\"" t <> "\""
+
 -------------------------------------------------------------------------------
 
 newtype Key a = Key { unKeys :: Prefixed }
@@ -57,7 +60,7 @@ newtype Literal = Literal Text
   deriving (Show, Monoid, IsString)
 
 instance Val Literal where
-  value (Literal t) = Value (Plain ("\"" <> replace "\"" "\\\"" t <> "\""))
+  value (Literal t) = Value (Plain (quote t))
 
 instance Val Integer where
   value = fromString . show

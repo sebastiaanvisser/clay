@@ -10,6 +10,8 @@
 module Clay.Common where
 
 import Clay.Property
+import Data.String (IsString)
+import Data.Monoid (Monoid, (<>))
 
 -------------------------------------------------------------------------------
 
@@ -50,3 +52,9 @@ browsers = Prefixed
   , (         "", "" )
   ]
 
+-------------------------------------------------------------------------------
+
+-- | Syntax for CSS function call.
+
+call :: (IsString s, Monoid s) => s -> s -> s
+call fn arg = fn <> "(" <> arg <> ")"
