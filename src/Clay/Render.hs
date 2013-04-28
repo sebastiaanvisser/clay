@@ -168,12 +168,12 @@ properties cfg xs =
   let width = 1 + maximum (Text.length . fst <$> rights xs)
       ind   = indentation cfg
       new   = newline cfg
-   in flip foldMap xs $ \p ->
+   in (<> new) $ intersperse (";" <> new) $ flip map xs $ \p ->
         case p of
           Left w -> if warn cfg then ind <> "/* no value for " <> fromText w <> " */" <> new else mempty
           Right (k, v) ->
             let pad = if align cfg then fromText (Text.replicate (width - Text.length k) " ") else ""
-             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, ";", new]
+             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v]
 
 selector :: Config -> Selector -> Builder
 selector cfg = intersperse ("," <> newline cfg) . rec
