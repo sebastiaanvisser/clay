@@ -19,6 +19,8 @@ import Data.Text (Text)
 import Data.Text.Lazy.Builder
 import Prelude hiding ((**))
 
+-- import Data.Monoid ((<>))
+
 import qualified Data.Text         as Text
 import qualified Data.Text.Lazy    as Lazy
 import qualified Data.Text.Lazy.IO as Lazy
@@ -26,6 +28,7 @@ import qualified Data.Text.Lazy.IO as Lazy
 import Clay.Stylesheet hiding (Child, query)
 import Clay.Property
 import Clay.Selector
+import Clay.Common
 
 import qualified Clay.Stylesheet as Rule
 
@@ -79,17 +82,21 @@ renderBanner cfg =
 
 rules :: Config -> [App] -> [Rule] -> Builder
 rules cfg sel rs = mconcat
-  [ rule cfg sel (mapMaybe property rs)
+  [ (\ff -> face cfg ff) `foldMap` mapMaybe faces rs
+  , rule cfg sel (mapMaybe property rs)
   , newline cfg
   , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested rs
   , (\(a, b) -> query cfg  a   sel  b) `foldMap` mapMaybe queries rs
   ]
-  where property (Property k v) = Just (k, v)
+  where faces    (Face ff     ) = Just ff
+        faces    _              = Nothing
+        property (Property k v) = Just (k, v)
         property _              = Nothing
         nested   (Nested a ns ) = Just (a, ns)
         nested   _              = Nothing
         queries  (Query q ns  ) = Just (q, ns)
         queries  _              = Nothing
+
 
 query :: Config -> MediaQuery -> [App] -> [Rule] -> Builder
 query cfg q sel rs =
@@ -129,6 +136,52 @@ feature (Feature k mv) =
                       , fromText (plain v)
                       , ")"
                       ]
+
+face :: Config -> FontFace -> Builder
+face cfg ff =
+  let xs = collect =<< fontFaceProps ff
+    in mconcat
+       [ "@font-face "
+       , newline cfg
+       , "{"
+       , newline cfg
+       , properties cfg xs
+       , "}"
+       , newline cfg
+       ]
+
+fontFaceProps :: FontFace -> [(Key (), Value)]
+fontFaceProps (FontFace
+  { fontFaceFamily  = family
+  , fontFaceSrc     = srcs
+  , fontFaceVariant = mVariant
+  , fontFaceWeight  = mWeight
+  , fontFaceStyle   = mStyle
+  }) =  [ (cast ("font-family" :: Key Text), value $ Literal family)
+        , (cast ("src" :: Key Text), renderFontFaceSrc srcs)
+        ]
+        ++ catMaybes
+        [ (\variant -> (cast ("font-variant" :: Key Text), value variant)) <$> mVariant
+        , (\weight -> (cast ("font-weight" :: Key Text), value weight)) <$> mWeight
+        , (\style -> (cast ("font-style" :: Key Text), value style)) <$> mStyle
+        ]
+  where
+    renderFontFaceSrc :: [FontFaceSrc] -> Value
+    renderFontFaceSrc = value . Text.intercalate ", " . map fontFaceSrcVal
+      where
+        fontFaceSrcVal src = case src of
+          FontFaceSrcLocal name   -> "local(" <> quote name <> ")"
+          FontFaceSrcUrl url mformat -> case mformat of
+            Nothing     -> "url(" <> quote url <> ")"
+            Just format -> "url(" <> quote url <> ") format(" <> quote (fontFormat format) <> ")"
+
+        fontFormat format = case format of
+          WOFF             -> "woff"
+          TrueType         -> "truetype"
+          OpenType         -> "opentype"
+          EmbeddedOpenType -> "embedded-opentype"
+          SVG              -> "svg"
+
 
 rule :: Config -> [App] -> [(Key (), Value)] -> Builder
 rule _   _   []    = mempty

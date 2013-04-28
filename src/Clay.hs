@@ -56,6 +56,11 @@ module Clay
 , queryNot
 , queryOnly
 
+-- * Define font-faces.
+
+, FontFace (..)
+, fontFace
+
 -- * Pseudo elements and classes.
 
 , module Clay.Pseudo

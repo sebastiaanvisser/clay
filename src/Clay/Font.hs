@@ -156,9 +156,6 @@ fontSizeCustom = key "font-size"
 
 -------------------------------------------------------------------------------
 
-newtype FontStyle = FontStyle Value
-  deriving (Val, Inherit, Normal)
-
 italic, oblique :: FontStyle
 
 italic = FontStyle "italic"
@@ -169,9 +166,6 @@ fontStyle = key "font-style"
 
 -------------------------------------------------------------------------------
 
-newtype FontVariant = FontVariant Value
-  deriving (Val, Inherit, Normal)
-
 smallCaps :: FontVariant
 smallCaps = FontVariant "small-caps"
 
@@ -179,9 +173,6 @@ fontVariant :: FontVariant -> Css
 fontVariant = key "font-variant"
 
 -------------------------------------------------------------------------------
-
-newtype FontWeight = FontWeight Value
-  deriving (Val, Inherit, Normal)
 
 bold, bolder, lighter :: FontWeight
 
