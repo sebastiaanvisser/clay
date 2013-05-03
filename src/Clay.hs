@@ -56,6 +56,10 @@ module Clay
 , queryNot
 , queryOnly
 
+-- * Define font-faces.
+
+, fontFace
+
 -- * Pseudo elements and classes.
 
 , module Clay.Pseudo
@@ -83,6 +87,7 @@ module Clay
 , module Clay.Display
 , module Clay.Dynamic
 , module Clay.Font
+, module Clay.FontFace
 , module Clay.Geometry
 , module Clay.Gradient
 , module Clay.Text
@@ -121,6 +126,7 @@ import Clay.Common
 import Clay.Display    hiding (table)
 import Clay.Dynamic
 import Clay.Font       hiding (menu, caption, small, icon)
+import Clay.FontFace
 import Clay.Geometry
 import Clay.Gradient
 import Clay.Size

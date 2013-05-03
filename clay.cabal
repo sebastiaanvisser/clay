@@ -45,6 +45,7 @@ Library
     Clay.Elements
     Clay.Filter
     Clay.Font
+    Clay.FontFace
     Clay.Geometry
     Clay.Gradient
     Clay.Media
