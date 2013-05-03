@@ -16,20 +16,22 @@ import Clay.Common
 
 data Color
   = Rgba Integer Integer Integer Integer
-  | Hsla Integer Integer Integer Integer
+  | Hsla Integer Float   Float   Integer
   | Other Value
   deriving Show
 
 -- * Color constructors.
 
-rgba, hsla :: Integer -> Integer -> Integer -> Integer -> Color
-
+rgba :: Integer -> Integer -> Integer -> Integer -> Color
 rgba = Rgba
+
+rgb :: Integer -> Integer -> Integer -> Color
+rgb r g b = rgba r g b 255
+
+hsla :: Integer -> Float -> Float -> Integer -> Color
 hsla = Hsla
 
-rgb, hsl :: Integer -> Integer -> Integer -> Color
-
-rgb r g b = rgba r g b 255
+hsl :: Integer -> Float -> Float -> Color
 hsl r g b = hsla r g b 255
 
 grayish :: Integer -> Color
@@ -42,40 +44,34 @@ transparent = rgba 0 0 0 0
 
 setR :: Integer -> Color -> Color
 setR r (Rgba _ g b a) = Rgba r g b a
-setR r (Hsla _ g b a) = Hsla r g b a
-setR _ (Other o)      = Other o
+setR _ o              = o
 
 setG :: Integer -> Color -> Color
 setG g (Rgba r _ b a) = Rgba r g b a
-setG g (Hsla r _ b a) = Hsla r g b a
-setG _ (Other o)      = Other o
+setG _ o              = o
 
 setB :: Integer -> Color -> Color
 setB b (Rgba r g _ a) = Rgba r g b a
-setB b (Hsla r g _ a) = Hsla r g b a
-setB _ (Other o)      = Other o
+setB _ o              = o
 
 setA :: Integer -> Color -> Color
 setA a (Rgba r g b _) = Rgba r g b a
 setA a (Hsla r g b _) = Hsla r g b a
-setA _ (Other o)      = Other o
+setA _ o              = o
 
 -- * Computing with colors.
 
 (*.) :: Color -> Integer -> Color
 (*.) (Rgba r g b a) i = Rgba (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
-(*.) (Hsla r g b a) i = Hsla (clamp (r * i)) (clamp (g * i)) (clamp (b * i)) a
-(*.) (Other o)      _ = Other o
+(*.) o              _ = o
 
 (+.) :: Color -> Integer -> Color
 (+.) (Rgba r g b a) i = Rgba (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
-(+.) (Hsla r g b a) i = Hsla (clamp (r + i)) (clamp (g + i)) (clamp (b + i)) a
-(+.) (Other o)      _ = Other o
+(+.) o              _ = o
 
 (-.) :: Color -> Integer -> Color
 (-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
-(-.) (Hsla r g b a) i = Hsla (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
-(-.) (Other o)      _ = Other o
+(-.) o              _ = o
 
 clamp :: Integer -> Integer
 clamp i = max (min i 255) 0
@@ -87,10 +83,11 @@ instance Val Color where
     case clr of
       Rgba r g b 255 -> Value $mconcat ["rgb(",  p r, ",", p g, ",", p b,            ")"]
       Rgba r g b a   -> Value $mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
-      Hsla h s l 255 -> Value $mconcat ["hsl(",  p h, ",", p s, ",", p l,            ")"]
-      Hsla h s l a   -> Value $mconcat ["hsla(", p h, ",", p s, ",", p l, ",", ah a, ")"]
+      Hsla h s l 255 -> Value $mconcat ["hsl(",  p h, ",", f s, ",", f l,            ")"]
+      Hsla h s l a   -> Value $mconcat ["hsla(", p h, ",", f s, ",", f l, ",", ah a, ")"]
       Other o        -> o
     where p  = fromString . show
+          f  = fromString . printf "%.4f%%"
           ah = fromString . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
 instance None    Color where none    = Other "none"
