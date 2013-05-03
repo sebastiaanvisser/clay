@@ -83,6 +83,7 @@ rules cfg sel rs = mconcat
   , newline cfg
   , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested rs
   , (\(a, b) -> query cfg  a   sel  b) `foldMap` mapMaybe queries rs
+  , (\ns     -> face  cfg      sel ns) `foldMap` mapMaybe faces rs
   ]
   where property (Property k v) = Just (k, v)
         property _              = Nothing
@@ -90,6 +91,9 @@ rules cfg sel rs = mconcat
         nested   _              = Nothing
         queries  (Query q ns  ) = Just (q, ns)
         queries  _              = Nothing
+        faces    (Face ns     ) = Just ns
+        faces    _              = Nothing
+
 
 query :: Config -> MediaQuery -> [App] -> [Rule] -> Builder
 query cfg q sel rs =
@@ -129,6 +133,17 @@ feature (Feature k mv) =
                       , fromText (plain v)
                       , ")"
                       ]
+
+face :: Config -> [App] -> [Rule] -> Builder
+face cfg sel rs = mconcat
+       [ "@font-face "
+       , newline cfg
+       , "{"
+       , newline cfg
+       , rules cfg sel rs
+       , "}"
+       , newline cfg
+       ]
 
 rule :: Config -> [App] -> [(Key (), Value)] -> Builder
 rule _   _   []    = mempty
