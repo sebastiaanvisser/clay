@@ -1,5 +1,11 @@
 CHANGELOG
 
+  0.5.1 -> 0.6
+    - Simplified implementation of size rendering.
+    - Implemented @font-face construct. By James Fisher.
+    - Make hsl(a) colors actually print percentage values.
+    - Changed the renderer to haul @font-face to the top level.
+
   0.5 -> 0.5.1
     - Fixed bug in fontFamily renderer.
 
