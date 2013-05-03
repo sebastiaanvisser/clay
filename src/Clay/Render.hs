@@ -77,24 +77,6 @@ renderBanner cfg =
   then (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
   else id
 
-rules :: Config -> [App] -> [Rule] -> Builder
-rules cfg sel rs = mconcat
-  [ rule cfg sel (mapMaybe property rs)
-  , newline cfg
-  , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested rs
-  , (\(a, b) -> query cfg  a   sel  b) `foldMap` mapMaybe queries rs
-  , (\ns     -> face  cfg      sel ns) `foldMap` mapMaybe faces rs
-  ]
-  where property (Property k v) = Just (k, v)
-        property _              = Nothing
-        nested   (Nested a ns ) = Just (a, ns)
-        nested   _              = Nothing
-        queries  (Query q ns  ) = Just (q, ns)
-        queries  _              = Nothing
-        faces    (Face ns     ) = Just ns
-        faces    _              = Nothing
-
-
 query :: Config -> MediaQuery -> [App] -> [Rule] -> Builder
 query cfg q sel rs =
   mconcat
@@ -108,12 +90,11 @@ query cfg q sel rs =
     ]
 
 mediaQuery :: MediaQuery -> Builder
-mediaQuery (MediaQuery no ty fs) =
-  mconcat
+mediaQuery (MediaQuery no ty fs) = mconcat
   [ "@media "
   , case no of
-      Nothing -> ""
-      Just Not -> "not "
+      Nothing   -> ""
+      Just Not  -> "not "
       Just Only -> "only "
   , mediaType ty
   , mconcat ((" and " <>) . feature <$> fs)
@@ -127,23 +108,30 @@ feature (Feature k mv) =
   case mv of
     Nothing        -> fromText k
     Just (Value v) -> mconcat
-                      [ "("
-                      , fromText k
-                      , ": "
-                      , fromText (plain v)
-                      , ")"
-                      ]
+      [ "(" , fromText k , ": " , fromText (plain v) , ")" ]
 
-face :: Config -> [App] -> [Rule] -> Builder
-face cfg sel rs = mconcat
-       [ "@font-face "
-       , newline cfg
-       , "{"
-       , newline cfg
-       , rules cfg sel rs
-       , "}"
-       , newline cfg
-       ]
+face :: Config -> [Rule] -> Builder
+face cfg rs = mconcat
+  [ "@font-face"
+  , rules cfg [] rs
+  ]
+
+rules :: Config -> [App] -> [Rule] -> Builder
+rules cfg sel rs = mconcat
+  [ rule cfg sel (mapMaybe property rs)
+  , newline cfg
+  , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested  rs
+  , (\(a, b) -> query cfg  a   sel  b) `foldMap` mapMaybe queries rs
+  , (\ns     -> face  cfg          ns) `foldMap` mapMaybe faces   rs
+  ]
+  where property (Property k v) = Just (k, v)
+        property _              = Nothing
+        nested   (Nested a ns ) = Just (a, ns)
+        nested   _              = Nothing
+        queries  (Query q ns  ) = Just (q, ns)
+        queries  _              = Nothing
+        faces    (Face ns     ) = Just ns
+        faces    _              = Nothing
 
 rule :: Config -> [App] -> [(Key (), Value)] -> Builder
 rule _   _   []    = mempty
@@ -160,7 +148,7 @@ rule cfg sel props =
       ]
 
 merger :: [App] -> Selector
-merger []     = error "this should be fixed!"
+merger []     = "" -- error "this should be fixed!"
 merger (x:xs) =
   case x of
     Rule.Child s -> case xs of [] -> s; _  -> merger xs |> s
