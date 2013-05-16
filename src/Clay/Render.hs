@@ -46,7 +46,7 @@ pretty = Config "  " "\n" " " True True True
 -- | Configuration to print to a compacted unreadable CSS output.
 
 compact :: Config
-compact = Config "" "" "" False False True
+compact = Config "" "" "" False False False
 
 -- | Render to CSS using the default configuration (`pretty`) and directly
 -- print to the standard output.
