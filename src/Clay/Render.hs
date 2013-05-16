@@ -30,23 +30,40 @@ import Clay.Selector
 import qualified Clay.Stylesheet as Rule
 
 data Config = Config
-  { indentation :: Builder
-  , newline     :: Builder
-  , sep         :: Builder
-  , warn        :: Bool
-  , align       :: Bool
-  , banner      :: Bool
+  { indentation    :: Builder
+  , newline        :: Builder
+  , sep            :: Builder
+  , finalSemicolon :: Bool
+  , warn           :: Bool
+  , align          :: Bool
+  , banner         :: Bool
   }
 
 -- | Configuration to print to a pretty human readable CSS output.
 
 pretty :: Config
-pretty = Config "  " "\n" " " True True True
+pretty = Config
+  { indentation    = "  "
+  , newline        = "\n"
+  , sep            = " "
+  , finalSemicolon = True
+  , warn           = True
+  , align          = True
+  , banner         = True
+  }
 
 -- | Configuration to print to a compacted unreadable CSS output.
 
 compact :: Config
-compact = Config "" "" "" False False True
+compact = Config
+  { indentation    = ""
+  , newline        = ""
+  , sep            = ""
+  , finalSemicolon = False
+  , warn           = False
+  , align          = False
+  , banner         = True
+  }
 
 -- | Render to CSS using the default configuration (`pretty`) and directly
 -- print to the standard output.
@@ -168,10 +185,11 @@ collect (Key ky, Value vl) =
 
 properties :: Config -> [Either Text (Text, Text)] -> Builder
 properties cfg xs =
-  let width = 1 + maximum (Text.length . fst <$> rights xs)
-      ind   = indentation cfg
-      new   = newline cfg
-   in (<> new) $ intersperse (";" <> new) $ flip map xs $ \p ->
+  let width     = 1 + maximum (Text.length . fst <$> rights xs)
+      ind       = indentation cfg
+      new       = newline cfg
+      finalSemi = if finalSemicolon cfg then ";" else ""
+   in (<> new) $ (<> finalSemi) $ intersperse (";" <> new) $ flip map xs $ \p ->
         case p of
           Left w -> if warn cfg then ind <> "/* no value for " <> fromText w <> " */" <> new else mempty
           Right (k, v) ->
