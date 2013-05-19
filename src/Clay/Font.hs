@@ -19,9 +19,12 @@ module Clay.Font
 
 -- * Font-family.
 
+, GenericFontFamily
 , fontFamily
-, sansSerif
 , serif
+, sansSerif
+, cursive
+, fantasy
 , monospace
 
 -- * Font-size.
@@ -66,6 +69,7 @@ import Data.Text (pack)
 import Data.Monoid
 import Prelude hiding (Left, Right)
 import Data.Text (Text)
+import Data.String (IsString (..))
 
 import Clay.Color
 import Clay.Common
@@ -73,10 +77,39 @@ import Clay.Property
 import Clay.Stylesheet
 import Clay.Size
 
+-------------------------------------------------------------------------------
+
+-- | The five generic font families.
+--
+-- <http://www.w3.org/TR/css3-fonts/#generic-font-families>.
+
+data GenericFontFamily = Serif | SansSerif | Cursive | Fantasy | Monospace
+
+instance Val GenericFontFamily where
+  value g = Value $ Plain $ case g of
+    Serif     -> "serif"
+    SansSerif -> "sans-serif"
+    Cursive   -> "cursive"
+    Fantasy   -> "fantasy"
+    Monospace -> "monospace"
+
+instance IsString GenericFontFamily where
+  fromString s = case s of
+    "serif"      -> Serif
+    "sans-serif" -> SansSerif
+    "cursive"    -> Cursive
+    "fantasy"    -> Fantasy
+    "monospace"  -> Monospace
+    _            -> error $ "unknown generic font family \"" ++ s ++ "\""
+
+-------------------------------------------------------------------------------
+
 -- | We implement the generic font property as a type class that accepts
 -- multiple value types. This allows us to combine different font aspects into
 -- a shorthand syntax. Fonts require a mandatory part and have a optional a
 -- part.
+--
+-- <http://www.w3.org/TR/css3-fonts/#font-prop>
 
 class Val a => Font a where
   font :: a -> Css
@@ -91,12 +124,12 @@ data Optional =
 instance Val Optional where
   value (Optional a b c) = value (a ! b ! c)
 
-data Required a =
-  Required
-  (Size a)
-  (Maybe (Size a))
-  [Text]
-  [Text]
+data Required a = Required
+  { requiredFontSize          :: Size a
+  , requiredLineHeight        :: (Maybe (Size a))
+  , requiredFontFamily        :: [Text]
+  , requiredGenericFontFamily :: [GenericFontFamily]
+  }
 
 instance Val (Required a) where
   value (Required a Nothing  c d) = value (a ! (Literal <$> c) ! d)
@@ -117,19 +150,18 @@ color = key "color"
 
 -------------------------------------------------------------------------------
 
-fontFamily :: [Text] -> [Text] -> Css
-fontFamily a b = key "font-family" $
-  let sep = if null a || null b then "" else ", "
-   in value (Literal <$> a) <> sep <> value b
+fontFamily :: [Text] -> [GenericFontFamily] -> Css
+fontFamily familyNames genericFamilies = key "font-family" $
+  let sep = if null familyNames || null genericFamilies then "" else ","
+   in value (Literal <$> familyNames) <> sep <> value genericFamilies
 
-sansSerif :: Text
-sansSerif = "sans-serif"
+serif, sansSerif, cursive, fantasy, monospace :: GenericFontFamily
 
-serif :: Text
-serif = "serif"
-
-monospace :: Text
-monospace = "monospace"
+serif     = Serif
+sansSerif = SansSerif
+cursive   = Cursive
+fantasy   = Fantasy
+monospace = Monospace
 
 -------------------------------------------------------------------------------
 
