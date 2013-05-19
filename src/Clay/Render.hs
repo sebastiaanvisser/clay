@@ -182,13 +182,13 @@ selector :: Config -> Selector -> Builder
 selector cfg = intersperse ("," <> newline cfg) . rec
   where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
-            Star           -> if length ft == 0 then ["*"] else [""]
+            Star           -> if null ft then ["*"] else [""]
             Elem t         -> [fromText t]
             Child      a b -> ins " > " <$> rec a <*> rec b
             Deep       a b -> ins " "   <$> rec a <*> rec b
             Adjacent   a b -> ins " + " <$> rec a <*> rec b
             Combined   a b -> rec a ++ rec b
-          where ins s a b = (a <> s <> b)
+          where ins s a b = a <> s <> b
 
 predicate :: Predicate -> Builder
 predicate ft = mconcat $

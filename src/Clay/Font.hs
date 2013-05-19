@@ -62,10 +62,9 @@ module Clay.Font
 where
 
 import Control.Applicative
-import Data.Text (pack)
+import Data.Text (pack, Text)
 import Data.Monoid
 import Prelude hiding (Left, Right)
-import Data.Text (Text)
 
 import Clay.Color
 import Clay.Common

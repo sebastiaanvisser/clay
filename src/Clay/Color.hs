@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.Color where
 
+import Data.Char (isHexDigit)
 import Data.Monoid
 import Data.String
 import Data.Text (Text)
@@ -101,7 +102,7 @@ instance IsString Color where
 parse :: Text -> Color
 parse t =
   case Text.uncons t of
-    Just ('#', cs) | Text.all isHex cs ->
+    Just ('#', cs) | Text.all isHexDigit cs ->
       case Text.unpack cs of
         [a, b, c, d, e, f, g, h] -> rgba (hex a b) (hex c d) (hex e f) (hex g h)
         [a, b, c, d, e, f      ] -> rgb  (hex a b) (hex c d) (hex e f)
@@ -112,7 +113,6 @@ parse t =
 
   where
     hex a b = either err fst (Text.hexadecimal (Text.singleton a <> Text.singleton b))
-    isHex a = (a >= 'a' && a <= 'f') || (a >= 'A' && a <= 'F') || (a >= '0' && a <= '9')
     err = error "Invalid color string"
 
 -------------------------------------------------------------------------------
