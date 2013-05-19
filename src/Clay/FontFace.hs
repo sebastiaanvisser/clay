@@ -39,8 +39,8 @@ instance Val FontFaceSrc where
   value src = Value $ Plain $ case src of
     FontFaceSrcLocal name      -> call "local" (quote name)
     FontFaceSrcUrl url mformat ->
-      (call "url" $ quote url)
-      <> (fromMaybe "" $ call "format" . quote . formatName <$> mformat)
+      call "url" (quote url)
+      <> fromMaybe "" (call "format" . quote . formatName <$> mformat)
 
 -------------------------------------------------------------------------------
 
