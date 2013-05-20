@@ -116,8 +116,8 @@
 
 <span class="Function">oneOrTwoColumns</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">oneOrTwoColumns</span> <span class="Symbol">=</span>
-  <span class="Keyword">do</span> <span class="VarId">query</span> <span class="ConId">Media.</span><span class="VarId">all</span> <span class="Symbol">[</span><span class="ConId">Media.</span><span class="VarId">minWidth</span> <span class="Number">800</span><span class="Symbol">]</span> <span class="VarId">twoColumns</span>
-     <span class="VarId">query</span> <span class="ConId">Media.</span><span class="VarId">all</span> <span class="Symbol">[</span><span class="ConId">Media.</span><span class="VarId">maxWidth</span> <span class="Number">800</span><span class="Symbol">]</span> <span class="VarId">oneColumn</span>
+  <span class="Keyword">do</span> <span class="VarId">query</span> <span class="ConId">Clay.</span><span class="VarId">all</span> <span class="Symbol">[</span><span class="ConId">Media.</span><span class="VarId">minWidth</span> <span class="Number">800</span><span class="Symbol">]</span> <span class="VarId">twoColumns</span>
+     <span class="VarId">query</span> <span class="ConId">Clay.</span><span class="VarId">all</span> <span class="Symbol">[</span><span class="ConId">Media.</span><span class="VarId">maxWidth</span> <span class="Number">800</span><span class="Symbol">]</span> <span class="VarId">oneColumn</span>
 
 <span class="Function">twoColumns</span> <span class="Symbol">::</span> <span class="ConId">Css</span>
 <span class="Function">twoColumns</span> <span class="Symbol">=</span>
@@ -128,8 +128,8 @@
           <span class="VarId">boxSizing</span>  <span class="VarId">borderBox</span>
 
      <span class="Comment">-- Float first child to the left, second to the right.</span>
-     <span class="VarId">column</span> <span class="String">&quot;1&quot;</span> <span class="VarId">sideLeft</span>  <span class="VarId">paddingRight</span>
-     <span class="VarId">column</span> <span class="String">&quot;2&quot;</span> <span class="VarId">sideRight</span> <span class="VarId">paddingLeft</span>
+     <span class="VarId">column</span> <span class="String">&quot;1&quot;</span> <span class="VarId">floatLeft</span>  <span class="VarId">paddingRight</span>
+     <span class="VarId">column</span> <span class="String">&quot;2&quot;</span> <span class="VarId">floatRight</span> <span class="VarId">paddingLeft</span>
 
      <span class="Comment">-- Don't float outside the section.</span>
      <span class="VarId">br</span> <span class="Symbol">?</span> <span class="VarId">clear</span> <span class="VarId">both</span>
@@ -267,14 +267,14 @@
        <span class="Keyword">do</span> <span class="Comment">-- Quite some spacing at the top and bottom, horizontal scrolling</span>
           <span class="Comment">-- when needed and a slight shadow.</span>
 
-          <span class="VarId">boxSizing</span>     <span class="VarId">borderBox</span>
-          <span class="VarId">borderRadius</span>  <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">2</span><span class="Symbol">)</span>
-          <span class="VarId">overflowX</span>     <span class="VarId">auto</span>
-          <span class="VarId">sym</span> <span class="VarId">padding</span>   <span class="Number">20</span>
-          <span class="VarId">marginTop</span>     <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
-          <span class="VarId">marginBottom</span>  <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
-          <span class="VarId">boxShadow</span>     <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
-                        <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">30</span> <span class="VarId">black</span><span class="Symbol">)</span>
+          <span class="VarId">boxSizing</span>         <span class="VarId">borderBox</span>
+          <span class="VarId">sym</span> <span class="VarId">borderRadius</span>  <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">2</span><span class="Symbol">)</span>
+          <span class="VarId">overflowX</span>         <span class="VarId">auto</span>
+          <span class="VarId">sym</span> <span class="VarId">padding</span>       <span class="Number">20</span>
+          <span class="VarId">marginTop</span>         <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
+          <span class="VarId">marginBottom</span>      <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
+          <span class="VarId">boxShadow</span>         <span class="Number">0</span> <span class="Number">0</span> <span class="Symbol">(</span><span class="VarId">px</span> <span class="Number">60</span><span class="Symbol">)</span>
+                            <span class="Symbol">(</span><span class="VarId">setA</span> <span class="Number">30</span> <span class="VarId">black</span><span class="Symbol">)</span>
 
           <span class="VarId">pre</span> <span class="Symbol">?</span>
             <span class="Keyword">do</span> <span class="VarId">sym</span> <span class="VarId">margin</span> <span class="Number">0</span>
@@ -438,7 +438,7 @@
      <span class="VarId">overflow</span>       <span class="VarId">hidden</span>
 
      <span class="VarId">backgroundImage</span> <span class="Symbol">$</span>
-       <span class="VarId">radialGradient</span> <span class="VarId">sideCenter</span> <span class="VarId">ellipse</span>
+       <span class="VarId">radialGradient</span> <span class="VarId">sideCenter</span> <span class="Symbol">(</span><span class="VarId">ellipse</span> <span class="VarId">closestSide</span><span class="Symbol">)</span>
          <span class="Symbol">[</span> <span class="Symbol">(</span> <span class="VarId">setA</span> <span class="Number">150</span> <span class="VarId">yellow</span> <span class="Symbol">,</span>  <span class="Number">0</span> <span class="Symbol">)</span>
          <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>  <span class="Number">25</span> <span class="VarId">yellow</span> <span class="Symbol">,</span> <span class="Number">50</span> <span class="Symbol">)</span>
          <span class="Symbol">,</span> <span class="Symbol">(</span> <span class="VarId">setA</span>   <span class="Number">0</span> <span class="VarId">yellow</span> <span class="Symbol">,</span> <span class="Number">75</span> <span class="Symbol">)</span>
@@ -480,4 +480,4 @@
   <script src=code.js></script>
 
 </html>
-<!-- site generated at Thu Feb 28 18:23:53 CET 2013 -->
+<!-- site generated at Mon May 20 21:37:00 CEST 2013 -->
