@@ -133,7 +133,7 @@ monospace = "monospace"
 -------------------------------------------------------------------------------
 
 newtype FontSize = FontSize Value
-  deriving (Val, Inherit, Auto)
+  deriving (Val, Inherit, Auto, Other)
 
 xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger :: FontSize
 
@@ -156,7 +156,7 @@ fontSizeCustom = key "font-size"
 -------------------------------------------------------------------------------
 
 newtype FontStyle = FontStyle Value
-  deriving (Val, Inherit, Normal)
+  deriving (Val, Inherit, Normal, Other)
 
 italic, oblique :: FontStyle
 
@@ -169,7 +169,7 @@ fontStyle = key "font-style"
 -------------------------------------------------------------------------------
 
 newtype FontVariant = FontVariant Value
-  deriving (Val, Inherit, Normal)
+  deriving (Val, Inherit, Normal, Other)
 
 smallCaps :: FontVariant
 smallCaps = FontVariant "small-caps"
@@ -180,7 +180,7 @@ fontVariant = key "font-variant"
 -------------------------------------------------------------------------------
 
 newtype FontWeight = FontWeight Value
-  deriving (Val, Inherit, Normal)
+  deriving (Val, Inherit, Normal, Other)
 
 bold, bolder, lighter :: FontWeight
 
@@ -197,7 +197,7 @@ fontWeight = key "font-weight"
 -------------------------------------------------------------------------------
 
 newtype NamedFont = NamedFont Value
-  deriving Val
+  deriving (Val, Other)
 
 caption, icon, menu, messageBox, smallCaption, statusBar :: NamedFont
 
