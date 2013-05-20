@@ -78,6 +78,8 @@ import Clay.Size
 -- multiple value types. This allows us to combine different font aspects into
 -- a shorthand syntax. Fonts require a mandatory part and have a optional a
 -- part.
+--
+-- <http://www.w3.org/TR/css3-fonts/#font-prop>
 
 class Val a => Font a where
   font :: a -> Css
@@ -117,6 +119,10 @@ color :: Color -> Css
 color = key "color"
 
 -------------------------------------------------------------------------------
+
+-- | The five generic font families.
+--
+-- <http://www.w3.org/TR/css3-fonts/#generic-font-families>.
 
 newtype GenericFontFamily = GenericFontFamily Value
   deriving (Val, Inherit, Auto, Other)
