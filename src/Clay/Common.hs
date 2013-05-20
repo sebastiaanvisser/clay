@@ -58,3 +58,4 @@ browsers = Prefixed
 
 call :: (IsString s, Monoid s) => s -> s -> s
 call fn arg = fn <> "(" <> arg <> ")"
+
