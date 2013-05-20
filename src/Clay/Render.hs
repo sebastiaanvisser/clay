@@ -62,7 +62,7 @@ compact = Config
   , finalSemicolon = False
   , warn           = False
   , align          = False
-  , banner         = True
+  , banner         = False
   }
 
 -- | Render to CSS using the default configuration (`pretty`) and directly
