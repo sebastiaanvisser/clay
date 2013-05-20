@@ -1,5 +1,10 @@
 CHANGELOG
 
+  0.6 -> 0.7
+    - Stop printing banner in compact mode.
+    - Generic font family as datatype.
+    - Only drop final semicolon if doing compact printing.
+
   0.5.1 -> 0.6
     - Simplified implementation of size rendering.
     - Implemented @font-face construct. By James Fisher.
