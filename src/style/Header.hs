@@ -101,7 +101,7 @@ theLogo =
      overflow       hidden
 
      backgroundImage $
-       radialGradient sideCenter ellipse
+       radialGradient sideCenter (ellipse closestSide)
          [ ( setA 150 yellow ,  0 )
          , ( setA  25 yellow , 50 )
          , ( setA   0 yellow , 75 )

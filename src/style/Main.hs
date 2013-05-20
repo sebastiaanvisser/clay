@@ -90,8 +90,8 @@ oneColumn =
 
 oneOrTwoColumns :: Css
 oneOrTwoColumns =
-  do query Media.all [Media.minWidth 800] twoColumns
-     query Media.all [Media.maxWidth 800] oneColumn
+  do query Clay.all [Media.minWidth 800] twoColumns
+     query Clay.all [Media.maxWidth 800] oneColumn
 
 twoColumns :: Css
 twoColumns =
@@ -102,8 +102,8 @@ twoColumns =
           boxSizing  borderBox
 
      -- Float first child to the left, second to the right.
-     column "1" sideLeft  paddingRight
-     column "2" sideRight paddingLeft
+     column "1" floatLeft  paddingRight
+     column "2" floatRight paddingLeft
 
      -- Don't float outside the section.
      br ? clear both

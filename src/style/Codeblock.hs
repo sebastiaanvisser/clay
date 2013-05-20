@@ -13,14 +13,14 @@ codeblocks =
        do -- Quite some spacing at the top and bottom, horizontal scrolling
           -- when needed and a slight shadow.
 
-          boxSizing     borderBox
-          borderRadius  (px 2)
-          overflowX     auto
-          sym padding   20
-          marginTop     (px 60)
-          marginBottom  (px 60)
-          boxShadow     0 0 (px 60)
-                        (setA 30 black)
+          boxSizing         borderBox
+          sym borderRadius  (px 2)
+          overflowX         auto
+          sym padding       20
+          marginTop         (px 60)
+          marginBottom      (px 60)
+          boxShadow         0 0 (px 60)
+                            (setA 30 black)
 
           pre ?
             do sym margin 0
