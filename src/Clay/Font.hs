@@ -23,6 +23,8 @@ module Clay.Font
 , sansSerif
 , serif
 , monospace
+, cursive
+, fantasy
 
 -- * Font-size.
 
@@ -116,19 +118,24 @@ color = key "color"
 
 -------------------------------------------------------------------------------
 
-fontFamily :: [Text] -> [Text] -> Css
+newtype GenericFontFamily = GenericFontFamily Value
+  deriving (Val, Inherit, Auto, Other)
+
+sansSerif, serif, monospace, cursive, fantasy :: GenericFontFamily
+
+sansSerif = GenericFontFamily "sans-serif"
+serif     = GenericFontFamily "serif"
+monospace = GenericFontFamily "monospace"
+cursive   = GenericFontFamily "cursive"
+fantasy   = GenericFontFamily "fantasy"
+
+-- | The `fontFamily` style rules takes to lists of font families: zero or more
+-- custom font-families and preferably one or more generic font families.
+
+fontFamily :: [Text] -> [GenericFontFamily] -> Css
 fontFamily a b = key "font-family" $
   let sep = if null a || null b then "" else ", "
    in value (Literal <$> a) <> sep <> value b
-
-sansSerif :: Text
-sansSerif = "sans-serif"
-
-serif :: Text
-serif = "serif"
-
-monospace :: Text
-monospace = "monospace"
 
 -------------------------------------------------------------------------------
 
