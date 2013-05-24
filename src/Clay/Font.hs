@@ -99,7 +99,7 @@ data Required a =
   (Size a)
   (Maybe (Size a))
   [Text]
-  [Text]
+  [GenericFontFamily]
 
 instance Val (Required a) where
   value (Required a Nothing  c d) = value (a ! (Literal <$> c) ! d)
