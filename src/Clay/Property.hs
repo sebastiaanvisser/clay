@@ -3,11 +3,11 @@ module Clay.Property where
 
 import Control.Arrow (second)
 import Control.Monad.Writer
+import Data.Fixed (Fixed, HasResolution (resolution), showFixed)
 import Data.List (partition, sort)
 import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
-import Text.Printf
 
 data Prefixed = Prefixed [(Text, Text)] | Plain Text
   deriving Show
@@ -65,8 +65,14 @@ instance Val Literal where
 instance Val Integer where
   value = fromString . show
 
+data E5 = E5
+instance HasResolution E5 where resolution _ = 100000
+
 instance Val Double where
-  value = fromString . printf "%.5f"
+  value = fromString . showFixed' . realToFrac
+    where
+      showFixed' :: Fixed E5 -> String
+      showFixed' = showFixed True
 
 instance Val Value where
   value = id
