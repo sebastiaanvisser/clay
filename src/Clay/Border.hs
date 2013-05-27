@@ -8,16 +8,16 @@ module Clay.Border
 -- * Border properties.
 
 , border, borderTop, borderLeft, borderBottom, borderRight
-, borderColor, borderLeftColor, borderRightColor, borderTopColor, borderBottomColor
-, borderStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle
-, borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth
+, borderColor4, borderColor, borderLeftColor, borderRightColor, borderTopColor, borderBottomColor
+, borderStyle4, borderStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle
+, borderWidth4, borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth
 
 -- * Outline properties.
 
 , outline, outlineTop, outlineLeft, outlineBottom, outlineRight
-, outlineColor, outlineLeftColor, outlineRightColor, outlineTopColor, outlineBottomColor
-, outlineStyle, outlineLeftStyle, outlineRightStyle, outlineTopStyle, outlineBottomStyle
-, outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth
+, outlineColor4, outlineColor, outlineLeftColor, outlineRightColor, outlineTopColor, outlineBottomColor
+, outlineStyle4, outlineStyle, outlineLeftStyle, outlineRightStyle, outlineTopStyle, outlineBottomStyle
+, outlineWidth4, outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth
 , outlineOffset
 
 -- * Border radius.
@@ -59,6 +59,9 @@ borderLeft    a b c = key "border-left"   (a ! b ! c)
 borderBottom  a b c = key "border-bottom" (a ! b ! c)
 borderRight   a b c = key "border-right"  (a ! b ! c)
 
+borderColor4 :: Color -> Color -> Color -> Color -> Css
+borderColor4 a b c d = key "border-color" (a ! b ! c ! d)
+
 borderColor, borderLeftColor, borderRightColor, borderTopColor, borderBottomColor :: Color -> Css
 
 borderColor       = key "border-color"
@@ -67,6 +70,9 @@ borderRightColor  = key "border-right-color"
 borderTopColor    = key "border-top-color"
 borderBottomColor = key "border-bottom-color"
 
+borderStyle4 :: Stroke -> Stroke -> Stroke -> Stroke -> Css
+borderStyle4 a b c d = key "border-style" (a ! b ! c ! d)
+
 borderStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderBottomStyle :: Stroke -> Css
 
 borderStyle       = key "border-style"
@@ -74,6 +80,9 @@ borderLeftStyle   = key "border-left-style"
 borderRightStyle  = key "border-right-style"
 borderTopStyle    = key "border-top-style"
 borderBottomStyle = key "border-bottom-style"
+
+borderWidth4 :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+borderWidth4 a b c d = key "border-width" (a ! b ! c ! d)
 
 borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size Abs -> Css
 
@@ -93,6 +102,9 @@ outlineLeft    a b c = key "outline-left"   (a ! b ! c)
 outlineBottom  a b c = key "outline-bottom" (a ! b ! c)
 outlineRight   a b c = key "outline-right"  (a ! b ! c)
 
+outlineColor4 :: Color -> Color -> Color -> Color -> Css
+outlineColor4 a b c d = key "outline-color" (a ! b ! c ! d)
+
 outlineColor, outlineLeftColor, outlineRightColor, outlineTopColor, outlineBottomColor :: Color -> Css
 
 outlineColor       = key "outline-color"
@@ -101,6 +113,9 @@ outlineRightColor  = key "outline-right-color"
 outlineTopColor    = key "outline-top-color"
 outlineBottomColor = key "outline-bottom-color"
 
+outlineStyle4 :: Stroke -> Stroke -> Stroke -> Stroke -> Css
+outlineStyle4 a b c d = key "outline-style" (a ! b ! c ! d)
+
 outlineStyle, outlineLeftStyle, outlineRightStyle, outlineTopStyle, outlineBottomStyle :: Stroke -> Css
 
 outlineStyle       = key "outline-style"
@@ -108,6 +123,9 @@ outlineLeftStyle   = key "outline-left-style"
 outlineRightStyle  = key "outline-right-style"
 outlineTopStyle    = key "outline-top-style"
 outlineBottomStyle = key "outline-bottom-style"
+
+outlineWidth4 :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+outlineWidth4 a b c d = key "outline-width" (a ! b ! c ! d)
 
 outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth :: Size Abs -> Css
 
