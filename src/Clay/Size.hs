@@ -21,7 +21,7 @@ module Clay.Size
 , ex
 , pct
 
--- * Shorthands for mutli size-valued properties.
+-- * Shorthands for properties that can be applied separately to each box side.
 
 , sym
 , sym2
@@ -108,13 +108,13 @@ instance Fractional (Size Rel) where
 
 -------------------------------------------------------------------------------
 
-sym :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Css
+sym :: (a -> a -> a -> a -> Css) -> a -> Css
 sym k a = k a a a a
 
-sym3 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Size a -> Size a -> Css
+sym3 :: (a -> a -> a -> a -> Css) -> a -> a -> a -> Css
 sym3 k tb l r = k tb l tb r
 
-sym2 :: (Size a -> Size a -> Size a -> Size a -> Css) -> Size a -> Size a -> Css
+sym2 :: (a -> a -> a -> a -> Css) -> a -> a -> Css
 sym2 k tb lr = k tb lr tb lr
 
 -------------------------------------------------------------------------------
