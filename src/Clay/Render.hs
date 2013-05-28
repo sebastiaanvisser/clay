@@ -75,18 +75,56 @@ putCss = Lazy.putStr . render
 -- used by default.
 
 render :: Css -> Lazy.Text
-render = renderWith pretty []
+render = renderWith pretty
 
 -- | Render a stylesheet with a custom configuration and an optional outer
 -- scope.
 
-renderWith :: Config -> [App] -> Css -> Lazy.Text
-renderWith cfg top (S c)
+renderWith :: Config -> Css -> Lazy.Text
+renderWith cfg (S c)
   = renderBanner cfg
   . toLazyText
-  . rules cfg top
+  . cssRules cfg
+  . flattenRules
   . execWriter
   $ c
+
+-------------------------------------------------------------------------------
+
+-- | The AST of a CSS3 file.
+
+data Css3
+  = Css3Query MediaQuery [Css3]
+  | Css3Rule [App] [(Key (), Value)]
+  | Css3Font       [(Key (), Value)]
+
+flattenRules :: [Rule] -> [Css3]
+flattenRules rules =
+  let
+    property p = case p of
+      Property k v -> (k, v)
+      _            -> error "only properties are allowed in @font-face"
+
+    nestApp app css = case css of
+      Css3Query q cs -> Css3Query q $ map (nestApp app) cs
+      Css3Rule as ps -> Css3Rule (app:as) ps
+      Css3Font ps    -> Css3Font ps
+
+    (props, nests, qrys, faces) = foldr
+      (\r (ps,ns,qs,fs) -> case r of
+        Property k v -> ((k, v):ps,          ns,          qs,     fs)
+        Nested a rs' -> (       ps, (a, rs'):ns,          qs,     fs)
+        Query q  rs' -> (       ps,          ns, (q, rs'):qs,     fs)
+        Face     rs' -> (       ps,          ns,          qs, rs':fs))
+      ([],[],[],[])
+      rules
+  in
+    (if null props then [] else [Css3Rule [] props])                      ++
+    concatMap (\(app, rs') -> map (nestApp app) (flattenRules rs')) nests ++
+    map       (\(q,   rs') -> Css3Query q (flattenRules rs'))       qrys  ++
+    map       (\      rs'  -> Css3Font $ map property rs')          faces
+
+-------------------------------------------------------------------------------
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
 renderBanner cfg =
@@ -94,17 +132,7 @@ renderBanner cfg =
   then (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
   else id
 
-query :: Config -> MediaQuery -> [App] -> [Rule] -> Builder
-query cfg q sel rs =
-  mconcat
-    [ mediaQuery q
-    , newline cfg
-    , "{"
-    , newline cfg
-    , rules cfg sel rs
-    , "}"
-    , newline cfg
-    ]
+-------------------------------------------------------------------------------
 
 mediaQuery :: MediaQuery -> Builder
 mediaQuery (MediaQuery no ty fs) = mconcat
@@ -127,42 +155,15 @@ feature (Feature k mv) =
     Just (Value v) -> mconcat
       [ "(" , fromText k , ": " , fromText (plain v) , ")" ]
 
-face :: Config -> [Rule] -> Builder
-face cfg rs = mconcat
-  [ "@font-face"
-  , rules cfg [] rs
-  ]
-
-rules :: Config -> [App] -> [Rule] -> Builder
-rules cfg sel rs = mconcat
-  [ rule cfg sel (mapMaybe property rs)
-  , newline cfg
-  , (\(a, b) -> rules cfg (a : sel) b) `foldMap` mapMaybe nested  rs
-  , (\(a, b) -> query cfg  a   sel  b) `foldMap` mapMaybe queries rs
-  , (\ns     -> face  cfg          ns) `foldMap` mapMaybe faces   rs
-  ]
-  where property (Property k v) = Just (k, v)
-        property _              = Nothing
-        nested   (Nested a ns ) = Just (a, ns)
-        nested   _              = Nothing
-        queries  (Query q ns  ) = Just (q, ns)
-        queries  _              = Nothing
-        faces    (Face ns     ) = Just ns
-        faces    _              = Nothing
-
-rule :: Config -> [App] -> [(Key (), Value)] -> Builder
-rule _   _   []    = mempty
-rule cfg sel props =
-  let xs = collect =<< props
-   in mconcat
-      [ selector cfg (merger sel)
-      , newline cfg
-      , "{"
-      , newline cfg
-      , properties cfg xs
-      , "}"
-      , newline cfg
-      ]
+cssRules :: Config -> [Css3] -> Builder
+cssRules cfg = (mconcat .) $ map $ \c -> mconcat $ case c of
+  Css3Query  q cs -> [ mediaQuery q,                        block $ cssRules cfg cs ]
+  Css3Rule sel ps -> [ selector cfg (merger $ reverse sel), propertyBlock ps        ]
+  Css3Font     ps -> [ "@font-face",                        propertyBlock ps        ]
+  where
+    propertyBlock = block . properties cfg . concatMap collect
+    block inner = mconcat [ nl, "{", nl, inner, "}", nl, nl ]
+    nl = newline cfg
 
 merger :: [App] -> Selector
 merger []     = "" -- error "this should be fixed!"
