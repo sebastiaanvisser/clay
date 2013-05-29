@@ -1,1 +1,7 @@
 src/highlighted
+
+# from master branch; they're annoying when switching branches:
+dist/
+examples/
+cabal-dev/
+
