@@ -23,7 +23,7 @@ main =
   do args <- getArgs
      case args of
        "compact" : _
-          -> Text.putStr (renderWith compact [] theStylesheet)
+          -> Text.putStr (renderWith compact theStylesheet)
        _  -> putCss theStylesheet
 
 ---------------------------------------------------------------------------
