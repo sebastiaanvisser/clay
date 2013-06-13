@@ -17,7 +17,7 @@ for hs in `find src -name '*.clay.hs'`
 do
   file=$(basename $hs)
   echo -n "Syntax highlighting output of: ${file} "
-  runhaskell -isrc $hs | grep -v "^\s*$" | illuminate --syntax=css --fragment --to=xhtmlcss > \
+  runhaskell -isrc $hs | grep -v "^\s*$" | grep -v "Generated with Clay" | illuminate --syntax=css --fragment --to=xhtmlcss > \
     src/highlighted/${file}.output.html
   echo done
 done
