@@ -1,10 +1,8 @@
-
 body
 {
   margin  : 0px 0px 0px 0px;
   padding : 0px 0px 0px 0px;
 }
-
 
 body.index #container
 {
@@ -45,13 +43,11 @@ section .one-col
   box-sizing         : border-box;
 }
 
-
 @media all and (min-width: 800px)
 {
-
 section .two-col > div
 {
-  width              : 50.00000%;
+  width              : 50%;
   -webkit-box-sizing : border-box;
   -moz-box-sizing    : border-box;
   -ms-box-sizing     : border-box;
@@ -77,6 +73,7 @@ section .two-col br
 }
 
 }
+
 @media all and (max-width: 800px)
 {
 section .two-col
@@ -90,6 +87,7 @@ section .two-col
 }
 
 }
+
 section div.code
 {
   -webkit-box-sizing : border-box;
@@ -114,7 +112,7 @@ section div.code pre
   margin         : 0px 0px 0px 0px;
   font-size      : 16px;
   font-family    : "Monaco","Courier New", monospace;
-  line-height    : 2.60000ex;
+  line-height    : 2.6ex;
   text-rendering : optimizeLegibility;
 }
 
@@ -315,11 +313,11 @@ header
   left           : 0px;
   right          : 0px;
   height         : 240px;
-  background     : -webkit-linear-gradient(top,rgb(175,80,0) 0.00000%,rgb(255,180,70) 100.00000%);
-  background     : -moz-linear-gradient(top,rgb(175,80,0) 0.00000%,rgb(255,180,70) 100.00000%);
-  background     : -ms-linear-gradient(top,rgb(175,80,0) 0.00000%,rgb(255,180,70) 100.00000%);
-  background     : -o-linear-gradient(top,rgb(175,80,0) 0.00000%,rgb(255,180,70) 100.00000%);
-  background     : linear-gradient(top,rgb(175,80,0) 0.00000%,rgb(255,180,70) 100.00000%);
+  background     : -webkit-linear-gradient(top,rgb(175,80,0) 0%,rgb(255,180,70) 100%);
+  background     : -moz-linear-gradient(top,rgb(175,80,0) 0%,rgb(255,180,70) 100%);
+  background     : -ms-linear-gradient(top,rgb(175,80,0) 0%,rgb(255,180,70) 100%);
+  background     : -o-linear-gradient(top,rgb(175,80,0) 0%,rgb(255,180,70) 100%);
+  background     : linear-gradient(top,rgb(175,80,0) 0%,rgb(255,180,70) 100%);
   font-size      : 20px;
   line-height    : 30px;
   font-family    : "Europa","Helvetica", sans-serif;
@@ -337,12 +335,12 @@ header:before
   position         : absolute;
   content          : "";
   pointer-events   : none;
-  background-size  : 100.00000% 5px;
-  background-image : -webkit-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.00000%,rgba(255,255,255,0.0781) 50.00000%,rgba(255,255,255,0.0000) 100.00000%);
-  background-image : -moz-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.00000%,rgba(255,255,255,0.0781) 50.00000%,rgba(255,255,255,0.0000) 100.00000%);
-  background-image : -ms-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.00000%,rgba(255,255,255,0.0781) 50.00000%,rgba(255,255,255,0.0000) 100.00000%);
-  background-image : -o-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.00000%,rgba(255,255,255,0.0781) 50.00000%,rgba(255,255,255,0.0000) 100.00000%);
-  background-image : repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0.00000%,rgba(255,255,255,0.0781) 50.00000%,rgba(255,255,255,0.0000) 100.00000%);
+  background-size  : 100% 5px;
+  background-image : -webkit-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0%,rgba(255,255,255,0.0781) 50%,rgba(255,255,255,0.0000) 100%);
+  background-image : -moz-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0%,rgba(255,255,255,0.0781) 50%,rgba(255,255,255,0.0000) 100%);
+  background-image : -ms-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0%,rgba(255,255,255,0.0781) 50%,rgba(255,255,255,0.0000) 100%);
+  background-image : -o-repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0%,rgba(255,255,255,0.0781) 50%,rgba(255,255,255,0.0000) 100%);
+  background-image : repeating-linear-gradient(top,rgba(255,255,255,0.0000) 0%,rgba(255,255,255,0.0781) 50%,rgba(255,255,255,0.0000) 100%);
 }
 
 header nav
@@ -414,13 +412,13 @@ header > #logo
   margin             : 0px auto 0px auto;
   width              : 550px;
   padding-top        : 40px;
-  height             : 100.00000%;
+  height             : 100%;
   overflow           : hidden;
-  background-image   : -webkit-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0.00000%,rgba(255,255,0,0.0977) 50.00000%,rgba(255,255,0,0.0000) 75.00000%);
-  background-image   : -moz-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0.00000%,rgba(255,255,0,0.0977) 50.00000%,rgba(255,255,0,0.0000) 75.00000%);
-  background-image   : -ms-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0.00000%,rgba(255,255,0,0.0977) 50.00000%,rgba(255,255,0,0.0000) 75.00000%);
-  background-image   : -o-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0.00000%,rgba(255,255,0,0.0977) 50.00000%,rgba(255,255,0,0.0000) 75.00000%);
-  background-image   : radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0.00000%,rgba(255,255,0,0.0977) 50.00000%,rgba(255,255,0,0.0000) 75.00000%);
+  background-image   : -webkit-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0%,rgba(255,255,0,0.0977) 50%,rgba(255,255,0,0.0000) 75%);
+  background-image   : -moz-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0%,rgba(255,255,0,0.0977) 50%,rgba(255,255,0,0.0000) 75%);
+  background-image   : -ms-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0%,rgba(255,255,0,0.0977) 50%,rgba(255,255,0,0.0000) 75%);
+  background-image   : -o-radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0%,rgba(255,255,0,0.0977) 50%,rgba(255,255,0,0.0000) 75%);
+  background-image   : radial-gradient(center,ellipse closest-side,rgba(255,255,0,0.5859) 0%,rgba(255,255,0,0.0977) 50%,rgba(255,255,0,0.0000) 75%);
 }
 
 header > #logo a
@@ -443,31 +441,30 @@ header > #logo h1
   color          : rgba(255,255,255,0.7812);
   text-shadow    : 0px 0px 20px rgba(175,80,0,0.7812);
   font-weight    : normal;
-  letter-spacing : 0.40000em;
+  letter-spacing : 0.4em;
 }
 
 header > #logo h1 span.a
 {
-  letter-spacing : 0.36000em;
+  letter-spacing : 0.35999em;
 }
 
 header > #logo h1 span.y
 {
-  letter-spacing : 0.00000em;
+  letter-spacing : 0em;
 }
 
 header > #logo h2
 {
   font-size      : 35px;
   color          : rgba(0,0,0,0.4688);
-  letter-spacing : 0.30000em;
+  letter-spacing : 0.29999em;
 }
 
 header > #logo h2 a:hover
 {
   color : rgba(0,0,0,0.8594);
 }
-
 
 footer > div
 {
