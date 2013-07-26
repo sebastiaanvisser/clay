@@ -67,6 +67,7 @@ module Clay.Text
 , attrContent
 , stringContent
 , uriContent
+, urlContent
 , openQuote, closeQuote, noOpenQuote, noCloseQuote
 
 )
@@ -229,6 +230,9 @@ stringContent = Content . value . Literal
 
 uriContent :: Text -> Content
 uriContent u = Content ("uri(" <> value (Literal u) <> ")")
+
+urlContent :: Text -> Content
+urlContent u = Content ("url(" <> value (Literal u) <> ")")
 
 openQuote, closeQuote, noOpenQuote, noCloseQuote :: Content
 
