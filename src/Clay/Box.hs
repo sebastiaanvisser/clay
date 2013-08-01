@@ -5,6 +5,7 @@ module Clay.Box
 , boxSizing
 , boxShadow
 , boxShadows
+, insetBoxShadow
 )
 where
 
@@ -15,6 +16,7 @@ import Clay.Common
 import Clay.Property
 import Clay.Stylesheet
 import Clay.Size
+import Clay.Border
 
 -------------------------------------------------------------------------------
 
@@ -40,3 +42,7 @@ boxShadow x y w c = prefixed (browsers <> "box-shadow") (x ! y ! w ! c)
 boxShadows :: [(Size a, Size a, Size a, Color)] -> Css
 boxShadows = prefixed (browsers <> "box-shadow") . map (\(a, b, c, d) -> a ! b ! c ! d)
 
+-------------------------------------------------------------------------------
+
+insetBoxShadow :: Stroke -> Size a -> Size a -> Size a -> Color -> Css
+insetBoxShadow x y w c z = prefixed (browsers <> "box-shadow") (x ! y ! w ! c ! z)
