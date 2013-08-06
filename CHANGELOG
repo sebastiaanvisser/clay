@@ -1,5 +1,13 @@
 CHANGELOG
 
+  0.7 -> 0.8
+    - Print prettier doubles.
+    - Loosen type of sym functions.
+    - Added some missing multi-side properties.
+    - Added content URL support.
+    - Added inset box shadows.
+    Thanks Deck and James Fisher.
+
   0.6 -> 0.7
     - Stop printing banner in compact mode.
     - Generic font family as datatype.
