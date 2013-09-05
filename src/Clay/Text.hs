@@ -169,7 +169,7 @@ newtype WhiteSpace = WhiteSpace Value
   deriving (Val, Normal, Inherit, Other)
 
 whiteSpace :: WhiteSpace -> Css
-whiteSpace = key "whiteSpace"
+whiteSpace = key "white-space"
 
 pre, nowrap, preWrap, preLine :: WhiteSpace
 
