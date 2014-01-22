@@ -1,5 +1,5 @@
 Name:     clay
-Version:  0.8
+Version:  0.8.0.1
 Synopsis: CSS preprocessor as embedded Haskell.
 Description:
   Clay is a CSS preprocessor like LESS and Sass, but implemented as an embedded
@@ -11,13 +11,10 @@ Description:
   .
   The API documentation can be found in the top level module "Clay".
   .
-  > 0.7 -> 0.8
-  >   - Print prettier doubles.
-  >   - Loosen type of sym functions.
-  >   - Added some missing multi-side properties.
-  >   - Added content URL support.
-  >   - Added inset box shadows.
-  >   Thanks Deck and James Fisher.
+  > 0.8 -> 0.8.0.1
+  >   - Widened dependency on text.
+  >   Thanks to bgamari.
+
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>

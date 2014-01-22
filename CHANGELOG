@@ -1,5 +1,9 @@
 CHANGELOG
 
+  0.8 -> 0.8.0.1
+    - Widened dependency on text.
+    Thanks to bgamari.
+
   0.7 -> 0.8
     - Print prettier doubles.
     - Loosen type of sym functions.
