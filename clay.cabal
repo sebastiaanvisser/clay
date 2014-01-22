@@ -24,7 +24,7 @@ Bug-Reports:   http://github.com/sebastiaanvisser/clay/issues
 License:       BSD3
 License-File:  LICENSE
 Category:      Web, Graphics
-Cabal-Version: >= 1.6
+Cabal-Version: >= 1.8
 Build-Type:    Simple
 
 Source-Repository head
