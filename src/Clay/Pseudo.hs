@@ -13,7 +13,7 @@ after, before :: Refinement
 after  = ":after"
 before = ":before"
 
-link, visited, active, hover, focus, firstChild :: Refinement
+link, visited, active, hover, focus, firstChild, lastChild :: Refinement
 
 link       = ":link"
 visited    = ":visited"
@@ -21,6 +21,7 @@ active     = ":active"
 hover      = ":hover"
 focus      = ":focus"
 firstChild = ":first-child"
+lastChild  = ":last-child"
 
 firstOfType, lastOfType, empty, target, checked, enabled, disabled :: Refinement
 
