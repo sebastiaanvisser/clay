@@ -15,13 +15,15 @@ import Data.Monoid (Monoid, (<>))
 
 -------------------------------------------------------------------------------
 
-class All     a where all     ::          a
-class Auto    a where auto    ::          a
-class Inherit a where inherit ::          a
-class None    a where none    ::          a
-class Normal  a where normal  ::          a
-class Visible a where visible ::          a
-class Hidden  a where hidden  ::          a
+class All     a where all     :: a
+class Auto    a where auto    :: a
+class Inherit a where inherit :: a
+class None    a where none    :: a
+class Normal  a where normal  :: a
+class Visible a where visible :: a
+class Hidden  a where hidden  :: a
+class Initial a where initial :: a
+class Unset   a where unset   :: a
 
 -- | The other type class is used to escape from the type safety introduced by
 -- embedding CSS properties into the typed world of Clay. `Other` allows you to
@@ -37,6 +39,8 @@ instance None    Value where none    = "none"
 instance Visible Value where visible = "visible"
 instance Hidden  Value where hidden  = "hidden"
 instance Other   Value where other   = id
+instance Initial Value where initial = "initial"
+instance Unset   Value where unset   = "unset"
 
 -------------------------------------------------------------------------------
 
