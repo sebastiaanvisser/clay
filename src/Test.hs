@@ -9,5 +9,5 @@ import Clay.Render (renderWith, compact)
 
 main :: IO ()
 main = defaultMain
-  [ testCase "empty Clay produces empty compact CSS" $ renderWith compact (return ()) @?= ""
+  [ testCase "empty Clay produces empty compact CSS" $ renderWith compact [] (return ()) @?= ""
   ]
