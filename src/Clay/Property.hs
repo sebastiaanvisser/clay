@@ -9,7 +9,7 @@ import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
 
-data Prefixed = Prefixed [(Text, Text)] | Plain Text
+data Prefixed = Prefixed { unPrefixed :: [(Text, Text)] } | Plain { unPlain :: Text }
   deriving Show
 
 instance IsString Prefixed where
