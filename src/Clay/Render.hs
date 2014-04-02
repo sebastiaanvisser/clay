@@ -15,7 +15,7 @@ import Data.Either
 import Data.Foldable (foldMap)
 import Data.List (sort)
 import Data.Maybe
-import Data.Text (Text)
+import Data.Text (Text, pack)
 import Data.Text.Lazy.Builder
 import Prelude hiding ((**))
 
@@ -23,7 +23,8 @@ import qualified Data.Text         as Text
 import qualified Data.Text.Lazy    as Lazy
 import qualified Data.Text.Lazy.IO as Lazy
 
-import Clay.Stylesheet hiding (Child, query)
+import Clay.Stylesheet hiding (Child, query, rule)
+import Clay.Common (browsers)
 import Clay.Property
 import Clay.Selector
 
@@ -75,64 +76,62 @@ putCss = Lazy.putStr . render
 -- used by default.
 
 render :: Css -> Lazy.Text
-render = renderWith pretty
+render = renderWith pretty []
 
 -- | Render a stylesheet with a custom configuration and an optional outer
 -- scope.
 
-renderWith :: Config -> Css -> Lazy.Text
-renderWith cfg (S c)
+renderWith :: Config -> [App] -> Css -> Lazy.Text
+renderWith cfg top
   = renderBanner cfg
   . toLazyText
-  . cssRules cfg
-  . flattenRules
-  . execWriter
-  $ c
-
--------------------------------------------------------------------------------
-
--- | The AST of a CSS3 file.
-
-data Css3
-  = Css3Query MediaQuery [Css3]
-  | Css3Rule [App] [(Key (), Value)]
-  | Css3Font       [(Key (), Value)]
-
-flattenRules :: [Rule] -> [Css3]
-flattenRules rules =
-  let
-    property p = case p of
-      Property k v -> (k, v)
-      _            -> error "only properties are allowed in @font-face"
-
-    nestApp app css = case css of
-      Css3Query q cs -> Css3Query q $ map (nestApp app) cs
-      Css3Rule as ps -> Css3Rule (app:as) ps
-      Css3Font ps    -> Css3Font ps
-
-    (props, nests, qrys, faces) = foldr
-      (\r (ps,ns,qs,fs) -> case r of
-        Property k v -> ((k, v):ps,          ns,          qs,     fs)
-        Nested a rs' -> (       ps, (a, rs'):ns,          qs,     fs)
-        Query q  rs' -> (       ps,          ns, (q, rs'):qs,     fs)
-        Face     rs' -> (       ps,          ns,          qs, rs':fs))
-      ([],[],[],[])
-      rules
-  in
-    (if null props then [] else [Css3Rule [] props])                      ++
-    concatMap (\(app, rs') -> map (nestApp app) (flattenRules rs')) nests ++
-    map       (\(q,   rs') -> Css3Query q (flattenRules rs'))       qrys  ++
-    map       (\      rs'  -> Css3Font $ map property rs')          faces
+  . rules cfg top
+  . runS
 
 -------------------------------------------------------------------------------
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
-renderBanner cfg =
-  if banner cfg
-  then (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
-  else id
+renderBanner cfg
+  | banner cfg = (<> b)
+  | otherwise  = id
+  where b = "\n/* Generated with Clay, http://fvisser.nl/clay */"
 
--------------------------------------------------------------------------------
+kframe :: Config -> Keyframes -> Builder
+kframe cfg (Keyframes ident xs) =
+  foldMap
+    ( \(browser, _) ->
+      mconcat [ "@" <> fromText browser <> "keyframes "
+              , fromText ident
+              , newline cfg
+              , "{"
+              , newline cfg
+              , foldMap (frame cfg) xs
+              , "}"
+              , newline cfg
+              , newline cfg
+              ]
+    )
+    (unPrefixed browsers)
+
+frame :: Config -> (Double, [Rule]) -> Builder
+frame cfg (p, rs) =
+  mconcat
+    [ fromText (pack (show p))
+    , "% "
+    , rules cfg [] rs
+    ]
+
+query :: Config -> MediaQuery -> [App] -> [Rule] -> Builder
+query cfg q sel rs =
+  mconcat
+    [ mediaQuery q
+    , newline cfg
+    , "{"
+    , newline cfg
+    , rules cfg sel rs
+    , "}"
+    , newline cfg
+    ]
 
 mediaQuery :: MediaQuery -> Builder
 mediaQuery (MediaQuery no ty fs) = mconcat
@@ -155,15 +154,45 @@ feature (Feature k mv) =
     Just (Value v) -> mconcat
       [ "(" , fromText k , ": " , fromText (plain v) , ")" ]
 
-cssRules :: Config -> [Css3] -> Builder
-cssRules cfg = (mconcat .) $ map $ \c -> mconcat $ case c of
-  Css3Query  q cs -> [ mediaQuery q,                        block $ cssRules cfg cs ]
-  Css3Rule sel ps -> [ selector cfg (merger $ reverse sel), propertyBlock ps        ]
-  Css3Font     ps -> [ "@font-face",                        propertyBlock ps        ]
-  where
-    propertyBlock = block . properties cfg . concatMap collect
-    block inner = mconcat [ nl, "{", nl, inner, "}", nl, nl ]
-    nl = newline cfg
+face :: Config -> [Rule] -> Builder
+face cfg rs = mconcat
+  [ "@font-face"
+  , rules cfg [] rs
+  ]
+
+rules :: Config -> [App] -> [Rule] -> Builder
+rules cfg sel rs = mconcat
+  [ rule cfg sel (mapMaybe property rs)
+  , newline cfg
+  ,             kframe cfg              `foldMap` mapMaybe kframes rs
+  ,             face   cfg              `foldMap` mapMaybe faces   rs
+  , (\(a, b) -> rules  cfg (a : sel) b) `foldMap` mapMaybe nested  rs
+  , (\(a, b) -> query  cfg  a   sel  b) `foldMap` mapMaybe queries rs
+  ]
+  where property (Property k v) = Just (k, v)
+        property _              = Nothing
+        nested   (Nested a ns ) = Just (a, ns)
+        nested   _              = Nothing
+        queries  (Query q ns  ) = Just (q, ns)
+        queries  _              = Nothing
+        kframes  (Keyframe fs ) = Just fs;
+        kframes  _              = Nothing
+        faces    (Face ns     ) = Just ns
+        faces    _              = Nothing
+
+rule :: Config -> [App] -> [(Key (), Value)] -> Builder
+rule _   _   []    = mempty
+rule cfg sel props =
+  let xs = collect =<< props
+   in mconcat
+      [ selector cfg (merger sel)
+      , newline cfg
+      , "{"
+      , newline cfg
+      , properties cfg xs
+      , "}"
+      , newline cfg
+      ]
 
 merger :: [App] -> Selector
 merger []     = "" -- error "this should be fixed!"
@@ -192,9 +221,13 @@ properties cfg xs =
       finalSemi = if finalSemicolon cfg then ";" else ""
    in (<> new) $ (<> finalSemi) $ intersperse (";" <> new) $ flip map xs $ \p ->
         case p of
-          Left w -> if warn cfg then ind <> "/* no value for " <> fromText w <> " */" <> new else mempty
+          Left w -> if warn cfg
+                    then ind <> "/* no value for " <> fromText w <> " */" <> new
+                    else mempty
           Right (k, v) ->
-            let pad = if align cfg then fromText (Text.replicate (width - Text.length k) " ") else ""
+            let pad = if align cfg
+                      then fromText (Text.replicate (width - Text.length k) " ")
+                      else ""
              in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v]
 
 selector :: Config -> Selector -> Builder
@@ -221,4 +254,5 @@ predicate ft = mconcat $
     AttrHyph   a v -> [ "[", fromText a, "|='", fromText v, "']"                    ]
     Pseudo     a   -> [ ":", fromText a                                             ]
     PseudoFunc a p -> [ ":", fromText a, "(", intersperse "," (map fromText p), ")" ]
+
 
