@@ -93,6 +93,7 @@ module Clay
 , module Clay.Text
 , module Clay.Transform
 , module Clay.Transition
+, module Clay.Animation
 , module Clay.Mask
 , module Clay.Filter
 
@@ -133,6 +134,7 @@ import Clay.Size
 import Clay.Text       hiding (pre)
 import Clay.Transform
 import Clay.Transition
+import Clay.Animation
 import Clay.Mask       hiding (clear)
 import Clay.Filter     hiding (url, opacity)
 

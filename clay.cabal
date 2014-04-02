@@ -36,6 +36,7 @@ Library
 
   Exposed-Modules:
     Clay
+    Clay.Animation
     Clay.Attributes
     Clay.Background
     Clay.Border
