@@ -1,8 +1,9 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Clay.Stylesheet where
 
-import Data.Text (Text)
+import Control.Arrow (second)
 import Control.Monad.Writer hiding (All)
+import Data.Text (Text)
 
 import Clay.Selector hiding (Child)
 import Clay.Property
@@ -32,15 +33,25 @@ data App
   | Sub    Selector
   deriving Show
 
+data Keyframes = Keyframes Text [(Double, [Rule])]
+  deriving Show
+
 data Rule
   = Property (Key ()) Value
   | Nested   App [Rule]
   | Query    MediaQuery [Rule]
   | Face     [Rule]
+  | Keyframe Keyframes
   deriving Show
 
 newtype StyleM a = S (Writer [Rule] a)
   deriving Monad
+
+runS :: Css -> [Rule]
+runS (S a) = execWriter a
+
+rule :: Rule -> Css
+rule a = S (tell [a])
 
 -- | The `Css` context is used to collect style rules which are mappings from
 -- selectors to style properties. The `Css` type is a computation in the
@@ -53,7 +64,7 @@ type Css = StyleM ()
 -- words: can be converted to a `Value`.
 
 key :: Val a => Key a -> a -> Css
-key k v = S $ tell [Property (cast k) (value v)]
+key k v = rule $ Property (cast k) (value v)
 
 -- | Add a new style property to the stylesheet with the specified `Key` and
 -- value, like `key` but use a `Prefixed` key.
@@ -80,51 +91,60 @@ infixr 5 &
 -- outer scope it will be composed with `deep`.
 
 (?) :: Selector -> Css -> Css
-(?) sel (S rs) = S (tell [Nested (Sub sel) (execWriter rs)])
+(?) sel rs = rule $ Nested (Sub sel) (runS rs)
 
 -- | Assign a stylesheet to a selector. When the selector is nested inside an
 -- outer scope it will be composed with `|>`.
 
 (<?) :: Selector -> Css -> Css
-(<?) sel (S rs) = S (tell [Nested (Child sel) (execWriter rs)])
+(<?) sel rs = rule $ Nested (Child sel) (runS rs)
 
 -- | Assign a stylesheet to a filter selector. When the selector is nested
 -- inside an outer scope it will be composed with the `with` selector.
 
 (&) :: Refinement -> Css -> Css
-(&) p (S rs) = S (tell [Nested (Self p) (execWriter rs)])
+(&) p rs = rule $ Nested (Self p) (runS rs)
 
 -- | Root is used to add style rules to the top scope.
 
 root :: Selector -> Css -> Css
-root sel (S rs) = S (tell [Nested (Root sel) (execWriter rs)])
+root sel rs = rule $ Nested (Root sel) (runS rs)
 
 -- | Pop is used to add style rules to selectors defined in an outer scope. The
 -- counter specifies how far up the scope stack we want to add the rules.
 
 pop :: Int -> Css -> Css
-pop i (S rs) = S (tell [Nested (Pop i) (execWriter rs)])
+pop i rs = rule $ Nested (Pop i) (runS rs)
 
 -------------------------------------------------------------------------------
 
 -- | Apply a set of style rules when the media type and feature queries apply.
 
 query :: MediaType -> [Feature] -> Css -> Css
-query ty fs (S rs) = S (tell [Query (MediaQuery Nothing ty fs) (execWriter rs)])
+query ty fs rs = rule $ Query (MediaQuery Nothing ty fs) (runS rs)
 
 -- | Apply a set of style rules when the media type and feature queries do not apply.
 
 queryNot :: MediaType -> [Feature] -> Css -> Css
-queryNot ty fs (S rs) = S (tell [Query (MediaQuery (Just Not) ty fs) (execWriter rs)])
+queryNot ty fs rs = rule $ Query (MediaQuery (Just Not) ty fs) (runS rs)
 
 -- | Apply a set of style rules only when the media type and feature queries apply.
 
 queryOnly :: MediaType -> [Feature] -> Css -> Css
-queryOnly ty fs (S rs) = S (tell [Query (MediaQuery (Just Only) ty fs) (execWriter rs)])
+queryOnly ty fs rs = rule $ Query (MediaQuery (Just Only) ty fs) (runS rs)
+
+-------------------------------------------------------------------------------
+
+keyframes :: Text -> [(Double, Css)] -> Css
+keyframes n xs = rule $ Keyframe (Keyframes n (map (second runS) xs))
+
+keyframesFromTo :: Text -> Css -> Css -> Css
+keyframesFromTo n a b = keyframes n [(0, a), (100, b)]
 
 -------------------------------------------------------------------------------
 
 -- | Define a new font-face.
 
 fontFace :: Css -> Css
-fontFace (S rs) = S (tell [Face (execWriter rs)])
+fontFace rs = rule $ Face (runS rs)
+
