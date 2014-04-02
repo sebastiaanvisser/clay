@@ -56,6 +56,11 @@ module Clay
 , queryNot
 , queryOnly
 
+-- * Apply key-frame animation.
+
+, keyframes
+, keyframesFromTo
+
 -- * Define font-faces.
 
 , fontFace
