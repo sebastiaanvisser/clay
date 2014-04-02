@@ -2,3 +2,5 @@ dist/
 cabal-dev/
 examples/*.css
 examples/*/*.css
+.cabal-sandbox/
+cabal.sandbox.config
