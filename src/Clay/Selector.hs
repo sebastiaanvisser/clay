@@ -102,11 +102,23 @@ attr = Refinement . pure . Attr
 (@=) :: Text -> Text -> Refinement
 (@=) a = Refinement . pure . AttrVal a
 
+-- | Filter elements based on the presence of a certain attribute that begins
+-- with the selected value.
+
+(^=) :: Text -> Text -> Refinement
+(^=) a = Refinement . pure . AttrBegins a
+
 -- | Filter elements based on the presence of a certain attribute that ends
 -- with the specified value.
 
 ($=) :: Text -> Text -> Refinement
 ($=) a = Refinement . pure . AttrEnds a
+
+-- | Filter elements based on the presence of a certain attribute that contains
+-- the specified value as a substring.
+
+(*=) :: Text -> Text -> Refinement
+(*=) a = Refinement . pure . AttrContains a
 
 -- | Filter elements based on the presence of a certain attribute that have the
 -- specified value contained in a space separated list.
@@ -123,15 +135,17 @@ attr = Refinement . pure . Attr
 -------------------------------------------------------------------------------
 
 data Predicate
-  = Id         Text
-  | Class      Text
-  | Attr       Text
-  | AttrVal    Text Text
-  | AttrEnds   Text Text
-  | AttrSpace  Text Text
-  | AttrHyph   Text Text
-  | Pseudo     Text
-  | PseudoFunc Text [Text]
+  = Id           Text
+  | Class        Text
+  | Attr         Text
+  | AttrVal      Text Text
+  | AttrBegins   Text Text
+  | AttrEnds     Text Text
+  | AttrContains Text Text
+  | AttrSpace    Text Text
+  | AttrHyph     Text Text
+  | Pseudo       Text
+  | PseudoFunc   Text [Text]
   deriving (Eq, Ord, Show)
 
 newtype Refinement = Refinement { unFilter :: [Predicate] }

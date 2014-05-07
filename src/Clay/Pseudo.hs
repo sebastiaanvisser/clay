@@ -23,19 +23,33 @@ focus      = ":focus"
 firstChild = ":first-child"
 lastChild  = ":last-child"
 
-firstOfType, lastOfType, empty, target, checked, enabled, disabled :: Refinement
+checked, default_, disabled, empty, enabled, firstOfType, indeterminate,
+  inRange, invalid, lastOfType, onlyChild, onlyOfType, optional,
+  outOfRange, required, root, target, valid :: Refinement
 
-firstOfType = ":first-of-type"
-lastOfType  = ":last-of-type"
-empty       = ":empty"
-target      = ":target"
-checked     = ":checked"
-enabled     = ":enabled"
-disabled    = ":disabled"
+checked       = ":checked"
+default_      = ":default"
+disabled      = ":disabled"
+empty         = ":empty"
+enabled       = ":enabled"
+firstOfType   = ":first-of-type"
+indeterminate = ":indeterminate"
+inRange       = ":in-range"
+invalid       = ":invalid"
+lastOfType    = ":last-of-type"
+onlyChild     = ":only-child"
+onlyOfType    = ":only-of-type"
+optional      = ":optional"
+outOfRange    = ":out-of-range"
+required      = ":required"
+root          = ":root"
+target        = ":target"
+valid         = ":valid"
 
-nthChild, nthLastChild, nthOfType :: Text -> Refinement
+lang, nthChild, nthLastChild, nthLastOfType, nthOfType :: Text -> Refinement
 
-nthChild     n = func "nth-child"      [n]
-nthLastChild n = func "nth-last-child" [n]
-nthOfType    n = func "nth-of-type"    [n]
-
+lang          n = func "lang"             [n]
+nthChild      n = func "nth-child"        [n]
+nthLastChild  n = func "nth-last-child"   [n]
+nthLastOfType n = func "nth-last-of-type" [n]
+nthOfType     n = func "nth-of-type"      [n]

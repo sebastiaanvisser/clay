@@ -45,7 +45,9 @@ module Clay
 
 , attr
 , (@=)
+, (^=)
 , ($=)
+, (*=)
 , (~=)
 , (|=)
 
@@ -115,7 +117,7 @@ import Clay.Stylesheet
 import Clay.Selector
 import Clay.Property
 
-import Clay.Pseudo
+import Clay.Pseudo hiding (default_, required, root, lang)
 import Clay.Elements hiding (link, em)
 import Clay.Attributes hiding
   ( content, class_, target, checked, disabled

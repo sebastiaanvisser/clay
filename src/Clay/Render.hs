@@ -245,14 +245,16 @@ selector cfg = intersperse ("," <> newline cfg) . rec
 predicate :: Predicate -> Builder
 predicate ft = mconcat $
   case ft of
-    Id         a   -> [ "#", fromText a                                             ]
-    Class      a   -> [ ".", fromText a                                             ]
-    Attr       a   -> [ "[", fromText a,                     "]"                    ]
-    AttrVal    a v -> [ "[", fromText a,  "='", fromText v, "']"                    ]
-    AttrEnds   a v -> [ "[", fromText a, "$='", fromText v, "']"                    ]
-    AttrSpace  a v -> [ "[", fromText a, "~='", fromText v, "']"                    ]
-    AttrHyph   a v -> [ "[", fromText a, "|='", fromText v, "']"                    ]
-    Pseudo     a   -> [ ":", fromText a                                             ]
-    PseudoFunc a p -> [ ":", fromText a, "(", intersperse "," (map fromText p), ")" ]
+    Id           a   -> [ "#", fromText a                                             ]
+    Class        a   -> [ ".", fromText a                                             ]
+    Attr         a   -> [ "[", fromText a,                     "]"                    ]
+    AttrVal      a v -> [ "[", fromText a,  "='", fromText v, "']"                    ]
+    AttrBegins   a v -> [ "[", fromText a, "^='", fromText v, "']"                    ]
+    AttrEnds     a v -> [ "[", fromText a, "$='", fromText v, "']"                    ]
+    AttrContains a v -> [ "[", fromText a, "*='", fromText v, "']"                    ]
+    AttrSpace    a v -> [ "[", fromText a, "~='", fromText v, "']"                    ]
+    AttrHyph     a v -> [ "[", fromText a, "|='", fromText v, "']"                    ]
+    Pseudo       a   -> [ ":", fromText a                                             ]
+    PseudoFunc   a p -> [ ":", fromText a, "(", intersperse "," (map fromText p), ")" ]
 
 
