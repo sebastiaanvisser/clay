@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.List
-( listStyleType
+( ListStyleType
+, listStyleType
 , disc
 , decimal
 , hiragana
