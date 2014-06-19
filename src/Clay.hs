@@ -97,8 +97,8 @@ module Clay
 , module Clay.FontFace
 , module Clay.Geometry
 , module Clay.Gradient
-, module Clay.Text
 , module Clay.List
+, module Clay.Text
 , module Clay.Transform
 , module Clay.Transition
 , module Clay.Animation
@@ -138,9 +138,9 @@ import Clay.Font       hiding (menu, caption, small, icon)
 import Clay.FontFace
 import Clay.Geometry
 import Clay.Gradient
+import Clay.List
 import Clay.Size
 import Clay.Text       hiding (pre)
-import Clay.List
 import Clay.Transform
 import Clay.Transition
 import Clay.Animation
