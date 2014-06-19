@@ -37,7 +37,6 @@ import Clay.Common
 import Clay.Property
 import Clay.Stylesheet
 import Data.Monoid hiding (All)
-import Prelude (($))
 
 --------------------------------------------------------------------------------
 -- Enabling user interface elements: the 'user-input' property
