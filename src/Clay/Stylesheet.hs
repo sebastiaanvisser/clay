@@ -1,6 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Clay.Stylesheet where
 
+import Control.Applicative
 import Control.Arrow (second)
 import Control.Monad.Writer hiding (All)
 import Data.Text (Text)
@@ -45,7 +46,7 @@ data Rule
   deriving Show
 
 newtype StyleM a = S (Writer [Rule] a)
-  deriving Monad
+  deriving (Functor, Applicative, Monad)
 
 runS :: Css -> [Rule]
 runS (S a) = execWriter a
