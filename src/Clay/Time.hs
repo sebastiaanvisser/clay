@@ -39,7 +39,9 @@ instance Num Time where
   (*)    = error  "times not implemented for Time"
   abs    = error    "abs not implemented for Time"
   signum = error "signum not implemented for Time"
+  negate = error "negate not implemented for Time"
 
 instance Fractional Time where
   fromRational = sec . fromRational
+  recip  = error  "recip not implemented for Time"
 

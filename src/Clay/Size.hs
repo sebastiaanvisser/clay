@@ -92,9 +92,11 @@ instance Num (Size Abs) where
   (*)    = error  "times not implemented for Size"
   abs    = error    "abs not implemented for Size"
   signum = error "signum not implemented for Size"
+  negate = error "negate not implemented for Size"
 
 instance Fractional (Size Abs) where
   fromRational = em . fromRational
+  recip  = error  "recip not implemented for Size"
 
 instance Num (Size Rel) where
   fromInteger = pct . fromInteger
@@ -102,9 +104,11 @@ instance Num (Size Rel) where
   (*)    = error  "times not implemented for Size"
   abs    = error    "abs not implemented for Size"
   signum = error "signum not implemented for Size"
+  negate = error "negate not implemented for Size"
 
 instance Fractional (Size Rel) where
   fromRational = pct . fromRational
+  recip  = error  "recip not implemented for Size"
 
 -------------------------------------------------------------------------------
 
@@ -141,9 +145,11 @@ instance Num (Angle Deg) where
   (*)    = error  "times not implemented for Angle"
   abs    = error    "abs not implemented for Angle"
   signum = error "signum not implemented for Angle"
+  negate = error "negate not implemented for Angle"
 
 instance Fractional (Angle Deg) where
   fromRational = deg . fromRational
+  recip  = error  "recip not implemented for Angle"
 
 instance Num (Angle Rad) where
   fromInteger = rad . fromInteger
@@ -151,7 +157,9 @@ instance Num (Angle Rad) where
   (*)    = error  "times not implemented for Angle"
   abs    = error    "abs not implemented for Angle"
   signum = error "signum not implemented for Angle"
+  negate = error "negate not implemented for Angle"
 
 instance Fractional (Angle Rad) where
   fromRational = rad . fromRational
+  recip  = error  "recip not implemented for Angle"
 
