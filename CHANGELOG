@@ -1,5 +1,9 @@
 CHANGELOG
 
+  0.9 -> 0.9.0.1
+   - Fixed bug in easing properties.
+
+  0.8 -> 0.9
   - Added list-style-type property.
   - Added some CSS3 selectors and pseudo-classes.
   - Added some missing HTML5 elements.

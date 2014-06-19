@@ -74,12 +74,12 @@ newtype TimingFunction = TimingFunction Value
 ease, easeIn, easeOut, easeInOut, linear, stepStart, stepStop :: TimingFunction
 
 ease       = other "ease"
-easeIn     = other "easeIn"
-easeOut    = other "easeOut"
-easeInOut  = other "easeInOut"
+easeIn     = other "ease-in"
+easeOut    = other "ease-out"
+easeInOut  = other "ease-in-out"
 linear     = other "linear"
-stepStart  = other "stepStart"
-stepStop   = other "stepStop"
+stepStart  = other "step-start"
+stepStop   = other "step-stop"
 
 stepsStart, stepsStop :: Integer -> TimingFunction
 
