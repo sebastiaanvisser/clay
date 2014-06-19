@@ -1,5 +1,5 @@
 Name:     clay
-Version:  0.8.1
+Version:  0.9
 Synopsis: CSS preprocessor as embedded Haskell.
 Description:
   Clay is a CSS preprocessor like LESS and Sass, but implemented as an embedded
@@ -11,9 +11,19 @@ Description:
   .
   The API documentation can be found in the top level module "Clay".
   .
-  > 0.8 -> 0.8.0.1
-  >   - Widened dependency on text.
-  >   Thanks to bgamari.
+  > 0.8 -> 0.9
+  >  - Added list-style-type property.
+  >  - Added some CSS3 selectors and pseudo-classes.
+  >  - Added some missing HTML5 elements.
+  >  - Added keyframes support.
+  >  - Fixed bug in linear in transition.
+  >  - Added Initial and Unset type classes.
+  >  - Added animation related styling rules.
+  >  - Restored old renderer.
+  >  - Fixed bunch of warnings.
+  >  - Added :last-child pseudo selector.
+  >  - Stub test suite
+  >  Thanks to Sergei Trofimovich, Levi Ad, Ian D. Bollinger, Ben Gamari and Oly Mi!
 
 
 Author:        Sebastiaan Visser

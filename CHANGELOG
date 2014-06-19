@@ -1,5 +1,18 @@
 CHANGELOG
 
+  - Added list-style-type property.
+  - Added some CSS3 selectors and pseudo-classes.
+  - Added some missing HTML5 elements.
+  - Added keyframes support.
+  - Fixed bug in linear in transition.
+  - Added Initial and Unset type classes.
+  - Added animation related styling rules.
+  - Restored old renderer.
+  - Fixed bunch of warnings.
+  - Added :last-child pseudo selector.
+  - Stub test suite
+  Thanks to Sergei Trofimovich, Levi Ad, Ian D. Bollinger, Ben Gamari and Oly Mi!
+
   0.8 -> 0.8.0.1
     - Widened dependency on text.
     Thanks to bgamari.
