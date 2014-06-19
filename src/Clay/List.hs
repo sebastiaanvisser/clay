@@ -13,7 +13,7 @@ import Clay.Property
 import Clay.Stylesheet
 
 newtype ListStyleType = ListStyleType Value
-  deriving (Val, Auto, Inherit, Other)
+  deriving (Val, Initial, Inherit, None, Other)
 
 disc, decimal, hiragana  :: ListStyleType
 
