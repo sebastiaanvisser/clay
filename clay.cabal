@@ -51,6 +51,7 @@ Library
     Clay.FontFace
     Clay.Geometry
     Clay.Gradient
+    Clay.List
     Clay.Media
     Clay.Mask
     Clay.Property
