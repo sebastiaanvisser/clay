@@ -3,8 +3,25 @@ module Clay.List
 ( ListStyleType
 , listStyleType
 , disc
+, armenian
+, circleListStyle
+, cjkIdeographic
 , decimal
+, decimalLeadingZero
+, georgian
+, hebrew
 , hiragana
+, hiraganaIroha
+, katakana
+, katakanaIroha
+, lowerAlpha
+, lowerGreek
+, lowerLatin
+, lowerRoman
+, square
+, upperAlpha
+, upperLatin
+, upperRoman
 
 , ListStylePosition
 , listStylePosition
@@ -24,11 +41,13 @@ import Clay.Stylesheet
 newtype ListStyleType = ListStyleType Value
   deriving (Val, Initial, Inherit, None, Other)
 
-disc, decimal, hiragana  :: ListStyleType
+disc, armenian, circleListStyle, cjkIdeographic, decimal, decimalLeadingZero, georgian
+    , hebrew, hiragana, hiraganaIroha, katakana, katakanaIroha, lowerAlpha
+    , lowerGreek, lowerLatin, lowerRoman, square, upperAlpha, upperLatin, upperRoman :: ListStyleType
 
 disc                = ListStyleType "disc"
 armenian            = ListStyleType "armenian"
-circle              = ListStyleType "circle"
+circleListStyle     = ListStyleType "circle"
 cjkIdeographic      = ListStyleType "cjk-ideographic"
 decimal             = ListStyleType "decimal"
 decimalLeadingZero  = ListStyleType "decimal-leading-zero"
