@@ -25,14 +25,19 @@ module Clay.List
 
 , ListStylePosition
 , listStylePosition
+, inside
 , outside
 
 , ListStyleImage
 , listStyleImage
+, imageUrl
 
 , listStyle
 )
 where
+
+import Data.Monoid
+import Data.Text (Text)
 
 import Clay.Common
 import Clay.Property
@@ -72,8 +77,9 @@ listStyleType = key "list-style-type"
 newtype ListStylePosition = ListStylePosition Value
   deriving (Val, Initial, Inherit, None, Other)
 
-outside :: ListStylePosition
+inside, outside :: ListStylePosition
 
+inside  = ListStylePosition "inside"
 outside = ListStylePosition "outside"
 
 listStylePosition :: ListStylePosition -> Css
@@ -84,6 +90,9 @@ newtype ListStyleImage = ListStyleImage Value
 
 listStyleImage :: ListStyleImage -> Css
 listStyleImage = key "list-style-image"
+
+imageUrl :: Text -> ListStyleImage
+imageUrl u = ListStyleImage ("url(" <> value (Literal u) <> ")")
 
 listStyle :: ListStyleType -> ListStylePosition -> ListStyleImage -> Css
 listStyle a b c = key "list-style" (a ! b ! c)
