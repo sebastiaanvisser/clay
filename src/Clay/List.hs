@@ -26,9 +26,26 @@ newtype ListStyleType = ListStyleType Value
 
 disc, decimal, hiragana  :: ListStyleType
 
-disc        = ListStyleType "disc"
-decimal     = ListStyleType "decimal"
-hiragana    = ListStyleType "hiragana"
+disc                = ListStyleType "disc"
+armenian            = ListStyleType "armenian"
+circle              = ListStyleType "circle"
+cjkIdeographic      = ListStyleType "cjk-ideographic"
+decimal             = ListStyleType "decimal"
+decimalLeadingZero  = ListStyleType "decimal-leading-zero"
+georgian            = ListStyleType "georgian"
+hebrew              = ListStyleType "hebrew"
+hiragana            = ListStyleType "hiragana"
+hiraganaIroha       = ListStyleType "hiragana-iroha"
+katakana            = ListStyleType "katakana"
+katakanaIroha       = ListStyleType "katakana-iroha"
+lowerAlpha          = ListStyleType "lower-alpha"
+lowerGreek          = ListStyleType "lower-greek"
+lowerLatin          = ListStyleType "lower-latin"
+lowerRoman          = ListStyleType "lower-roman"
+square              = ListStyleType "square"
+upperAlpha          = ListStyleType "upper-alpha"
+upperLatin          = ListStyleType "upper-latin"
+upperRoman          = ListStyleType "upper-roman"
 
 listStyleType :: ListStyleType -> Css
 listStyleType = key "list-style-type"
