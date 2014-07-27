@@ -20,6 +20,7 @@ module Clay.Size
 , em
 , ex
 , pct
+, rem
 
 -- * Shorthands for properties that can be applied separately to each box side.
 
@@ -42,6 +43,7 @@ module Clay.Size
 where
 
 import Data.Monoid
+import Prelude hiding (rem)
 
 import Clay.Common
 import Clay.Property
@@ -49,7 +51,7 @@ import Clay.Stylesheet
 
 -------------------------------------------------------------------------------
 
--- | Sizes can be relative like percentages.
+-- | Sizes can be relative like percentages or rems.
 data Rel
 
 -- | Sizes can be absolute like pixels, points, etc.
@@ -85,6 +87,11 @@ ex i = Size (value i <> "ex")
 
 pct :: Double -> Size Rel
 pct i = Size (value i <> "%")
+
+-- | Size in rem's.
+
+rem :: Double -> Size Rel
+rem i = Size (value i <> "rem")
 
 instance Num (Size Abs) where
   fromInteger = px
