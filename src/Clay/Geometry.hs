@@ -23,7 +23,7 @@ import Clay.Size
 
 -------------------------------------------------------------------------------
 
-size, top, left, bottom, right :: Size Abs -> Css
+size, top, left, bottom, right :: Size a -> Css
 
 size      = key "size"
 top       = key "top"
@@ -42,10 +42,10 @@ maxHeight = key "max-height"
 
 -------------------------------------------------------------------------------
 
-padding :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+padding :: Size a -> Size a -> Size a -> Size a -> Css
 padding a b c d = key "padding" (a ! b ! c ! d)
 
-paddingTop, paddingLeft, paddingRight, paddingBottom :: Size Abs -> Css
+paddingTop, paddingLeft, paddingRight, paddingBottom :: Size a -> Css
 
 paddingTop    = key "padding-top"
 paddingLeft   = key "padding-left"
@@ -54,10 +54,10 @@ paddingBottom = key "padding-bottom"
 
 -------------------------------------------------------------------------------
 
-margin :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+margin :: Size a -> Size a -> Size a -> Size a -> Css
 margin a b c d = key "margin"  (a ! b ! c ! d)
 
-marginTop, marginLeft, marginRight, marginBottom :: Size Abs -> Css
+marginTop, marginLeft, marginRight, marginBottom :: Size a -> Css
 
 marginTop     = key "margin-top"
 marginLeft    = key "margin-left"
