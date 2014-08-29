@@ -61,6 +61,11 @@ module Clay.Display
 , visiblePainted, visibleFill, visibleStroke, painted
 , fillEvents, strokeEvents, allEvents
 
+-- * Vertical align.
+
+, VerticalAlign(..)
+, baseline, middle, vAlignSub, textTop, textBottom, vAlignTop, vAlignBottom
+          
 )
 where
 
@@ -211,3 +216,24 @@ allEvents      = PointerEvents "all"
 
 pointerEvents :: PointerEvents -> Css
 pointerEvents = key "pointer-events"
+
+-------------------------------------------------------------------------------
+
+class (Val a) => VerticalAlign a where
+    verticalAlign :: a -> Css
+    verticalAlign = key "vertical-align"
+
+newtype VerticalAlignValue a = VerticalAlignValue Value deriving (Val)
+
+instance VerticalAlign (VerticalAlignValue a)
+instance VerticalAlign (Size a)
+
+baseline,middle,vAlignSub,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
+
+baseline = VerticalAlignValue "baseline"
+middle = VerticalAlignValue "middle"
+vAlignSub = VerticalAlignValue "sub"
+textTop = VerticalAlignValue "text-top"
+textBottom = VerticalAlignValue "text-bottom"
+vAlignTop = VerticalAlignValue "top"
+vAlignBottom = VerticalAlignValue "bottom"
