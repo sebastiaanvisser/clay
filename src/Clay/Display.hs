@@ -61,6 +61,16 @@ module Clay.Display
 , visiblePainted, visibleFill, visibleStroke, painted
 , fillEvents, strokeEvents, allEvents
 
+-- * Vertical align.
+
+, VerticalAlign(..)
+, baseline, middle, vAlignSub, textTop, textBottom, vAlignTop, vAlignBottom
+
+-- * Cursor
+
+, Cursor(..)
+, crosshair, cursorDefault, pointer, move, eResize, neResize, nwResize, nResize, seResize, swResize, sResize, wResize, cursorText, wait, cursorProgress, help, cursorUrl
+          
 )
 where
 
@@ -71,6 +81,7 @@ import Clay.Size
 import Clay.Property
 import Clay.Stylesheet
 import Clay.Common
+import Data.Text (Text)    
 
 -------------------------------------------------------------------------------
 
@@ -211,3 +222,56 @@ allEvents      = PointerEvents "all"
 
 pointerEvents :: PointerEvents -> Css
 pointerEvents = key "pointer-events"
+
+-------------------------------------------------------------------------------
+
+class (Val a) => VerticalAlign a where
+    verticalAlign :: a -> Css
+    verticalAlign = key "vertical-align"
+
+newtype VerticalAlignValue a = VerticalAlignValue Value deriving (Val)
+
+instance VerticalAlign (VerticalAlignValue a)
+instance VerticalAlign (Size a)
+
+baseline,middle,vAlignSub,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
+
+baseline = VerticalAlignValue "baseline"
+middle = VerticalAlignValue "middle"
+vAlignSub = VerticalAlignValue "sub"
+textTop = VerticalAlignValue "text-top"
+textBottom = VerticalAlignValue "text-bottom"
+vAlignTop = VerticalAlignValue "top"
+vAlignBottom = VerticalAlignValue "bottom"
+
+-------------------------------------------------------------------------------               
+
+class (Val a) => Cursor a where
+    cursor :: a -> Css
+    cursor = key "cursor"
+
+newtype CursorValue a = CursorValue Value deriving (Val,Inherit,Auto)
+
+instance Cursor (CursorValue a)
+
+crosshair,cursorDefault,pointer,move,eResize,neResize,nwResize,nResize,seResize,swResize,sResize,wResize,cursorText,wait,cursorProgress,help :: CursorValue Value
+                                                                                                                                          
+crosshair = CursorValue "crosshair"
+cursorDefault = CursorValue "cursorDefault"
+pointer = CursorValue "pointer"
+move = CursorValue "move"
+eResize = CursorValue "e-resize"
+neResize = CursorValue "ne-resize"
+nwResize = CursorValue "nw-resize"
+nResize = CursorValue "n-resize"
+seResize = CursorValue "se-resize"
+swResize = CursorValue "sw-resize"
+sResize = CursorValue "sResize"
+wResize = CursorValue "sResize"
+cursorText = CursorValue "text"
+wait = CursorValue "wait"
+cursorProgress = CursorValue "progress"
+help = CursorValue "help"
+
+cursorUrl :: Text -> CursorValue Value
+cursorUrl u = CursorValue $ value ("url(\"" <> u <> "\")")
