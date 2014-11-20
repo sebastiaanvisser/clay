@@ -11,8 +11,14 @@ Description:
   .
   The API documentation can be found in the top level module "Clay".
   .
-  > 0.9 -> 0.9.0.1
-  >  - Fixed bug in easing properties.
+  > 0.9 -> 0.10
+  > - Bumped up text requirement.
+  > - Added cursor property.
+  > - Added vertical-align property.
+  > - Removed Abs constraint from Geometry functions.
+  > - Added support for rem dimensions.
+  > - Added support for ListStyle.
+  > Thanks to Lorenzo Bolla, Fraser Murray, Heather and Sergey!
 
 Author:        Sebastiaan Visser
 Maintainer:    Sebastiaan Visser <code@fvisser.nl>
