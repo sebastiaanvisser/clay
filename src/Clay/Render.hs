@@ -164,6 +164,7 @@ rules :: Config -> [App] -> [Rule] -> Builder
 rules cfg sel rs = mconcat
   [ rule cfg sel (mapMaybe property rs)
   , newline cfg
+  ,             imp    cfg              `foldMap` mapMaybe imports rs
   ,             kframe cfg              `foldMap` mapMaybe kframes rs
   ,             face   cfg              `foldMap` mapMaybe faces   rs
   , (\(a, b) -> rules  cfg (a : sel) b) `foldMap` mapMaybe nested  rs
@@ -179,6 +180,17 @@ rules cfg sel rs = mconcat
         kframes  _              = Nothing
         faces    (Face ns     ) = Just ns
         faces    _              = Nothing
+        imports  (Import i    ) = Just i
+        imports  _              = Nothing
+
+imp :: Config -> Text -> Builder
+imp cfg t =
+  mconcat
+    [ "@import url("
+    , fromText t
+    , ");"
+    , newline cfg ]
+
 
 rule :: Config -> [App] -> [(Key (), Value)] -> Builder
 rule _   _   []    = mempty

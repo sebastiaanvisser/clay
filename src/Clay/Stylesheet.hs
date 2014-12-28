@@ -43,6 +43,7 @@ data Rule
   | Query    MediaQuery [Rule]
   | Face     [Rule]
   | Keyframe Keyframes
+  | Import   Text
   deriving Show
 
 newtype StyleM a = S (Writer [Rule] a)
@@ -148,4 +149,10 @@ keyframesFromTo n a b = keyframes n [(0, a), (100, b)]
 
 fontFace :: Css -> Css
 fontFace rs = rule $ Face (runS rs)
+
+
+-- | Import a CSS file from a URL
+
+importUrl :: Text -> Css
+importUrl l = rule $ Import l
 
