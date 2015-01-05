@@ -67,6 +67,10 @@ module Clay
 
 , fontFace
 
+-- * Import other CSS files
+
+, importUrl
+
 -- * Pseudo elements and classes.
 
 , module Clay.Pseudo
