@@ -64,7 +64,7 @@ module Clay.Display
 -- * Vertical align.
 
 , VerticalAlign(..)
-, baseline, middle, vAlignSub, textTop, textBottom, vAlignTop, vAlignBottom
+, baseline, middle, vAlignSub, vAlignSuper, textTop, textBottom, vAlignTop, vAlignBottom
 
 -- * Cursor
 
@@ -234,11 +234,12 @@ newtype VerticalAlignValue a = VerticalAlignValue Value deriving (Val)
 instance VerticalAlign (VerticalAlignValue a)
 instance VerticalAlign (Size a)
 
-baseline,middle,vAlignSub,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
+baseline,middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
 
 baseline = VerticalAlignValue "baseline"
 middle = VerticalAlignValue "middle"
 vAlignSub = VerticalAlignValue "sub"
+vAlignSuper = VerticalAlignValue "super"
 textTop = VerticalAlignValue "text-top"
 textBottom = VerticalAlignValue "text-bottom"
 vAlignTop = VerticalAlignValue "top"
