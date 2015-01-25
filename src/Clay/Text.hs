@@ -220,7 +220,7 @@ textTransform = key "text-transform"
 -------------------------------------------------------------------------------
 
 newtype Content = Content Value
-  deriving (Val, None, Normal, Inherit)
+  deriving (Val, None, Normal, Inherit, Initial)
 
 attrContent :: Text -> Content
 attrContent a = Content ("attr(" <> value a <> ")")
@@ -248,4 +248,3 @@ contents :: [Content] -> Css
 contents cs = key "content" (noCommas cs)
 
 -- TODO: counters
-
