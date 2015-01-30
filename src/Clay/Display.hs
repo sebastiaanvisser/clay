@@ -37,7 +37,8 @@ module Clay.Display
 -- * Visibility.
 
 , Visibility
-, collapse
+, collapse, separate
+
 , visibility
 
 -- Clipping.
@@ -179,8 +180,10 @@ overflowY = key "overflow-y"
 newtype Visibility = Visibility Value
   deriving (Val, Other, Auto, Inherit, Hidden, Visible)
 
-collapse :: Visibility
+separate, collapse :: Visibility
+
 collapse = Visibility "collapse"
+separate = Visibility "separate"
 
 visibility :: Visibility -> Css
 visibility = key "visibility"
