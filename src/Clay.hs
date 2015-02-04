@@ -8,6 +8,8 @@ module Clay
 , pretty
 , compact
 
+, renderSelector
+
 -- * The @Css@ monad for collecting style rules.
 
 , Css

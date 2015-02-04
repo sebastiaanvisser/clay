@@ -6,6 +6,8 @@ module Clay.Render
 , render
 , putCss
 , renderWith
+
+, renderSelector
 )
 where
 
@@ -87,6 +89,11 @@ renderWith cfg top
   . toLazyText
   . rules cfg top
   . runS
+
+-- | Render a single CSS `Selector`.
+
+renderSelector :: Selector -> Lazy.Text
+renderSelector = toLazyText . selector compact
 
 -------------------------------------------------------------------------------
 
