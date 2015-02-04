@@ -6,6 +6,8 @@ module Clay.Render
 , render
 , putCss
 , renderWith
+, renderSelector
+, renderSelectorWith
 )
 where
 
@@ -88,6 +90,16 @@ renderWith cfg top
   . rules cfg top
   . runS
 
+-- | Render a selector with the default configuration. The pretty printer is
+-- used by default.
+
+renderSelector :: Selector -> Lazy.Text
+renderSelector = renderSelectorWith pretty
+
+-- | Render a selector with a custom configuration 
+
+renderSelectorWith :: Config -> Selector -> Lazy.Text
+renderSelectorWith cfg = toLazyText . selector cfg
 -------------------------------------------------------------------------------
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
