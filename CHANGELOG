@@ -1,5 +1,13 @@
 CHANGELOG
 
+  0.10 -> 0.10.1
+  - Expose a render function for single selectors.
+  - Added super for vertical-align.
+  - Added support for border-collapse.
+  - Allow initial for the content property.
+  - Added support for CSS import.
+  Thanks to Heather, Collin J. Doering, Fraser Murray and Jonathan Fischoff.
+
   0.9 -> 0.10
 
    - Bumped up text requirement.
