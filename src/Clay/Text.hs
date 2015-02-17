@@ -150,7 +150,7 @@ newtype TextAlign = TextAlign Value
 justify, matchParent, start, end, center :: TextAlign
 
 justify     = TextAlign "justify"
-matchParent = TextAlign "matchParent"
+matchParent = TextAlign "match-parent"
 start       = TextAlign "start"
 end         = TextAlign "end"
 center      = TextAlign "center"
