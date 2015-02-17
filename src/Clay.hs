@@ -117,7 +117,7 @@ module Clay
 )
 where
 
-import Prelude hiding ((**))
+import Prelude ()
 
 import Clay.Render
 import Clay.Stylesheet
