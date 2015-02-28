@@ -21,6 +21,10 @@ module Clay.Size
 , ex
 , pct
 , rem
+, vw
+, vh
+, vmin
+, vmax
 
 -- * Shorthands for properties that can be applied separately to each box side.
 
@@ -92,6 +96,22 @@ pct i = Size (value i <> "%")
 
 rem :: Double -> Size Rel
 rem i = Size (value i <> "rem")
+
+-- | Size in 1/100th of the viewport width.
+vw :: Double -> Size Rel
+vw i = Size (value i <> "vw")
+
+-- | Size in 1/100th of the viewport height.
+vh :: Double -> Size Rel
+vh i = Size (value i <> "vh")
+
+-- | Size in 1/100th of minimum value of height or width of viewport.
+vmin :: Double -> Size Rel
+vmin i = Size (value i <> "vmin")
+
+-- | Size in 1/100th of maximum value between height or width of viewport.
+vmax :: Double -> Size Rel
+vmax i = Size (value i <> "vmax")
 
 instance Num (Size Abs) where
   fromInteger = px
