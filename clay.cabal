@@ -51,6 +51,7 @@ Library
     Clay.Display
     Clay.Elements
     Clay.Filter
+    Clay.Flexbox
     Clay.Font
     Clay.FontFace
     Clay.Geometry

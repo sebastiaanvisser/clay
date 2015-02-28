@@ -34,7 +34,7 @@ module Clay.Text
 
 , TextAlign
 , textAlign
-, justify, matchParent, start, end, center
+, justify, matchParent, start, end
 , alignSide
 , alignString
 
@@ -145,15 +145,14 @@ direction = key "direction"
 -------------------------------------------------------------------------------
 
 newtype TextAlign = TextAlign Value
-  deriving (Val, Normal, Inherit, Other)
+  deriving (Val, Normal, Inherit, Other, Center)
 
-justify, matchParent, start, end, center :: TextAlign
+justify, matchParent, start, end :: TextAlign
 
 justify     = TextAlign "justify"
 matchParent = TextAlign "match-parent"
 start       = TextAlign "start"
 end         = TextAlign "end"
-center      = TextAlign "center"
 
 alignSide :: Side -> TextAlign
 alignSide = TextAlign . value
