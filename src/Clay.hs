@@ -99,6 +99,7 @@ module Clay
 , module Clay.Box
 , module Clay.Display
 , module Clay.Dynamic
+, module Clay.Flexbox
 , module Clay.Font
 , module Clay.FontFace
 , module Clay.Geometry
@@ -140,6 +141,7 @@ import Clay.Time
 import Clay.Common
 import Clay.Display    hiding (table)
 import Clay.Dynamic
+import Clay.Flexbox    hiding (flex, nowrap, wrap)
 import Clay.Font       hiding (menu, caption, small, icon)
 import Clay.FontFace
 import Clay.Geometry

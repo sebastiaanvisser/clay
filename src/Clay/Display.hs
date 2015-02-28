@@ -65,13 +65,13 @@ module Clay.Display
 -- * Vertical align.
 
 , VerticalAlign(..)
-, baseline, middle, vAlignSub, vAlignSuper, textTop, textBottom, vAlignTop, vAlignBottom
+, middle, vAlignSub, vAlignSuper, textTop, textBottom, vAlignTop, vAlignBottom
 
 -- * Cursor
 
 , Cursor(..)
 , crosshair, cursorDefault, pointer, move, eResize, neResize, nwResize, nResize, seResize, swResize, sResize, wResize, cursorText, wait, cursorProgress, help, cursorUrl
-          
+
 )
 where
 
@@ -232,14 +232,13 @@ class (Val a) => VerticalAlign a where
     verticalAlign :: a -> Css
     verticalAlign = key "vertical-align"
 
-newtype VerticalAlignValue a = VerticalAlignValue Value deriving (Val)
+newtype VerticalAlignValue a = VerticalAlignValue Value deriving (Val, Baseline)
 
 instance VerticalAlign (VerticalAlignValue a)
 instance VerticalAlign (Size a)
 
-baseline,middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
+middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
 
-baseline = VerticalAlignValue "baseline"
 middle = VerticalAlignValue "middle"
 vAlignSub = VerticalAlignValue "sub"
 vAlignSuper = VerticalAlignValue "super"
