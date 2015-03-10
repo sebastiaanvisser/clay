@@ -1,4 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
 module Clay.Stylesheet where
 
 import Control.Applicative
@@ -60,6 +62,10 @@ rule a = S (tell [a])
 -- `StyleM` monad that just collects and doesn't return anything.
 
 type Css = StyleM ()
+
+instance Monoid Css where
+  mempty = pure ()
+  mappend = liftA2 mappend
 
 -- | Add a new style property to the stylesheet with the specified `Key` and
 -- value. The value can be any type that is in the `Val' typeclass, with other
