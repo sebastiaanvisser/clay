@@ -82,12 +82,13 @@ clamp i = max (min i 255) 0
 instance Val Color where
   value clr =
     case clr of
-      Rgba r g b 255 -> Value $mconcat ["rgb(",  p r, ",", p g, ",", p b,            ")"]
+      Rgba r g b 255 -> Value $mconcat ["#",  p' r, p' g, p' b]
       Rgba r g b a   -> Value $mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
       Hsla h s l 255 -> Value $mconcat ["hsl(",  p h, ",", f s, ",", f l,            ")"]
       Hsla h s l a   -> Value $mconcat ["hsla(", p h, ",", f s, ",", f l, ",", ah a, ")"]
       Other o        -> o
     where p  = fromString . show
+          p' = fromString . printf "%02x"
           f  = fromString . printf "%.4f%%"
           ah = fromString . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
 
