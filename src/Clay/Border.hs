@@ -28,6 +28,7 @@ module Clay.Border
 
 -- * Collapsing borders model for a table
 , borderCollapse
+, borderSpacing, borderSpacing2
 )
 where
 
@@ -171,3 +172,9 @@ collapseSeparate  = Collapse "separate" -}
 
 borderCollapse :: Visibility -> Css
 borderCollapse = key "border-collapse"
+
+borderSpacing :: Size a -> Css
+borderSpacing a = key "border-spacing" a
+
+borderSpacing2 :: Size a -> Size a -> Css
+borderSpacing2 a b = key "border-spacing" (a ! b)
