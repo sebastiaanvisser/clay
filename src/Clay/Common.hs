@@ -67,3 +67,15 @@ browsers = Prefixed
 call :: (IsString s, Monoid s) => s -> s -> s
 call fn arg = fn <> "(" <> arg <> ")"
 
+-------------------------------------------------------------------------------
+
+-- | Some auxiliary mathematical functions.
+
+fracMod :: RealFrac a => a -> a -> a
+fracMod x y = (x -) . (* y) $ evenMultiples x y
+    where evenMultiples x y = fromIntegral . truncate $ x / y
+
+decimalRound :: RealFrac a => a -> Int -> a
+decimalRound x decimalPlaces = shiftedAndRounded x / powersOf10
+    where powersOf10 = 10 ^ decimalPlaces
+          shiftedAndRounded x = fromIntegral . round $ x * powersOf10
