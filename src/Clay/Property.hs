@@ -10,7 +10,7 @@ import Data.String
 import Data.Text (Text, replace)
 
 data Prefixed = Prefixed { unPrefixed :: [(Text, Text)] } | Plain { unPlain :: Text }
-  deriving Show
+  deriving (Show, Eq)
 
 instance IsString Prefixed where
   fromString s = Plain (fromString s)
@@ -48,7 +48,7 @@ cast (Key k) = Key k
 -------------------------------------------------------------------------------
 
 newtype Value = Value { unValue :: Prefixed }
-  deriving (Show, Monoid, IsString)
+  deriving (Show, Monoid, IsString, Eq)
 
 class Val a where
   value :: a -> Value
