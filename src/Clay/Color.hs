@@ -19,7 +19,7 @@ data Color
   = Rgba Integer Integer Integer Integer
   | Hsla Integer Float   Float   Integer
   | Other Value
-  deriving Show
+  deriving (Show, Eq)
 
 -- * Color constructors.
 
@@ -60,6 +60,56 @@ setA a (Rgba r g b _) = Rgba r g b a
 setA a (Hsla r g b _) = Hsla r g b a
 setA _ o              = o
 
+-- * Color conversions.
+
+toRgba :: Color -> Color
+toRgba color =
+    case color of
+        Hsla h s l a -> toRgba rgb' a
+              where sextant = fromIntegral h / 60.0
+                    chroma = (s *) . (1.0 -) . abs $ (2.0 * l) - 1.0
+                    x = (chroma *) . (1.0 -) . abs $ (sextant `fracMod` 2) - 1.0
+                    lightnessAdjustment = l - (chroma / 2.0)
+
+                    toRgbPart component = truncate . (* 255.0) $ component + lightnessAdjustment
+                    toRgba (r, g, b) = Rgba (toRgbPart r) (toRgbPart g) (toRgbPart b)
+
+                    rgb' | h >= 0   && h <  60 = (chroma, x     ,  0)
+                         | h >= 60  && h < 120 = (x     , chroma,  0)
+                         | h >= 120 && h < 180 = (0     , chroma,  x)
+                         | h >= 180 && h < 240 = (0     , x     ,  chroma)
+                         | h >= 240 && h < 300 = (x     , 0     ,  chroma)
+                         | otherwise           = (chroma, 0     ,  x)
+
+        color@(Rgba _ _ _ _) -> color
+
+
+toHsla :: Color -> Color
+toHsla color =
+    case color of
+        Rgba red green blue alpha -> Hsla h (decimalRound s 3) (decimalRound l 3) alpha
+            where r = fromIntegral red   / 255.0
+                  g = fromIntegral green / 255.0
+                  b = fromIntegral blue  / 255.0
+
+                  min = minimum [r, g, b]
+                  max = maximum [r, g, b]
+                  delta = max - min
+
+                  l = (min + max) / 2.0
+                  s = if delta == 0.0 then 0.0
+                      else (delta /) . (1.0 -) . abs $ (2.0 * l) - 1.0
+
+                  h' | delta == 0.0 = 0.0
+                     | r == max     = ((g - b) / delta) `fracMod` 6.0
+                     | g == max     = ((b - r) / delta) + 2.0
+                     | otherwise    = ((r - g) / delta) + 4.0
+
+                  h'' = truncate $ 60 * h'
+                  h = if h'' < 0 then h''+ 360 else h''
+
+        color@(Hsla _ _ _ _) -> color
+
 -- * Computing with colors.
 
 (*.) :: Color -> Integer -> Color
@@ -76,6 +126,37 @@ setA _ o              = o
 
 clamp :: Integer -> Integer
 clamp i = max (min i 255) 0
+
+lighten :: Float -> Color -> Color
+lighten factor color =
+    case color of
+        color@(Hsla {}) -> toHsla $ lighten factor (toRgba color)
+        color@(Rgba {}) -> lerp factor color (Rgba 255 255 255 255)
+
+darken :: Float -> Color -> Color
+darken factor color =
+    case color of
+        color@(Hsla {}) -> toHsla $ darken factor (toRgba color)
+        color@(Rgba {}) -> lerp factor color (Rgba 0 0 0 255)
+
+lerp :: Float -> Color -> Color -> Color
+lerp factor startColor boundColor =
+    case (startColor, boundColor) of
+        (color@(Hsla {}), bound) -> toHsla $ lerp factor (toRgba color) bound
+
+        (start, color@(Hsla {})) -> toHsla $ lerp factor start (toRgba color)
+
+        (Rgba r g b a, Rgba r' g' b' a') ->
+            Rgba
+                (lerpComponent factor r r')
+                (lerpComponent factor g g')
+                (lerpComponent factor b b')
+                (lerpComponent factor a a')
+            where lerpComponent :: Float -> Integer -> Integer -> Integer
+                  lerpComponent amount start bound =
+                    let difference = bound - start
+                        adjustment = truncate $ fromIntegral difference * amount
+                    in clamp $ start + adjustment
 
 -------------------------------------------------------------------------------
 
