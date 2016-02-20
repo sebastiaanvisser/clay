@@ -15,7 +15,7 @@ import Control.Applicative
 import Control.Monad.Writer
 import Data.Either
 import Data.Foldable (foldMap)
-import Data.List (sort)
+import Data.List (sort,sortBy)
 import Data.Maybe
 import Data.Text (Text, pack)
 import Data.Text.Lazy.Builder
@@ -251,7 +251,10 @@ properties cfg xs =
 
 selector :: Config -> Selector -> Builder
 selector cfg = intersperse ("," <> newline cfg) . rec
-  where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
+  where
+    cmp' (Pseudo _) (Pseudo _) = EQ
+    cmp' a b = compare a b
+    rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sortBy cmp' ft)) <$>
           case p of
             Star           -> if null ft then ["*"] else [""]
             Elem t         -> [fromText t]
