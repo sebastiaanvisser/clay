@@ -5,6 +5,7 @@
   , GeneralizedNewtypeDeriving
   , StandaloneDeriving
   , UndecidableInstances
+  , ViewPatterns
   #-}
 module Clay.Selector where
 
@@ -146,6 +147,7 @@ data Predicate
   | AttrHyph     Text Text
   | Pseudo       Text
   | PseudoFunc   Text [Text]
+  | PseudoElem   Text
   deriving (Eq, Ord, Show)
 
 newtype Refinement = Refinement { unFilter :: [Predicate] }
@@ -159,6 +161,8 @@ filterFromText t = Refinement $
   case Text.uncons t of
     Just ('#', s) -> [Id     s]
     Just ('.', s) -> [Class  s]
+    Just (':', Text.uncons -> Just (':',s))
+                  -> [PseudoElem s]
     Just (':', s) -> [Pseudo s]
     Just ('@', s) -> [Attr   s]
     _             -> [Attr   t]

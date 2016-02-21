@@ -8,11 +8,18 @@ import Clay.Selector
 -- List of specific pseudo classes, from:
 -- https://developer.mozilla.org/en-US/docs/CSS/Pseudo-classes
 
-after, before :: Refinement
+-- * Pseudo elements
 
-after  = ":after"
-before = ":before"
+after, before, firstLetter, firstLine, selection, backdrop :: Refinement
 
+after       = "::after"
+before      = "::before"
+firstLetter = "::first-letter"
+firstLine   = "::first-line"
+selection   = "::selection"
+backdrop    = "::backdrop"
+
+-- * Pseudo classes
 link, visited, active, hover, focus, firstChild, lastChild :: Refinement
 
 link       = ":link"
