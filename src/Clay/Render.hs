@@ -11,26 +11,26 @@ module Clay.Render
 )
 where
 
-import Control.Applicative
-import Control.Monad.Writer
-import Data.Either
-import Data.Foldable (foldMap)
-import Data.List (sort,sortBy)
-import Data.Maybe
-import Data.Text (Text, pack)
-import Data.Text.Lazy.Builder
-import Prelude hiding ((**))
+import           Control.Applicative
+import           Control.Monad.Writer
+import           Data.Either
+import           Data.Foldable          (foldMap)
+import           Data.List              (sort, sortBy)
+import           Data.Maybe
+import           Data.Text              (Text, pack)
+import           Data.Text.Lazy.Builder
+import           Prelude                hiding ((**))
 
-import qualified Data.Text         as Text
-import qualified Data.Text.Lazy    as Lazy
-import qualified Data.Text.Lazy.IO as Lazy
+import qualified Data.Text              as Text
+import qualified Data.Text.Lazy         as Lazy
+import qualified Data.Text.Lazy.IO      as Lazy
 
-import Clay.Stylesheet hiding (Child, query, rule)
-import Clay.Common (browsers)
-import Clay.Property
-import Clay.Selector
+import           Clay.Common            (browsers)
+import           Clay.Property
+import           Clay.Selector
+import           Clay.Stylesheet        hiding (Child, query, rule)
 
-import qualified Clay.Stylesheet as Rule
+import qualified Clay.Stylesheet        as Rule
 
 
 data Config = Config
@@ -249,11 +249,10 @@ properties cfg xs =
                       then fromText (Text.replicate (width - Text.length k) " ")
                       else ""
              in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v]
-                
+
 selector :: Config -> Selector -> Builder
 selector cfg = intersperse ("," <> newline cfg) . rec
-  where
-    rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
+  where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
             Star           -> if null ft then ["*"] else [""]
             Elem t         -> [fromText t]
