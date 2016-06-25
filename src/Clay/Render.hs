@@ -11,26 +11,27 @@ module Clay.Render
 )
 where
 
-import Control.Applicative
-import Control.Monad.Writer
-import Data.Either
-import Data.Foldable (foldMap)
-import Data.List (sort)
-import Data.Maybe
-import Data.Text (Text, pack)
-import Data.Text.Lazy.Builder
-import Prelude hiding ((**))
+import           Control.Applicative
+import           Control.Monad.Writer
+import           Data.Either
+import           Data.Foldable          (foldMap)
+import           Data.List              (sort, sortBy)
+import           Data.Maybe
+import           Data.Text              (Text, pack)
+import           Data.Text.Lazy.Builder
+import           Prelude                hiding ((**))
 
-import qualified Data.Text         as Text
-import qualified Data.Text.Lazy    as Lazy
-import qualified Data.Text.Lazy.IO as Lazy
+import qualified Data.Text              as Text
+import qualified Data.Text.Lazy         as Lazy
+import qualified Data.Text.Lazy.IO      as Lazy
 
-import Clay.Stylesheet hiding (Child, query, rule)
-import Clay.Common (browsers)
-import Clay.Property
-import Clay.Selector
+import           Clay.Common            (browsers)
+import           Clay.Property
+import           Clay.Selector
+import           Clay.Stylesheet        hiding (Child, query, rule)
 
-import qualified Clay.Stylesheet as Rule
+import qualified Clay.Stylesheet        as Rule
+
 
 data Config = Config
   { indentation    :: Builder
@@ -264,16 +265,16 @@ selector cfg = intersperse ("," <> newline cfg) . rec
 predicate :: Predicate -> Builder
 predicate ft = mconcat $
   case ft of
-    Id           a   -> [ "#", fromText a                                             ]
-    Class        a   -> [ ".", fromText a                                             ]
-    Attr         a   -> [ "[", fromText a,                     "]"                    ]
-    AttrVal      a v -> [ "[", fromText a,  "='", fromText v, "']"                    ]
-    AttrBegins   a v -> [ "[", fromText a, "^='", fromText v, "']"                    ]
-    AttrEnds     a v -> [ "[", fromText a, "$='", fromText v, "']"                    ]
-    AttrContains a v -> [ "[", fromText a, "*='", fromText v, "']"                    ]
-    AttrSpace    a v -> [ "[", fromText a, "~='", fromText v, "']"                    ]
-    AttrHyph     a v -> [ "[", fromText a, "|='", fromText v, "']"                    ]
-    Pseudo       a   -> [ ":", fromText a                                             ]
-    PseudoFunc   a p -> [ ":", fromText a, "(", intersperse "," (map fromText p), ")" ]
-
+    Id           a   -> [ "#" , fromText a                                             ]
+    Class        a   -> [ "." , fromText a                                             ]
+    Attr         a   -> [ "[" , fromText a,                     "]"                    ]
+    AttrVal      a v -> [ "[" , fromText a,  "='", fromText v, "']"                    ]
+    AttrBegins   a v -> [ "[" , fromText a, "^='", fromText v, "']"                    ]
+    AttrEnds     a v -> [ "[" , fromText a, "$='", fromText v, "']"                    ]
+    AttrContains a v -> [ "[" , fromText a, "*='", fromText v, "']"                    ]
+    AttrSpace    a v -> [ "[" , fromText a, "~='", fromText v, "']"                    ]
+    AttrHyph     a v -> [ "[" , fromText a, "|='", fromText v, "']"                    ]
+    Pseudo       a   -> [ ":" , fromText a                                             ]
+    PseudoFunc   a p -> [ ":" , fromText a, "(", intersperse "," (map fromText p), ")" ]
+    PseudoElem   a   -> [ "::", fromText a                                             ]
 
