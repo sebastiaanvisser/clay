@@ -13,7 +13,7 @@ module Clay.Media
 , minDeviceWidth, maxDeviceWidth, deviceHeight, minDeviceHeight
 , maxDeviceHeight
 
--- * Aspect ration features.
+-- * Aspect ratio features.
 
 , aspectRatio, minAspectRatio, maxAspectRatio, deviceAspectRatio
 , minDeviceAspectRatio, maxDeviceAspectRatio
