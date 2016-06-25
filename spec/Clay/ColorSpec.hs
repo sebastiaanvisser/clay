@@ -3,11 +3,11 @@ module Clay.ColorSpec where
 
 import           Clay.Color
 import           Control.Exception                 (evaluate)
-import           Control.Exception.Base            (PatternMatchFail)
+import           Control.Exception.Base            (SomeException)
 import           Test.Hspec
 
-anyPatternMatchFailException :: Selector PatternMatchFail
-anyPatternMatchFailException = const True
+someException :: Selector SomeException
+someException = const True
 
 spec :: Spec
 spec = do
@@ -16,7 +16,7 @@ spec = do
         it "gives back the same Rgba" $
             toRgba (Rgba 255 255 255 255) `shouldBe` Rgba 255 255 255 255
         it "will not accept an Other" $
-            evaluate (toRgba (Other "auto")) `shouldThrow` anyPatternMatchFailException
+            evaluate (toRgba (Other "auto")) `shouldThrow` someException
         it "translates a whiteRgba Hsla" $
             toRgba (Hsla 360 1.0 1.0 255) `shouldBe` Rgba 255 255 255 255
         it "translates a blackRgba Hsla" $
@@ -35,7 +35,7 @@ spec = do
         it "gives back the same Hsla" $
             toHsla (Hsla 0 0.0 0.0 0) `shouldBe` Hsla 0 0.0 0.0 0
         it "will not accept an Other" $
-            evaluate (toHsla (Other "auto")) `shouldThrow` anyPatternMatchFailException
+            evaluate (toHsla (Other "auto")) `shouldThrow` someException
         it "translates a whiteRgba Rgba" $
             toHsla (Rgba 255 255 255 255) `shouldBe` Hsla 0 0.0 1.0 255
         it "translates a blackRgba Rgba" $

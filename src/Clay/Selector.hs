@@ -6,6 +6,7 @@
   , StandaloneDeriving
   , UndecidableInstances
   , ViewPatterns
+  , PatternGuards
   #-}
 module Clay.Selector where
 

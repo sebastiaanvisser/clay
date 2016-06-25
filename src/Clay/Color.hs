@@ -16,24 +16,24 @@ import Clay.Common
 -- * Color datatype.
 
 data Color
-  = Rgba Integer Integer Integer Integer
-  | Hsla Integer Float   Float   Integer
+  = Rgba Integer Integer Integer Float
+  | Hsla Integer Float   Float   Float
   | Other Value
   deriving (Show, Eq)
 
 -- * Color constructors.
 
-rgba :: Integer -> Integer -> Integer -> Integer -> Color
+rgba :: Integer -> Integer -> Integer -> Float -> Color
 rgba = Rgba
 
 rgb :: Integer -> Integer -> Integer -> Color
-rgb r g b = rgba r g b 255
+rgb r g b = rgba r g b 1
 
-hsla :: Integer -> Float -> Float -> Integer -> Color
+hsla :: Integer -> Float -> Float -> Float -> Color
 hsla = Hsla
 
 hsl :: Integer -> Float -> Float -> Color
-hsl r g b = hsla r g b 255
+hsl r g b = hsla r g b 1
 
 grayish :: Integer -> Color
 grayish g = rgb g g g
@@ -55,7 +55,7 @@ setB :: Integer -> Color -> Color
 setB b (Rgba r g _ a) = Rgba r g b a
 setB _ o              = o
 
-setA :: Integer -> Color -> Color
+setA :: Float -> Color -> Color
 setA a (Rgba r g b _) = Rgba r g b a
 setA a (Hsla r g b _) = Hsla r g b a
 setA _ o              = o
@@ -65,14 +65,14 @@ setA _ o              = o
 toRgba :: Color -> Color
 toRgba color =
     case color of
-        Hsla h s l a -> toRgba rgb' a
+        Hsla h s l a -> toRgba' rgb' a
               where sextant = fromIntegral h / 60.0
                     chroma = (s *) . (1.0 -) . abs $ (2.0 * l) - 1.0
                     x = (chroma *) . (1.0 -) . abs $ (sextant `fracMod` 2) - 1.0
                     lightnessAdjustment = l - (chroma / 2.0)
 
                     toRgbPart component = truncate . (* 255.0) $ component + lightnessAdjustment
-                    toRgba (r, g, b) = Rgba (toRgbPart r) (toRgbPart g) (toRgbPart b)
+                    toRgba' (r, g, b) = Rgba (toRgbPart r) (toRgbPart g) (toRgbPart b)
 
                     rgb' | h >= 0   && h <  60 = (chroma, x     ,  0)
                          | h >= 60  && h < 120 = (x     , chroma,  0)
@@ -81,34 +81,38 @@ toRgba color =
                          | h >= 240 && h < 300 = (x     , 0     ,  chroma)
                          | otherwise           = (chroma, 0     ,  x)
 
-        color@(Rgba _ _ _ _) -> color
+        c@(Rgba _ _ _ _) -> c
+        
+        Other _          -> error "Invalid to pass Other to toRgba."
 
 
 toHsla :: Color -> Color
 toHsla color =
     case color of
-        Rgba red green blue alpha -> Hsla h (decimalRound s 3) (decimalRound l 3) alpha
-            where r = fromIntegral red   / 255.0
-                  g = fromIntegral green / 255.0
-                  b = fromIntegral blue  / 255.0
+        Rgba redComponent greenComponent blueComponent alphaComponent -> Hsla h (decimalRound s 3) (decimalRound l 3) alphaComponent
+            where r = fromIntegral redComponent   / 255.0
+                  g = fromIntegral greenComponent / 255.0
+                  b = fromIntegral blueComponent  / 255.0
 
-                  min = minimum [r, g, b]
-                  max = maximum [r, g, b]
-                  delta = max - min
+                  minColor = minimum [r, g, b]
+                  maxColor = maximum [r, g, b]
+                  delta = maxColor - minColor
 
-                  l = (min + max) / 2.0
+                  l = (minColor + maxColor) / 2.0
                   s = if delta == 0.0 then 0.0
                       else (delta /) . (1.0 -) . abs $ (2.0 * l) - 1.0
 
                   h' | delta == 0.0 = 0.0
-                     | r == max     = ((g - b) / delta) `fracMod` 6.0
-                     | g == max     = ((b - r) / delta) + 2.0
-                     | otherwise    = ((r - g) / delta) + 4.0
+                     | r == maxColor = ((g - b) / delta) `fracMod` 6.0
+                     | g == maxColor = ((b - r) / delta) + 2.0
+                     | otherwise     = ((r - g) / delta) + 4.0
 
                   h'' = truncate $ 60 * h'
                   h = if h'' < 0 then h''+ 360 else h''
 
-        color@(Hsla _ _ _ _) -> color
+        c@(Hsla _ _ _ _) -> c
+        
+        Other _          -> error "Invalid to pass Other to toHsla."
 
 -- * Computing with colors.
 
@@ -124,24 +128,28 @@ toHsla color =
 (-.) (Rgba r g b a) i = Rgba (clamp (r - i)) (clamp (g - i)) (clamp (b - i)) a
 (-.) o              _ = o
 
-clamp :: Integer -> Integer
-clamp i = max (min i 255) 0
+clamp :: Ord a => Num a => a -> a
+clamp i = max (min i (fromIntegral (255 :: Integer))) (fromIntegral (0 :: Integer))
 
 lighten :: Float -> Color -> Color
 lighten factor color =
     case color of
-        color@(Hsla {}) -> toHsla $ lighten factor (toRgba color)
-        color@(Rgba {}) -> lerp factor color (Rgba 255 255 255 255)
+        c@(Hsla {}) -> toHsla $ lighten factor (toRgba c)
+        c@(Rgba {}) -> lerp factor c (Rgba 255 255 255 255)
+        Other _     -> error "Other cannot be lightened."
 
 darken :: Float -> Color -> Color
 darken factor color =
     case color of
-        color@(Hsla {}) -> toHsla $ darken factor (toRgba color)
-        color@(Rgba {}) -> lerp factor color (Rgba 0 0 0 255)
+        c@(Hsla {}) -> toHsla $ darken factor (toRgba c)
+        c@(Rgba {}) -> lerp factor c (Rgba 0 0 0 255)
+        Other _     -> error "Other cannot be darkened."
 
 lerp :: Float -> Color -> Color -> Color
 lerp factor startColor boundColor =
     case (startColor, boundColor) of
+        (Other _, _) -> error "Other cannot be lerped." 
+        (_, Other _) -> error "Other cannot be lerped." 
         (color@(Hsla {}), bound) -> toHsla $ lerp factor (toRgba color) bound
 
         (start, color@(Hsla {})) -> toHsla $ lerp factor start (toRgba color)
@@ -151,11 +159,16 @@ lerp factor startColor boundColor =
                 (lerpComponent factor r r')
                 (lerpComponent factor g g')
                 (lerpComponent factor b b')
-                (lerpComponent factor a a')
+                (lerpAlpha factor a a')
             where lerpComponent :: Float -> Integer -> Integer -> Integer
                   lerpComponent amount start bound =
                     let difference = bound - start
                         adjustment = truncate $ fromIntegral difference * amount
+                    in clamp $ start + adjustment
+                  lerpAlpha :: Float -> Float -> Float -> Float
+                  lerpAlpha amount start bound =
+                    let difference = bound - start
+                        adjustment = fromIntegral $ (truncate $ difference * amount :: Integer)
                     in clamp $ start + adjustment
 
 -------------------------------------------------------------------------------
@@ -171,7 +184,7 @@ instance Val Color where
     where p  = fromString . show
           p' = fromString . printf "%02x"
           f  = fromString . printf "%.4f%%"
-          ah = fromString . printf "%.4f" . (/ (256 :: Double)) . fromIntegral
+          ah = fromString . printf "%.4f"
 
 instance None    Color where none    = Other "none"
 instance Auto    Color where auto    = Other "auto"
@@ -186,9 +199,9 @@ parse t =
   case Text.uncons t of
     Just ('#', cs) | Text.all isHexDigit cs ->
       case Text.unpack cs of
-        [a, b, c, d, e, f, g, h] -> rgba (hex a b) (hex c d) (hex e f) (hex g h)
+        [a, b, c, d, e, f, g, h] -> rgba (hex a b) (hex c d) (hex e f) (fromIntegral (hex g h :: Integer) / 255.0)
         [a, b, c, d, e, f      ] -> rgb  (hex a b) (hex c d) (hex e f)
-        [a, b, c, d            ] -> rgba (hex a a) (hex b b) (hex c c) (hex d d)
+        [a, b, c, d            ] -> rgba (hex a a) (hex b b) (hex c c) (fromIntegral (hex d d :: Integer) / 255.0)
         [a, b, c               ] -> rgb  (hex a a) (hex b b) (hex c c)
         _                        -> err
     _                            -> err

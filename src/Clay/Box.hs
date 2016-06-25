@@ -4,6 +4,7 @@ module Clay.Box
 , paddingBox, borderBox, contentBox
 , boxSizing
 , boxShadow
+, boxShadowWithSpread
 , boxShadows
 , insetBoxShadow
 )

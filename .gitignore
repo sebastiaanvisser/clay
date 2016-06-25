@@ -4,3 +4,4 @@ examples/*.css
 examples/*/*.css
 .cabal-sandbox/
 cabal.sandbox.config
+.stack-work

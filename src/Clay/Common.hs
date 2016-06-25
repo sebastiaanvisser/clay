@@ -11,7 +11,7 @@ module Clay.Common where
 
 import Clay.Property
 import Data.String (IsString)
-import Data.Monoid (Monoid, (<>))
+import Data.Monoid ((<>))
 
 -------------------------------------------------------------------------------
 
@@ -73,9 +73,9 @@ call fn arg = fn <> "(" <> arg <> ")"
 
 fracMod :: RealFrac a => a -> a -> a
 fracMod x y = (x -) . (* y) $ evenMultiples x y
-    where evenMultiples x y = fromIntegral . truncate $ x / y
+    where evenMultiples x' y' = fromIntegral (truncate (x' / y') :: Integer)
 
 decimalRound :: RealFrac a => a -> Int -> a
 decimalRound x decimalPlaces = shiftedAndRounded x / powersOf10
     where powersOf10 = 10 ^ decimalPlaces
-          shiftedAndRounded x = fromIntegral . round $ x * powersOf10
+          shiftedAndRounded x' = fromIntegral (round $ x' * powersOf10 :: Integer)
