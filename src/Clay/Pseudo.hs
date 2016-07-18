@@ -53,10 +53,11 @@ root          = ":root"
 target        = ":target"
 valid         = ":valid"
 
-lang, nthChild, nthLastChild, nthLastOfType, nthOfType :: Text -> Refinement
+lang, nthChild, nthLastChild, nthLastOfType, nthOfType, not :: Text -> Refinement
 
 lang          n = func "lang"             [n]
 nthChild      n = func "nth-child"        [n]
 nthLastChild  n = func "nth-last-child"   [n]
 nthLastOfType n = func "nth-last-of-type" [n]
 nthOfType     n = func "nth-of-type"      [n]
+not           n = func "not"              [n]
