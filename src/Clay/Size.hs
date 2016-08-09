@@ -11,6 +11,7 @@ module Clay.Size
   Size
 , Abs
 , Rel
+, Percentage
 , nil
 , unitless
 
@@ -64,11 +65,14 @@ import Clay.Stylesheet
 
 -------------------------------------------------------------------------------
 
--- | Sizes can be relative like percentages or rems.
+-- | Sizes can be relative like ems or rems.
 data Rel
 
 -- | Sizes can be absolute like pixels, points, etc.
 data Abs
+
+-- | Sizes can be given in percentages
+data Percentage
 
 newtype Size a = Size Value
   deriving (Val, Auto, Normal, Inherit, None, Other)
@@ -101,7 +105,8 @@ pt i = Size (value i <> "pt")
 -- | Size in picas (1pc = 12pt).
 pc i = Size (value i <> "pc")
 
-em, ex, pct, rem, vw, vh, vmin, vmax :: Double -> Size Rel
+pct :: Double -> Size Percentage
+em, ex, rem, vw, vh, vmin, vmax :: Double -> Size Rel
 
 -- | Size in em's (computed value of the font-size).
 em i = Size (value i <> "em")
@@ -139,7 +144,7 @@ instance Fractional (Size Abs) where
   fromRational = px . fromRational
   recip  = error  "recip not implemented for Size"
 
-instance Num (Size Rel) where
+instance Num (Size Percentage) where
   fromInteger = pct . fromInteger
   (+)    = error   "plus not implemented for Size"
   (*)    = error  "times not implemented for Size"
@@ -147,7 +152,7 @@ instance Num (Size Rel) where
   signum = error "signum not implemented for Size"
   negate = error "negate not implemented for Size"
 
-instance Fractional (Size Rel) where
+instance Fractional (Size Percentage) where
   fromRational = pct . fromRational
   recip  = error  "recip not implemented for Size"
 
