@@ -49,33 +49,33 @@ filters x = prefixed (browsers <> "filter") (noCommas x)
 url :: Text -> Filter
 url u = Filter ("url(" <> value u <> ")")
 
-blur :: Size Abs -> Filter
+blur :: Size LengthUnit -> Filter
 blur i = Filter ("blur(" <> value i <> ")")
 
 brightness :: Double -> Filter
 brightness i = Filter ("brightness(" <> value i <> ")")
 
-contrast :: Size Rel -> Filter
+contrast :: Size Percentage -> Filter
 contrast i = Filter ("contrast(" <> value i <> ")")
 
-dropShadow :: Size Abs -> Size Abs -> Size Abs -> Color -> Filter
+dropShadow :: Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Color -> Filter
 dropShadow x y s c = Filter ("drop-shadow(" <> value (x ! y ! s ! c) <> ")")
 
-grayscale :: Size Rel -> Filter
+grayscale :: Size Percentage -> Filter
 grayscale g = Filter ("grayscale(" <> value g <> ")")
 
 hueRotate :: Angle a -> Filter
 hueRotate h = Filter ("hue-rotate(" <> value h <> ")")
 
-invert :: Size Rel -> Filter
+invert :: Size Percentage -> Filter
 invert i = Filter ("invert(" <> value i <> ")")
 
-opacity :: Size Rel -> Filter
+opacity :: Size Percentage -> Filter
 opacity i = Filter ("opacity(" <> value i <> ")")
 
-saturate :: Size Rel -> Filter
+saturate :: Size Percentage -> Filter
 saturate i = Filter ("saturate(" <> value i <> ")")
 
-sepia :: Size Rel -> Filter
+sepia :: Size Percentage -> Filter
 sepia i = Filter ("sepia(" <> value i <> ")")
 

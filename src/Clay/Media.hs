@@ -72,7 +72,7 @@ without f = Feature f Nothing
 
 width, minWidth, maxWidth, height, minHeight, maxHeight, deviceWidth
   , minDeviceWidth, maxDeviceWidth, deviceHeight, minDeviceHeight
-  , maxDeviceHeight :: Size Abs -> Feature
+  , maxDeviceHeight :: Size LengthUnit -> Feature
 
 width           = with "width"
 minWidth        = with "min-width"

@@ -44,7 +44,7 @@ import Clay.Property
 import Clay.Size
 import Clay.Background
 
-type Ramp = [(Color, Size Rel)]
+type Ramp = [(Color, Size Percentage)]
 
 -------------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ circle ext = Radial ("circle " <> value ext)
 ellipse :: Extend -> Radial
 ellipse ext = Radial ("ellipse " <> value ext)
 
-circular :: Size Abs -> Radial
+circular :: Size LengthUnit -> Radial
 circular radius = Radial (value (radius, radius))
 
 elliptical :: Size a -> Size a -> Radial
@@ -115,5 +115,5 @@ ramp :: Ramp -> Value
 ramp xs = value (map (\(a, b) -> value (value a, value b)) xs)
 
 shortcut :: (Ramp -> BackgroundImage) -> Color -> Color -> BackgroundImage
-shortcut g f t = g [(f, 0), (t, 100)]
+shortcut g f t = g [(f, (pct 0)), (t, (pct 100))]
 
