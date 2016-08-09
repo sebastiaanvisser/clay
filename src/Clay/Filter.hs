@@ -49,7 +49,7 @@ filters x = prefixed (browsers <> "filter") (noCommas x)
 url :: Text -> Filter
 url u = Filter ("url(" <> value u <> ")")
 
-blur :: Size Abs -> Filter
+blur :: Size LengthUnit -> Filter
 blur i = Filter ("blur(" <> value i <> ")")
 
 brightness :: Double -> Filter
@@ -58,7 +58,7 @@ brightness i = Filter ("brightness(" <> value i <> ")")
 contrast :: Size Percentage -> Filter
 contrast i = Filter ("contrast(" <> value i <> ")")
 
-dropShadow :: Size Abs -> Size Abs -> Size Abs -> Color -> Filter
+dropShadow :: Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Color -> Filter
 dropShadow x y s c = Filter ("drop-shadow(" <> value (x ! y ! s ! c) <> ")")
 
 grayscale :: Size Percentage -> Filter

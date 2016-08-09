@@ -56,7 +56,7 @@ outset = Stroke "outset"
 
 -------------------------------------------------------------------------------
 
-border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size Abs -> Color -> Css
+border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size LengthUnit -> Color -> Css
 
 border        a b c = key "border"        (a ! b ! c)
 borderTop     a b c = key "border-top"    (a ! b ! c)
@@ -86,10 +86,10 @@ borderRightStyle  = key "border-right-style"
 borderTopStyle    = key "border-top-style"
 borderBottomStyle = key "border-bottom-style"
 
-borderWidth4 :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+borderWidth4 :: Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Css
 borderWidth4 a b c d = key "border-width" (a ! b ! c ! d)
 
-borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size Abs -> Css
+borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth :: Size LengthUnit -> Css
 
 borderWidth       = key "border-width"
 borderLeftWidth   = key "border-left-width"
@@ -99,7 +99,7 @@ borderBottomWidth = key "border-bottom-width"
 
 -------------------------------------------------------------------------------
 
-outline, outlineTop, outlineLeft, outlineBottom, outlineRight :: Stroke -> Size Abs -> Color -> Css
+outline, outlineTop, outlineLeft, outlineBottom, outlineRight :: Stroke -> Size LengthUnit -> Color -> Css
 
 outline        a b c = key "outline"        (a ! b ! c)
 outlineTop     a b c = key "outline-top"    (a ! b ! c)
@@ -129,10 +129,10 @@ outlineRightStyle  = key "outline-right-style"
 outlineTopStyle    = key "outline-top-style"
 outlineBottomStyle = key "outline-bottom-style"
 
-outlineWidth4 :: Size Abs -> Size Abs -> Size Abs -> Size Abs -> Css
+outlineWidth4 :: Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Css
 outlineWidth4 a b c d = key "outline-width" (a ! b ! c ! d)
 
-outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth :: Size Abs -> Css
+outlineWidth, outlineLeftWidth, outlineRightWidth, outlineTopWidth, outlineBottomWidth :: Size LengthUnit -> Css
 
 outlineWidth       = key "outline-width"
 outlineLeftWidth   = key "outline-left-width"
@@ -140,7 +140,7 @@ outlineRightWidth  = key "outline-right-width"
 outlineTopWidth    = key "outline-top-width"
 outlineBottomWidth = key "outline-bottom-width"
 
-outlineOffset :: Size Abs -> Css
+outlineOffset :: Size LengthUnit -> Css
 outlineOffset = key "outline-offset"
 
 -------------------------------------------------------------------------------

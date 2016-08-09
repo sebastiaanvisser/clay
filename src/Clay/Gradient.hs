@@ -81,7 +81,7 @@ circle ext = Radial ("circle " <> value ext)
 ellipse :: Extend -> Radial
 ellipse ext = Radial ("ellipse " <> value ext)
 
-circular :: Size Abs -> Radial
+circular :: Size LengthUnit -> Radial
 circular radius = Radial (value (radius, radius))
 
 elliptical :: Size a -> Size a -> Radial

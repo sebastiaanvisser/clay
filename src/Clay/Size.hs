@@ -9,8 +9,7 @@ module Clay.Size
 
 -- * Size type.
   Size
-, Abs
-, Rel
+, LengthUnit
 , Percentage
 , nil
 , unitless
@@ -65,13 +64,10 @@ import Clay.Stylesheet
 
 -------------------------------------------------------------------------------
 
--- | Sizes can be relative like ems or rems.
-data Rel
+-- | Sizes can be given using a length unit (e.g. em, px).
+data LengthUnit
 
--- | Sizes can be absolute like pixels, points, etc.
-data Abs
-
--- | Sizes can be given in percentages
+-- | Sizes can be given in percentages.
 data Percentage
 
 newtype Size a = Size Value
@@ -85,7 +81,7 @@ nil = Size "0"
 unitless :: Double -> Size a
 unitless i = Size (value i)
 
-cm, mm, inches, px, pt, pc :: Double -> Size Abs
+cm, mm, inches, px, pt, pc :: Double -> Size LengthUnit
 
 -- | Size in centimeters.
 cm i = Size (value i <> "cm")
@@ -105,17 +101,13 @@ pt i = Size (value i <> "pt")
 -- | Size in picas (1pc = 12pt).
 pc i = Size (value i <> "pc")
 
-pct :: Double -> Size Percentage
-em, ex, rem, vw, vh, vmin, vmax :: Double -> Size Rel
+em, ex, rem, vw, vh, vmin, vmax :: Double -> Size LengthUnit
 
 -- | Size in em's (computed value of the font-size).
 em i = Size (value i <> "em")
 
 -- | Size in ex'es (x-height of the first avaliable font).
 ex i = Size (value i <> "ex")
-
--- | Size in percents.
-pct i = Size (value i <> "%")
 
 -- | Size in rem's (em's, but always relative to the root element).
 rem i = Size (value i <> "rem")
@@ -132,7 +124,11 @@ vmin i = Size (value i <> "vmin")
 -- | Size in vmax's (the larger of vw or vh).
 vmax i = Size (value i <> "vmax")
 
-instance Num (Size Abs) where
+-- | Size in percents.
+pct :: Double -> Size Percentage
+pct i = Size (value i <> "%")
+
+instance Num (Size LengthUnit) where
   fromInteger = px . fromInteger
   (+)    = error   "plus not implemented for Size"
   (*)    = error  "times not implemented for Size"
@@ -140,7 +136,7 @@ instance Num (Size Abs) where
   signum = error "signum not implemented for Size"
   negate = error "negate not implemented for Size"
 
-instance Fractional (Size Abs) where
+instance Fractional (Size LengthUnit) where
   fromRational = px . fromRational
   recip  = error  "recip not implemented for Size"
 
