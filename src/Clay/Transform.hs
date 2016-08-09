@@ -85,18 +85,19 @@ rotate3d :: Double -> Double -> Double -> Angle a -> Transformation
 rotate3d x y z a = Transformation ("rotate3d(" <> value [value x, value y, value z, value a] <> ")")
 
 -------------------------------------------------------------------------------
-  
-translate :: Size LengthUnit -> Size LengthUnit -> Transformation
-translate x y = Transformation ("translate(" <> value [x, y] <> ")")
 
-translateX, translateY, translateZ :: Size LengthUnit -> Transformation
+translate :: Size a -> Size b -> Transformation
+translate x y = Transformation ("translate(" <> value [value x, value y] <> ")")
+
+translateX, translateY :: Size LengthUnit -> Transformation
+translateZ :: Size LengthUnit -> Transformation
 
 translateX x = Transformation ("translateX(" <> value x <> ")")
 translateY y = Transformation ("translateY(" <> value y <> ")")
 translateZ z = Transformation ("translateZ(" <> value z <> ")")
 
-translate3d :: Size LengthUnit -> Size LengthUnit -> Size LengthUnit -> Transformation
-translate3d x y z = Transformation ("translate3d(" <> value [x, y, z] <> ")")
+translate3d :: Size a -> Size b -> Size LengthUnit -> Transformation
+translate3d x y z = Transformation ("translate3d(" <> value [value x, value y, value z] <> ")")
 
 -------------------------------------------------------------------------------
 
