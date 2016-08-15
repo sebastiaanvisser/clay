@@ -32,3 +32,5 @@ spec = do
       sizeRepr (em 2 @+@ pt 1 @+@ px 3) `shouldBe` "calc((2em + 1pt) + 3px)"
     it "returns prefixed calc for simple sum" $
       (em 2 @+@ pt 2) `shouldSatisfy` hasAllPrefixes
+    it "return calc for sum of different types" $
+      sizeRepr (em 2 @+@ pct 10) `shouldBe` "calc(2em + 10%)"

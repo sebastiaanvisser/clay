@@ -5,6 +5,7 @@
   , FlexibleInstances
   , ExistentialQuantification
   , StandaloneDeriving
+  , TypeFamilies
   #-}
 module Clay.Size
 (
@@ -76,6 +77,9 @@ data LengthUnit
 
 -- | Sizes can be given in percentages.
 data Percentage
+
+-- | When combining percentages with units using calc, we get a combination
+data Combination
 
 data Size a = SimpleSize Text | forall b c. SumSize (Size b) (Size c)
 
@@ -173,9 +177,15 @@ instance Fractional (Size Percentage) where
   fromRational = pct . fromRational
   recip  = error  "recip not implemented for Size"
 
+
+type family SizeCombination sa sb where
+  SizeCombination Percentage Percentage = Percentage
+  SizeCombination LengthUnit LengthUnit = LengthUnit
+  SizeCombination a b = Combination
+
 -- | Plus operator to combine sizes into calc function
 infixl 6 @+@
-(@+@) :: Size a -> Size a -> Size a
+(@+@) :: Size a -> Size b -> Size (SizeCombination a b)
 a @+@ b = SumSize a b
 
 -------------------------------------------------------------------------------
