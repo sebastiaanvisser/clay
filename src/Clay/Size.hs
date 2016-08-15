@@ -37,6 +37,7 @@ module Clay.Size
 -- * Calculation operators for calc
 
 , (@+@)
+, (@-@)
 
 -- * Shorthands for properties that can be applied separately to each box side.
 
@@ -81,17 +82,21 @@ data Percentage
 -- | When combining percentages with units using calc, we get a combination
 data Combination
 
-data Size a = SimpleSize Text | forall b c. SumSize (Size b) (Size c)
+data Size a =
+  SimpleSize Text |
+  forall b c. SumSize (Size b) (Size c) |
+  forall b c. DiffSize (Size b) (Size c)
 
 deriving instance Show (Size a)
 
 sizeToText :: Size a -> Text
 sizeToText (SimpleSize txt) = txt
-sizeToText (SumSize a b) = "(" <> sizeToText a <> " + " <> sizeToText b <> ")"
+sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
+sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
-  value s@(SumSize _ _) = Value $ browsers <> Plain ("calc" <> sizeToText s)
+  value s = Value $ browsers <> Plain ("calc" <> sizeToText s)
 
 instance Auto (Size a) where auto = Clay.Common.auto
 instance Normal (Size a) where normal = Clay.Common.normal
@@ -187,6 +192,11 @@ type family SizeCombination sa sb where
 infixl 6 @+@
 (@+@) :: Size a -> Size b -> Size (SizeCombination a b)
 a @+@ b = SumSize a b
+
+-- | Minus operator to combine sizes into calc function
+infixl 6 @-@
+(@-@) :: Size a -> Size b -> Size (SizeCombination a b)
+a @-@ b = DiffSize a b
 
 -------------------------------------------------------------------------------
 
