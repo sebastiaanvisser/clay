@@ -40,6 +40,7 @@ module Clay.Size
 , (@-@)
 , (@*)
 , (*@)
+, (@/)
 
 -- * Shorthands for properties that can be applied separately to each box side.
 
@@ -88,7 +89,8 @@ data Size a =
   SimpleSize Text |
   forall b c. SumSize (Size b) (Size c) |
   forall b c. DiffSize (Size b) (Size c) |
-  MultSize Double (Size a)
+  MultSize Double (Size a) |
+  DivSize Double (Size a)
 
 deriving instance Show (Size a)
 
@@ -97,6 +99,7 @@ sizeToText (SimpleSize txt) = txt
 sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
 sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
 sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
+sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
@@ -212,6 +215,11 @@ a *@ b = MultSize a b
 infixl 7 @*
 (@*) :: Size a -> Double -> Size a
 a @* b = MultSize b a
+
+-- | Division operator to combine sizes into calc function
+infixl 7 @/
+(@/) :: Size a -> Double -> Size a
+a @/ b = DivSize b a
 
 -------------------------------------------------------------------------------
 

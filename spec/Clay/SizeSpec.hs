@@ -48,3 +48,10 @@ spec = do
       sizeRepr (vmax 5 @-@ em 2 @* 6) `shouldBe` "calc(5vmax - (6 * 2em))"
     it "behaves correctly with negatives" $
       sizeRepr (vmax (-5) @-@ em (-2) @* (-6)) `shouldBe` "calc(-5vmax - (-6 * -2em))"
+    it "return calc for simple division" $
+      sizeRepr (em 2 @/ 3) `shouldBe` "calc(2em / 3)"
+    it "returns calc for division with sum" $
+      sizeRepr (em 2 @/ 3 @+@ px 7) `shouldBe` "calc((2em / 3) + 7px)"
+    it "returns correct calc for complicated expression" $
+      sizeRepr (em 2 @+@ (px 3 @-@ pt 2 @/ 3) @* 4 @* 3 @/ 4 @+@ 2 *@ (vmax 3 @* 5 @+@ vmin 4))
+        `shouldBe` "calc((2em + ((3 * (4 * (3px - (2pt / 3)))) / 4)) + (2 * ((5 * 3vmax) + 4vmin)))"
