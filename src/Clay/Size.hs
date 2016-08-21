@@ -38,6 +38,8 @@ module Clay.Size
 
 , (@+@)
 , (@-@)
+, (@*)
+, (*@)
 
 -- * Shorthands for properties that can be applied separately to each box side.
 
@@ -85,7 +87,8 @@ data Combination
 data Size a =
   SimpleSize Text |
   forall b c. SumSize (Size b) (Size c) |
-  forall b c. DiffSize (Size b) (Size c)
+  forall b c. DiffSize (Size b) (Size c) |
+  MultSize Double (Size a)
 
 deriving instance Show (Size a)
 
@@ -93,6 +96,7 @@ sizeToText :: Size a -> Text
 sizeToText (SimpleSize txt) = txt
 sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
 sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
+sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
@@ -182,6 +186,7 @@ instance Fractional (Size Percentage) where
   fromRational = pct . fromRational
   recip  = error  "recip not implemented for Size"
 
+-- | Type family to define what is the result of a calc operation
 
 type family SizeCombination sa sb where
   SizeCombination Percentage Percentage = Percentage
@@ -197,6 +202,16 @@ a @+@ b = SumSize a b
 infixl 6 @-@
 (@-@) :: Size a -> Size b -> Size (SizeCombination a b)
 a @-@ b = DiffSize a b
+
+-- | Times operator to combine sizes into calc function
+infixl 7 *@
+(*@) :: Double -> Size a -> Size a
+a *@ b = MultSize a b
+
+-- | Reversed times operator to combine sizes into calc function
+infixl 7 @*
+(@*) :: Size a -> Double -> Size a
+a @* b = MultSize b a
 
 -------------------------------------------------------------------------------
 

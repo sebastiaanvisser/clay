@@ -38,3 +38,13 @@ spec = do
       sizeRepr (em 2 @-@ px 5) `shouldBe` "calc(2em - 5px)"
     it "returns calc for combination of sum and difference" $
       sizeRepr (em 2 @-@ px 5 @+@ pt 3) `shouldBe` "calc((2em - 5px) + 3pt)"
+    it "returns calc for simple multiplication" $
+      sizeRepr (3 *@ em 2) `shouldBe` "calc(3 * 2em)"
+    it "returns calc for reversed multiplication" $
+      sizeRepr (em 2 @* 3) `shouldBe` "calc(3 * 2em)"
+    it "returns calc for multiplication with sum" $
+      sizeRepr (em 2 @* 3 @+@ px 3) `shouldBe` "calc((3 * 2em) + 3px)"
+    it "returns calc for multiplication with difference" $
+      sizeRepr (vmax 5 @-@ em 2 @* 6) `shouldBe` "calc(5vmax - (6 * 2em))"
+    it "behaves correctly with negatives" $
+      sizeRepr (vmax (-5) @-@ em (-2) @* (-6)) `shouldBe` "calc(-5vmax - (-6 * -2em))"
