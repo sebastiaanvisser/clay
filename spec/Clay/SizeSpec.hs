@@ -5,6 +5,7 @@ module Clay.SizeSpec where
 import Clay.Size
 import Clay.Property
 import Clay.Common
+import Clay.Color
 
 import Test.Hspec
 import Data.Text
@@ -55,3 +56,5 @@ spec = do
     it "returns correct calc for complicated expression" $
       sizeRepr (em 2 @+@ (px 3 @-@ pt 2 @/ 3) @* 4 @* 3 @/ 4 @+@ 2 *@ (vmax 3 @* 5 @+@ vmin 4))
         `shouldBe` "calc((2em + ((3 * (4 * (3px - (2pt / 3)))) / 4)) + (2 * ((5 * 3vmax) + 4vmin)))"
+    it "returns original value if other is used" $
+      other (value aqua) `shouldBe` (value aqua)

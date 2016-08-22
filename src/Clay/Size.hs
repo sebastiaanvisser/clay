@@ -90,7 +90,8 @@ data Size a =
   forall b c. SumSize (Size b) (Size c) |
   forall b c. DiffSize (Size b) (Size c) |
   MultSize Double (Size a) |
-  DivSize Double (Size a)
+  DivSize Double (Size a) |
+  OtherSize Value
 
 deriving instance Show (Size a)
 
@@ -100,15 +101,18 @@ sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
 sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
 sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
 sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
+sizeToText (OtherSize a) = plain $ unValue a
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
+  value (OtherSize a) = a
   value s = Value $ browsers <> Plain ("calc" <> sizeToText s)
 
 instance Auto (Size a) where auto = Clay.Common.auto
 instance Normal (Size a) where normal = Clay.Common.normal
 instance Inherit (Size a) where inherit = Clay.Common.inherit
 instance None (Size a) where none = Clay.Common.none
+instance Other (Size a) where other a = OtherSize a
 
 -- | Zero size.
 nil :: Size a
