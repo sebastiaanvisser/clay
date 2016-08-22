@@ -59,6 +59,12 @@ module Clay.Text
 , textTransform
 , capitalize, uppercase, lowercase, fullWidth
 
+-- * Text-overflow.
+
+, TextOverflow
+, textOverflow
+, overflowClip, overflowEllipsis
+
 -- * Content.
 
 , Content
@@ -216,6 +222,19 @@ fullWidth  = TextTransform "full-width"
 
 textTransform :: TextTransform -> Css
 textTransform = key "text-transform"
+
+-------------------------------------------------------------------------------
+
+newtype TextOverflow = TextOverflow Value
+  deriving (Val, None, Inherit, Initial)
+
+overflowClip, overflowEllipsis :: TextOverflow
+
+overflowClip = TextOverflow "clip"
+overflowEllipsis = TextOverflow "ellipsis"
+
+textOverflow :: TextOverflow -> Css
+textOverflow = key "text-overflow"
 
 -------------------------------------------------------------------------------
 
