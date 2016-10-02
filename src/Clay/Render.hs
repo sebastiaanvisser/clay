@@ -272,6 +272,8 @@ properties cfg xs =
              in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v]
 
 selector :: Config -> Selector -> Builder
+selector Config { lbrace = "", rbrace = "" } = rec
+  where rec _ = ""
 selector cfg = intersperse ("," <> newline cfg) . rec
   where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
