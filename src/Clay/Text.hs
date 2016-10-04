@@ -65,6 +65,20 @@ module Clay.Text
 , textOverflow
 , overflowClip, overflowEllipsis
 
+-- * Word-break.
+
+, WordBreak
+, wordBreak
+, breakAll
+, keepAll
+  
+-- * Overflow-wrap (and Word-wrap).
+
+, OverflowWrap
+, overflowWrap
+, wordWrap
+, breakWord
+  
 -- * Content.
 
 , Content
@@ -222,6 +236,34 @@ fullWidth  = TextTransform "full-width"
 
 textTransform :: TextTransform -> Css
 textTransform = key "text-transform"
+
+-------------------------------------------------------------------------------
+
+newtype WordBreak = WordBreak Value
+  deriving (Val, Inherit, Initial, Unset, Normal)
+
+breakAll, keepAll :: WordBreak
+
+breakAll = WordBreak "break-all"
+keepAll  = WordBreak "keep-all"
+
+wordBreak :: WordBreak -> Css
+
+wordBreak = key "word-break"
+
+-------------------------------------------------------------------------------
+
+newtype OverflowWrap = OverflowWrap Value
+  deriving (Val, Inherit, Initial, Unset, Normal)
+
+breakWord :: OverflowWrap
+
+breakWord = OverflowWrap "break-word"
+
+overflowWrap, wordWrap :: OverflowWrap -> Css
+
+wordWrap     = key "word-wrap"
+overflowWrap = key "overflow-wrap"
 
 -------------------------------------------------------------------------------
 
