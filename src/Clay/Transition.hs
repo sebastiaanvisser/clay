@@ -24,6 +24,7 @@ module Clay.Transition
 
 , TimingFunction
 , transitionTimingFunction
+, transitionTimingFunctions
 , ease, easeIn, easeOut, easeInOut, linear, stepStart, stepStop
 , stepsStart, stepsStop
 , cubicBezier
@@ -91,6 +92,9 @@ cubicBezier a b c d = other ("cubic-bezier(" <> value (a ! b ! c ! d) <> ")")
 
 transitionTimingFunction :: TimingFunction -> Css
 transitionTimingFunction = key "transition-timing-function"
+
+transitionTimingFunctions :: [TimingFunction] -> Css
+transitionTimingFunctions = key "transition-timing-function"
 
 -------------------------------------------------------------------------------
 
