@@ -260,7 +260,7 @@ instance Cursor (CursorValue a)
 crosshair,cursorDefault,pointer,move,eResize,neResize,nwResize,nResize,seResize,swResize,sResize,wResize,cursorText,wait,cursorProgress,help :: CursorValue Value
                                                                                                                                           
 crosshair = CursorValue "crosshair"
-cursorDefault = CursorValue "cursorDefault"
+cursorDefault = CursorValue "default"
 pointer = CursorValue "pointer"
 move = CursorValue "move"
 eResize = CursorValue "e-resize"
