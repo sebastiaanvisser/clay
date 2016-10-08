@@ -69,7 +69,10 @@ data E5 = E5
 instance HasResolution E5 where resolution _ = 100000
 
 instance Val Double where
-  value = fromString . showFixed' . realToFrac
+  value = Value . Plain . cssDoubleText
+
+cssDoubleText :: Double -> Text
+cssDoubleText = fromString . showFixed' . realToFrac
     where
       showFixed' :: Fixed E5 -> String
       showFixed' = showFixed True

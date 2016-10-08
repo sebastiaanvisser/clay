@@ -3,6 +3,9 @@
   , OverloadedStrings
   , GeneralizedNewtypeDeriving
   , FlexibleInstances
+  , ExistentialQuantification
+  , StandaloneDeriving
+  , TypeFamilies
   #-}
 module Clay.Size
 (
@@ -31,6 +34,14 @@ module Clay.Size
 , vmin
 , vmax
 
+-- * Calculation operators for calc
+
+, (@+@)
+, (@-@)
+, (@*)
+, (*@)
+, (@/)
+
 -- * Shorthands for properties that can be applied separately to each box side.
 
 , sym
@@ -57,6 +68,7 @@ where
 
 import Data.Monoid
 import Prelude hiding (rem)
+import Data.Text (Text)
 
 import Clay.Common
 import Clay.Property
@@ -70,63 +82,92 @@ data LengthUnit
 -- | Sizes can be given in percentages.
 data Percentage
 
-newtype Size a = Size Value
-  deriving (Val, Auto, Normal, Inherit, None, Other)
+-- | When combining percentages with units using calc, we get a combination
+data Combination
+
+data Size a =
+  SimpleSize Text |
+  forall b c. SumSize (Size b) (Size c) |
+  forall b c. DiffSize (Size b) (Size c) |
+  MultSize Double (Size a) |
+  DivSize Double (Size a) |
+  OtherSize Value
+
+deriving instance Show (Size a)
+
+sizeToText :: Size a -> Text
+sizeToText (SimpleSize txt) = txt
+sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
+sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
+sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
+sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
+sizeToText (OtherSize a) = plain $ unValue a
+
+instance Val (Size a) where
+  value (SimpleSize a) = value a
+  value (OtherSize a) = a
+  value s = Value $ browsers <> Plain ("calc" <> sizeToText s)
+
+instance Auto (Size a) where auto = Clay.Common.auto
+instance Normal (Size a) where normal = Clay.Common.normal
+instance Inherit (Size a) where inherit = Clay.Common.inherit
+instance None (Size a) where none = Clay.Common.none
+instance Other (Size a) where other a = OtherSize a
 
 -- | Zero size.
 nil :: Size a
-nil = Size "0"
+nil = SimpleSize "0"
 
 -- | Unitless size (as recommended for line-height).
 unitless :: Double -> Size a
-unitless i = Size (value i)
+unitless i = SimpleSize ((plain . unValue . value) i)
 
 cm, mm, inches, px, pt, pc :: Double -> Size LengthUnit
 
 -- | Size in centimeters.
-cm i = Size (value i <> "cm")
+cm i = SimpleSize (cssDoubleText i <> "cm")
 
 -- | Size in millimeters.
-mm i = Size (value i <> "mm")
+mm i = SimpleSize (cssDoubleText i <> "mm")
 
 -- | Size in inches (1in = 2.54 cm).
-inches i = Size (value i <> "in")
+inches i = SimpleSize (cssDoubleText i <> "in")
 
 -- | Size in pixels.
-px i = Size (value i <> "px")
+px i = SimpleSize (cssDoubleText i <> "px")
 
 -- | Size in points (1pt = 1/72 of 1in).
-pt i = Size (value i <> "pt")
+pt i = SimpleSize (cssDoubleText i <> "pt")
 
 -- | Size in picas (1pc = 12pt).
-pc i = Size (value i <> "pc")
+pc i = SimpleSize (cssDoubleText i <> "pc")
 
 em, ex, rem, vw, vh, vmin, vmax :: Double -> Size LengthUnit
 
--- | Size in em's (computed value of the font-size).
-em i = Size (value i <> "em")
+-- | Size in em's (computed cssDoubleText of the font-size).
+em i = SimpleSize (cssDoubleText i <> "em")
 
--- | Size in ex'es (x-height of the first avaliable font).
-ex i = Size (value i <> "ex")
+-- | SimpleSize in ex'es (x-height of the first avaliable font).
+ex i = SimpleSize (cssDoubleText i <> "ex")
 
--- | Size in rem's (em's, but always relative to the root element).
-rem i = Size (value i <> "rem")
+-- | SimpleSize in rem's (em's, but always relative to the root element).
+rem i = SimpleSize (cssDoubleText i <> "rem")
 
--- | Size in vw's (1vw = 1% of viewport width).
-vw i = Size (value i <> "vw")
+-- | SimpleSize in vw's (1vw = 1% of viewport width).
+vw i = SimpleSize (cssDoubleText i <> "vw")
 
--- | Size in vh's (1vh = 1% of viewport height).
-vh i = Size (value i <> "vh")
+-- | SimpleSize in vh's (1vh = 1% of viewport height).
+vh i = SimpleSize (cssDoubleText i <> "vh")
 
--- | Size in vmin's (the smaller of vw or vh).
-vmin i = Size (value i <> "vmin")
+-- | SimpleSize in vmin's (the smaller of vw or vh).
+vmin i = SimpleSize (cssDoubleText i <> "vmin")
 
--- | Size in vmax's (the larger of vw or vh).
-vmax i = Size (value i <> "vmax")
+-- | SimpleSize in vmax's (the larger of vw or vh).
+vmax i = SimpleSize (cssDoubleText i <> "vmax")
 
--- | Size in percents.
+-- | SimpleSize in percents.
 pct :: Double -> Size Percentage
-pct i = Size (value i <> "%")
+pct i = SimpleSize (cssDoubleText i <> "%")
 
 instance Num (Size LengthUnit) where
   fromInteger = px . fromInteger
@@ -151,6 +192,38 @@ instance Num (Size Percentage) where
 instance Fractional (Size Percentage) where
   fromRational = pct . fromRational
   recip  = error  "recip not implemented for Size"
+
+-- | Type family to define what is the result of a calc operation
+
+type family SizeCombination sa sb where
+  SizeCombination Percentage Percentage = Percentage
+  SizeCombination LengthUnit LengthUnit = LengthUnit
+  SizeCombination a b = Combination
+
+-- | Plus operator to combine sizes into calc function
+infixl 6 @+@
+(@+@) :: Size a -> Size b -> Size (SizeCombination a b)
+a @+@ b = SumSize a b
+
+-- | Minus operator to combine sizes into calc function
+infixl 6 @-@
+(@-@) :: Size a -> Size b -> Size (SizeCombination a b)
+a @-@ b = DiffSize a b
+
+-- | Times operator to combine sizes into calc function
+infixl 7 *@
+(*@) :: Double -> Size a -> Size a
+a *@ b = MultSize a b
+
+-- | Reversed times operator to combine sizes into calc function
+infixl 7 @*
+(@*) :: Size a -> Double -> Size a
+a @* b = MultSize b a
+
+-- | Division operator to combine sizes into calc function
+infixl 7 @/
+(@/) :: Size a -> Double -> Size a
+a @/ b = DivSize b a
 
 -------------------------------------------------------------------------------
 
