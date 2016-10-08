@@ -4,6 +4,7 @@ module Clay.Render
 , pretty
 , compact
 , render
+, htmlInline
 , putCss
 , renderWith
 , renderSelector
@@ -36,6 +37,8 @@ data Config = Config
   { indentation    :: Builder
   , newline        :: Builder
   , sep            :: Builder
+  , lbrace         :: Builder
+  , rbrace         :: Builder
   , finalSemicolon :: Bool
   , warn           :: Bool
   , align          :: Bool
@@ -49,6 +52,8 @@ pretty = Config
   { indentation    = "  "
   , newline        = "\n"
   , sep            = " "
+  , lbrace         = "{"
+  , rbrace         = "}"
   , finalSemicolon = True
   , warn           = True
   , align          = True
@@ -62,6 +67,23 @@ compact = Config
   { indentation    = ""
   , newline        = ""
   , sep            = ""
+  , lbrace         = "{"
+  , rbrace         = "}"
+  , finalSemicolon = False
+  , warn           = False
+  , align          = False
+  , banner         = False
+  }
+
+-- | Configuration to print to a compacted unreadable CSS output for embedding inline with HTML.
+
+htmlInline :: Config
+htmlInline = Config
+  { indentation    = ""
+  , newline        = ""
+  , sep            = ""
+  , lbrace         = ""
+  , rbrace         = ""
   , finalSemicolon = False
   , warn           = False
   , align          = False
@@ -110,10 +132,10 @@ kframe cfg (Keyframes ident xs) =
       mconcat [ "@" <> fromText browser <> "keyframes "
               , fromText ident
               , newline cfg
-              , "{"
+              , lbrace cfg
               , newline cfg
               , foldMap (frame cfg) xs
-              , "}"
+              , rbrace cfg
               , newline cfg
               , newline cfg
               ]
@@ -133,10 +155,10 @@ query cfg q sel rs =
   mconcat
     [ mediaQuery q
     , newline cfg
-    , "{"
+    , lbrace cfg
     , newline cfg
     , rules cfg sel rs
-    , "}"
+    , rbrace cfg
     , newline cfg
     ]
 
@@ -206,10 +228,10 @@ rule cfg sel props =
    in mconcat
       [ selector cfg (merger sel)
       , newline cfg
-      , "{"
+      , lbrace cfg
       , newline cfg
       , properties cfg xs
-      , "}"
+      , rbrace cfg
       , newline cfg
       ]
 
@@ -250,6 +272,8 @@ properties cfg xs =
              in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v]
 
 selector :: Config -> Selector -> Builder
+selector Config { lbrace = "", rbrace = "" } = rec
+  where rec _ = ""
 selector cfg = intersperse ("," <> newline cfg) . rec
   where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
