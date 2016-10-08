@@ -23,7 +23,7 @@ module Clay.Display
 
 , Display
 , display
-, inline, block, listItem, runIn, inlineBlock, table, inlineTable, tableRowGroup
+, inline, block, listItem, runIn, inlineBlock, table, displayTable, inlineTable, tableRowGroup
 , tableHeaderGroup, tableFooterGroup, tableRow, tableColumnGroup, tableColumn
 , tableCell, tableCaption, displayNone, displayInherit, flex
 , inlineFlex, grid, inlineGrid
@@ -131,7 +131,7 @@ position = key "position"
 newtype Display = Display Value
   deriving (Val, Other, None, Inherit)
 
-inline, block, listItem, runIn, inlineBlock, table, inlineTable, tableRowGroup,
+inline, block, listItem, runIn, inlineBlock, table, displayTable, inlineTable, tableRowGroup,
   tableHeaderGroup, tableFooterGroup, tableRow, tableColumnGroup, tableColumn,
   tableCell, tableCaption, displayNone, displayInherit, flex, inlineFlex, grid,
   inlineGrid :: Display
@@ -141,6 +141,8 @@ block            = Display "block"
 listItem         = Display "list-item"
 runIn            = Display "runIn"
 inlineBlock      = Display "inline-block"
+displayTable     = Display "table"
+{-# DEPRECATED table "Use `displayTable` instead." #-}
 table            = Display "table"
 inlineTable      = Display "inline-table"
 tableRowGroup    = Display "table-row-Group"
