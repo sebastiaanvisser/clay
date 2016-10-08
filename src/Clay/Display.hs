@@ -232,15 +232,16 @@ class (Val a) => VerticalAlign a where
     verticalAlign :: a -> Css
     verticalAlign = key "vertical-align"
 
-newtype VerticalAlignValue a = VerticalAlignValue Value deriving (Val, Baseline)
+newtype VerticalAlignValue = VerticalAlignValue Value deriving (Val, Baseline)
 
-instance VerticalAlign (VerticalAlignValue a)
+instance VerticalAlign VerticalAlignValue
 instance VerticalAlign (Size a)
 
-middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom :: VerticalAlignValue Value
+middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom,vAlignBaseline :: VerticalAlignValue 
 
 middle = VerticalAlignValue "middle"
 vAlignSub = VerticalAlignValue "sub"
+vAlignBaseline = baseline
 vAlignSuper = VerticalAlignValue "super"
 textTop = VerticalAlignValue "text-top"
 textBottom = VerticalAlignValue "text-bottom"
@@ -260,7 +261,7 @@ instance Cursor (CursorValue a)
 crosshair,cursorDefault,pointer,move,eResize,neResize,nwResize,nResize,seResize,swResize,sResize,wResize,cursorText,wait,cursorProgress,help :: CursorValue Value
                                                                                                                                           
 crosshair = CursorValue "crosshair"
-cursorDefault = CursorValue "cursorDefault"
+cursorDefault = CursorValue "default"
 pointer = CursorValue "pointer"
 move = CursorValue "move"
 eResize = CursorValue "e-resize"

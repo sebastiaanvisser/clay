@@ -24,6 +24,7 @@ module Clay.Transition
 
 , TimingFunction
 , transitionTimingFunction
+, transitionTimingFunctions
 , ease, easeIn, easeOut, easeInOut, linear, stepStart, stepStop
 , stepsStart, stepsStop
 , cubicBezier
@@ -47,8 +48,9 @@ transition :: Text -> Time -> TimingFunction -> Time -> Css
 transition p d f e = prefixed (browsers <> "transition") (p ! d ! f ! e)
 
 transitions :: [(Text, Time, TimingFunction, Time)] -> Css
-transitions = prefixed (browsers <> "transition")
-            . map (\(p, d, f, e) -> value (p ! d ! f ! e))
+transitions [] = key "transition" (none :: Value)
+transitions x = prefixed (browsers <> "transition")
+                $ map (\(p, d, f, e) -> value (p ! d ! f ! e)) x
 
 -------------------------------------------------------------------------------
 
@@ -56,15 +58,17 @@ transitionProperty :: Text -> Css
 transitionProperty = key "transition-property"
 
 transitionProperties :: [Text] -> Css
-transitionProperties = key "transition-property"
+transitionProperties [] = key "transition-property" (none :: Value)
+transitionProperties x = key "transition-property" x
 
 -------------------------------------------------------------------------------
 
 transitionDuration :: Time -> Css
 transitionDuration = key "transition-duration"
 
-transitionDurations :: [Time] -> Css
-transitionDurations = key "transition-duration"
+transitionDurations :: [Time] -> Css          
+transitionDurations [] = key "transition-duration" (none :: Value)
+transitionDurations x = key "transition-duration" x
 
 -------------------------------------------------------------------------------
 
@@ -91,6 +95,10 @@ cubicBezier a b c d = other ("cubic-bezier(" <> value (a ! b ! c ! d) <> ")")
 
 transitionTimingFunction :: TimingFunction -> Css
 transitionTimingFunction = key "transition-timing-function"
+
+transitionTimingFunctions :: [TimingFunction] -> Css
+transitionTimingFunctions [] = key "transition-timing-function" (none :: Value)
+transitionTimingFunctions x = key "transition-timing-function" x
 
 -------------------------------------------------------------------------------
 
