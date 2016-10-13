@@ -39,6 +39,7 @@ module Clay
 , (|>)
 , (#)
 , (|+)
+, (|~)
 
 -- ** Refining selectors.
 
