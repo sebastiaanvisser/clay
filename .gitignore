@@ -5,3 +5,4 @@ examples/*/*.css
 .cabal-sandbox/
 cabal.sandbox.config
 .stack-work
+*.sublime-*
