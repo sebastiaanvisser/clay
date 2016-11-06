@@ -10,14 +10,6 @@ Description:
   The project is described on <http://fvisser.nl/clay>.
   .
   The API documentation can be found in the top level module "Clay".
-  .
-  > 0.10 -> 0.10.1
-  > - Expose a render function for single selectors.
-  > - Added super for vertical-align.
-  > - Added support for border-collapse.
-  > - Allow initial for the content property.
-  > - Added support for CSS import.
-  > Thanks to Heather, Collin J. Doering, Fraser Murray and Jonathan Fischoff.
 
 
 Author:        Sebastiaan Visser
