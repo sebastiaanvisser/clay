@@ -65,7 +65,7 @@ module Clay.Display
 -- * Vertical align.
 
 , VerticalAlign(..)
-, middle, vAlignSub, vAlignSuper, textTop, textBottom, vAlignTop, vAlignBottom
+, middle, vAlignSub, vAlignSuper, textTop, textBottom, vAlignTop, vAlignBottom, vAlignBaseline
 
 -- * Cursor
 

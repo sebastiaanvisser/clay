@@ -2,7 +2,6 @@
 module Clay.RenderSpec where
 
 import Clay.Render (renderWith, compact, htmlInline)
-import Data.Monoid
 import Test.Hspec
 import Clay
 

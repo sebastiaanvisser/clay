@@ -84,6 +84,8 @@ module Clay.Background
 
 , Location
 , Loc
+, Val
+, location
 )
 where
 

@@ -1,7 +1,6 @@
 {-# LANGUAGE
     OverloadedStrings
   , FlexibleInstances
-  , FlexibleContexts
   , GeneralizedNewtypeDeriving
   , StandaloneDeriving
   , UndecidableInstances

@@ -1,6 +1,5 @@
 {-# LANGUAGE
-    EmptyDataDecls
-  , OverloadedStrings
+    OverloadedStrings
   , GeneralizedNewtypeDeriving
   , FlexibleInstances
   , ExistentialQuantification
@@ -108,10 +107,10 @@ instance Val (Size a) where
   value (OtherSize a) = a
   value s = Value $ browsers <> Plain ("calc" <> sizeToText s)
 
-instance Auto (Size a) where auto = Clay.Common.auto
-instance Normal (Size a) where normal = Clay.Common.normal
-instance Inherit (Size a) where inherit = Clay.Common.inherit
-instance None (Size a) where none = Clay.Common.none
+instance Auto (Size a) where auto = OtherSize Clay.Common.autoValue
+instance Normal (Size a) where normal = OtherSize Clay.Common.normalValue
+instance Inherit (Size a) where inherit = OtherSize Clay.Common.inheritValue
+instance None (Size a) where none = OtherSize Clay.Common.noneValue
 instance Other (Size a) where other a = OtherSize a
 
 -- | Zero size.

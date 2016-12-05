@@ -33,18 +33,41 @@ class Unset    a where unset    :: a
 
 class Other   a where other   :: Value -> a
 
-instance All      Value where all      = "all"
-instance Auto     Value where auto     = "auto"
-instance Baseline Value where baseline = "baseline"
-instance Center   Value where center   = "center"
-instance Inherit  Value where inherit  = "inherit"
-instance Normal   Value where normal   = "normal"
-instance None     Value where none     = "none"
-instance Visible  Value where visible  = "visible"
-instance Hidden   Value where hidden   = "hidden"
+allValue :: Value
+allValue = "all"
+autoValue :: Value
+autoValue = "auto"
+baselineValue :: Value
+baselineValue = "baseline"
+centerValue :: Value
+centerValue = "center"
+inheritValue :: Value
+inheritValue = "inherit"
+normalValue :: Value
+normalValue = "normal"
+noneValue :: Value
+noneValue = "none"
+visibleValue :: Value
+visibleValue = "visible"
+hiddenValue :: Value
+hiddenValue = "hidden"
+initialValue :: Value
+initialValue = "initial"
+unsetValue :: Value
+unsetValue = "unset"
+
+instance All      Value where all      = allValue
+instance Auto     Value where auto     = autoValue
+instance Baseline Value where baseline = baselineValue
+instance Center   Value where center   = centerValue
+instance Inherit  Value where inherit  = inheritValue
+instance Normal   Value where normal   = normalValue
+instance None     Value where none     = noneValue
+instance Visible  Value where visible  = visibleValue
+instance Hidden   Value where hidden   = hiddenValue
 instance Other    Value where other    = id
-instance Initial  Value where initial  = "initial"
-instance Unset    Value where unset    = "unset"
+instance Initial  Value where initial  = initialValue
+instance Unset    Value where unset    = unsetValue
 
 -------------------------------------------------------------------------------
 

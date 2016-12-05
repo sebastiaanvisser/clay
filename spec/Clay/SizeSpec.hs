@@ -6,9 +6,13 @@ import Clay.Size
 import Clay.Property
 import Clay.Common
 import Clay.Color
+import Clay.Geometry
+import Clay.Render
+import Clay.Stylesheet
 
 import Test.Hspec
 import Data.Text
+import Data.Text.Lazy (toStrict)
 import Data.List
 
 sizeRepr :: Size a -> Text
@@ -19,8 +23,20 @@ hasAllPrefixes a = checkPrefixed ((unValue . value) a) browsers
   where checkPrefixed (Prefixed pa) (Prefixed pb) = sort (fmap fst pa) == sort (fmap fst pb)
         checkPrefixed _ _ = False
 
+compactRender :: Css -> Text
+compactRender css = toStrict $ renderWith compact [] css
+
 spec :: Spec
 spec = do
+  describe "render results" $ do
+    it "marginLeft auto" $
+      (compactRender $ marginLeft auto) `shouldBe` "{margin-left:auto}"
+    it "marginLeft normal" $
+      (compactRender $ marginLeft normal) `shouldBe` "{margin-left:normal}"
+    it "marginLeft inherit" $
+      (compactRender $ marginLeft inherit) `shouldBe` "{margin-left:inherit}"
+    it "marginLeft none" $
+      (compactRender $ marginLeft none) `shouldBe` "{margin-left:none}"
   describe "simple sizes" $ do
     it "returns 1px for (px 1)" $
       sizeRepr (px 1) `shouldBe` "1px"
