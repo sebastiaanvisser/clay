@@ -5,6 +5,7 @@
   , ExistentialQuantification
   , StandaloneDeriving
   , TypeFamilies
+  , EmptyDataDecls
   #-}
 module Clay.Size
 (
