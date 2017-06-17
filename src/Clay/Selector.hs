@@ -6,6 +6,7 @@
   , UndecidableInstances
   , ViewPatterns
   , PatternGuards
+  , CPP
   #-}
 module Clay.Selector where
 
@@ -14,6 +15,10 @@ import Data.Monoid
 import Data.String
 import Data.Text (Text)
 import Prelude hiding (foldl)
+
+#if MIN_VERSION_base(4,9,0)
+import Data.Semigroup
+#endif
 
 import qualified Data.Text as Text
 
@@ -133,6 +138,7 @@ attr = Refinement . pure . Attr
 (|=) :: Text -> Text -> Refinement
 (|=) a = Refinement . pure . AttrHyph a
 
+
 -------------------------------------------------------------------------------
 
 data Predicate
@@ -197,6 +203,11 @@ text t = In $
     Just ('#', s) -> SelectorF (Refinement [Id s]) Star
     Just ('.', s) -> SelectorF (Refinement [Class s]) Star
     _             -> SelectorF (Refinement []) (Elem t)
+
+#if MIN_VERSION_base(4,9,0)
+instance Semigroup (Fix SelectorF) where
+  (<>) = mappend
+#endif
 
 instance Monoid (Fix SelectorF) where
   mempty      = error "Selector is a semigroup"
