@@ -1,5 +1,5 @@
 Name:     clay
-Version:  0.12.1
+Version:  0.12.2
 Synopsis: CSS preprocessor as embedded Haskell.
 Description:
   Clay is a CSS preprocessor like LESS and Sass, but implemented as an embedded
