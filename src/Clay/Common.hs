@@ -19,6 +19,8 @@ class All      a where all      :: a
 class Auto     a where auto     :: a
 class Baseline a where baseline :: a
 class Center   a where center   :: a
+class Left     a where left     :: a
+class Right    a where right    :: a
 class Inherit  a where inherit  :: a
 class None     a where none     :: a
 class Normal   a where normal   :: a
@@ -37,6 +39,8 @@ instance All      Value where all      = "all"
 instance Auto     Value where auto     = "auto"
 instance Baseline Value where baseline = "baseline"
 instance Center   Value where center   = "center"
+instance Left     Value where left     = "left"
+instance Right    Value where right    = "right"
 instance Inherit  Value where inherit  = "inherit"
 instance Normal   Value where normal   = "normal"
 instance None     Value where none     = "none"
