@@ -90,11 +90,13 @@ float :: FloatStyle -> Css
 float = key "float"
 
 newtype FloatStyle = FloatStyle Value
-  deriving (Val,None,Inherit)
+  deriving (Val,None,Inherit,Left,Right)
 
 floatLeft, floatRight :: FloatStyle
-floatLeft = FloatStyle "left"
-floatRight = FloatStyle "right"
+{-# DEPRECATED floatLeft "Use `left` instead." #-}
+floatLeft = left
+{-# DEPRECATED floatRight "Use `right` instead." #-}
+floatRight = right
 
 newtype Clear = Clear Value
   deriving (Val, Other, None, Inherit)

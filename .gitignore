@@ -7,3 +7,4 @@ cabal.sandbox.config
 .stack-work
 *.sublime-*
 result
+TAGS

@@ -165,7 +165,7 @@ direction = key "direction"
 -------------------------------------------------------------------------------
 
 newtype TextAlign = TextAlign Value
-  deriving (Val, Normal, Inherit, Other, Center)
+  deriving (Val, Normal, Inherit, Other, Center, Left, Right)
 
 justify, matchParent, start, end :: TextAlign
 
