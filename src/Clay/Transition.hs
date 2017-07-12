@@ -83,7 +83,10 @@ easeOut    = other "ease-out"
 easeInOut  = other "ease-in-out"
 linear     = other "linear"
 stepStart  = other "step-start"
-stepStop   = other "step-stop"
+stepEnd    = other "step-end"
+
+stepStop   = stepEnd
+{-# DEPRECATED stepStop "Use `stepEnd` instead." #-}
 
 stepsStart, stepsStop :: Integer -> TimingFunction
 
