@@ -16,13 +16,20 @@ import Data.Text (Text)
 
 -------------------------------------------------------------------------------
 
-data FontFaceFormat = WOFF | TrueType | OpenType | EmbeddedOpenType | SVG
+data FontFaceFormat
+  = WOFF
+  | WOFF2
+  | TrueType
+  | OpenType
+  | EmbeddedOpenType
+  | SVG
   deriving Show
 
 -- | name of format according to CSS specification
 formatName :: FontFaceFormat -> Text
 formatName format = case format of
   WOFF             -> "woff"
+  WOFF2            -> "woff2"
   TrueType         -> "truetype"
   OpenType         -> "opentype"
   EmbeddedOpenType -> "embedded-opentype"
