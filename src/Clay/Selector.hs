@@ -157,7 +157,7 @@ data Predicate
   deriving (Eq, Ord, Show)
 
 newtype Refinement = Refinement { unFilter :: [Predicate] }
-  deriving Show
+  deriving (Show, Monoid)
 
 instance IsString Refinement where
   fromString = filterFromText . fromString
