@@ -195,14 +195,14 @@ data SelectorF a = SelectorF Refinement (Path a)
 type Selector = Fix SelectorF
 
 instance IsString (Fix SelectorF) where
-  fromString = text . fromString
+  fromString = selectorFromText . fromString
 
-text :: Text -> Selector
-text t = In $
+selectorFromText :: Text -> Selector
+selectorFromText t =
   case Text.uncons t of
-    Just ('#', s) -> SelectorF (Refinement [Id s]) Star
-    Just ('.', s) -> SelectorF (Refinement [Class s]) Star
-    _             -> SelectorF (Refinement []) (Elem t)
+    Just (c, _) | elem c ("#.:@" :: [Char])
+      -> with star (refinementFromText t)
+    _ -> In $ SelectorF (Refinement []) (Elem t)
 
 #if MIN_VERSION_base(4,9,0)
 instance Semigroup (Fix SelectorF) where
