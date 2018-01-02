@@ -160,10 +160,10 @@ newtype Refinement = Refinement { unFilter :: [Predicate] }
   deriving (Show, Monoid)
 
 instance IsString Refinement where
-  fromString = filterFromText . fromString
+  fromString = refinementFromText . fromString
 
-filterFromText :: Text -> Refinement
-filterFromText t = Refinement $
+refinementFromText :: Text -> Refinement
+refinementFromText t = Refinement $
   case Text.uncons t of
     Just ('#', s) -> [Id     s]
     Just ('.', s) -> [Class  s]
