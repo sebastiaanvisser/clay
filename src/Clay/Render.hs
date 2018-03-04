@@ -24,7 +24,6 @@ import qualified Data.Text              as Text
 import qualified Data.Text.Lazy         as Lazy
 import qualified Data.Text.Lazy.IO      as Lazy
 
-import           Clay.Comments
 import           Clay.Common            (browsers)
 import           Clay.Property
 import           Clay.Selector

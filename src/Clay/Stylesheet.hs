@@ -5,11 +5,12 @@ module Clay.Stylesheet where
 import Control.Applicative
 import Control.Arrow (second)
 import Control.Monad.Writer hiding (All)
+import Data.Semigroup (Semigroup)
+import Data.String (IsString)
 import Data.Text (Text)
 
 import Clay.Selector hiding (Child)
 import Clay.Property
-import Clay.Comments
 import Clay.Common
 
 -------------------------------------------------------------------------------
@@ -25,6 +26,9 @@ data MediaQuery = MediaQuery (Maybe NotOrOnly) MediaType [Feature]
 
 data Feature = Feature Text (Maybe Value)
   deriving Show
+
+newtype CommentText = CommentText { unCommentText :: Text }
+  deriving (Show, IsString, Semigroup, Monoid)
 
 -------------------------------------------------------------------------------
 
@@ -88,17 +92,6 @@ infix 4 -:
 
 (-:) :: Key Text -> Text -> Css
 (-:) = key
-
-comment :: CommentText -> Css -> Css
-comment c css = foldMap (rule . addComment c) $ runS css
-infixl 3 `comment`
-
--- TODO The last case indicates there's something wrong in the typing, as
--- it shouldn't be possible to comment a wrong rule.
-addComment :: CommentText -> Rule -> Rule
-addComment c (Property Nothing k v  ) = Property (Just c) k v
-addComment c (Property (Just c0) k v) = Property (Just $ c <> c0) k v
-addComment _ r                        = r
 
 -------------------------------------------------------------------------------
 

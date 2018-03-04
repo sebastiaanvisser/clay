@@ -22,6 +22,10 @@ module Clay
 
 , (-:)
 
+-- ** Comments
+-- $comments
+, commenting
+
 -- * The selector language.
 
 , Selector
@@ -138,6 +142,7 @@ import Clay.Border
 import Clay.Box
 import Clay.Color
 import Clay.Time
+import Clay.Comments (commenting)
 import Clay.Common
 import Clay.Display    hiding (table)
 import Clay.Dynamic
@@ -160,3 +165,19 @@ import Clay.Filter     hiding (url, opacity)
 -- Because a large part of the names export by "Clay.Media" clash with names
 -- export by other modules we don't re-export it here and recommend you to
 -- import the module qualified.
+
+-- $comments
+--
+-- It is occasionally useful to output comments in the generated css.
+-- 'commenting' appends comments (surrounded by '@ /* @' and '@ */@') to the
+-- values of the supplied 'Css' as
+--
+-- > key: value /* comment */;
+--
+-- Placing the comments before the semicolon ensures they are obviously
+-- grouped with the preceding value when rendered compactly.
+--
+-- Note that /every/ generated line in the generated content will feature the
+-- comment. 
+--
+-- An empty comment generates '@/*  */@'.
