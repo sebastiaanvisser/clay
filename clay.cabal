@@ -43,6 +43,7 @@ Library
     Clay.Border
     Clay.Box
     Clay.Color
+    Clay.Comments
     Clay.Common
     Clay.Dynamic
     Clay.Display

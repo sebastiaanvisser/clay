@@ -5,6 +5,8 @@ module Clay.Stylesheet where
 import Control.Applicative
 import Control.Arrow (second)
 import Control.Monad.Writer hiding (All)
+import Data.Semigroup (Semigroup)
+import Data.String (IsString)
 import Data.Text (Text)
 
 import Clay.Selector hiding (Child)
@@ -25,6 +27,9 @@ data MediaQuery = MediaQuery (Maybe NotOrOnly) MediaType [Feature]
 data Feature = Feature Text (Maybe Value)
   deriving Show
 
+newtype CommentText = CommentText { unCommentText :: Text }
+  deriving (Show, IsString, Semigroup, Monoid)
+
 -------------------------------------------------------------------------------
 
 data App
@@ -39,7 +44,7 @@ data Keyframes = Keyframes Text [(Double, [Rule])]
   deriving Show
 
 data Rule
-  = Property (Key ()) Value
+  = Property (Maybe CommentText) (Key ()) Value
   | Nested   App [Rule]
   | Query    MediaQuery [Rule]
   | Face     [Rule]
@@ -71,7 +76,7 @@ instance Monoid Css where
 -- words: can be converted to a `Value`.
 
 key :: Val a => Key a -> a -> Css
-key k v = rule $ Property (cast k) (value v)
+key k v = rule $ Property Nothing (cast k) (value v)
 
 -- | Add a new style property to the stylesheet with the specified `Key` and
 -- value, like `key` but use a `Prefixed` key.
