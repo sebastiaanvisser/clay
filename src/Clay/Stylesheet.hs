@@ -89,6 +89,17 @@ infix 4 -:
 (-:) :: Key Text -> Text -> Css
 (-:) = key
 
+comment :: CommentText -> Css -> Css
+comment c css = foldMap (rule . addComment c) $ runS css
+infixl 3 `comment`
+
+-- TODO The last case indicates there's something wrong in the typing, as
+-- it shouldn't be possible to comment a wrong rule.
+addComment :: CommentText -> Rule -> Rule
+addComment c (Property Nothing k v  ) = Property (Just c) k v
+addComment c (Property (Just c0) k v) = Property (Just $ c <> c0) k v
+addComment _ r                        = r
+
 -------------------------------------------------------------------------------
 
 infixr 5 <?
