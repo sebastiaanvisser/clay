@@ -36,7 +36,7 @@ spec = do
                 withBanner "\n{\n  display : none /*  */;\n}\n\n\n"
         it "with comment produces no comment" $ do
             renderWith pretty [] ("test" `comment` display displayNone) `shouldBe`
-                withBanner "\n{\n  /* test */\n  display : none;\n}\n\n\n"
+                withBanner "\n{\n  display : none /* test */;\n}\n\n\n"
 
 withBanner :: Text -> Text
 withBanner = (<> "/* Generated with Clay, http://fvisser.nl/clay */")

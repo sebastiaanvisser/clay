@@ -13,7 +13,6 @@ where
 
 import           Control.Applicative
 import           Control.Monad.Writer
-import           Data.Either
 import           Data.Foldable          (foldMap)
 import           Data.List              (sort)
 import           Data.Maybe
@@ -25,6 +24,7 @@ import qualified Data.Text              as Text
 import qualified Data.Text.Lazy         as Lazy
 import qualified Data.Text.Lazy.IO      as Lazy
 
+import           Clay.Comments
 import           Clay.Common            (browsers)
 import           Clay.Property
 import           Clay.Selector
@@ -43,6 +43,7 @@ data Config = Config
   , warn           :: Bool
   , align          :: Bool
   , banner         :: Bool
+  , comments       :: Bool
   }
 
 -- | Configuration to print to a pretty human readable CSS output.
@@ -58,6 +59,7 @@ pretty = Config
   , warn           = True
   , align          = True
   , banner         = True
+  , comments       = True
   }
 
 -- | Configuration to print to a compacted unreadable CSS output.
@@ -73,6 +75,7 @@ compact = Config
   , warn           = False
   , align          = False
   , banner         = False
+  , comments       = False
   }
 
 -- | Configuration to print to a compacted unreadable CSS output for embedding inline with HTML.
@@ -88,6 +91,7 @@ htmlInline = Config
   , warn           = False
   , align          = False
   , banner         = False
+  , comments       = False
   }
 
 -- | Render to CSS using the default configuration (`pretty`) and directly
@@ -199,18 +203,18 @@ rules cfg sel rs = mconcat
   , (\(a, b) -> rules  cfg (a : sel) b) `foldMap` mapMaybe nested  rs
   , (\(a, b) -> query  cfg  a   sel  b) `foldMap` mapMaybe queries rs
   ]
-  where property (Property k v) = Just (k, v)
-        property _              = Nothing
-        nested   (Nested a ns ) = Just (a, ns)
-        nested   _              = Nothing
-        queries  (Query q ns  ) = Just (q, ns)
-        queries  _              = Nothing
-        kframes  (Keyframe fs ) = Just fs;
-        kframes  _              = Nothing
-        faces    (Face ns     ) = Just ns
-        faces    _              = Nothing
-        imports  (Import i    ) = Just i
-        imports  _              = Nothing
+  where property (Property c k v) = Just (c, k, v)
+        property _                = Nothing
+        nested   (Nested a ns   ) = Just (a, ns)
+        nested   _                = Nothing
+        queries  (Query q ns    ) = Just (q, ns)
+        queries  _                = Nothing
+        kframes  (Keyframe fs   ) = Just fs;
+        kframes  _                = Nothing
+        faces    (Face ns       ) = Just ns
+        faces    _                = Nothing
+        imports  (Import i      ) = Just i
+        imports  _                = Nothing
 
 imp :: Config -> Text -> Builder
 imp cfg t =
@@ -220,8 +224,10 @@ imp cfg t =
     , ");"
     , newline cfg ]
 
+-- | A key-value pair with associated comment.
+type KeyVal = (Maybe CommentText, Key (), Value)
 
-rule :: Config -> [App] -> [(Key (), Value)] -> Builder
+rule :: Config -> [App] -> [KeyVal] -> Builder
 rule _   _   []    = mempty
 rule cfg sel props =
   let xs = collect =<< props
@@ -245,31 +251,44 @@ merger (x:xs) =
     Pop        i -> merger (drop i (x:xs))
     Self       f -> case xs of [] -> star `with` f; _ -> merger xs `with` f
 
-collect :: (Key (), Value) -> [Either Text (Text, Text)]
-collect (Key ky, Value vl) =
-  case (ky, vl) of
+data Representation
+  = Warning Text
+  | KeyValRep (Maybe CommentText) Text Text
+  deriving (Show)
+
+keys :: [Representation] -> [Text]
+keys = mapMaybe f
+  where
+    f (KeyValRep _ k _) = Just k
+    f _                 = Nothing
+
+collect :: KeyVal -> [Representation]
+collect (mc, Key ky, Value vl) = case (ky, vl) of
     ( Plain    k  , Plain    v  ) -> [prop k v]
     ( Prefixed ks , Plain    v  ) -> flip map ks $ \(p, k) -> prop (p <> k) v
     ( Plain    k  , Prefixed vs ) -> flip map vs $ \(p, v) -> prop k (p <> v)
-    ( Prefixed ks , Prefixed vs ) -> flip map ks $ \(p, k) -> (Left (p <> k) `maybe` (prop (p <> k) . mappend p)) (lookup p vs)
-  where prop k v = Right (k, v)
+    ( Prefixed ks , Prefixed vs ) -> flip map ks $ \(p, k) -> (Warning (p <> k) `maybe` (prop (p <> k) . mappend p)) (lookup p vs)
+  where prop k v = KeyValRep mc k v
 
-properties :: Config -> [Either Text (Text, Text)] -> Builder
+properties :: Config -> [Representation] -> Builder
 properties cfg xs =
-  let width     = 1 + maximum (Text.length . fst <$> rights xs)
+  let width     = 1 + maximum (Text.length <$> keys xs)
       ind       = indentation cfg
       new       = newline cfg
       finalSemi = if finalSemicolon cfg then ";" else ""
    in (<> new) $ (<> finalSemi) $ intersperse (";" <> new) $ flip map xs $ \p ->
         case p of
-          Left w -> if warn cfg
+          Warning w -> if warn cfg
                     then ind <> "/* no value for " <> fromText w <> " */" <> new
                     else mempty
-          Right (k, v) ->
+          KeyValRep mc k v ->
             let pad = if align cfg
                       then fromText (Text.replicate (width - Text.length k) " ")
                       else ""
-             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v]
+                comm = case (mc, comments cfg) of
+                  (Just c, True) -> " /* " <> fromText (unCommentText c) <> " */"
+                  _              -> mempty
+             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, comm]
 
 selector :: Config -> Selector -> Builder
 selector Config { lbrace = "", rbrace = "" } = rec

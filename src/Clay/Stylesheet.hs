@@ -9,6 +9,7 @@ import Data.Text (Text)
 
 import Clay.Selector hiding (Child)
 import Clay.Property
+import Clay.Comments
 import Clay.Common
 
 -------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ data Keyframes = Keyframes Text [(Double, [Rule])]
   deriving Show
 
 data Rule
-  = Property (Key ()) Value
+  = Property (Maybe CommentText) (Key ()) Value
   | Nested   App [Rule]
   | Query    MediaQuery [Rule]
   | Face     [Rule]
@@ -71,7 +72,7 @@ instance Monoid Css where
 -- words: can be converted to a `Value`.
 
 key :: Val a => Key a -> a -> Css
-key k v = rule $ Property (cast k) (value v)
+key k v = rule $ Property Nothing (cast k) (value v)
 
 -- | Add a new style property to the stylesheet with the specified `Key` and
 -- value, like `key` but use a `Prefixed` key.
