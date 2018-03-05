@@ -3,6 +3,7 @@ CHANGELOG
   RECENT
   - Added commenting to append comment to a property.
     Comments are displayed by default in pretty but not compact mode.
+  - Rewrite boxShadow functionality with BoxShadow newtype for arguments.
 
   0.10 -> 0.10.1
   - Expose a render function for single selectors.
