@@ -1,11 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.TextSpec where
 
-import Clay.Render (renderWith, compact, htmlInline, withBanner)
 import Test.Hspec
 import Clay
-import Data.Monoid ((<>))
-import Data.Text.Lazy (Text, unpack)
+import Common
 
 spec :: Spec
 spec = do
@@ -35,8 +33,3 @@ spec = do
         textIndent initial
       "{text-indent:unset}" `shouldRenderFrom`
         textIndent unset
-
-shouldRenderFrom :: Text -> Css -> SpecWith ()
-shouldRenderFrom txt css = let s = shouldBe . renderWith compact [] in
-    it ("renders " <> unpack txt) $ css `s` txt
-infixr 0 `shouldRenderFrom`
