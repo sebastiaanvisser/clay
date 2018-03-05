@@ -8,6 +8,7 @@ module Clay.Render
 , putCss
 , renderWith
 , renderSelector
+, withBanner
 )
 where
 
@@ -124,9 +125,11 @@ renderSelector = toLazyText . selector compact
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
 renderBanner cfg
-  | banner cfg = (<> b)
+  | banner cfg = withBanner
   | otherwise  = id
-  where b = "\n/* Generated with Clay, http://fvisser.nl/clay */"
+
+withBanner :: Lazy.Text -> Lazy.Text
+withBanner = (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
 
 kframe :: Config -> Keyframes -> Builder
 kframe cfg (Keyframes ident xs) =
