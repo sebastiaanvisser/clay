@@ -1,10 +1,13 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ViewPatterns #-}
 module Clay.Stylesheet where
 
 import Control.Applicative
 import Control.Arrow (second)
 import Control.Monad.Writer hiding (All)
+import Data.Maybe (isJust)
 import Data.Semigroup (Semigroup)
 import Data.String (IsString)
 import Data.Text (Text)
@@ -30,6 +33,19 @@ data Feature = Feature Text (Maybe Value)
 newtype CommentText = CommentText { unCommentText :: Text }
   deriving (Show, IsString, Semigroup, Monoid)
 
+data Modifier
+  = Important
+  | Comment CommentText
+  deriving (Show)
+
+_Important :: Modifier -> Maybe Text
+_Important Important   = Just "!important"
+_Important (Comment _) = Nothing
+
+_Comment :: Modifier -> Maybe CommentText
+_Comment (Comment c) = Just c
+_Comment Important   = Nothing
+
 -------------------------------------------------------------------------------
 
 data App
@@ -44,7 +60,7 @@ data Keyframes = Keyframes Text [(Double, [Rule])]
   deriving Show
 
 data Rule
-  = Property (Maybe CommentText) (Key ()) Value
+  = Property [Modifier] (Key ()) Value
   | Nested   App [Rule]
   | Query    MediaQuery [Rule]
   | Face     [Rule]
@@ -76,7 +92,7 @@ instance Monoid Css where
 -- words: can be converted to a `Value`.
 
 key :: Val a => Key a -> a -> Css
-key k v = rule $ Property Nothing (cast k) (value v)
+key k v = rule $ Property [] (cast k) (value v)
 
 -- | Add a new style property to the stylesheet with the specified `Key` and
 -- value, like `key` but use a `Prefixed` key.
@@ -166,3 +182,21 @@ fontFace rs = rule $ Face (runS rs)
 importUrl :: Text -> Css
 importUrl l = rule $ Import l
 
+-------------------------------------------------------------------------------
+
+-- | Indicate the supplied css should override css declarations that would
+-- otherwise take precedence.
+--
+-- Use sparingly.
+important :: Css -> Css
+important = foldMap (rule . addImportant) . runS
+
+-- The last case indicates there may be something wrong in the typing, as
+-- it shouldn't be possible to make a non-property important. In practice,
+-- this implementation means only the directly applied property rule is
+-- affected, i.e. no nested rules. That could be changed by adding recursive cases.
+addImportant :: Rule -> Rule
+addImportant (Property ms@(filter (isJust . _Important) -> (_:_)) k v) =
+  Property ms k v
+addImportant (Property ms k v  ) = Property (Important : ms) k v
+addImportant r                   = r

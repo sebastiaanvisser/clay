@@ -1,6 +1,11 @@
+{-# LANGUAGE ViewPatterns #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Clay.Comments where
 
 import Data.Monoid ((<>))
+import Data.Maybe (isNothing)
+import Data.List (partition)
 
 import Clay.Stylesheet
 
@@ -16,7 +21,10 @@ infixl 3 `commenting`
 -- means only the directly applied property rule is affected, i.e. no nested
 -- rules. That could be changed by adding recursive cases.
 addComment :: CommentText -> Rule -> Rule
-addComment c (Property Nothing k v  ) = Property (Just c) k v
-addComment c (Property (Just c0) k v) = Property (Just $ c <> c0) k v
-addComment _ r                        = r
+addComment c (Property (PartitionComments xs (Just cs)) k v) = let c1 = Comment $ cs <> "; " <> c in
+  Property (c1 : xs) k v
+addComment c (Property ms k v  ) = Property (Comment c : ms) k v
+addComment _ r                   = r
 
+pattern PartitionComments :: [Modifier] -> Maybe CommentText -> [Modifier]
+pattern PartitionComments xs cs <- (fmap (foldMap _Comment) . partition (isNothing . _Comment) -> (xs, cs))

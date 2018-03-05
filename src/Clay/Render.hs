@@ -202,7 +202,7 @@ rules cfg sel rs = mconcat
   , (\(a, b) -> rules  cfg (a : sel) b) `foldMap` mapMaybe nested  rs
   , (\(a, b) -> query  cfg  a   sel  b) `foldMap` mapMaybe queries rs
   ]
-  where property (Property c k v) = Just (c, k, v)
+  where property (Property m k v) = Just (m, k, v)
         property _                = Nothing
         nested   (Nested a ns   ) = Just (a, ns)
         nested   _                = Nothing
@@ -224,7 +224,7 @@ imp cfg t =
     , newline cfg ]
 
 -- | A key-value pair with associated comment.
-type KeyVal = (Maybe CommentText, Key (), Value)
+type KeyVal = ([Modifier], Key (), Value)
 
 rule :: Config -> [App] -> [KeyVal] -> Builder
 rule _   _   []    = mempty
@@ -252,7 +252,7 @@ merger (x:xs) =
 
 data Representation
   = Warning Text
-  | KeyValRep (Maybe CommentText) Text Text
+  | KeyValRep [Modifier] Text Text
   deriving (Show)
 
 keys :: [Representation] -> [Text]
@@ -262,12 +262,12 @@ keys = mapMaybe f
     f _                 = Nothing
 
 collect :: KeyVal -> [Representation]
-collect (mc, Key ky, Value vl) = case (ky, vl) of
+collect (ms, Key ky, Value vl) = case (ky, vl) of
     ( Plain    k  , Plain    v  ) -> [prop k v]
     ( Prefixed ks , Plain    v  ) -> flip map ks $ \(p, k) -> prop (p <> k) v
     ( Plain    k  , Prefixed vs ) -> flip map vs $ \(p, v) -> prop k (p <> v)
     ( Prefixed ks , Prefixed vs ) -> flip map ks $ \(p, k) -> (Warning (p <> k) `maybe` (prop (p <> k) . mappend p)) (lookup p vs)
-  where prop k v = KeyValRep mc k v
+  where prop k v = KeyValRep ms k v
 
 properties :: Config -> [Representation] -> Builder
 properties cfg xs =
@@ -280,14 +280,15 @@ properties cfg xs =
           Warning w -> if warn cfg
                     then ind <> "/* no value for " <> fromText w <> " */" <> new
                     else mempty
-          KeyValRep mc k v ->
+          KeyValRep ms k v ->
             let pad = if align cfg
                       then fromText (Text.replicate (width - Text.length k) " ")
                       else ""
-                comm = case (mc, comments cfg) of
+                imptant = maybe "" ((" " <>) . fromText) . foldMap _Important $ ms
+                comm = case (foldMap _Comment ms, comments cfg) of
                   (Just c, True) -> " /* " <> fromText (unCommentText c) <> " */"
                   _              -> mempty
-             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, comm]
+             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, imptant, comm]
 
 selector :: Config -> Selector -> Builder
 selector Config { lbrace = "", rbrace = "" } = rec
