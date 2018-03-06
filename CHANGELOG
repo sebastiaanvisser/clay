@@ -3,6 +3,7 @@ CHANGELOG
   RECENT
   - Added commenting to append comment to a property.
     Comments are displayed by default in pretty but not compact mode.
+  - Added 'important' to append !important to values.
   - Update eachLine and hanging to work as spec (for textIndent).
   - Rename (internal) intersperse function to intercalate.
 

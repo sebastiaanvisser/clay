@@ -36,4 +36,10 @@ spec = do
                 withBanner "\n{\n  display : none /*  */;\n}\n\n"
         it "with ‘commenting’ produces no comment" $ do
             renderWith pretty [] ("test" `commenting` display displayNone) `shouldBe`
-                withBanner "\n{\n  display : none /* test */;\n}\n\n"
+                withBanner "\n{\n  display : none /* test */;\n}\n\n\n"
+    describe "!important" $ do
+        it "renders !important" $ do
+            renderWith compact [] (important $ background red) `shouldBe` "{background:#ff0000 !important}"
+
+withBanner :: Text -> Text
+withBanner = (<> "/* Generated with Clay, http://fvisser.nl/clay */")
