@@ -92,16 +92,16 @@ instance (Val a, Val b) => Val (Either a b) where
   value (Right a) = value a
 
 instance Val a => Val [a] where
-  value xs = intersperse "," (map value xs)
+  value xs = intercalate "," (map value xs)
 
-intersperse :: Monoid a => a -> [a] -> a
-intersperse _ []     = mempty
-intersperse s (x:xs) = foldl (\a b -> a <> s <> b) x xs
+intercalate :: Monoid a => a -> [a] -> a
+intercalate _ []     = mempty
+intercalate s (x:xs) = foldl (\a b -> a <> s <> b) x xs
 
 -------------------------------------------------------------------------------
 
 noCommas :: Val a => [a] -> Value
-noCommas xs = intersperse " " (map value xs)
+noCommas xs = intercalate " " (map value xs)
 
 infixr !
 

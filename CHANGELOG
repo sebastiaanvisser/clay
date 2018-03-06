@@ -3,6 +3,8 @@ CHANGELOG
   RECENT
   - Added commenting to append comment to a property.
     Comments are displayed by default in pretty but not compact mode.
+  - Update eachLine and hanging to work as spec (for textIndent).
+  - Rename (internal) intersperse function to intercalate.
 
   0.10 -> 0.10.1
   - Expose a render function for single selectors.
