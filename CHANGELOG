@@ -1,47 +1,48 @@
 CHANGELOG
 
-  RECENT
-  - Added commenting to append comment to a property.
-    Comments are displayed by default in pretty but not compact mode.
-  - Rewrite boxShadow functionality with BoxShadow newtype for arguments.
-  - Added 'important' to append !important to values.
-  - Update eachLine and hanging to work as spec (for textIndent).
-  - Rename (internal) intersperse function to intercalate.
+  0.10.2 -> 0.10.3
+    - Added commenting to append comment to a property.
+    - Comments are displayed by default in pretty but not compact mode.
+    - Rewrite boxShadow functionality with BoxShadow newtype for arguments.
+    - Added 'important' to append !important to values.
+    - Update eachLine and hanging to work as spec (for textIndent).
+    - Rename (internal) intersperse function to intercalate.
+    - Not pseudo takes selector.
+    Thanks to dbaynard and sebastiaanvisser.
 
   0.10 -> 0.10.1
-  - Expose a render function for single selectors.
-  - Added super for vertical-align.
-  - Added support for border-collapse.
-  - Allow initial for the content property.
-  - Added support for CSS import.
-  Thanks to Heather, Collin J. Doering, Fraser Murray and Jonathan Fischoff.
+    - Expose a render function for single selectors.
+    - Added super for vertical-align.
+    - Added support for border-collapse.
+    - Allow initial for the content property.
+    - Added support for CSS import.
+    Thanks to Heather, Collin J. Doering, Fraser Murray and Jonathan Fischoff.
 
   0.9 -> 0.10
-
-   - Bumped up text requirement.
-   - Added cursor property.
-   - Added vertical-align property.
-   - Removed Abs constraint from Geometry functions.
-   - Added support for rem dimensions.
-   - Added support for ListStyle.
-   Thanks to Lorenzo Bolla, Fraser Murray, Heather and Sergey!
+    - Bumped up text requirement.
+    - Added cursor property.
+    - Added vertical-align property.
+    - Removed Abs constraint from Geometry functions.
+    - Added support for rem dimensions.
+    - Added support for ListStyle.
+    Thanks to Lorenzo Bolla, Fraser Murray, Heather and Sergey!
 
   0.9 -> 0.9.0.1
-   - Fixed bug in easing properties.
+    - Fixed bug in easing properties.
 
   0.8 -> 0.9
-  - Added list-style-type property.
-  - Added some CSS3 selectors and pseudo-classes.
-  - Added some missing HTML5 elements.
-  - Added keyframes support.
-  - Fixed bug in linear in transition.
-  - Added Initial and Unset type classes.
-  - Added animation related styling rules.
-  - Restored old renderer.
-  - Fixed bunch of warnings.
-  - Added :last-child pseudo selector.
-  - Stub test suite
-  Thanks to Sergei Trofimovich, Levi Ad, Ian D. Bollinger, Ben Gamari and Oly Mi!
+    - Added list-style-type property.
+    - Added some CSS3 selectors and pseudo-classes.
+    - Added some missing HTML5 elements.
+    - Added keyframes support.
+    - Fixed bug in linear in transition.
+    - Added Initial and Unset type classes.
+    - Added animation related styling rules.
+    - Restored old renderer.
+    - Fixed bunch of warnings.
+    - Added :last-child pseudo selector.
+    - Stub test suite
+    Thanks to Sergei Trofimovich, Levi Ad, Ian D. Bollinger, Ben Gamari and Oly Mi!
 
   0.8 -> 0.8.0.1
     - Widened dependency on text.
