@@ -73,7 +73,11 @@ module Clay
 
 , fontFace
 
--- * Import other CSS files
+-- * !important
+
+, important
+
+-- * Import other CSS files
 
 , importUrl
 

@@ -8,6 +8,7 @@ module Clay.Render
 , putCss
 , renderWith
 , renderSelector
+, withBanner
 )
 where
 
@@ -124,9 +125,11 @@ renderSelector = toLazyText . selector compact
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
 renderBanner cfg
-  | banner cfg = (<> b)
+  | banner cfg = withBanner
   | otherwise  = id
-  where b = "\n/* Generated with Clay, http://fvisser.nl/clay */"
+
+withBanner :: Lazy.Text -> Lazy.Text
+withBanner = (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
 
 kframe :: Config -> Keyframes -> Builder
 kframe cfg (Keyframes ident xs) =
@@ -202,7 +205,7 @@ rules cfg sel rs = mconcat
   , (\(a, b) -> rules  cfg (a : sel) b) `foldMap` mapMaybe nested  rs
   , (\(a, b) -> query  cfg  a   sel  b) `foldMap` mapMaybe queries rs
   ]
-  where property (Property c k v) = Just (c, k, v)
+  where property (Property m k v) = Just (m, k, v)
         property _                = Nothing
         nested   (Nested a ns   ) = Just (a, ns)
         nested   _                = Nothing
@@ -224,7 +227,7 @@ imp cfg t =
     , newline cfg ]
 
 -- | A key-value pair with associated comment.
-type KeyVal = (Maybe CommentText, Key (), Value)
+type KeyVal = ([Modifier], Key (), Value)
 
 rule :: Config -> [App] -> [KeyVal] -> Builder
 rule _   _   []    = mempty
@@ -252,7 +255,7 @@ merger (x:xs) =
 
 data Representation
   = Warning Text
-  | KeyValRep (Maybe CommentText) Text Text
+  | KeyValRep [Modifier] Text Text
   deriving (Show)
 
 keys :: [Representation] -> [Text]
@@ -262,12 +265,12 @@ keys = mapMaybe f
     f _                 = Nothing
 
 collect :: KeyVal -> [Representation]
-collect (mc, Key ky, Value vl) = case (ky, vl) of
+collect (ms, Key ky, Value vl) = case (ky, vl) of
     ( Plain    k  , Plain    v  ) -> [prop k v]
     ( Prefixed ks , Plain    v  ) -> flip map ks $ \(p, k) -> prop (p <> k) v
     ( Plain    k  , Prefixed vs ) -> flip map vs $ \(p, v) -> prop k (p <> v)
     ( Prefixed ks , Prefixed vs ) -> flip map ks $ \(p, k) -> (Warning (p <> k) `maybe` (prop (p <> k) . mappend p)) (lookup p vs)
-  where prop k v = KeyValRep mc k v
+  where prop k v = KeyValRep ms k v
 
 properties :: Config -> [Representation] -> Builder
 properties cfg xs =
@@ -275,24 +278,25 @@ properties cfg xs =
       ind       = indentation cfg
       new       = newline cfg
       finalSemi = if finalSemicolon cfg then ";" else ""
-   in (<> new) $ (<> finalSemi) $ intersperse (";" <> new) $ flip map xs $ \p ->
+   in (<> new) $ (<> finalSemi) $ intercalate (";" <> new) $ flip map xs $ \p ->
         case p of
           Warning w -> if warn cfg
                     then ind <> "/* no value for " <> fromText w <> " */" <> new
                     else mempty
-          KeyValRep mc k v ->
+          KeyValRep ms k v ->
             let pad = if align cfg
                       then fromText (Text.replicate (width - Text.length k) " ")
                       else ""
-                comm = case (mc, comments cfg) of
+                imptant = maybe "" ((" " <>) . fromText) . foldMap _Important $ ms
+                comm = case (foldMap _Comment ms, comments cfg) of
                   (Just c, True) -> " /* " <> fromText (unCommentText c) <> " */"
                   _              -> mempty
-             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, comm]
+             in mconcat [ind, fromText k, pad, ":", sep cfg, fromText v, imptant, comm]
 
 selector :: Config -> Selector -> Builder
 selector Config { lbrace = "", rbrace = "" } = rec
   where rec _ = ""
-selector cfg = intersperse ("," <> newline cfg) . rec
+selector cfg = intercalate ("," <> newline cfg) . rec
   where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
             Star           -> if null ft then ["*"] else [""]
@@ -316,6 +320,6 @@ predicate ft = mconcat $
     AttrSpace    a v -> [ "[" , fromText a, "~='", fromText v, "']"                    ]
     AttrHyph     a v -> [ "[" , fromText a, "|='", fromText v, "']"                    ]
     Pseudo       a   -> [ ":" , fromText a                                             ]
-    PseudoFunc   a p -> [ ":" , fromText a, "(", intersperse "," (map fromText p), ")" ]
+    PseudoFunc   a p -> [ ":" , fromText a, "(", intercalate "," (map fromText p), ")" ]
     PseudoElem   a   -> [ "::", fromText a                                             ]
 

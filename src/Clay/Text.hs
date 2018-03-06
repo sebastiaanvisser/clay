@@ -17,6 +17,7 @@ module Clay.Text
 , textShadow
 
 -- * Text-indent.
+-- $text-indent
 
 , TextIndent
 , textIndent
@@ -134,13 +135,37 @@ textShadow x y w c = key "text-shadow" (x ! y ! w ! c)
 
 -------------------------------------------------------------------------------
 
+-- $text-indent
+--
+-- Supply a length — optionally annotated with @each-line@ or @hanging@ or
+-- both, or a global value. It is possible to apply the same annotation
+-- multiple times, but it has no defined effect.
+--
+-- Note browser support is currently (March 2018) non-existent, but the
+-- Prince typesetting system supports the syntax.
+--
+-- === Formal argument syntax
+--
+-- > <length-percentage> && hanging? && each-line?
+-- > where
+-- > <length-percentage> = <length> | <percentage>
+
 newtype TextIndent = TextIndent Value
-  deriving (Val, Inherit, Other)
+  deriving (Val, Inherit, Initial, Unset, Other)
 
-eachLine, hanging :: TextIndent
+-- | An internal function that ensures each-line and hanging are processed
+-- correctly.
+tagTextIndent :: Value -> TextIndent -> TextIndent
+tagTextIndent v (TextIndent v0) = TextIndent . value $ (v0, v)
 
-eachLine = TextIndent "each-line"
-hanging  = TextIndent "hanging"
+-- | Annotate the supplied 'TextIndent' with @each-line@ or @hanging@ or
+-- both.
+--
+-- > eachLine . hanging . indent $ px 3 :: TextIndent
+eachLine, hanging :: TextIndent -> TextIndent
+
+eachLine = tagTextIndent "each-line"
+hanging  = tagTextIndent "hanging"
 
 indent :: Size a -> TextIndent
 indent = TextIndent . value
