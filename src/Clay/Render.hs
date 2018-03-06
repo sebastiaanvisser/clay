@@ -8,6 +8,7 @@ module Clay.Render
 , putCss
 , renderWith
 , renderSelector
+, withBanner
 )
 where
 
@@ -124,9 +125,11 @@ renderSelector = toLazyText . selector compact
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
 renderBanner cfg
-  | banner cfg = (<> b)
+  | banner cfg = withBanner
   | otherwise  = id
-  where b = "\n/* Generated with Clay, http://fvisser.nl/clay */"
+
+withBanner :: Lazy.Text -> Lazy.Text
+withBanner = (<> "\n/* Generated with Clay, http://fvisser.nl/clay */")
 
 kframe :: Config -> Keyframes -> Builder
 kframe cfg (Keyframes ident xs) =
@@ -275,7 +278,7 @@ properties cfg xs =
       ind       = indentation cfg
       new       = newline cfg
       finalSemi = if finalSemicolon cfg then ";" else ""
-   in (<> new) $ (<> finalSemi) $ intersperse (";" <> new) $ flip map xs $ \p ->
+   in (<> new) $ (<> finalSemi) $ intercalate (";" <> new) $ flip map xs $ \p ->
         case p of
           Warning w -> if warn cfg
                     then ind <> "/* no value for " <> fromText w <> " */" <> new
@@ -293,7 +296,7 @@ properties cfg xs =
 selector :: Config -> Selector -> Builder
 selector Config { lbrace = "", rbrace = "" } = rec
   where rec _ = ""
-selector cfg = intersperse ("," <> newline cfg) . rec
+selector cfg = intercalate ("," <> newline cfg) . rec
   where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
             Star           -> if null ft then ["*"] else [""]
@@ -317,6 +320,6 @@ predicate ft = mconcat $
     AttrSpace    a v -> [ "[" , fromText a, "~='", fromText v, "']"                    ]
     AttrHyph     a v -> [ "[" , fromText a, "|='", fromText v, "']"                    ]
     Pseudo       a   -> [ ":" , fromText a                                             ]
-    PseudoFunc   a p -> [ ":" , fromText a, "(", intersperse "," (map fromText p), ")" ]
+    PseudoFunc   a p -> [ ":" , fromText a, "(", intercalate "," (map fromText p), ")" ]
     PseudoElem   a   -> [ "::", fromText a                                             ]
 

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.RenderSpec where
 
-import Clay.Render (renderWith, compact, htmlInline)
+import Clay.Render (renderWith, compact, htmlInline, withBanner)
 import Test.Hspec
 import Clay
 import Clay.Comments
@@ -30,10 +30,10 @@ spec = do
     describe "pretty ‘commenting’" $ do
         it "with no ‘commenting’ produces no annotation" $ do
             renderWith pretty [] (display displayNone) `shouldBe`
-                withBanner "\n{\n  display : none;\n}\n\n\n"
+                withBanner "\n{\n  display : none;\n}\n\n"
         it "with mempty produces empty annotation" $ do
             renderWith pretty [] (mempty `commenting` display displayNone) `shouldBe`
-                withBanner "\n{\n  display : none /*  */;\n}\n\n\n"
+                withBanner "\n{\n  display : none /*  */;\n}\n\n"
         it "with ‘commenting’ produces no comment" $ do
             renderWith pretty [] ("test" `commenting` display displayNone) `shouldBe`
                 withBanner "\n{\n  display : none /* test */;\n}\n\n\n"
