@@ -5,6 +5,7 @@ import Control.Arrow (second)
 import Control.Monad.Writer
 import Data.Fixed (Fixed, HasResolution (resolution), showFixed)
 import Data.List (partition, sort)
+import Data.List.NonEmpty (NonEmpty, toList)
 import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
@@ -93,6 +94,9 @@ instance (Val a, Val b) => Val (Either a b) where
 
 instance Val a => Val [a] where
   value xs = intercalate "," (map value xs)
+
+instance Val a => Val (NonEmpty a) where
+  value = value . toList
 
 intercalate :: Monoid a => a -> [a] -> a
 intercalate _ []     = mempty
