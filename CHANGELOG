@@ -1,6 +1,6 @@
 CHANGELOG
 
-  0.10.2 -> 0.10.3
+  0.13.0:
     - Added commenting to append comment to a property.
     - Comments are displayed by default in pretty but not compact mode.
     - Rewrite boxShadow functionality with BoxShadow newtype for arguments.
