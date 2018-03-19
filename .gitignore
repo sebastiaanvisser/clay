@@ -1,4 +1,5 @@
 dist/
+dist-newstyle/
 cabal-dev/
 examples/*.css
 examples/*/*.css
