@@ -85,4 +85,6 @@ Test-Suite Test-Clay
     text                 >= 0.11  && < 1.3,
     hspec-expectations   >= 0.7.2 && < 0.9,
     hspec                >= 2.2.0 && < 2.5
+  Build-Tool-Depends:
+    hspec-discover:hspec-discover
   Ghc-Options: -Wall
