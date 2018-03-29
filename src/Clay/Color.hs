@@ -4,9 +4,9 @@ module Clay.Color where
 import Data.Char (isHexDigit)
 import Data.Monoid
 import Data.String
-import Data.Text (Text)
 import Text.Printf
 
+import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.Text.Read as Text
 

@@ -1,7 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.RenderSpec where
 
-import Clay.Render (renderWith, compact, htmlInline, withBanner)
+import Data.Monoid
+import Clay.Render (htmlInline, withBanner)
 import Test.Hspec
 import Clay
 

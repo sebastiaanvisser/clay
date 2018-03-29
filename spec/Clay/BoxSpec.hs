@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings, OverloadedLists #-}
 module Clay.BoxSpec where
 
+import Control.Applicative
 import Test.Hspec
 import Clay
 import Common

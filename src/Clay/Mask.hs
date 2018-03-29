@@ -57,7 +57,7 @@ module Clay.Mask
 )
 where
 
-import Data.Monoid
+import Data.Semigroup
 
 import Clay.Background
 import Clay.Common

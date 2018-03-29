@@ -11,14 +11,9 @@
 module Clay.Selector where
 
 import Control.Applicative
-import Data.Monoid
+import Data.Semigroup
 import Data.String
 import Data.Text (Text)
-import Prelude hiding (foldl)
-
-#if MIN_VERSION_base(4,9,0)
-import Data.Semigroup
-#endif
 
 import qualified Data.Text as Text
 
@@ -157,7 +152,7 @@ data Predicate
   deriving (Eq, Ord, Show)
 
 newtype Refinement = Refinement { unFilter :: [Predicate] }
-  deriving (Show, Monoid)
+  deriving (Show, Semigroup, Monoid)
 
 instance IsString Refinement where
   fromString = refinementFromText . fromString
@@ -204,12 +199,9 @@ selectorFromText t =
       -> with star (refinementFromText t)
     _ -> In $ SelectorF (Refinement []) (Elem t)
 
-#if MIN_VERSION_base(4,9,0)
 instance Semigroup (Fix SelectorF) where
-  (<>) = mappend
-#endif
+  a <> b = In (SelectorF (Refinement []) (Combined a b))
 
 instance Monoid (Fix SelectorF) where
-  mempty      = error "Selector is a semigroup"
-  mappend a b = In (SelectorF (Refinement []) (Combined a b))
-
+  mempty  = error "Selector is a semigroup"
+  mappend = (<>)
