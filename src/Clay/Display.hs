@@ -17,7 +17,7 @@ module Clay.Display
 
 , Position
 , position
-, static, absolute, fixed, relative
+, static, absolute, fixed, relative, sticky
 
 -- * Display
 
@@ -82,7 +82,7 @@ import Clay.Size
 import Clay.Property
 import Clay.Stylesheet
 import Clay.Common
-import Data.Text (Text)    
+import Data.Text (Text)
 
 -------------------------------------------------------------------------------
 
@@ -116,12 +116,13 @@ clear = key "clear"
 newtype Position = Position Value
   deriving (Val, Other, Inherit)
 
-static, absolute, fixed, relative :: Position
+static, absolute, fixed, relative, sticky :: Position
 
 static   = Position "static"
 absolute = Position "absolute"
 fixed    = Position "fixed"
 relative = Position "relative"
+sticky = Position "sticky"
 
 position :: Position -> Css
 position = key "position"
@@ -239,7 +240,7 @@ newtype VerticalAlignValue = VerticalAlignValue Value deriving (Val, Baseline)
 instance VerticalAlign VerticalAlignValue
 instance VerticalAlign (Size a)
 
-middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom,vAlignBaseline :: VerticalAlignValue 
+middle,vAlignSub,vAlignSuper,textTop,textBottom,vAlignTop,vAlignBottom,vAlignBaseline :: VerticalAlignValue
 
 middle = VerticalAlignValue "middle"
 vAlignSub = VerticalAlignValue "sub"
@@ -250,7 +251,7 @@ textBottom = VerticalAlignValue "text-bottom"
 vAlignTop = VerticalAlignValue "top"
 vAlignBottom = VerticalAlignValue "bottom"
 
--------------------------------------------------------------------------------               
+-------------------------------------------------------------------------------
 
 class (Val a) => Cursor a where
     cursor :: a -> Css
@@ -261,7 +262,7 @@ newtype CursorValue a = CursorValue Value deriving (Val,Inherit,Auto)
 instance Cursor (CursorValue a)
 
 crosshair,cursorDefault,pointer,move,eResize,neResize,nwResize,nResize,seResize,swResize,sResize,wResize,cursorText,wait,cursorProgress,help :: CursorValue Value
-                                                                                                                                          
+
 crosshair = CursorValue "crosshair"
 cursorDefault = CursorValue "default"
 pointer = CursorValue "pointer"
