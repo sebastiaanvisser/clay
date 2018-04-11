@@ -21,6 +21,8 @@ import           Data.Text              (Text, pack)
 import           Data.Text.Lazy.Builder
 import           Prelude                hiding ((**))
 
+import           Data.Generics.Fixplate (Mu (Fix))
+
 import qualified Data.Text              as Text
 import qualified Data.Text.Lazy         as Lazy
 import qualified Data.Text.Lazy.IO      as Lazy
@@ -297,7 +299,7 @@ selector :: Config -> Selector -> Builder
 selector Config { lbrace = "", rbrace = "" } = rec
   where rec _ = ""
 selector cfg = intercalate ("," <> newline cfg) . rec
-  where rec (In (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
+  where rec (Fix (SelectorF (Refinement ft) p)) = (<> foldMap predicate (sort ft)) <$>
           case p of
             Star           -> if null ft then ["*"] else [""]
             Elem t         -> [fromText t]
@@ -322,4 +324,3 @@ predicate ft = mconcat $
     Pseudo       a   -> [ ":" , fromText a                                             ]
     PseudoFunc   a p -> [ ":" , fromText a, "(", intercalate "," (map fromText p), ")" ]
     PseudoElem   a   -> [ "::", fromText a                                             ]
-

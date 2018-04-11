@@ -10,7 +10,9 @@ import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
 
-data Prefixed = Prefixed { unPrefixed :: [(Text, Text)] } | Plain { unPlain :: Text }
+data Prefixed
+  = Prefixed { unPrefixed :: [(Text, Text)] }
+  | Plain { unPlain :: Text }
   deriving (Show, Eq)
 
 instance IsString Prefixed where
@@ -41,7 +43,7 @@ quote t = "\"" <> replace "\"" "\\\"" t <> "\""
 -------------------------------------------------------------------------------
 
 newtype Key a = Key { unKeys :: Prefixed }
-  deriving (Show, Monoid, IsString)
+  deriving (Show, Monoid, IsString,Eq)
 
 cast :: Key a -> Key ()
 cast (Key k) = Key k
@@ -58,7 +60,7 @@ instance Val Text where
   value t = Value (Plain t)
 
 newtype Literal = Literal Text
-  deriving (Show, Monoid, IsString)
+  deriving (Show, Monoid, IsString,Eq)
 
 instance Val Literal where
   value (Literal t) = Value (Plain (quote t))
@@ -111,4 +113,3 @@ infixr !
 
 (!) :: a -> b -> (a, b)
 (!) = (,)
-

@@ -1,43 +1,40 @@
-{-# LANGUAGE
-    OverloadedStrings
-  , FlexibleInstances
-  , GeneralizedNewtypeDeriving
-  , StandaloneDeriving
-  , UndecidableInstances
-  , ViewPatterns
-  , PatternGuards
-  , CPP
-  #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE DeriveFoldable             #-}
+{-# LANGUAGE DeriveFunctor              #-}
+{-# LANGUAGE FlexibleInstances          #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE PatternGuards              #-}
+{-# LANGUAGE UndecidableInstances       #-}
 module Clay.Selector where
 
-import Control.Applicative
-import Data.Monoid
-import Data.String
-import Data.Text (Text)
-import Prelude hiding (foldl)
+import           Data.String
+import           Data.Text              (Text)
+
+import           Data.Generics.Fixplate (EqF (..), Mu (..), ShowF (..), transform)
 
 #if MIN_VERSION_base(4,9,0)
-import Data.Semigroup
+import           Data.Semigroup
 #endif
 
-import qualified Data.Text as Text
+import qualified Data.Text              as Text
 
 -- | The star selector applies to all elements. Maps to @*@ in CSS.
 
 star :: Selector
-star = In (SelectorF (Refinement []) Star)
+star = Fix (SelectorF (Refinement []) Star)
 
 -- | Select elements by name. The preferred syntax is to enable
 -- @OverloadedStrings@ and actually just use @\"element-name\"@ or use one of
 -- the predefined elements from "Clay.Elements".
 
 element :: Text -> Selector
-element e = In (SelectorF (Refinement []) (Elem e))
+element e = Fix (SelectorF (Refinement []) (Elem e))
 
 -- | Named alias for `**`.
 
 deep :: Selector -> Selector -> Selector
-deep a b = In (SelectorF (Refinement []) (Deep a b))
+deep a b = Fix (SelectorF (Refinement []) (Deep a b))
 
 -- | The deep selector composer. Maps to @sel1 sel2@ in CSS.
 
@@ -47,7 +44,7 @@ deep a b = In (SelectorF (Refinement []) (Deep a b))
 -- | Named alias for `|>`.
 
 child :: Selector -> Selector -> Selector
-child a b = In (SelectorF (Refinement []) (Child a b))
+child a b = Fix (SelectorF (Refinement []) (Child a b))
 
 -- | The child selector composer. Maps to @sel1 > sel2@ in CSS.
 
@@ -57,12 +54,12 @@ child a b = In (SelectorF (Refinement []) (Child a b))
 -- | The adjacent selector composer. Maps to @sel1 + sel2@ in CSS.
 
 (|+) :: Selector -> Selector -> Selector
-(|+) a b = In (SelectorF (Refinement []) (Adjacent a b))
+(|+) a b = Fix (SelectorF (Refinement []) (Adjacent a b))
 
 -- | Named alias for `#`.
 
 with :: Selector -> Refinement -> Selector
-with (In (SelectorF (Refinement fs) e)) (Refinement ps) = In (SelectorF (Refinement (fs ++ ps)) e)
+with (Fix (SelectorF (Refinement fs) e)) (Refinement ps) = Fix (SelectorF (Refinement (fs ++ ps)) e)
 
 -- | The filter selector composer, adds a filter to a selector. Maps to
 -- something like @sel#filter@ or @sel.filter@ in CSS, depending on the filter.
@@ -157,7 +154,7 @@ data Predicate
   deriving (Eq, Ord, Show)
 
 newtype Refinement = Refinement { unFilter :: [Predicate] }
-  deriving (Show, Monoid)
+  deriving (Show, Monoid, Eq)
 
 instance IsString Refinement where
   fromString = refinementFromText . fromString
@@ -183,18 +180,31 @@ data Path f
   | Deep      f f
   | Adjacent  f f
   | Combined  f f
-  deriving Show
-
-newtype Fix f = In { out :: f (Fix f) }
-
-deriving instance Show (f (Fix f)) => Show (Fix f)
+  deriving (Show, Functor, Foldable, Eq)
 
 data SelectorF a = SelectorF Refinement (Path a)
-  deriving Show
+  deriving (Show, Functor, Foldable, Eq)
 
-type Selector = Fix SelectorF
+-- We're able to use Eq so we can start comparing Selector, should it be required.
+instance EqF   SelectorF where equalF     = (==)
+instance ShowF SelectorF where showsPrecF = showsPrec
 
-instance IsString (Fix SelectorF) where
+-- | Leverage the @Mu@ from the <https://hackage.haskell.org/package/fixplate fixplate>
+-- package so we can have nice things. Like @transform@ and other similar functions.
+-- These let us target specific parts of the @SelectorF@ structure without having
+-- to worry about how we move around the structure.
+type Selector = Mu SelectorF
+
+editClasses :: (Text -> Text) -> Selector -> Selector
+editClasses f = transform fn
+  where
+    g (Class c) = Class (f c)
+    g r         = r
+
+    fn (Fix (SelectorF (Refinement rs) p)) =
+      Fix $ SelectorF (Refinement (g <$> rs)) (editClasses f <$> p)
+
+instance IsString (Mu SelectorF) where
   fromString = selectorFromText . fromString
 
 selectorFromText :: Text -> Selector
@@ -202,14 +212,13 @@ selectorFromText t =
   case Text.uncons t of
     Just (c, _) | elem c ("#.:@" :: [Char])
       -> with star (refinementFromText t)
-    _ -> In $ SelectorF (Refinement []) (Elem t)
+    _ -> Fix $ SelectorF (Refinement []) (Elem t)
 
 #if MIN_VERSION_base(4,9,0)
-instance Semigroup (Fix SelectorF) where
+instance Semigroup (Mu SelectorF) where
   (<>) = mappend
 #endif
 
-instance Monoid (Fix SelectorF) where
+instance Monoid (Mu SelectorF) where
   mempty      = error "Selector is a semigroup"
-  mappend a b = In (SelectorF (Refinement []) (Combined a b))
-
+  mappend a b = Fix (SelectorF (Refinement []) (Combined a b))

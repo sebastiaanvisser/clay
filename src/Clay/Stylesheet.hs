@@ -1,42 +1,42 @@
+{-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ViewPatterns #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE ViewPatterns               #-}
 module Clay.Stylesheet where
 
-import Control.Applicative
-import Control.Arrow (second)
-import Control.Monad.Writer hiding (All)
-import Data.Maybe (isJust)
-import Data.Semigroup (Semigroup)
-import Data.String (IsString)
-import Data.Text (Text)
+import           Control.Applicative
+import           Control.Arrow        (second)
+import           Control.Monad.Writer hiding (All)
+import           Data.Maybe           (isJust)
+import           Data.Semigroup       (Semigroup)
+import           Data.String          (IsString)
+import           Data.Text            (Text)
 
-import Clay.Selector hiding (Child)
-import Clay.Property
-import Clay.Common
+import           Clay.Common
+import           Clay.Property
+import           Clay.Selector        hiding (Child)
 
 -------------------------------------------------------------------------------
 
 newtype MediaType = MediaType Value
-  deriving (Val, Other, Show, All)
+  deriving (Val, Other, Show, All, Eq)
 
 data NotOrOnly = Not | Only
-  deriving Show
+  deriving (Show,Eq)
 
 data MediaQuery = MediaQuery (Maybe NotOrOnly) MediaType [Feature]
-  deriving Show
+  deriving (Show,Eq)
 
 data Feature = Feature Text (Maybe Value)
-  deriving Show
+  deriving (Show,Eq)
 
 newtype CommentText = CommentText { unCommentText :: Text }
-  deriving (Show, IsString, Semigroup, Monoid)
+  deriving (Show, IsString, Semigroup, Monoid, Eq)
 
 data Modifier
   = Important
   | Comment CommentText
-  deriving (Show)
+  deriving (Show,Eq)
 
 _Important :: Modifier -> Maybe Text
 _Important Important   = Just "!important"
@@ -54,10 +54,10 @@ data App
   | Pop    Int
   | Child  Selector
   | Sub    Selector
-  deriving Show
+  deriving (Show,Eq)
 
 data Keyframes = Keyframes Text [(Double, [Rule])]
-  deriving Show
+  deriving (Show,Eq)
 
 data Rule
   = Property [Modifier] (Key ()) Value
@@ -66,7 +66,7 @@ data Rule
   | Face     [Rule]
   | Keyframe Keyframes
   | Import   Text
-  deriving Show
+  deriving (Show,Eq)
 
 newtype StyleM a = S (Writer [Rule] a)
   deriving (Functor, Applicative, Monad)
