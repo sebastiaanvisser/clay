@@ -6,9 +6,11 @@ module Clay.Stylesheet where
 
 import Control.Applicative
 import Control.Arrow (second)
-import Control.Monad.Writer hiding (All)
+import Control.Monad.Writer (Writer, execWriter, tell)
+import Data.Foldable (foldMap)
 import Data.Maybe (isJust)
-import Data.Semigroup (Semigroup)
+import Data.Monoid (Monoid(..))
+import Data.Semigroup (Semigroup(..))
 import Data.String (IsString)
 import Data.Text (Text)
 
@@ -83,9 +85,12 @@ rule a = S (tell [a])
 
 type Css = StyleM ()
 
+instance Semigroup Css where
+  (<>) = liftA2 (<>)
+
 instance Monoid Css where
   mempty = pure ()
-  mappend = liftA2 mappend
+  mappend = (<>)
 
 -- | Add a new style property to the stylesheet with the specified `Key` and
 -- value. The value can be any type that is in the `Val' typeclass, with other

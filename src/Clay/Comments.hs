@@ -1,8 +1,10 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.Comments where
 
+import Data.Foldable (foldMap)
 import Data.Monoid ((<>))
 import Data.Maybe (isNothing)
 import Data.List (partition)
@@ -26,5 +28,7 @@ addComment c (Property (PartitionComments xs (Just cs)) k v) = let c1 = Comment 
 addComment c (Property ms k v  ) = Property (Comment c : ms) k v
 addComment _ r                   = r
 
+#if __GLASGOW_HASKELL__ >= 710
 pattern PartitionComments :: [Modifier] -> Maybe CommentText -> [Modifier]
+#endif
 pattern PartitionComments xs cs <- (fmap (foldMap _Comment) . partition (isNothing . _Comment) -> (xs, cs))

@@ -2,11 +2,11 @@
 module Clay.Property where
 
 import Control.Arrow (second)
-import Control.Monad.Writer
 import Data.Fixed (Fixed, HasResolution (resolution), showFixed)
 import Data.List (partition, sort)
 import Data.List.NonEmpty (NonEmpty, toList)
 import Data.Maybe
+import Data.Semigroup
 import Data.String
 import Data.Text (Text, replace)
 
@@ -16,9 +16,12 @@ data Prefixed = Prefixed { unPrefixed :: [(Text, Text)] } | Plain { unPlain :: T
 instance IsString Prefixed where
   fromString s = Plain (fromString s)
 
+instance Semigroup Prefixed where
+  (<>) = merge
+
 instance Monoid Prefixed where
   mempty  = ""
-  mappend = merge
+  mappend = (<>)
 
 merge :: Prefixed -> Prefixed -> Prefixed
 merge (Plain    x ) (Plain    y ) = Plain (x <> y)
@@ -41,7 +44,7 @@ quote t = "\"" <> replace "\"" "\\\"" t <> "\""
 -------------------------------------------------------------------------------
 
 newtype Key a = Key { unKeys :: Prefixed }
-  deriving (Show, Monoid, IsString)
+  deriving (Show, Semigroup, Monoid, IsString)
 
 cast :: Key a -> Key ()
 cast (Key k) = Key k
@@ -49,7 +52,7 @@ cast (Key k) = Key k
 -------------------------------------------------------------------------------
 
 newtype Value = Value { unValue :: Prefixed }
-  deriving (Show, Monoid, IsString, Eq)
+  deriving (Show, Semigroup, Monoid, IsString, Eq)
 
 class Val a where
   value :: a -> Value
@@ -58,7 +61,7 @@ instance Val Text where
   value t = Value (Plain t)
 
 newtype Literal = Literal Text
-  deriving (Show, Monoid, IsString)
+  deriving (Show, Semigroup, Monoid, IsString)
 
 instance Val Literal where
   value (Literal t) = Value (Plain (quote t))
@@ -100,7 +103,7 @@ instance Val a => Val (NonEmpty a) where
 
 intercalate :: Monoid a => a -> [a] -> a
 intercalate _ []     = mempty
-intercalate s (x:xs) = foldl (\a b -> a <> s <> b) x xs
+intercalate s (x:xs) = foldl (\a b -> a `mappend` s `mappend` b) x xs
 
 -------------------------------------------------------------------------------
 
