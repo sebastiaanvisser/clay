@@ -3,4 +3,4 @@ script:
 - nix-build --expr '(import ./default.nix {compiler = "ghc7103";})'
 - nix-build --expr '(import ./default.nix {compiler = "ghc802";})'
 - nix-build --expr '(import ./default.nix {compiler = "ghc822";})'
-- nix-build --expr '(import ./default.nix {compiler = "ghc841";})'
+- nix-build --expr '(import ./default.nix {compiler = "ghc842";})'
