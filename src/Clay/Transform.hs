@@ -114,8 +114,29 @@ skewY y = Transformation ("skewY(" <> value y <> ")")
 perspective :: Double -> Transformation
 perspective p = Transformation ("perspective(" <> value p <> ")")
 
-matrix :: Double -> Double -> Double -> Double -> Double -> Double -> Transformation
-matrix u v w x y z = Transformation ("matrix3d(" <> value [ u, v, w, x, y, z ] <> ")")
+-- | For a guide to which parameter is which, see the following matrix, which is premultiplied by column vector @(x y 1)@:
+--
+-- \[
+-- \begin{bmatrix} a & c & tx \\ b & d & ty \\ 0 & 0 & 1 \end{bmatrix}
+-- \]
+--
+-- This means the new parameters are:
+--
+-- * @x: a x + c y + tx@
+-- * @y: b y + d y + ty@
+--
+-- It also corresponds to 
+-- 
+-- > matrix3d(a, b, 0, 0, c, d, 0, 0, 0, 0, 1, 0, tx, ty, 0, 1)
+matrix
+  :: Double -- ^ a (linear scale, x)
+  -> Double -- ^ b (skew, contribution of old y to new x)
+  -> Double -- ^ c (skew, contribution of old x to new y)
+  -> Double -- ^ d (linear scale, y)
+  -> Double -- ^ tx (translate x)
+  -> Double -- ^ ty (translate y)
+  -> Transformation
+matrix u v w x y z = Transformation ("matrix(" <> value [ u, v, w, x, y, z ] <> ")")
 
 matrix3d :: Double -> Double -> Double -> Double
          -> Double -> Double -> Double -> Double
