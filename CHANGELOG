@@ -1,5 +1,8 @@
 CHANGELOG
 
+  Upcoming:
+    - Fix incorrect implementation of matrix transformation.
+
   0.13.0:
     - Added commenting to append comment to a property.
     - Comments are displayed by default in pretty but not compact mode.
