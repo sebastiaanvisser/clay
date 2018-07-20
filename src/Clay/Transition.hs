@@ -89,7 +89,7 @@ stepStop   = stepEnd
 
 stepsStart, stepsStop :: Integer -> TimingFunction
 
-stepsStart s = other ("steps(" <> value s <> ", end)")
+stepsStart s = other ("steps(" <> value s <> ", start)")
 stepsStop  s = other ("steps(" <> value s <> ", end)")
 
 cubicBezier :: Double -> Double -> Double -> Double -> TimingFunction
