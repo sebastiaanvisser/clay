@@ -35,6 +35,7 @@ module Clay.Text
 
 , TextAlign
 , textAlign
+, textAlignLast
 , justify, matchParent, start, end
 , alignSide
 , alignString
@@ -206,6 +207,9 @@ alignString = TextAlign . value . Literal . fromString . return
 
 textAlign :: TextAlign -> Css
 textAlign = key "text-align"
+
+textAlignLast :: TextAlign -> Css
+textAlignLast = key "text-align-last"
 
 -------------------------------------------------------------------------------
 
