@@ -133,6 +133,12 @@ attr = Refinement . pure . Attr
 (|=) :: Text -> Text -> Refinement
 (|=) a = Refinement . pure . AttrHyph a
 
+-- | Convert a Refinement to a Selector. This keeps there from being
+-- unneccesary stars in the css.
+-- Solves issues [#25](https://github.com/sebastiaanvisser/clay/issues/25), [#185](https://github.com/sebastiaanvisser/clay/issues/185), [#186](https://github.com/sebastiaanvisser/clay/pull/186)
+
+sel :: Refinement -> Selector
+sel = (#) $ selectorFromText ""
 
 -------------------------------------------------------------------------------
 
