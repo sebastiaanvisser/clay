@@ -1,3 +1,3 @@
-{ compiler ? "ghc844" }:
+{ compiler ? "ghc881" }:
 
 (import ./release.nix {inherit compiler;}).clay
