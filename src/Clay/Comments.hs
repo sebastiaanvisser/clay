@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -28,7 +27,5 @@ addComment c (Property (PartitionComments xs (Just cs)) k v) = let c1 = Comment 
 addComment c (Property ms k v  ) = Property (Comment c : ms) k v
 addComment _ r                   = r
 
-#if __GLASGOW_HASKELL__ >= 710
 pattern PartitionComments :: [Modifier] -> Maybe CommentText -> [Modifier]
-#endif
 pattern PartitionComments xs cs <- (fmap (foldMap _Comment) . partition (isNothing . _Comment) -> (xs, cs))

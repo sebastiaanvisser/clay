@@ -6,7 +6,6 @@
   , UndecidableInstances
   , ViewPatterns
   , PatternGuards
-  , CPP
   #-}
 module Clay.Selector where
 
