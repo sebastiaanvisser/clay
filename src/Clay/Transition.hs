@@ -25,7 +25,7 @@ module Clay.Transition
 , TimingFunction
 , transitionTimingFunction
 , transitionTimingFunctions
-, ease, easeIn, easeOut, easeInOut, linear, stepStart, stepStop
+, ease, easeIn, easeOut, easeInOut, linear, stepStart, stepEnd, stepStop
 , stepsStart, stepsStop
 , cubicBezier
 
@@ -75,7 +75,7 @@ transitionDurations x = key "transition-duration" x
 newtype TimingFunction = TimingFunction Value
   deriving (Val, Other, Auto)
 
-ease, easeIn, easeOut, easeInOut, linear, stepStart, stepStop :: TimingFunction
+ease, easeIn, easeOut, easeInOut, linear, stepStart, stepEnd, stepStop :: TimingFunction
 
 ease       = other "ease"
 easeIn     = other "ease-in"
