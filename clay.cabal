@@ -23,6 +23,9 @@ Category:      Web, Graphics
 Cabal-Version: >= 1.8
 Build-Type:    Simple
 
+Extra-Source-Files:
+  README.md CHANGELOG
+
 Tested-With:
   GHC==8.2.2,
   GHC==8.4.4,
