@@ -1,5 +1,15 @@
 CHANGELOG
 
+  0.13.2:
+    - Bump hspec versions
+    Thanks to Julien Dehos and Sean Parsons.
+
+  0.13.1:
+    - 'Clay.Size': Add 'sticky: Position'.
+    - Adhere to Semigroup-Monoid-Hierarchy
+    - 'Clay.Transition': Add 'stepEnd: TimingFunction'
+    Thanks to Sean Parsons, Elliot Cameron, Simon Jakobi and Olivier Sohn.
+
   0.13.0:
     - Added commenting to append comment to a property.
     - Comments are displayed by default in pretty but not compact mode.
