@@ -1,6 +1,2 @@
 language: nix
-script:
-- nix-build --expr '(import ./default.nix {compiler = "ghc822Binary";})'
-- nix-build --expr '(import ./default.nix {compiler = "ghc844";})'
-- nix-build --expr '(import ./default.nix {compiler = "ghc865";})'
-- nix-build --expr '(import ./default.nix {compiler = "ghc881";})'
+script: nix-build all-ghcs.nix
