@@ -70,8 +70,14 @@ module Clay.Display
 -- * Cursor
 
 , Cursor(..)
-, crosshair, cursorDefault, pointer, move, eResize, neResize, nwResize, nResize, seResize, swResize, sResize, wResize, cursorText, wait, cursorProgress, help, cursorUrl
-
+, cursorUrl
+, cursorDefault
+, contextMenu, help, pointer, cursorProgress, wait
+, cell, crosshair, cursorText, vText
+, alias, cursorCopy, move, noDrop, notAllowed, grab, grabbing
+, allScroll, colResize, rowResize, nResize, eResize, sResize, wResize
+, neResize, nwResize, seResize, swResize, ewResize, nsResize, neswResize, nwseResize
+, zoomIn, zoomOut
 )
 where
 
@@ -257,28 +263,65 @@ class (Val a) => Cursor a where
     cursor :: a -> Css
     cursor = key "cursor"
 
-newtype CursorValue a = CursorValue Value deriving (Val,Inherit,Auto)
+newtype CursorValue a = CursorValue Value deriving (Val,Inherit,Auto,None)
 
 instance Cursor (CursorValue a)
 
-crosshair,cursorDefault,pointer,move,eResize,neResize,nwResize,nResize,seResize,swResize,sResize,wResize,cursorText,wait,cursorProgress,help :: CursorValue Value
-
-crosshair = CursorValue "crosshair"
-cursorDefault = CursorValue "default"
-pointer = CursorValue "pointer"
-move = CursorValue "move"
-eResize = CursorValue "e-resize"
-neResize = CursorValue "ne-resize"
-nwResize = CursorValue "nw-resize"
-nResize = CursorValue "n-resize"
-seResize = CursorValue "se-resize"
-swResize = CursorValue "sw-resize"
-sResize = CursorValue "s-resize"
-wResize = CursorValue "w-resize"
-cursorText = CursorValue "text"
-wait = CursorValue "wait"
-cursorProgress = CursorValue "progress"
-help = CursorValue "help"
-
 cursorUrl :: Text -> CursorValue Value
 cursorUrl u = CursorValue $ value ("url(\"" <> u <> "\")")
+
+-- Using the classification from https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+cursorDefault
+  , contextMenu, help, pointer, cursorProgress, wait
+  , cell, crosshair, cursorText, vText
+  , alias, cursorCopy, move, noDrop, notAllowed, grab, grabbing
+  , allScroll, colResize, rowResize, nResize, eResize, sResize, wResize
+  , neResize, nwResize, seResize, swResize, ewResize, nsResize, neswResize, nwseResize
+  , zoomIn, zoomOut :: CursorValue Value
+
+-- General
+cursorDefault = CursorValue "default"
+
+-- Links & status
+contextMenu = CursorValue "context-menu"
+help = CursorValue "help"
+pointer = CursorValue "pointer"
+cursorProgress = CursorValue "progress"
+wait = CursorValue "wait"
+
+-- Selection
+cell = CursorValue "cell"
+crosshair = CursorValue "crosshair"
+cursorText = CursorValue "text"
+vText = CursorValue "vertical-text"
+
+-- Drag & drop
+alias = CursorValue "alias"
+cursorCopy = CursorValue "copy"
+move = CursorValue "move"
+noDrop = CursorValue "no-drop"
+notAllowed = CursorValue "not-allowed"
+grab = CursorValue "grab"
+grabbing = CursorValue "grabbing"
+
+-- Resizing & scrolling
+allScroll = CursorValue "all-scroll"
+colResize = CursorValue "col-resize"
+rowResize = CursorValue "row-resize"
+nResize = CursorValue "n-resize"
+eResize = CursorValue "e-resize"
+sResize = CursorValue "s-resize"
+wResize = CursorValue "w-resize"
+
+neResize = CursorValue "ne-resize"
+nwResize = CursorValue "nw-resize"
+seResize = CursorValue "se-resize"
+swResize = CursorValue "sw-resize"
+ewResize = CursorValue "ew-resize"
+nsResize = CursorValue "ns-resize"
+neswResize = CursorValue "nesw-resize"
+nwseResize = CursorValue "nwse-resize"
+
+-- Zooming
+zoomIn = CursorValue "zoom-in"
+zoomOut = CursorValue "zoom-out"
