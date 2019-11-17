@@ -230,10 +230,10 @@ a @/ b = DivSize b a
 sym :: (a -> a -> a -> a -> Css) -> a -> Css
 sym k a = k a a a a
 
-sym3 :: (a -> a -> a -> a -> Css) -> a -> a -> a -> Css
+sym3 :: (tb -> l -> tb -> r -> Css) -> tb -> l -> r -> Css
 sym3 k tb l r = k tb l tb r
 
-sym2 :: (a -> a -> a -> a -> Css) -> a -> a -> Css
+sym2 :: (tb -> lr -> tb -> lr -> Css) -> tb -> lr -> Css
 sym2 k tb lr = k tb lr tb lr
 
 -------------------------------------------------------------------------------
