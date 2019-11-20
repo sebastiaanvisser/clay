@@ -7,5 +7,6 @@ let
     "ghc865"
     "ghc881"
   ];
-  getGHCByVersion = version: builtins.getAttr version nixpkgs.haskell.compiler;
-in builtins.map getGHCByVersion supportedGHCVersions
+
+  buildClayWith = version: import ./default.nix { compiler = version; };
+in builtins.map buildClayWith supportedGHCVersions
