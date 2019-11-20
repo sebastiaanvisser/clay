@@ -24,7 +24,7 @@ Cabal-Version: >= 1.8
 Build-Type:    Simple
 
 Extra-Source-Files:
-  README.md CHANGELOG
+  README.md CHANGELOG CONTRIBUTING.md
 
 Tested-With:
   GHC==8.2.2,

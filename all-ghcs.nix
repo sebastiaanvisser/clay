@@ -1,12 +1,8 @@
 { nixpkgs ? import <nixpkgs> {} }:
 
 let
-  supportedGHCVersions = [
-    "ghc822Binary"
-    "ghc844"
-    "ghc865"
-    "ghc881"
-  ];
-
+  travisJobEnvAssignments = (builtins.fromJSON (builtins.readFile ./.travis.yml)).env.jobs;
+  getGHCVersionFromEnvAssignment = envAssignment: builtins.elemAt (builtins.split "=" envAssignment) 2;
+  supportedGHCVersions = builtins.map getGHCVersionFromEnvAssignment travisJobEnvAssignments;
   buildClayWith = version: import ./default.nix { compiler = version; };
 in builtins.map buildClayWith supportedGHCVersions

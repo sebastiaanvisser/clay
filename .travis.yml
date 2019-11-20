@@ -1,7 +1,11 @@
-language: nix
-env:
-  jobs:
-    - GHC_VERSION=ghc822Binary
-    - GHC_VERSION=ghc844
-    - GHC_VERSION=ghc865
-    - GHC_VERSION=ghc881
+{
+  "language": "nix",
+  "env": {
+    "jobs":
+      [ "GHC_VERSION=ghc822Binary"
+      , "GHC_VERSION=ghc844"
+      , "GHC_VERSION=ghc865"
+      , "GHC_VERSION=ghc881"
+      ]
+  }
+}
