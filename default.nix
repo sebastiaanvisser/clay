@@ -1,3 +1,6 @@
-{ compiler ? "ghc881" }:
+{ compiler ? builtins.getEnv "GHC_VERSION" }:
 
-(import ./release.nix {inherit compiler;}).clay
+let
+  compilerWithDefault = if compiler == "" then "ghc881" else compiler;
+in
+  (import ./release.nix { compiler = compilerWithDefault; }).clay
