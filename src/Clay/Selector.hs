@@ -9,7 +9,6 @@
   #-}
 module Clay.Selector where
 
-import Control.Applicative
 import Data.Semigroup
 import Data.String
 import Data.Text (Text)
