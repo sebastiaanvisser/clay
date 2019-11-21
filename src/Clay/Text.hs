@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
 module Clay.Text
 (
 -- * Letter and word-spacing.
@@ -94,7 +94,9 @@ module Clay.Text
 )
 where
 
+#if __GLASGOW_HASKELL__ < 804
 import Data.Monoid
+#endif
 import Data.String
 import Data.Text (Text)
 

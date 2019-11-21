@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
 module Clay.Property where
 
 import Control.Arrow (second)
@@ -6,7 +6,9 @@ import Data.Fixed (Fixed, HasResolution (resolution), showFixed)
 import Data.List (partition, sort)
 import Data.List.NonEmpty (NonEmpty, toList)
 import Data.Maybe
+#if __GLASGOW_HASKELL__ < 804
 import Data.Semigroup
+#endif
 import Data.String
 import Data.Text (Text, replace)
 

@@ -2,6 +2,7 @@
     OverloadedStrings
   , FlexibleInstances
   , GeneralizedNewtypeDeriving
+  , CPP
   #-}
 module Clay.Gradient
 (
@@ -36,7 +37,9 @@ module Clay.Gradient
 )
 where
 
+#if __GLASGOW_HASKELL__ < 804
 import Data.Monoid
+#endif
 
 import Clay.Color
 import Clay.Common

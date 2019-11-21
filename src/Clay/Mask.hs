@@ -2,6 +2,7 @@
     OverloadedStrings
   , FlexibleInstances
   , GeneralizedNewtypeDeriving
+  , CPP
   #-}
 module Clay.Mask
 (
@@ -57,7 +58,9 @@ module Clay.Mask
 )
 where
 
+#if __GLASGOW_HASKELL__ < 804
 import Data.Semigroup
+#endif
 
 import Clay.Background
 import Clay.Common

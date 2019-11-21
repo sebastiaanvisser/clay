@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
 module Clay.Box
 ( BoxType
 , paddingBox, borderBox, contentBox
@@ -20,7 +20,9 @@ module Clay.Box
 )
 where
 
+#if __GLASGOW_HASKELL__ < 804
 import Data.Monoid
+#endif
 import Data.List.NonEmpty (NonEmpty)
 
 import Clay.Color

@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
 module Clay.List
 ( ListStyleType
 , listStyleType
@@ -36,7 +36,9 @@ module Clay.List
 )
 where
 
+#if __GLASGOW_HASKELL__ < 804
 import Data.Semigroup
+#endif
 import Data.Text (Text)
 
 import Clay.Common
