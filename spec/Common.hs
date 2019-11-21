@@ -1,9 +1,11 @@
+{-# LANGUAGE CPP #-}
 module Common where
 
-import Clay.Render (renderWith, compact)
 import Test.Hspec
 import Clay
+#if __GLASGOW_HASKELL__ < 808
 import Data.Monoid ((<>))
+#endif
 import Data.Text.Lazy (Text, unpack)
 
 shouldRenderFrom :: Text -> Css -> SpecWith ()

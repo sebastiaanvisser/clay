@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, CPP #-}
 module Clay.Render
 ( Config (..)
 , pretty
@@ -14,7 +14,9 @@ where
 
 import           Control.Applicative
 import           Control.Monad.Writer
+#if __GLASGOW_HASKELL__ < 808
 import           Data.Foldable          (foldMap)
+#endif
 import           Data.List              (sort)
 import           Data.Maybe
 import           Data.Text              (Text, pack)

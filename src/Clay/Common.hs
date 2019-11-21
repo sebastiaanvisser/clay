@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, CPP #-}
 
 -- | A bunch of type classes representing common values shared between multiple
 -- CSS properties, like `Auto`, `Inherit`, `None`, `Normal` and several more.
@@ -11,7 +11,9 @@ module Clay.Common where
 
 import Clay.Property
 import Data.String (IsString)
+#if __GLASGOW_HASKELL__ < 808
 import Data.Monoid (Monoid, (<>))
+#endif
 
 -------------------------------------------------------------------------------
 
