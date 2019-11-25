@@ -1,13 +1,8 @@
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE CPP #-}
 module Clay.Comments where
 
-#if __GLASGOW_HASKELL__ < 808
-import Data.Foldable (foldMap)
-import Data.Monoid ((<>))
-#endif
 import Data.Maybe (isNothing)
 import Data.List (partition)
 

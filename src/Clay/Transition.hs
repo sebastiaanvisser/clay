@@ -1,7 +1,6 @@
 {-# LANGUAGE
     OverloadedStrings
   , GeneralizedNewtypeDeriving
-  , CPP
   #-}
 module Clay.Transition
 (
@@ -37,9 +36,6 @@ module Clay.Transition
 )
 where
 
-#if __GLASGOW_HASKELL__ < 804
-import Data.Monoid
-#endif
 import Data.Text (Text)
 
 import Clay.Common

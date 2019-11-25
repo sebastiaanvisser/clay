@@ -1,10 +1,7 @@
-{-# LANGUAGE OverloadedStrings, CPP #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Clay.Color where
 
 import Data.Char (isHexDigit)
-#if __GLASGOW_HASKELL__ < 804
-import Data.Monoid
-#endif
 import Data.String
 import Text.Printf
 

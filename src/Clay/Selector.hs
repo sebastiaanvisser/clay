@@ -6,13 +6,9 @@
   , UndecidableInstances
   , ViewPatterns
   , PatternGuards
-  , CPP
   #-}
 module Clay.Selector where
 
-#if __GLASGOW_HASKELL__ < 804
-import Data.Semigroup
-#endif
 import Data.String
 import Data.Text (Text)
 

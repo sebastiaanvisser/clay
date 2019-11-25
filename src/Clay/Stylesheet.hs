@@ -2,18 +2,12 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE CPP #-}
 module Clay.Stylesheet where
 
 import Control.Applicative
 import Control.Arrow (second)
 import Control.Monad.Writer (Writer, execWriter, tell)
 import Data.Maybe (isJust)
-#if __GLASGOW_HASKELL__ < 808
-import Data.Monoid (Monoid(..))
-import Data.Semigroup (Semigroup(..))
-import Data.Foldable (foldMap)
-#endif
 import Data.String (IsString)
 import Data.Text (Text)
 

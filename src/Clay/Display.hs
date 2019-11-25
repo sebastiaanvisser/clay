@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Display
 (
 -- * Float.
@@ -81,9 +81,6 @@ module Clay.Display
 )
 where
 
-#if __GLASGOW_HASKELL__ < 804
-import Data.Monoid
-#endif
 import Data.String
 
 import Clay.Size

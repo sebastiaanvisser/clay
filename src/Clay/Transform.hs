@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Transform
 (
 
@@ -39,9 +39,6 @@ module Clay.Transform
 )
 where
 
-#if __GLASGOW_HASKELL__ < 804
-import Data.Monoid
-#endif
 import Prelude hiding (Left, Right)
 
 import Clay.Property

@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving, CPP #-}
+{-# LANGUAGE OverloadedStrings, GeneralizedNewtypeDeriving #-}
 module Clay.Time
 (
 
@@ -12,9 +12,6 @@ module Clay.Time
 )
 where
 
-#if __GLASGOW_HASKELL__ < 804
-import Data.Monoid
-#endif
 import Data.Text (pack)
 
 import Clay.Common

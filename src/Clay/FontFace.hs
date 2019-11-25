@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, CPP #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Clay.FontFace
   ( FontFaceFormat (..)
   , FontFaceSrc (..)
@@ -9,10 +9,6 @@ import Clay.Common (call)
 import Clay.Property (Prefixed (Plain), Value(Value), Val (value), quote)
 import Clay.Stylesheet (Css, key)
 
-#if __GLASGOW_HASKELL__ < 808
-import Data.Monoid ((<>))
-import Data.Functor ((<$>))
-#endif
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 
