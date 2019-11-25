@@ -13,7 +13,7 @@ To build for a particular version,
 set the `GHC_VERSION` environment variable:
 
 ```
-GHC_VERSION=ghc nix-build
+GHC_VERSION=ghc881 nix-build
 ```
 
 To find out which GHC versions your nix setup provides:
