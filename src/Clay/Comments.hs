@@ -3,8 +3,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Clay.Comments where
 
-import Data.Foldable (foldMap)
-import Data.Monoid ((<>))
 import Data.Maybe (isNothing)
 import Data.List (partition)
 

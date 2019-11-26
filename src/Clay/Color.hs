@@ -2,7 +2,6 @@
 module Clay.Color where
 
 import Data.Char (isHexDigit)
-import Data.Monoid
 import Data.String
 import Text.Printf
 

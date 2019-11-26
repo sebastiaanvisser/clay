@@ -20,7 +20,6 @@ module Clay.Box
 )
 where
 
-import Data.Monoid
 import Data.List.NonEmpty (NonEmpty)
 
 import Clay.Color

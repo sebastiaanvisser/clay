@@ -7,10 +7,7 @@ module Clay.Stylesheet where
 import Control.Applicative
 import Control.Arrow (second)
 import Control.Monad.Writer (Writer, execWriter, tell)
-import Data.Foldable (foldMap)
 import Data.Maybe (isJust)
-import Data.Monoid (Monoid(..))
-import Data.Semigroup (Semigroup(..))
 import Data.String (IsString)
 import Data.Text (Text)
 

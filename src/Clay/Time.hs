@@ -12,7 +12,6 @@ module Clay.Time
 )
 where
 
-import Data.Monoid
 import Data.Text (pack)
 
 import Clay.Common

@@ -1,9 +1,7 @@
 module Common where
 
-import Clay.Render (renderWith, compact)
 import Test.Hspec
 import Clay
-import Data.Monoid ((<>))
 import Data.Text.Lazy (Text, unpack)
 
 shouldRenderFrom :: Text -> Css -> SpecWith ()

@@ -6,7 +6,6 @@ import Data.Fixed (Fixed, HasResolution (resolution), showFixed)
 import Data.List (partition, sort)
 import Data.List.NonEmpty (NonEmpty, toList)
 import Data.Maybe
-import Data.Semigroup
 import Data.String
 import Data.Text (Text, replace)
 

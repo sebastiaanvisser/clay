@@ -9,8 +9,6 @@ import Clay.Common (call)
 import Clay.Property (Prefixed (Plain), Value(Value), Val (value), quote)
 import Clay.Stylesheet (Css, key)
 
-import Data.Monoid ((<>))
-import Data.Functor ((<$>))
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 

@@ -36,7 +36,6 @@ module Clay.List
 )
 where
 
-import Data.Semigroup
 import Data.Text (Text)
 
 import Clay.Common

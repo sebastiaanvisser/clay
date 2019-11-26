@@ -94,7 +94,6 @@ module Clay.Text
 )
 where
 
-import Data.Monoid
 import Data.String
 import Data.Text (Text)
 

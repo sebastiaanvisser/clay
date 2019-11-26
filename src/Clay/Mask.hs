@@ -57,8 +57,6 @@ module Clay.Mask
 )
 where
 
-import Data.Semigroup
-
 import Clay.Background
 import Clay.Common
 import Clay.Property

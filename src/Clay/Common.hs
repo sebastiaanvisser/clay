@@ -11,7 +11,6 @@ module Clay.Common where
 
 import Clay.Property
 import Data.String (IsString)
-import Data.Monoid (Monoid, (<>))
 
 -------------------------------------------------------------------------------
 

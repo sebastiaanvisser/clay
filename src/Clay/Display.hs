@@ -81,7 +81,6 @@ module Clay.Display
 )
 where
 
-import Data.Monoid
 import Data.String
 
 import Clay.Size

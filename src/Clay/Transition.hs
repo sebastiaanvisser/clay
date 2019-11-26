@@ -36,7 +36,6 @@ module Clay.Transition
 )
 where
 
-import Data.Monoid
 import Data.Text (Text)
 
 import Clay.Common

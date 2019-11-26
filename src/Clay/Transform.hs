@@ -39,7 +39,6 @@ module Clay.Transform
 )
 where
 
-import Data.Monoid
 import Prelude hiding (Left, Right)
 
 import Clay.Property

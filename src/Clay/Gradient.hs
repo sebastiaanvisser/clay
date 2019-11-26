@@ -36,8 +36,6 @@ module Clay.Gradient
 )
 where
 
-import Data.Monoid
-
 import Clay.Color
 import Clay.Common
 import Clay.Property

@@ -14,7 +14,6 @@ where
 
 import           Control.Applicative
 import           Control.Monad.Writer
-import           Data.Foldable          (foldMap)
 import           Data.List              (sort)
 import           Data.Maybe
 import           Data.Text              (Text, pack)
