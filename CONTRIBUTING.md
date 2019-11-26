@@ -38,3 +38,6 @@ If your fix breaks an older version, do not despair.
 As long as the last three versions work,
 you can delete older GHC versions from `.travis.yml` in your pull request,
 and deprecation of that version will be considered.
+
+If you fix an important bug or contribute a new feature,
+consider adding a line to `CHANGELOG` describing what you have changed.

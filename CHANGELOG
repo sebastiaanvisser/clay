@@ -1,5 +1,11 @@
 CHANGELOG
 
+  0.13.3:
+    - Improve README
+    - Relax types for `sym2` and `sym3` combinators
+    - Add new cursors
+    Thanks to Sridhar Ratnakumar, Brad Ediger and Alexandre Esteves.
+
   0.13.2:
     - Bump hspec versions
     Thanks to Julien Dehos and Sean Parsons.
