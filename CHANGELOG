@@ -1,5 +1,8 @@
 CHANGELOG
 
+  0.14.0:
+    - Drop support for GHC 8.2
+
   0.13.3:
     - Improve README
     - Relax types for `sym2` and `sym3` combinators
