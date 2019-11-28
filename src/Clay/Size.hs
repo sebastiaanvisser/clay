@@ -33,6 +33,10 @@ module Clay.Size
 , vh
 , vmin
 , vmax
+, maxContent
+, minContent
+, available
+, fitContent
 
 -- * Calculation operators for calc
 
@@ -164,6 +168,22 @@ vmin i = SimpleSize (cssDoubleText i <> "vmin")
 
 -- | SimpleSize in vmax's (the larger of vw or vh).
 vmax i = SimpleSize (cssDoubleText i <> "vmax")
+
+-- | SimpleSize for the intrinsic preferred width.
+maxContent :: Size LengthUnit
+maxContent = SimpleSize "max-content"
+
+-- | SimpleSize for the intrinsic minimum width.
+minContent :: Size LengthUnit
+minContent = SimpleSize "min-content"
+
+-- | SimpleSize for The containing block width minus horizontal margin, border, and padding.
+available :: Size LengthUnit
+available = SimpleSize "available"
+
+-- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width
+fitContent :: Size LengthUnit
+fitContent = SimpleSize "fit-content"
 
 -- | SimpleSize in percents.
 pct :: Double -> Size Percentage
