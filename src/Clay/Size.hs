@@ -33,6 +33,7 @@ module Clay.Size
 , vh
 , vmin
 , vmax
+, fr
 , maxContent
 , minContent
 , available
@@ -146,7 +147,7 @@ pt i = SimpleSize (cssDoubleText i <> "pt")
 -- | Size in picas (1pc = 12pt).
 pc i = SimpleSize (cssDoubleText i <> "pc")
 
-em, ex, rem, vw, vh, vmin, vmax :: Double -> Size LengthUnit
+em, ex, rem, vw, vh, vmin, vmax, fr :: Double -> Size LengthUnit
 
 -- | Size in em's (computed cssDoubleText of the font-size).
 em i = SimpleSize (cssDoubleText i <> "em")
@@ -168,6 +169,9 @@ vmin i = SimpleSize (cssDoubleText i <> "vmin")
 
 -- | SimpleSize in vmax's (the larger of vw or vh).
 vmax i = SimpleSize (cssDoubleText i <> "vmax")
+
+-- | SimpleSize in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
+fr i = SimpleSize (cssDoubleText i <> "fr")
 
 -- | SimpleSize for the intrinsic preferred width.
 maxContent :: Size LengthUnit
