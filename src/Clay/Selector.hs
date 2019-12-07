@@ -51,6 +51,11 @@ child a b = In (SelectorF (Refinement []) (Child a b))
 (|+) :: Selector -> Selector -> Selector
 (|+) a b = In (SelectorF (Refinement []) (Adjacent a b))
 
+-- | The general sibling selector composer. Maps to @sel1 ~ sel2@ in CSS.
+
+(|~) :: Selector -> Selector -> Selector
+(|~) a b = In (SelectorF (Refinement []) (Sibling a b))
+
 -- | Named alias for `#`.
 
 with :: Selector -> Refinement -> Selector
@@ -174,6 +179,7 @@ data Path f
   | Child     f f
   | Deep      f f
   | Adjacent  f f
+  | Sibling   f f
   | Combined  f f
   deriving Show
 

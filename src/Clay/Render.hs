@@ -303,6 +303,7 @@ selector cfg = intercalate ("," <> newline cfg) . rec
             Child      a b -> ins " > " <$> rec a <*> rec b
             Deep       a b -> ins " "   <$> rec a <*> rec b
             Adjacent   a b -> ins " + " <$> rec a <*> rec b
+            Sibling    a b -> ins " ~ " <$> rec a <*> rec b
             Combined   a b -> rec a ++ rec b
           where ins s a b = a <> s <> b
 
