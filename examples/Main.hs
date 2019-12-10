@@ -54,12 +54,12 @@ main = putCss logo
          before &
            do toTheRight m
               transforms [translate (px 0) (px (div m 2)), skew (deg 0) (deg 45)]
-              boxShadow 0 0 (px 40) black
+              boxShadow' 0 0 (px 40) black
 
          after &
            do toTheBottom m
               transforms [translate (px (div m 2)) (px 0), skew (deg 45) (deg 0)]
-              boxShadow 0 0 (px 40) black
+              boxShadow' 0 0 (px 40) black
 
          "div" <?
            do position absolute
@@ -71,7 +71,7 @@ main = putCss logo
     squareI i x y c = ".square" `with` nthChild i ?
       do rectangular x y s s
          background (hGradient (c -. 100) c)
-         boxShadow 0 0 (px 50) c
+         boxShadow' 0 0 (px 50) c
          before & background (vGradient (c -. 10) (c -. 60))
          after  & background (hGradient (c +. 10) (c +. 80))
 
