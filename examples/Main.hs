@@ -11,8 +11,8 @@ main :: IO ()
 main = putCss logo
 
   where
-    s = 80
-    m = 30
+    s = 80 :: Double
+    m = 30 :: Double
     cs = [ "#78e700"
          , "#00b454"
          , "#ff3900"
@@ -33,10 +33,10 @@ main = putCss logo
          forM_ [0..3] $ \x ->
            forM_ [0..3] $ \y ->
              do let idx = (pack . show) (1 + y * 4 + x)
-                    clr = cycle cs !! fromInteger y
+                    clr = cycle cs !! floor y
                 squareI idx (m * y + x * (s + m))
                             (m * x + y * (s + m))
-                            (clr -. 50 +. (x * 50))
+                            (clr -. 50 +. floor (x * 50))
 
     square = ".square" ?
       do font ( Optional (Just bold) Nothing (Just italic)
@@ -53,12 +53,12 @@ main = putCss logo
 
          before &
            do toTheRight m
-              transforms [translate (px 0) (px (div m 2)), skew (deg 0) (deg 45)]
+              transforms [translate (px 0) (px $ fromIntegral $ div (floor m) 2), skew (deg 0) (deg 45)]
               boxShadow' 0 0 (px 40) black
 
          after &
            do toTheBottom m
-              transforms [translate (px (div m 2)) (px 0), skew (deg 45) (deg 0)]
+              transforms [translate (px $ fromIntegral $ div (floor m) 2) (px 0), skew (deg 45) (deg 0)]
               boxShadow' 0 0 (px 40) black
 
          "div" <?
@@ -66,7 +66,7 @@ main = putCss logo
               background (vGradient (setA 0 white) (setA 60 white))
               borderBottomLeftRadius  (pct 100) (pct 100)
               borderBottomRightRadius (pct  40) (pct  15)
-              [left, top, right, bottom] `forM_` ($ 4)
+              [left, top, right, bottom] `forM_` ($ pct 4)
 
     squareI i x y c = ".square" `with` nthChild i ?
       do rectangular x y s s
