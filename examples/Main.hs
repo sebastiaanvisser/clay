@@ -35,10 +35,10 @@ main = putCss logo
          forM_ [0..3] $ \x ->
            forM_ [0..3] $ \y ->
              do let idx = (pack . show) (1 + y * 4 + x)
-                    clr = cycle cs !! floor y
-                squareI idx (m * y + x * (s + m))
-                            (m * x + y * (s + m))
-                            (clr -. 50 +. floor (x * 50))
+                    clr = cycle cs !! y
+                squareI idx (m * fromIntegral y + fromIntegral x * (s + m))
+                            (m * fromIntegral x + fromIntegral y * (s + m))
+                            (clr -. 50 +. fromIntegral (x * 50))
 
     square = ".square" ?
       do font ( Optional (Just bold) Nothing (Just italic)
