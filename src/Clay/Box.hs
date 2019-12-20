@@ -81,6 +81,10 @@ newtype BoxShadow = BoxShadow Value
 -- > boxShadow . pure $ shadow (px 1) (px 1)
 --
 -- Use with @{-# LANGUAGE OverloadedLists #-}@ for the simplest list syntax.
+-- Note that sometimes when @{-# LANGUAGE OverloadedLists #-}@ is active, GHC
+-- has troubles identifying what type the list should be converted to. Examples:
+-- 1) "forM_ [0..10] $ \x -> ..."
+-- 2) "[left, top, right, bottom] `forM_` ($ pct 4)"
 --
 -- > boxShadow [none]
 -- > boxShadow [shadow (px 1) (px 1)]
