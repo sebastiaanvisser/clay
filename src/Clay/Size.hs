@@ -181,7 +181,7 @@ maxContent = SimpleSize "max-content"
 minContent :: Size LengthUnit
 minContent = SimpleSize "min-content"
 
--- | SimpleSize for The containing block width minus horizontal margin, border, and padding.
+-- | SimpleSize for the containing block width minus horizontal margin, border, and padding.
 available :: Size LengthUnit
 available = SimpleSize "available"
 
