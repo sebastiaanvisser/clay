@@ -185,7 +185,7 @@ minContent = SimpleSize "min-content"
 available :: Size LengthUnit
 available = SimpleSize "available"
 
--- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width
+-- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width.
 fitContent :: Size LengthUnit
 fitContent = SimpleSize "fit-content"
 
