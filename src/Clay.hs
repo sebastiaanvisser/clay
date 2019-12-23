@@ -113,6 +113,7 @@ module Clay
 , module Clay.FontFace
 , module Clay.Geometry
 , module Clay.Gradient
+, module Clay.Grid
 , module Clay.List
 , module Clay.Text
 , module Clay.Transform
@@ -156,6 +157,7 @@ import Clay.Font       hiding (menu, caption, small, icon)
 import Clay.FontFace
 import Clay.Geometry
 import Clay.Gradient
+import Clay.Grid
 import Clay.List
 import Clay.Size
 import Clay.Text       hiding (pre)
@@ -183,6 +185,6 @@ import Clay.Filter     hiding (url, opacity)
 -- grouped with the preceding value when rendered compactly.
 --
 -- Note that /every/ generated line in the generated content will feature the
--- comment. 
+-- comment.
 --
 -- An empty comment generates '@/*  */@'.
