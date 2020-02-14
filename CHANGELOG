@@ -2,6 +2,9 @@ CHANGELOG
 
   0.14.0:
     - Drop support for GHC 8.2
+    - Added `text-align-last`
+    - Fix typo in `stepsStart`
+    Thanks to Vasiliy Yorkin and Florian Grignon.
 
   0.13.3:
     - Improve README
@@ -132,4 +135,3 @@ CHANGELOG
     - Refinements applied to the top level magically introduce star selector.
     Thanks to listx, bergmark, Cynede, chrisdone, Primigenus, Sigrlami for the
     pull requests and bug reports.
-
