@@ -13,7 +13,10 @@ jobs:
     - uses: actions/stale@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Stale issue message'
-        stale-pr-message: 'Stale pull request message'
+        stale-issue-message: 'This issue has not seen any activity in a long time. If no further activity occurs, it will be closed after four weeks.'
+        stale-pr-message: 'This issue has not seen any activity in a long time. If no further activity occurs, it will be closed after four weeks.'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
+        days-before-stale: 400
+        days-before-close: 28
+        operations-per-run: 7
