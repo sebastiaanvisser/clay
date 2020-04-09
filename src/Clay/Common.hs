@@ -9,6 +9,7 @@
 
 module Clay.Common where
 
+import Data.Text (Text)
 import Clay.Property
 import Data.String (IsString)
 
@@ -73,13 +74,25 @@ instance Unset    Value where unset    = unsetValue
 -- | Common list browser prefixes to make experimental properties work in
 -- different browsers.
 
+webkitPrefix :: (Text, Text)
+webkitPrefix = ( "-webkit-", "" )
+
+emptyPrefix :: (Text, Text)
+emptyPrefix = ( "", "" )
+
+webkit :: Prefixed
+webkit = Prefixed $
+  [ webkitPrefix
+  , emptyPrefix
+  ]
+
 browsers :: Prefixed
-browsers = Prefixed
-  [ ( "-webkit-", "" )
-  , (    "-moz-", "" )
-  , (     "-ms-", "" )
-  , (      "-o-", "" )
-  , (         "", "" )
+browsers = Prefixed $
+  [ webkitPrefix
+  , ( "-moz-", "" )
+  , (  "-ms-", "" )
+  , (   "-o-", "" )
+  , emptyPrefix
   ]
 
 -------------------------------------------------------------------------------

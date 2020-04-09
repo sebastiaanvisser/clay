@@ -127,7 +127,7 @@ static   = Position "static"
 absolute = Position "absolute"
 fixed    = Position "fixed"
 relative = Position "relative"
-sticky = Position "sticky"
+sticky = Position $ Value (webkit <> Plain "sticky")
 
 position :: Position -> Css
 position = key "position"
