@@ -4,7 +4,7 @@
     "jobs":
       [ "GHC_VERSION=ghc844"
       , "GHC_VERSION=ghc865"
-      , "GHC_VERSION=ghc881"
+      , "GHC_VERSION=ghc883"
       ]
   }
 }
