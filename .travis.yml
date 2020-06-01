@@ -6,5 +6,6 @@
       , "GHC_VERSION=ghc865"
       , "GHC_VERSION=ghc883"
       ]
-  }
+  },
+  "nix": "2.3.3"
 }
