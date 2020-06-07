@@ -314,7 +314,7 @@ predicate ft = mconcat $
     Class        a   -> [ "." , fromText a                                             ]
     Attr         a   -> [ "[" , fromText a,                     "]"                    ]
     AttrVal      a v -> [ "[" , fromText a,  "='", fromText v, "']"                    ]
-    AttrBegins   a v -> [ "[" , fromText a, "^='", fromText v, "']"                    ]
+    AttrBegins   a v -> [ " [" , fromText a, "^='", fromText v, "']"                    ]
     AttrEnds     a v -> [ "[" , fromText a, "$='", fromText v, "']"                    ]
     AttrContains a v -> [ "[" , fromText a, "*='", fromText v, "']"                    ]
     AttrSpace    a v -> [ "[" , fromText a, "~='", fromText v, "']"                    ]
@@ -322,4 +322,3 @@ predicate ft = mconcat $
     Pseudo       a   -> [ ":" , fromText a                                             ]
     PseudoFunc   a p -> [ ":" , fromText a, "(", intercalate "," (map fromText p), ")" ]
     PseudoElem   a   -> [ "::", fromText a                                             ]
-

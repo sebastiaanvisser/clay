@@ -57,7 +57,7 @@ Library
     Clay.FontFace
     Clay.Geometry
     Clay.Gradient
-    Clay.Grid 
+    Clay.Grid
     Clay.List
     Clay.Media
     Clay.Mask
@@ -82,6 +82,7 @@ Test-Suite Test-Clay
   Type: exitcode-stdio-1.0
   HS-Source-Dirs: spec, src
   main-is: Spec.hs
+  Build-Tool-Depends: hspec-discover:hspec-discover
   Build-Depends:
     base                 >= 4.11  && < 5,
     mtl                  >= 1     && < 2.3,

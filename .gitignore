@@ -9,3 +9,4 @@ cabal.sandbox.config
 *.sublime-*
 result
 *.code-*
+.ghc.environment.*
