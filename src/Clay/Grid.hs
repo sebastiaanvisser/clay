@@ -109,5 +109,7 @@ instance Val GridTemplateAreas where
   value areas =
     value $
     Text.intercalate "\n" $
-    fmap (Text.intercalate " ") $
+    fmap (quote . Text.intercalate " ") $
     (coerce areas :: [[Text]])
+    where
+      quote text = "\"" <> text <> "\""
