@@ -43,6 +43,7 @@
 -- @
 module Clay.Grid
   ( gap
+  , gridGap
   , rowGap
   , columnGap
   , gridTemplateRows
@@ -67,8 +68,12 @@ import GHC.Exts (IsList(..))
 
 
 -- | Property sets the gaps (gutters) between rows and columns.
-gap :: Size a -> Css
-gap = key "gap" <> key "grid-gap"
+gap :: Size a -> Size a -> Css
+gap row col = key "gap" (row, col) <> key "grid-gap" (row, col)
+
+gridGap :: Size a -> Css
+gridGap = key "grid-gap"
+{-# DEPRECATED gridGap "Use gap, rowGap, and/or columnGap instead" #-}
 
 -- | Property sets the size of the gap (gutter) between an element's grid rows.
 rowGap :: Size a -> Css

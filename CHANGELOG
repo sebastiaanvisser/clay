@@ -10,6 +10,7 @@ CHANGELOG
         gridTemplateColumns: `grid-template-columns`
         gridTemplateAreas: `grid-template-areas`
         gridArea: `grid-area`
+      deprecate: 'Clay.Grid.gridGap' in favor of 'Clay.Grid.gap'
       newtype GridArea for type safe grid area templating
 
   0.14.0:
