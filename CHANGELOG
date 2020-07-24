@@ -1,5 +1,17 @@
 CHANGELOG
 
+  0.15.0:
+    - 'Clay.Grid':
+      new properties:
+        gap: `gap` & `grid-gap`
+        rowGap: `row-gap` & `grid-row-gap`
+        columnGap: `column-gap` & `grid-column-gap`
+        gridTemplateRows: `grid-template-rows`
+        gridTemplateColumns: `grid-template-columns`
+        gridTemplateAreas: `grid-template-areas`
+        gridArea: `grid-area`
+      newtype GridArea for type safe grid area templating
+
   0.14.0:
     - Drop support for GHC 8.2
     - Added `text-align-last`
