@@ -11,7 +11,9 @@ module Clay.Grid
   , gridTemplateAreas
   , gridArea
   , GridArea(..)
-  , GridTemplateAreas(..)
+  , GridTemplateAreas
+  , mkGridTemplateAreas
+  , unGridTemplateAreas
   , InvalidGridTemplateAreas(..)
   -- deprecated
   , gridGap
@@ -70,14 +72,33 @@ newtype GridArea = GridArea Text
 -- have to create a newtype to override the Val instance for lists
 newtype GridTemplateAreas = GridTemplateAreas { unGridTemplateAreas :: [[GridArea]] }
 
+-- | toList will throw when your grid template areas are invalid
 instance IsList GridTemplateAreas where
   type Item GridTemplateAreas = [GridArea]
-  fromList = GridTemplateAreas
   toList = unGridTemplateAreas
+  fromList = fromRightOrThrow . mkGridTemplateAreas
 
-newtype Row = Row Int
-  deriving Show
 
+-- | Smart constructor for GridTemplateAreas
+mkGridTemplateAreas :: [[GridArea]] -> Either InvalidGridTemplateAreas GridTemplateAreas
+mkGridTemplateAreas rows = do
+    let
+      counts = map length rows
+      longest = maximum counts
+
+    when (null rows ) $
+      Left GridTemplateAreas_Empty
+
+    when (any (== 0) counts)  $
+      Left GridTemplateAreas_EmptyRow
+
+    when (any (/= longest) counts)  $
+      Left GridTemplateAreas_NotRectangular
+
+    Right $ GridTemplateAreas rows
+
+
+-- | Failure modes for the smart constructor
 data InvalidGridTemplateAreas
   = GridTemplateAreas_Empty
   | GridTemplateAreas_EmptyRow -- Row
@@ -87,31 +108,15 @@ data InvalidGridTemplateAreas
 instance Exception InvalidGridTemplateAreas
 
 instance Val GridTemplateAreas where
-  value areas = fromRight' $ do
+  value areas =
     let
+      rows = coerce areas :: [[Text]]
       wrapInParens text = "\"" <> text <> "\""
-      nested = coerce areas :: [[Text]]
-      counts = fmap length nested
-      longest = maximum counts
-
-    when (length nested == 0) $
-      Left GridTemplateAreas_Empty
-
-    when (any (== 0) counts)  $
-      Left GridTemplateAreas_EmptyRow
-
-    when (any (/= longest) counts)  $
-      Left GridTemplateAreas_NotRectangular
-
-    pure $
+    in
       value $
       Text.intercalate "\n" $
       fmap (wrapInParens . Text.intercalate " ") $
-      nested
-
-
-fromRight' :: Either InvalidGridTemplateAreas a -> a
-fromRight' = fromRightOrThrow
+      rows
 
 fromRightOrThrow :: Exception e => Either e a -> a
 fromRightOrThrow (Right a) = a
