@@ -9,12 +9,29 @@ import Clay
 spec :: Spec
 spec = do
   describe "grid-template-areas" $ do
+    describe "keyword values" $ do
+      "{grid-template-areas:none}"
+        `shouldRenderFrom`
+        gridTemplateAreas none
+
+      "{grid-template-areas:inherit}"
+        `shouldRenderFrom`
+        gridTemplateAreas inherit
+
+      "{grid-template-areas:initial}"
+        `shouldRenderFrom`
+        gridTemplateAreas initial
+
+      "{grid-template-areas:unset}"
+        `shouldRenderFrom`
+        gridTemplateAreas unset
+
     describe "mozilla example" $ do
       let
         area_a = "a"
         area_b = "b"
         area_c = "c"
-        area_blank = "."
+        area_blank = blankGridArea
 
       "{grid-template-areas:\"a a .\"\n\"a a .\"\n\". b c\"}"
         `shouldRenderFrom`
@@ -28,9 +45,9 @@ spec = do
         area_a = "a"
         area_b = "b"
         area_c = "c"
-        area_blank = "."
+        area_blank = blankGridArea
 
-      GridTemplateAreas_NotRectangular
+      GridTemplateNamedAreas_NotRectangular
         `shouldErrorFromRender`
         gridTemplateAreas
           [ [ area_blank]                 -- length 1
@@ -39,11 +56,11 @@ spec = do
           ]
 
     describe "empty template should error" $ do
-      GridTemplateAreas_Empty
+      GridTemplateNamedAreas_Empty
         `shouldErrorFromRender`
         gridTemplateAreas []
 
     describe "template with empty row(s) should error" $ do
-      GridTemplateAreas_EmptyRow
+      GridTemplateNamedAreas_EmptyRow
         `shouldErrorFromRender`
         gridTemplateAreas [[], []]

@@ -10,16 +10,18 @@ module Clay.Grid
   , gridTemplateColumns
   , gridTemplateAreas
   , gridArea
+  , blankGridArea
   , GridArea(..)
-  , GridTemplateAreas
-  , mkGridTemplateAreas
-  , unGridTemplateAreas
-  , InvalidGridTemplateAreas(..)
+  , GridTemplateNamedAreas
+  , mkGridTemplateNamedAreas
+  , unGridTemplateNamedAreas
+  , InvalidGridTemplateNamedAreas(..)
   -- deprecated
   , gridGap
   )
   where
 
+import Clay.Common
 import Clay.Property
 import Clay.Size
 import Clay.Stylesheet
@@ -69,55 +71,70 @@ gridArea = key "grid-area"
 newtype GridArea = GridArea Text
   deriving (IsString, Val)
 
--- have to create a newtype to override the Val instance for lists
-newtype GridTemplateAreas = GridTemplateAreas { unGridTemplateAreas :: [[GridArea]] }
+blankGridArea :: GridArea
+blankGridArea = GridArea "."
 
--- | toList will throw when your grid template areas are invalid
+-------------------------------------------------------------------------------
+newtype GridTemplateAreas = GridTemplateAreas Value
+  deriving (Val, None, Inherit, Initial, Unset)
+
 instance IsList GridTemplateAreas where
   type Item GridTemplateAreas = [GridArea]
-  toList = unGridTemplateAreas
-  fromList = fromRightOrThrow . mkGridTemplateAreas
+  toList = error "toList GridTemplateAreas is not defined"
+  fromList = GridTemplateAreas . value . fromList'
+    where
+      fromList' :: [Item GridTemplateNamedAreas] -> GridTemplateNamedAreas
+      fromList' = fromList
 
+-- have to create a newtype to override the Val instance for lists
+newtype GridTemplateNamedAreas = GridTemplateNamedAreas { unGridTemplateNamedAreas :: [[GridArea]] }
 
--- | Smart constructor for GridTemplateAreas
-mkGridTemplateAreas :: [[GridArea]] -> Either InvalidGridTemplateAreas GridTemplateAreas
-mkGridTemplateAreas rows = do
-    let
-      counts = map length rows
-      longest = maximum counts
-
-    when (null rows ) $
-      Left GridTemplateAreas_Empty
-
-    when (any (== 0) counts)  $
-      Left GridTemplateAreas_EmptyRow
-
-    when (any (/= longest) counts)  $
-      Left GridTemplateAreas_NotRectangular
-
-    Right $ GridTemplateAreas rows
-
-
--- | Failure modes for the smart constructor
-data InvalidGridTemplateAreas
-  = GridTemplateAreas_Empty
-  | GridTemplateAreas_EmptyRow -- Row
-  | GridTemplateAreas_NotRectangular -- [Row]
-  deriving (Eq, Show)
-
-instance Exception InvalidGridTemplateAreas
-
-instance Val GridTemplateAreas where
+instance Val GridTemplateNamedAreas where
   value areas =
     let
       rows = coerce areas :: [[Text]]
       wrapInParens text = "\"" <> text <> "\""
+      convertRow = wrapInParens . Text.intercalate " "
     in
       value $
       Text.intercalate "\n" $
-      fmap (wrapInParens . Text.intercalate " ") $
+      map convertRow $
       rows
 
-fromRightOrThrow :: Exception e => Either e a -> a
-fromRightOrThrow (Right a) = a
-fromRightOrThrow (Left e) = throw e
+-- | toList will throw when your grid template areas are invalid
+instance IsList GridTemplateNamedAreas where
+  type Item GridTemplateNamedAreas = [GridArea]
+  toList = unGridTemplateNamedAreas . coerce
+  fromList = fromRightOrThrow . mkGridTemplateNamedAreas
+    where
+      fromRightOrThrow :: Exception e => Either e a -> a
+      fromRightOrThrow (Right a) = a
+      fromRightOrThrow (Left e) = throw e
+
+-- | Smart constructor for GridTemplateNamedAreas
+mkGridTemplateNamedAreas :: [[GridArea]] -> Either InvalidGridTemplateNamedAreas GridTemplateNamedAreas
+mkGridTemplateNamedAreas rows = do
+    let
+      counts = map length (coerce rows :: [[GridArea]])
+      longest = maximum counts
+
+    when (null rows ) $
+      Left GridTemplateNamedAreas_Empty
+
+    when (any (== 0) counts)  $
+      Left GridTemplateNamedAreas_EmptyRow
+
+    when (any (/= longest) counts)  $
+      Left GridTemplateNamedAreas_NotRectangular
+
+    Right $ GridTemplateNamedAreas rows
+
+-- | Failure modes for the smart constructor
+data InvalidGridTemplateNamedAreas
+  = GridTemplateNamedAreas_Empty
+  | GridTemplateNamedAreas_EmptyRow
+  | GridTemplateNamedAreas_NotRectangular
+  deriving (Eq, Show)
+
+instance Exception InvalidGridTemplateNamedAreas
+------------------------------------------------------------------------------
