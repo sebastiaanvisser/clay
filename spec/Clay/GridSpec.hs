@@ -47,7 +47,12 @@ spec = do
         `shouldRenderFrom`
         gridTemplateColumns [SomeSize $ em 1, SomeSize $ pct 20, SomeSize minContent]
 
-  describe "grid-template-areas" $ do
+    describe "gridArea" $ do
+      "{grid-area:header}"
+        `shouldRenderFrom`
+        gridArea "header"
+
+  describe "gridTemplateAreas" $ do
     describe "keyword values" $ do
       "{grid-template-areas:none}"
         `shouldRenderFrom`
