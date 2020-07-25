@@ -1,7 +1,7 @@
 { mkDerivation, base, hspec, hspec-discover, mtl, stdenv, lib, text }:
 mkDerivation {
   pname = "clay";
-  version = "0.14.0";
+  version = "0.15.0";
   src = ./..;
   libraryHaskellDepends = [ base mtl text ];
   testHaskellDepends = [ base hspec hspec-discover mtl text ];

@@ -11,7 +11,6 @@ import Clay
 import Data.Text.Lazy (Text, unpack)
 import Control.Exception (evaluate)
 import Control.Exception (Exception(..), evaluate)
-import Control.DeepSeq (force)
 
 
 shouldRenderFrom :: Text -> Css -> SpecWith ()
@@ -34,6 +33,6 @@ testRender = renderWith compact []
 shouldErrorFromRender :: (Exception e, Eq e) => e -> Css -> SpecWith ()
 shouldErrorFromRender exception css = do
   let errorMsg = show exception
-  let rendered = evaluate $ force $ testRender css
+  let rendered = evaluate $! testRender css
   it ("throws " <> errorMsg) $
     (rendered `shouldThrow` (== exception))
