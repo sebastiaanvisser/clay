@@ -33,7 +33,7 @@ spec = do
       GridTemplateAreas_NotRectangular
         `shouldErrorFromRender`
         gridTemplateAreas
-          [ [ area_blank] -- length 1
+          [ [ area_blank]                 -- length 1
           , [ area_a, area_blank]         -- length 2
           , [ area_blank, area_b, area_c] -- length 3
           ]
