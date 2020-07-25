@@ -2,48 +2,8 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE TypeFamilies #-}
 -- | Partial implementation of <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout>.
---
--- For instance, you want to generate the following CSS:
---
--- @
--- .grid1 {
---   display: grid;
---   width: max-content;
--- }
---
--- .grid3 {
---   display: grid;
---   width: max-content;
--- }
---
--- \@media (min-width: 40.0rem) {
---   .grid3 {
---     display: grid;
---     grid-template-columns: 1fr 1fr 1fr;
---     grid-gap: 1rem;
---     width: max-content;
---   }
--- }
--- @
---
--- The corresponding clay code:
---
--- @
---  ".grid1" ? do
---    display grid
---    width maxContent
---  ".grid3" ? do
---    display grid
---    width maxContent
---  query M.screen [M.minWidth (rem 40)] $ ".grid3" ? do
---    display grid
---    gridTemplateColumns [fr 1, fr 1, fr 1]
---    gridGap $ rem 1
---    width maxContent
--- @
 module Clay.Grid
   ( gap
-  , gridGap
   , rowGap
   , columnGap
   , gridTemplateRows
@@ -52,6 +12,9 @@ module Clay.Grid
   , gridArea
   , GridArea(..)
   , GridTemplateAreas(..)
+  , InvalidGridTemplateAreas(..)
+  -- deprecated
+  , gridGap
   )
   where
 
@@ -65,6 +28,8 @@ import qualified Data.Text as Text
 
 import Data.Coerce (coerce)
 import GHC.Exts (IsList(..))
+import Control.Exception (Exception(..), throw)
+import Control.Monad (when)
 
 
 -- | Property sets the gaps (gutters) between rows and columns.
@@ -110,11 +75,44 @@ instance IsList GridTemplateAreas where
   fromList = GridTemplateAreas
   toList = unGridTemplateAreas
 
+newtype Row = Row Int
+  deriving Show
+
+data InvalidGridTemplateAreas
+  = GridTemplateAreas_Empty
+  | GridTemplateAreas_EmptyRow -- Row
+  | GridTemplateAreas_NotRectangular -- [Row]
+  deriving (Eq, Show)
+
+instance Exception InvalidGridTemplateAreas
+
 instance Val GridTemplateAreas where
-  value areas =
-    value $
-    Text.intercalate "\n" $
-    fmap (quote . Text.intercalate " ") $
-    (coerce areas :: [[Text]])
-    where
-      quote text = "\"" <> text <> "\""
+  value areas = fromRight' $ do
+    let
+      wrapInParens text = "\"" <> text <> "\""
+      nested = coerce areas :: [[Text]]
+      counts = fmap length nested
+      longest = maximum counts
+
+    when (length nested == 0) $
+      Left GridTemplateAreas_Empty
+
+    when (any (== 0) counts)  $
+      Left GridTemplateAreas_EmptyRow
+
+    when (any (/= longest) counts)  $
+      Left GridTemplateAreas_NotRectangular
+
+    pure $
+      value $
+      Text.intercalate "\n" $
+      fmap (wrapInParens . Text.intercalate " ") $
+      nested
+
+
+fromRight' :: Either InvalidGridTemplateAreas a -> a
+fromRight' = fromRightOrThrow
+
+fromRightOrThrow :: Exception e => Either e a -> a
+fromRightOrThrow (Right a) = a
+fromRightOrThrow (Left e) = throw e
