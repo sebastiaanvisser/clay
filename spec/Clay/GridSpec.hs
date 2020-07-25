@@ -6,8 +6,47 @@ import Test.Hspec
 import Common
 import Clay
 
+test = hspec spec
+
 spec :: Spec
 spec = do
+  describe "gap" $ do
+    "{gap:10px;grid-gap:10px}"
+      `shouldRenderFrom`
+      gap (px 10)
+
+  describe "rowGap" $ do
+    "{row-gap:5px;grid-row-gap:5px}"
+      `shouldRenderFrom`
+      rowGap (px 5)
+
+  describe "columnGap" $ do
+    "{column-gap:1em;grid-column-gap:1em}"
+      `shouldRenderFrom`
+      columnGap (em 1)
+
+  describe "gridTemplateRows" $ do
+    describe "keywords" $ do
+      "{grid-template-rows:none}"
+        `shouldRenderFrom`
+        gridTemplateRows none
+
+    describe "list of sizes" $ do
+      "{grid-template-rows:1em auto min-content}"
+        `shouldRenderFrom`
+        gridTemplateRows [SomeSize $ em 1, SomeSize auto, SomeSize minContent]
+
+  describe "gridTemplateColumns" $ do
+    describe "keywords" $ do
+      "{grid-template-rows:none}"
+        `shouldRenderFrom`
+        gridTemplateRows none
+
+    describe "list of sizes" $ do
+      "{grid-template-columns:1em 20% min-content}"
+        `shouldRenderFrom`
+        gridTemplateColumns [SomeSize $ em 1, SomeSize $ pct 20, SomeSize minContent]
+
   describe "grid-template-areas" $ do
     describe "keyword values" $ do
       "{grid-template-areas:none}"

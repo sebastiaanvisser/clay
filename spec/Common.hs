@@ -9,7 +9,6 @@ module Common
 import Test.Hspec
 import Clay
 import Data.Text.Lazy (Text, unpack)
-import Control.Exception (evaluate)
 import Control.Exception (Exception(..), evaluate)
 
 

@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE ExistentialQuantification #-}
 -- | Partial implementation of <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout>.
 module Clay.Grid
   ( gap
@@ -8,10 +10,13 @@ module Clay.Grid
   , columnGap
   , gridTemplateRows
   , gridTemplateColumns
+  , GridTemplateSizes
+  , SomeSize(..)
   , gridTemplateAreas
   , gridArea
   , blankGridArea
   , GridArea(..)
+  , GridTemplateAreas
   , GridTemplateNamedAreas
   , mkGridTemplateNamedAreas
   , unGridTemplateNamedAreas
@@ -37,11 +42,11 @@ import Control.Monad (when)
 
 
 -- | Property sets the gaps (gutters) between rows and columns.
-gap :: Size a -> Size a -> Css
-gap row col = key "gap" (row, col) <> key "grid-gap" (row, col)
+gap :: Size a -> Css
+gap = key "gap" <> key "grid-gap"
 
 gridGap :: Size a -> Css
-gridGap = key "grid-gap"
+gridGap = gap
 {-# DEPRECATED gridGap "Use gap, rowGap, and/or columnGap instead" #-}
 
 -- | Property sets the size of the gap (gutter) between an element's grid rows.
@@ -53,12 +58,12 @@ columnGap :: Size a -> Css
 columnGap = key "column-gap" <> key "grid-column-gap"
 
 -- | Property defines the line names and track sizing functions of the grid rows.
-gridTemplateRows :: [Size a] -> Css
-gridTemplateRows = key "grid-template-rows" . noCommas
+gridTemplateRows :: GridTemplateSizes -> Css
+gridTemplateRows = key "grid-template-rows"
 
 -- | Property defines the line names and track sizing functions of the grid columns.
-gridTemplateColumns :: [Size a] -> Css
-gridTemplateColumns = key "grid-template-columns" . noCommas
+gridTemplateColumns :: GridTemplateSizes -> Css
+gridTemplateColumns = key "grid-template-columns"
 
 -- | Property defines the template for grid layout
 gridTemplateAreas :: GridTemplateAreas -> Css
@@ -73,6 +78,20 @@ newtype GridArea = GridArea Text
 
 blankGridArea :: GridArea
 blankGridArea = GridArea "."
+
+-------------------------------------------------------------------------------
+data SomeSize = forall a. SomeSize { getSize :: Size a }
+
+instance Val SomeSize where
+  value (SomeSize size) = value size
+
+newtype GridTemplateSizes = GridTemplateSizes Value
+  deriving (Val, None, Inherit, Initial, Unset)
+
+instance IsList GridTemplateSizes where
+  type Item GridTemplateSizes = SomeSize
+  toList = error ""
+  fromList = GridTemplateSizes . noCommas
 
 -------------------------------------------------------------------------------
 newtype GridTemplateAreas = GridTemplateAreas Value
