@@ -56,6 +56,8 @@ rowGap = key "row-gap" <> key "grid-row-gap"
 columnGap :: Size a -> Css
 columnGap = key "column-gap" <> key "grid-column-gap"
 
+-------------------------------------------------------------------------------
+
 -- | Property defines the line names and track sizing functions of the grid rows.
 gridTemplateRows :: GridTemplateSizes a -> Css
 gridTemplateRows = key "grid-template-rows"
@@ -64,21 +66,6 @@ gridTemplateRows = key "grid-template-rows"
 gridTemplateColumns :: GridTemplateSizes a -> Css
 gridTemplateColumns = key "grid-template-columns"
 
--- | Property defines the template for grid layout
-gridTemplateAreas :: GridTemplateAreas -> Css
-gridTemplateAreas = key "grid-template-areas"
-
--- | Property defines the element location inside grid template
-gridArea :: GridArea -> Css
-gridArea = key "grid-area"
-
-newtype GridArea = GridArea Text
-  deriving (IsString, Val)
-
-blankGridArea :: GridArea
-blankGridArea = GridArea "."
-
--------------------------------------------------------------------------------
 newtype GridTemplateSizes a = GridTemplateSizes Value
   deriving (Val, None, Inherit, Initial, Unset)
 
@@ -88,6 +75,41 @@ instance IsList (GridTemplateSizes a) where
   fromList = GridTemplateSizes . noCommas
 
 -------------------------------------------------------------------------------
+-- | Property defines the element location inside grid template
+gridArea :: GridArea -> Css
+gridArea = key "grid-area"
+
+blankGridArea :: GridArea
+blankGridArea = GridArea "."
+
+newtype GridArea = GridArea Text
+  deriving (IsString, Val)
+
+-------------------------------------------------------------------------------
+
+gridRowStart :: GridCoordinate -> Css
+gridRowStart = key "grid-row-start"
+
+gridRowEnd :: GridCoordinate -> Css
+gridRowEnd = key "grid-row-end"
+
+gridColumnStart :: GridCoordinate -> Css
+gridColumnStart = key "grid-column-start"
+
+gridColumnEnd :: GridCoordinate -> Css
+gridColumnEnd = key "grid-column-end"
+
+newtype GridCoordinate = GridCoordinate Value
+  deriving (Val, Auto, Inherit, Initial, Unset)
+
+instance Num GridCoordinate where
+  fromInteger = GridCoordinate . value
+-------------------------------------------------------------------------------
+
+-- | Property defines the template for grid layout
+gridTemplateAreas :: GridTemplateAreas -> Css
+gridTemplateAreas = key "grid-template-areas"
+
 newtype GridTemplateAreas = GridTemplateAreas Value
   deriving (Val, None, Inherit, Initial, Unset)
 
