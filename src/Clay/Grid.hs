@@ -149,6 +149,8 @@ instance Val GridLocationData where
 
 instance Num GridLocation where
   fromInteger = gridLocation NoSpan . This
+  negate (GridLocation_Data (GridLocationData NoSpan (This index))) =
+    fromInteger $ negate index
 
 -------------------------------------------------------------------------------
 
