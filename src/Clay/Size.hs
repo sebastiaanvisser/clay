@@ -14,6 +14,8 @@ module Clay.Size
   Size
 , LengthUnit
 , Percentage
+, AnyUnit
+, upcast
 , nil
 , unitless
 
@@ -74,6 +76,7 @@ where
 import Data.Monoid
 import Prelude hiding (rem)
 import Data.Text (Text)
+import Data.Coerce (coerce)
 
 import Clay.Common
 import Clay.Property
@@ -88,7 +91,12 @@ data LengthUnit
 data Percentage
 
 -- | When combining percentages with units using calc, we get a combination
-data Combination
+-- | Any unit or combination of units
+data AnyUnit
+
+-- | Upcast a size unit
+upcast :: Size a -> Size AnyUnit
+upcast = coerce
 
 data Size a =
   SimpleSize Text |
@@ -222,7 +230,7 @@ instance Fractional (Size Percentage) where
 type family SizeCombination sa sb where
   SizeCombination Percentage Percentage = Percentage
   SizeCombination LengthUnit LengthUnit = LengthUnit
-  SizeCombination a b = Combination
+  SizeCombination a b = AnyUnit
 
 -- | Plus operator to combine sizes into calc function
 infixl 6 @+@

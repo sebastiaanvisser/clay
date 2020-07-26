@@ -32,9 +32,9 @@ spec = do
         gridTemplateRows none
 
     describe "list of sizes" $ do
-      "{grid-template-rows:1em auto min-content}"
+      "{grid-template-rows:50px auto 40em}"
         `shouldRenderFrom`
-        gridTemplateRows [SomeSize $ em 1, SomeSize auto, SomeSize minContent]
+        gridTemplateRows [px 50, auto, em 40]
 
   describe "gridTemplateColumns" $ do
     describe "keywords" $ do
@@ -43,9 +43,9 @@ spec = do
         gridTemplateRows none
 
     describe "list of sizes" $ do
-      "{grid-template-columns:1em 20% min-content}"
+      "{grid-template-columns:1em 20% auto}"
         `shouldRenderFrom`
-        gridTemplateColumns [SomeSize $ em 1, SomeSize $ pct 20, SomeSize minContent]
+        gridTemplateColumns [upcast $ em 1, pct 20 @+@ fr 1, upcast $ auto]
 
     describe "gridArea" $ do
       "{grid-area:header}"
