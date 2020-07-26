@@ -3,6 +3,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE PatternSynonyms #-}
 -- | Partial implementation of <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout>.
 module Clay.Grid
   ( gap
@@ -39,9 +40,7 @@ import Clay.Common
 import Clay.Property
 import Clay.Size
 import Clay.Stylesheet
-import Clay.Elements
 
-import Prelude hiding (span)
 import Data.String (IsString)
 import Data.Text (Text)
 import qualified Data.Text as Text
@@ -147,10 +146,12 @@ instance Val GridLocationData where
     then value ("span" :: Text, coordinateAndOrGridArea)
     else value coordinateAndOrGridArea
 
+pattern GridIndex :: Integer -> GridLocation
+pattern GridIndex n = GridLocation_Data (GridLocationData NoSpan (This n))
+
 instance Num GridLocation where
-  fromInteger = gridLocation NoSpan . This
-  negate (GridLocation_Data (GridLocationData NoSpan (This index))) =
-    fromInteger $ negate index
+  fromInteger = GridIndex
+  negate (GridIndex index) = GridIndex $ negate index
 
 -------------------------------------------------------------------------------
 
