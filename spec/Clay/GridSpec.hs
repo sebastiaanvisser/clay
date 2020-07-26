@@ -26,7 +26,7 @@ spec = do
       columnGap (em 1)
 
   describe "gridTemplateRows" $ do
-    describe "keywords" $ do
+    describe "keyword" $ do
       "{grid-template-rows:none}"
         `shouldRenderFrom`
         gridTemplateRows none
@@ -37,7 +37,7 @@ spec = do
         gridTemplateRows [px 50, auto, em 40]
 
   describe "gridTemplateColumns" $ do
-    describe "keywords" $ do
+    describe "keyword" $ do
       "{grid-template-rows:none}"
         `shouldRenderFrom`
         gridTemplateRows none
@@ -47,10 +47,29 @@ spec = do
         `shouldRenderFrom`
         gridTemplateColumns [upcast $ em 1, pct 20 @+@ fr 1, upcast $ auto]
 
-    describe "gridArea" $ do
-      "{grid-area:header}"
-        `shouldRenderFrom`
-        gridArea "header"
+  describe "gridArea" $ do
+    "{grid-area:header}"
+      `shouldRenderFrom`
+      gridArea "header"
+
+  describe "grid coordinate properties" $ do
+
+    "{grid-row-start:3}"
+      `shouldRenderFrom`
+      gridRowStart 3
+
+    "{grid-row-end:-2}"
+      `shouldRenderFrom`
+      gridRowEnd (-2)
+
+    "{grid-column-start:span nav}"
+      `shouldRenderFrom`
+      gridColumnStart $ gridLocation Span (That "nav")
+
+    "{grid-column-end:3 footer}"
+      `shouldRenderFrom`
+      gridColumnEnd $ gridLocation NoSpan (These 3 "footer")
+
 
   describe "gridTemplateAreas" $ do
     describe "keyword values" $ do

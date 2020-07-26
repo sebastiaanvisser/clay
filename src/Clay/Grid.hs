@@ -11,17 +11,27 @@ module Clay.Grid
   , gridTemplateRows
   , gridTemplateColumns
   , GridTemplateSizes
-  , gridTemplateAreas
   , gridArea
   , blankGridArea
-  , GridArea(..)
+  , GridArea
+  , gridRowStart
+  , gridRowEnd
+  , gridColumnStart
+  , gridColumnEnd
+  , GridLocation
+  , gridLocation
+  , IsSpan(..)
+  , gridTemplateAreas
   , GridTemplateAreas
   , GridTemplateNamedAreas
   , mkGridTemplateNamedAreas
   , unGridTemplateNamedAreas
   , InvalidGridTemplateNamedAreas(..)
+  -- re exports
+  , These(..)
   -- deprecated
   , gridGap
+
   )
   where
 
@@ -29,12 +39,15 @@ import Clay.Common
 import Clay.Property
 import Clay.Size
 import Clay.Stylesheet
+import Clay.Elements
 
+import Prelude hiding (span)
 import Data.String (IsString)
 import Data.Text (Text)
 import qualified Data.Text as Text
 
 import Data.Coerce (coerce)
+import Data.These
 import GHC.Exts (IsList(..))
 import Control.Exception (Exception(..), throw)
 import Control.Monad (when)
@@ -87,23 +100,56 @@ newtype GridArea = GridArea Text
 
 -------------------------------------------------------------------------------
 
-gridRowStart :: GridCoordinate -> Css
+gridRowStart :: GridLocation -> Css
 gridRowStart = key "grid-row-start"
 
-gridRowEnd :: GridCoordinate -> Css
+gridRowEnd :: GridLocation -> Css
 gridRowEnd = key "grid-row-end"
 
-gridColumnStart :: GridCoordinate -> Css
+gridColumnStart :: GridLocation -> Css
 gridColumnStart = key "grid-column-start"
 
-gridColumnEnd :: GridCoordinate -> Css
+gridColumnEnd :: GridLocation -> Css
 gridColumnEnd = key "grid-column-end"
 
-newtype GridCoordinate = GridCoordinate Value
-  deriving (Val, Auto, Inherit, Initial, Unset)
+gridLocation :: IsSpan -> These Integer GridArea -> GridLocation
+gridLocation isSpan these = GridLocation_Data $ GridLocationData isSpan these
 
-instance Num GridCoordinate where
-  fromInteger = GridCoordinate . value
+data IsSpan = Span | NoSpan
+  deriving (Show, Eq)
+
+data GridLocation
+  = GridLocation_Keyword Value
+  | GridLocation_Data GridLocationData
+
+instance Val GridLocation where
+  value (GridLocation_Keyword v) = v
+  value (GridLocation_Data d) = value d
+
+instance Auto    GridLocation where auto    = GridLocation_Keyword auto
+instance Inherit GridLocation where inherit = GridLocation_Keyword inherit
+instance Initial GridLocation where initial = GridLocation_Keyword initial
+instance Unset   GridLocation where unset   = GridLocation_Keyword unset
+
+data GridLocationData = GridLocationData
+  { gridLocation_span                    :: IsSpan
+  , gridLocation_coordinateAndOrGridArea :: These Integer GridArea
+  }
+
+instance (Val a, Val b) => Val (These a b) where
+  value (This a) = value a
+  value (That b) = value b
+  value (These a b) = value (a, b)
+
+instance Val GridLocationData where
+  value (GridLocationData isSpan coordinateAndOrGridArea) =
+    if isSpan == Span
+    then value ("span" :: Text, coordinateAndOrGridArea)
+    else value coordinateAndOrGridArea
+
+instance Num GridLocation where
+  fromInteger = gridLocation NoSpan . This
+
 -------------------------------------------------------------------------------
 
 -- | Property defines the template for grid layout
@@ -133,7 +179,7 @@ instance Val GridTemplateNamedAreas where
     in
       value $
       Text.intercalate "\n" $
-      map convertRow $
+      fmap convertRow $
       rows
 
 -- | toList will throw when your grid template areas are invalid
@@ -150,7 +196,7 @@ instance IsList GridTemplateNamedAreas where
 mkGridTemplateNamedAreas :: [[GridArea]] -> Either InvalidGridTemplateNamedAreas GridTemplateNamedAreas
 mkGridTemplateNamedAreas rows = do
     let
-      counts = map length (coerce rows :: [[GridArea]])
+      counts = fmap length (coerce rows :: [[GridArea]])
       longest = maximum counts
 
     when (null rows ) $
