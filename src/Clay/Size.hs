@@ -127,10 +127,15 @@ instance Val (Size a) where
   value s@(FitContentSize _) = Value $ Plain $ sizeToText s
   value s = Value $ Plain ("calc" <> sizeToText s)
 
-instance Auto (Size a) where auto = OtherSize Clay.Common.autoValue
-instance Normal (Size a) where normal = OtherSize Clay.Common.normalValue
-instance Inherit (Size a) where inherit = OtherSize Clay.Common.inheritValue
-instance None (Size a) where none = OtherSize Clay.Common.noneValue
+-- Keywords
+instance Auto       (Size a) where auto       = OtherSize auto
+instance Inherit    (Size a) where inherit    = OtherSize inherit
+instance Initial    (Size a) where initial    = OtherSize initial
+instance Unset      (Size a) where unset      = OtherSize inherit
+instance None       (Size a) where none       = OtherSize none
+instance MinContent (Size a) where minContent = OtherSize minContent
+instance MaxContent (Size a) where maxContent = OtherSize maxContent
+
 instance Other (Size a) where other a = OtherSize a
 
 -- | Zero size.
@@ -186,13 +191,6 @@ vmax i = SimpleSize (cssDoubleText i <> "vmax")
 
 -- | 'SimpleSize' in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
 fr i = SimpleSize (cssDoubleText i <> "fr")
-
--- | Keyword min-content size
-instance MinContent (Size LengthUnit) where minContent = OtherSize minContent
-
--- | Keyword max-content size
-instance MaxContent (Size LengthUnit) where maxContent = OtherSize maxContent
--- | SimpleSize for the containing block width minus horizontal margin, border, and padding.
 
 -- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width.
 fitContent :: Size a -> Size a

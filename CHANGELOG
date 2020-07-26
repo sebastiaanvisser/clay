@@ -18,7 +18,8 @@ CHANGELOG
       AnyUnit, a size parameter for lists of mixed units
       upcast :: Size a -> Size AnyUnit
       minmax :: Size a -> Size a -> Size AnyUnit
-      remove `available`, it's not a valid css size
+      remove `available`, `normal`: not valid css sizes
+      include `initial`, `unset` keyword values
       upgrade `fitContent` from value to function, it's not valid without an argument:
       minContent & maxContent are now type class overloaded values
         https://drafts.csswg.org/css-sizing-3/#valdef-width-fit-content-length-percentage
