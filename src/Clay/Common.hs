@@ -15,17 +15,19 @@ import Data.String (IsString)
 
 -------------------------------------------------------------------------------
 
-class All      a where all      :: a
-class Auto     a where auto     :: a
-class Baseline a where baseline :: a
-class Center   a where center   :: a
-class Inherit  a where inherit  :: a
-class None     a where none     :: a
-class Normal   a where normal   :: a
-class Visible  a where visible  :: a
-class Hidden   a where hidden   :: a
-class Initial  a where initial  :: a
-class Unset    a where unset    :: a
+class All        a where all        :: a
+class Auto       a where auto       :: a
+class Baseline   a where baseline   :: a
+class Center     a where center     :: a
+class Inherit    a where inherit    :: a
+class None       a where none       :: a
+class Normal     a where normal     :: a
+class Visible    a where visible    :: a
+class Hidden     a where hidden     :: a
+class Initial    a where initial    :: a
+class Unset      a where unset      :: a
+class MinContent a where minContent :: a
+class MaxContent a where maxContent :: a
 
 -- | The other type class is used to escape from the type safety introduced by
 -- embedding CSS properties into the typed world of Clay. `Other` allows you to
@@ -55,19 +57,25 @@ initialValue :: Value
 initialValue = "initial"
 unsetValue :: Value
 unsetValue = "unset"
+minContentValue :: Value
+minContentValue = "min-content"
+maxContentValue :: Value
+maxContentValue = "max-content"
 
-instance All      Value where all      = allValue
-instance Auto     Value where auto     = autoValue
-instance Baseline Value where baseline = baselineValue
-instance Center   Value where center   = centerValue
-instance Inherit  Value where inherit  = inheritValue
-instance Normal   Value where normal   = normalValue
-instance None     Value where none     = noneValue
-instance Visible  Value where visible  = visibleValue
-instance Hidden   Value where hidden   = hiddenValue
-instance Other    Value where other    = id
-instance Initial  Value where initial  = initialValue
-instance Unset    Value where unset    = unsetValue
+instance All        Value where all        = allValue
+instance Auto       Value where auto       = autoValue
+instance Baseline   Value where baseline   = baselineValue
+instance Center     Value where center     = centerValue
+instance Inherit    Value where inherit    = inheritValue
+instance Normal     Value where normal     = normalValue
+instance None       Value where none       = noneValue
+instance Visible    Value where visible    = visibleValue
+instance Hidden     Value where hidden     = hiddenValue
+instance Other      Value where other      = id
+instance Initial    Value where initial    = initialValue
+instance Unset      Value where unset      = unsetValue
+instance MinContent Value where minContent = minContentValue
+instance MaxContent Value where maxContent = maxContentValue
 
 -------------------------------------------------------------------------------
 

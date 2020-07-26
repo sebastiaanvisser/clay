@@ -185,14 +185,6 @@ vmax i = SimpleSize (cssDoubleText i <> "vmax")
 -- | 'SimpleSize' in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
 fr i = SimpleSize (cssDoubleText i <> "fr")
 
--- | SimpleSize for the intrinsic preferred width.
-maxContent :: Size LengthUnit
-maxContent = SimpleSize "max-content"
-
--- | SimpleSize for the intrinsic minimum width.
-minContent :: Size LengthUnit
-minContent = SimpleSize "min-content"
-
 -- | SimpleSize for the containing block width minus horizontal margin, border, and padding.
 available :: Size LengthUnit
 available = SimpleSize "available"
