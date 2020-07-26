@@ -87,6 +87,25 @@ instance IsList (GridTrackList a) where
   fromList = GridTrackList . noCommas
 
 -------------------------------------------------------------------------------
+
+-- | Property defines the line names and track sizing functions of the grid rows.
+gridAutoRows :: GridAutoTrackList a -> Css
+gridTemplateRows = key "grid-template-rows"
+
+-- | Property defines the line names and track sizing functions of the grid columns.
+gridAutoColumns :: GridAutoTrackList a -> Css
+gridTemplateColumns = key "grid-template-columns"
+
+newtype GridAutoTrackList a = GridAutoTrackList Value
+  deriving (Val, Auto, MinContent, MaxContent, Inherit, Initial, Unset)
+
+instance IsList (GridAutoTrackList a) where
+  type Item (GridAutoTrackList a) = Size a
+  toList = error ""
+  fromList = GridAutoTrackList . noCommas
+
+
+-------------------------------------------------------------------------------
 -- | Property defines the element location inside grid template
 gridArea :: GridArea -> Css
 gridArea = key "grid-area"
