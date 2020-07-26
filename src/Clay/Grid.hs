@@ -12,6 +12,9 @@ module Clay.Grid
   , gridTemplateRows
   , gridTemplateColumns
   , GridTrackList
+  , gridAutoRows
+  , gridAutoColumns
+  , GridAutoTrackList
   , gridArea
   , blankGridArea
   , GridArea
@@ -90,11 +93,11 @@ instance IsList (GridTrackList a) where
 
 -- | Property defines the line names and track sizing functions of the grid rows.
 gridAutoRows :: GridAutoTrackList a -> Css
-gridTemplateRows = key "grid-template-rows"
+gridAutoRows = key "grid-auto-rows"
 
 -- | Property defines the line names and track sizing functions of the grid columns.
 gridAutoColumns :: GridAutoTrackList a -> Css
-gridTemplateColumns = key "grid-template-columns"
+gridAutoColumns = key "grid-auto-columns"
 
 newtype GridAutoTrackList a = GridAutoTrackList Value
   deriving (Val, Auto, MinContent, MaxContent, Inherit, Initial, Unset)

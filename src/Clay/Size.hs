@@ -38,7 +38,6 @@ module Clay.Size
 , fr
 , maxContent
 , minContent
-, available
 , fitContent
 , minmax
 
@@ -104,6 +103,7 @@ data Size a =
   forall b c. SumSize (Size b) (Size c) |
   forall b c. DiffSize (Size b) (Size c) |
   forall b c. MinMaxSize (Size b) (Size c) |
+  forall b. FitContentSize (Size b) |
   MultSize Double (Size a) |
   DivSize Double (Size a) |
   OtherSize Value
@@ -117,12 +117,14 @@ sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"
 sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
 sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
 sizeToText (MinMaxSize a b) = mconcat ["minmax(", sizeToText a, ",", sizeToText b, ")"]
+sizeToText (FitContentSize a) = mconcat ["fit-content(", sizeToText a, ")"]
 sizeToText (OtherSize a) = plain $ unValue a
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
   value (OtherSize a) = a
   value s@(MinMaxSize _ _) = Value $ Plain $ sizeToText s
+  value s@(FitContentSize _) = Value $ Plain $ sizeToText s
   value s = Value $ Plain ("calc" <> sizeToText s)
 
 instance Auto (Size a) where auto = OtherSize Clay.Common.autoValue
@@ -185,13 +187,16 @@ vmax i = SimpleSize (cssDoubleText i <> "vmax")
 -- | 'SimpleSize' in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
 fr i = SimpleSize (cssDoubleText i <> "fr")
 
+-- | Keyword min-content size
+instance MinContent (Size LengthUnit) where minContent = OtherSize minContent
+
+-- | Keyword max-content size
+instance MaxContent (Size LengthUnit) where maxContent = OtherSize maxContent
 -- | SimpleSize for the containing block width minus horizontal margin, border, and padding.
-available :: Size LengthUnit
-available = SimpleSize "available"
 
 -- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width.
-fitContent :: Size LengthUnit
-fitContent = SimpleSize "fit-content"
+fitContent :: Size a -> Size a
+fitContent = FitContentSize
 
 -- | A mixed size range; only valid within grid-template-rows, grid-template-columns, grid-auto-rows, or grid-auto-columns.
 minmax :: Size a -> Size b -> Size AnyUnit

@@ -6,16 +6,21 @@ CHANGELOG
         gap: `gap` & `grid-gap`
         rowGap: `row-gap` & `grid-row-gap`
         columnGap: `column-gap` & `grid-column-gap`
-        gridTemplateRows: `grid-template-rows`
-        gridTemplateColumns: `grid-template-columns`
-        gridTemplateAreas: `grid-template-areas`
         gridArea: `grid-area`
+        gridAutoRows: `grid-auto-rows`
+        gridAutoColumns: `grid-auto-columns`
+        gridTemplateRows: `grid-template-rows`
+        gridTemplateColumns: `grid-template-columns` (already existed, but now handles more cases)
+        gridTemplateAreas: `grid-template-areas`
       deprecate: 'Clay.Grid.gridGap' in favor of 'Clay.Grid.gap'
-      newtype GridArea for type safe grid area templating
     - 'Clay.Size':
       AnyUnit, a size parameter for lists of mixed units
       upcast :: Size a -> Size AnyUnit
-      minmax :: Size a -> Size a -> Size AnyUnit, a css function for grids
+      minmax :: Size a -> Size a -> Size AnyUnit
+      remove `available`, it's not a valid css size
+      upgrade `fitContent` from value to function, it's not valid without an argument:
+        https://drafts.csswg.org/css-sizing-3/#valdef-width-fit-content-length-percentage
+
       drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at nearly 98% for unprefixed calc)
 
   0.14.0:

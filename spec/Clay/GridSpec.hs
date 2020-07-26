@@ -32,20 +32,35 @@ spec = do
         gridTemplateRows none
 
     describe "list of sizes" $ do
-      "{grid-template-rows:50px auto minmax(400em,50%)}"
+      "{grid-template-rows:50px fit-content(500px) minmax(400em,50%)}"
         `shouldRenderFrom`
-        gridTemplateRows [upcast (px 50), upcast auto, minmax (em 400) (pct 50)]
+        gridTemplateRows [upcast (px 50), upcast $ fitContent (px 500), minmax (em 400) (pct 50)]
 
   describe "gridTemplateColumns" $ do
     describe "keyword" $ do
-      "{grid-template-rows:none}"
+      "{grid-template-columns:none}"
         `shouldRenderFrom`
-        gridTemplateRows none
+        gridTemplateColumns none
 
     describe "list of sizes" $ do
       "{grid-template-columns:1em calc(20% + 1fr) auto}"
         `shouldRenderFrom`
         gridTemplateColumns [upcast $ em 1, pct 20 @+@ fr 1, upcast $ auto]
+
+  describe "gridAutoRows" $ do
+    describe "keywords" $ do
+      "{grid-auto-rows:min-content}"
+        `shouldRenderFrom`
+        gridAutoRows minContent
+
+      "{grid-auto-rows:max-content}"
+        `shouldRenderFrom`
+        gridAutoRows maxContent
+
+    describe "list of sizes" $ do
+      "{grid-auto-rows:1em calc(20% + 1fr) auto}"
+        `shouldRenderFrom`
+        gridAutoRows [upcast $ em 1, pct 20 @+@ fr 1, upcast $ auto]
 
   describe "gridArea" $ do
     "{grid-area:header}"
