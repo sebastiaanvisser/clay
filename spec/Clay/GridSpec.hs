@@ -5,6 +5,8 @@ module Clay.GridSpec where
 import Test.Hspec
 import Common
 import Clay
+import Data.These (These (..))
+
 
 spec :: Spec
 spec = do

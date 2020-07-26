@@ -38,7 +38,7 @@ module Clay.Grid
   , unGridTemplateNamedAreas
   , InvalidGridTemplateNamedAreas(..)
   -- re exports
-  , These(..)
+  , module Data.These
   -- deprecated
   , gridGap
 
@@ -49,11 +49,12 @@ import Clay.Common
 import Clay.Property
 import Clay.Size
 import Clay.Stylesheet
+import Clay.Elements (span)
 
+import Prelude hiding (span)
 import Data.String (IsString)
 import Data.Text (Text)
 import qualified Data.Text as Text
-
 import Data.Coerce (coerce)
 import Data.These
 import GHC.Exts (IsList(..))
@@ -172,13 +173,16 @@ instance Inherit GridLocation where inherit = GridLocation_Keyword inherit
 instance Initial GridLocation where initial = GridLocation_Keyword initial
 instance Unset   GridLocation where unset   = GridLocation_Keyword unset
 
+-- See under syntax:
+-- https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-start
+-- either grid index and/or named grid area is required, but span is optional
 data GridLocationData = GridLocationData IsSpan (These Integer GridArea)
 
 instance Val GridLocationData where
-  value (GridLocationData isSpan coordinateAndOrGridArea) =
+  value (GridLocationData isSpan indexAndOrGridArea) =
     if isSpan == Span
-    then value ("span" :: Text, coordinateAndOrGridArea)
-    else value coordinateAndOrGridArea
+    then value (span :: Value, indexAndOrGridArea)
+    else value indexAndOrGridArea
 
 pattern GridIndex :: Integer -> GridLocation
 pattern GridIndex n = GridLocation_Data (GridLocationData NoSpan (This n))
