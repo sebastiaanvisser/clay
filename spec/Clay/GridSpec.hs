@@ -32,9 +32,9 @@ spec = do
         gridTemplateRows none
 
     describe "list of sizes" $ do
-      "{grid-template-rows:50px auto 40em}"
+      "{grid-template-rows:50px auto minmax(400em,50%)}"
         `shouldRenderFrom`
-        gridTemplateRows [px 50, auto, em 40]
+        gridTemplateRows [upcast (px 50), upcast auto, minmax (em 400) (pct 50)]
 
   describe "gridTemplateColumns" $ do
     describe "keyword" $ do

@@ -40,6 +40,7 @@ module Clay.Size
 , minContent
 , available
 , fitContent
+, minmax
 
 -- * Calculation operators for calc
 
@@ -102,6 +103,7 @@ data Size a =
   SimpleSize Text |
   forall b c. SumSize (Size b) (Size c) |
   forall b c. DiffSize (Size b) (Size c) |
+  forall b c. MinMaxSize (Size b) (Size c) |
   MultSize Double (Size a) |
   DivSize Double (Size a) |
   OtherSize Value
@@ -114,11 +116,13 @@ sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
 sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
 sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
 sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
+sizeToText (MinMaxSize a b) = mconcat ["minmax(", sizeToText a, ",", sizeToText b, ")"]
 sizeToText (OtherSize a) = plain $ unValue a
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
   value (OtherSize a) = a
+  value s@(MinMaxSize _ _) = Value $ Plain $ sizeToText s
   value s = Value $ Plain ("calc" <> sizeToText s)
 
 instance Auto (Size a) where auto = OtherSize Clay.Common.autoValue
@@ -196,6 +200,10 @@ available = SimpleSize "available"
 -- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width.
 fitContent :: Size LengthUnit
 fitContent = SimpleSize "fit-content"
+
+-- | A mixed size range; only valid within grid-template-rows, grid-template-columns, grid-auto-rows, or grid-auto-columns.
+minmax :: Size a -> Size b -> Size AnyUnit
+minmax = MinMaxSize
 
 -- | SimpleSize in percents.
 pct :: Double -> Size Percentage
