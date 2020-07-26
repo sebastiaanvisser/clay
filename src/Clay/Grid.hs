@@ -11,7 +11,7 @@ module Clay.Grid
   , columnGap
   , gridTemplateRows
   , gridTemplateColumns
-  , GridTemplateSizes
+  , GridTrackList
   , gridArea
   , blankGridArea
   , GridArea
@@ -71,20 +71,20 @@ columnGap = key "column-gap" <> key "grid-column-gap"
 -------------------------------------------------------------------------------
 
 -- | Property defines the line names and track sizing functions of the grid rows.
-gridTemplateRows :: GridTemplateSizes a -> Css
+gridTemplateRows :: GridTrackList a -> Css
 gridTemplateRows = key "grid-template-rows"
 
 -- | Property defines the line names and track sizing functions of the grid columns.
-gridTemplateColumns :: GridTemplateSizes a -> Css
+gridTemplateColumns :: GridTrackList a -> Css
 gridTemplateColumns = key "grid-template-columns"
 
-newtype GridTemplateSizes a = GridTemplateSizes Value
+newtype GridTrackList a = GridTrackList Value
   deriving (Val, None, Inherit, Initial, Unset)
 
-instance IsList (GridTemplateSizes a) where
-  type Item (GridTemplateSizes a) = Size a
+instance IsList (GridTrackList a) where
+  type Item (GridTrackList a) = Size a
   toList = error ""
-  fromList = GridTemplateSizes . noCommas
+  fromList = GridTrackList . noCommas
 
 -------------------------------------------------------------------------------
 -- | Property defines the element location inside grid template
