@@ -19,6 +19,7 @@ CHANGELOG
       minmax :: Size a -> Size a -> Size AnyUnit
       remove `available`, it's not a valid css size
       upgrade `fitContent` from value to function, it's not valid without an argument:
+      minContent & maxContent are now type class overloaded values
         https://drafts.csswg.org/css-sizing-3/#valdef-width-fit-content-length-percentage
 
       drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at nearly 98% for unprefixed calc)
