@@ -154,7 +154,7 @@ gridColumnEnd :: GridLocation -> Css
 gridColumnEnd = key "grid-column-end"
 
 gridLocation :: IsSpan -> These Integer GridArea -> GridLocation
-gridLocation isSpan these = GridLocation_Data $ GridLocationData isSpan these
+gridLocation isSpan = GridLocation_Data . GridLocationData isSpan
 
 data IsSpan = Span | NoSpan
   deriving (Show, Eq)
@@ -172,15 +172,7 @@ instance Inherit GridLocation where inherit = GridLocation_Keyword inherit
 instance Initial GridLocation where initial = GridLocation_Keyword initial
 instance Unset   GridLocation where unset   = GridLocation_Keyword unset
 
-data GridLocationData = GridLocationData
-  { gridLocation_span                    :: IsSpan
-  , gridLocation_coordinateAndOrGridArea :: These Integer GridArea
-  }
-
-instance (Val a, Val b) => Val (These a b) where
-  value (This a) = value a
-  value (That b) = value b
-  value (These a b) = value (a, b)
+data GridLocationData = GridLocationData IsSpan (These Integer GridArea)
 
 instance Val GridLocationData where
   value (GridLocationData isSpan coordinateAndOrGridArea) =
@@ -192,8 +184,16 @@ pattern GridIndex :: Integer -> GridLocation
 pattern GridIndex n = GridLocation_Data (GridLocationData NoSpan (This n))
 
 instance Num GridLocation where
+  -- for index literals
   fromInteger = GridIndex
+  -- for negative index literals
   negate (GridIndex index) = GridIndex $ negate index
+  -- in general we don't support arithmetic on this type
+  negate _ = error "negate not defined for GridLocation"
+  abs = error "abs not defined for GridLocation"
+  signum = error "abs not defined for GridLocation"
+  (+) = error "addition not defined for GridLocation"
+  (*) = error "multiplication not defined for GridLocation"
 
 -------------------------------------------------------------------------------
 

@@ -6,8 +6,6 @@ import Test.Hspec
 import Common
 import Clay
 
-test = hspec spec
-
 spec :: Spec
 spec = do
   describe "gap" $ do
