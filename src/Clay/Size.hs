@@ -119,7 +119,7 @@ sizeToText (OtherSize a) = plain $ unValue a
 instance Val (Size a) where
   value (SimpleSize a) = value a
   value (OtherSize a) = a
-  value s = Value $ browsers <> Plain ("calc" <> sizeToText s)
+  value s = Value $ Plain ("calc" <> sizeToText s)
 
 instance Auto (Size a) where auto = OtherSize Clay.Common.autoValue
 instance Normal (Size a) where normal = OtherSize Clay.Common.normalValue

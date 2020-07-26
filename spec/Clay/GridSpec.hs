@@ -43,7 +43,7 @@ spec = do
         gridTemplateRows none
 
     describe "list of sizes" $ do
-      "{grid-template-columns:1em 20% auto}"
+      "{grid-template-columns:1em calc(20% + 1fr) auto}"
         `shouldRenderFrom`
         gridTemplateColumns [upcast $ em 1, pct 20 @+@ fr 1, upcast $ auto]
 

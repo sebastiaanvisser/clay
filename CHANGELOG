@@ -12,6 +12,10 @@ CHANGELOG
         gridArea: `grid-area`
       deprecate: 'Clay.Grid.gridGap' in favor of 'Clay.Grid.gap'
       newtype GridArea for type safe grid area templating
+    - 'Clay.Size':
+      AnyUnit, a size parameter for lists of mixed units
+      upcast :: Size a -> Size AnyUnit
+      drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at 96% for unprefixed calc)
 
   0.14.0:
     - Drop support for GHC 8.2
