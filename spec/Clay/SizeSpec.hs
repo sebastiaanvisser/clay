@@ -18,11 +18,6 @@ import Data.List
 sizeRepr :: Size a -> Text
 sizeRepr = plain . unValue . value
 
-hasAllPrefixes :: Val a => a -> Bool
-hasAllPrefixes a = checkPrefixed ((unValue . value) a) browsers
-  where checkPrefixed (Prefixed pa) (Prefixed pb) = sort (fmap fst pa) == sort (fmap fst pb)
-        checkPrefixed _ _ = False
-
 compactRender :: Css -> Text
 compactRender css = toStrict $ renderWith compact [] css
 
@@ -47,8 +42,6 @@ spec = do
       sizeRepr (em 2 @+@ px 1) `shouldBe` "calc(2em + 1px)"
     it "returns calc for nested sum" $
       sizeRepr (em 2 @+@ pt 1 @+@ px 3) `shouldBe` "calc((2em + 1pt) + 3px)"
-    it "returns prefixed calc for simple sum" $
-      (em 2 @+@ pt 2) `shouldSatisfy` hasAllPrefixes
     it "return calc for sum of different types" $
       sizeRepr (em 2 @+@ pct 10) `shouldBe` "calc(2em + 10%)"
     it "returns calc for simple difference" $
