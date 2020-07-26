@@ -26,8 +26,8 @@ spec = do
   describe "render results" $ do
     it "marginLeft auto" $
       (compactRender $ marginLeft auto) `shouldBe` "{margin-left:auto}"
-    it "marginLeft normal" $
-      (compactRender $ marginLeft normal) `shouldBe` "{margin-left:normal}"
+    it "marginLeft initial" $
+      (compactRender $ marginLeft initial) `shouldBe` "{margin-left:initial}"
     it "marginLeft inherit" $
       (compactRender $ marginLeft inherit) `shouldBe` "{margin-left:inherit}"
     it "marginLeft none" $
