@@ -15,7 +15,7 @@ CHANGELOG
     - 'Clay.Size':
       AnyUnit, a size parameter for lists of mixed units
       upcast :: Size a -> Size AnyUnit
-      drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at 96% for unprefixed calc)
+      drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at nearly 98% for unprefixed calc)
 
   0.14.0:
     - Drop support for GHC 8.2
