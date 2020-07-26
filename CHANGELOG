@@ -9,6 +9,7 @@ CHANGELOG
         gridArea: `grid-area`
         gridAutoRows: `grid-auto-rows`
         gridAutoColumns: `grid-auto-columns`
+        gridAutoFlow: `grid-auto-flow`
         gridTemplateRows: `grid-template-rows`
         gridTemplateColumns: `grid-template-columns` (already existed, but now handles more cases)
         gridTemplateAreas: `grid-template-areas`

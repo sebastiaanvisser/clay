@@ -15,6 +15,12 @@ module Clay.Grid
   , gridAutoRows
   , gridAutoColumns
   , GridAutoTrackList
+  , gridAutoFlow
+  , row
+  , column
+  , dense
+  , rowDense
+  , columnDense
   , gridArea
   , blankGridArea
   , GridArea
@@ -107,7 +113,21 @@ instance IsList (GridAutoTrackList a) where
   toList = error ""
   fromList = GridAutoTrackList . noCommas
 
+-------------------------------------------------------------------------------
+gridAutoFlow :: GridAutoFlow -> Css
+gridAutoFlow = key "grid-auto-flow"
 
+newtype GridAutoFlow = GridAutoFlow Value
+  deriving (Val, Row, Column, Inherit, Initial, Unset)
+
+dense :: GridAutoFlow
+dense = GridAutoFlow "dense"
+
+rowDense :: GridAutoFlow
+rowDense = GridAutoFlow "row dense"
+
+columnDense :: GridAutoFlow
+columnDense = GridAutoFlow "column dense"
 -------------------------------------------------------------------------------
 -- | Property defines the element location inside grid template
 gridArea :: GridArea -> Css

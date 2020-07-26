@@ -62,6 +62,27 @@ spec = do
         `shouldRenderFrom`
         gridAutoRows [upcast $ em 1, pct 20 @+@ fr 1, upcast $ auto]
 
+  describe "gridAutoFlow" $ do
+    "{grid-auto-flow:row}"
+      `shouldRenderFrom`
+      gridAutoFlow row
+
+    "{grid-auto-flow:column}"
+      `shouldRenderFrom`
+      gridAutoFlow column
+
+    "{grid-auto-flow:dense}"
+      `shouldRenderFrom`
+      gridAutoFlow dense
+
+    "{grid-auto-flow:row dense}"
+      `shouldRenderFrom`
+      gridAutoFlow rowDense
+
+    "{grid-auto-flow:column dense}"
+      `shouldRenderFrom`
+      gridAutoFlow columnDense
+
   describe "gridArea" $ do
     "{grid-area:header}"
       `shouldRenderFrom`

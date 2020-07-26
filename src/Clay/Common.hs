@@ -28,6 +28,8 @@ class Initial    a where initial    :: a
 class Unset      a where unset      :: a
 class MinContent a where minContent :: a
 class MaxContent a where maxContent :: a
+class Row        a where row        :: a
+class Column     a where column     :: a
 
 -- | The other type class is used to escape from the type safety introduced by
 -- embedding CSS properties into the typed world of Clay. `Other` allows you to
@@ -61,6 +63,10 @@ minContentValue :: Value
 minContentValue = "min-content"
 maxContentValue :: Value
 maxContentValue = "max-content"
+rowValue :: Value
+rowValue = "row"
+columnValue :: Value
+columnValue = "column"
 
 instance All        Value where all        = allValue
 instance Auto       Value where auto       = autoValue
@@ -76,6 +82,8 @@ instance Initial    Value where initial    = initialValue
 instance Unset      Value where unset      = unsetValue
 instance MinContent Value where minContent = minContentValue
 instance MaxContent Value where maxContent = maxContentValue
+instance Row        Value where row        = rowValue
+instance Column     Value where column     = columnValue
 
 -------------------------------------------------------------------------------
 

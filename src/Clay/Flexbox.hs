@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances, GeneralizedNewtypeDeriving, OverloadedStrings #-}
 module Clay.Flexbox where
 
-import Clay.Common     (Auto, Baseline, Center, Inherit, Other)
+import Clay.Common     (Auto, Baseline, Center, Inherit, Other, Row, Column)
 import Clay.Property
 import Clay.Size       (Size)
 import Clay.Stylesheet
@@ -66,13 +66,10 @@ flexBasis = key "flex-basis"
 -------------------------------------------------------------------------------
 
 newtype FlexDirection = FlexDirection Value
-  deriving (Val, Other)
+  deriving (Val, Other, Row, Column)
 
-row, rowReverse, column, columnReverse :: FlexDirection
-
-row           = FlexDirection "row"
+rowReverse, columnReverse :: FlexDirection
 rowReverse    = FlexDirection "row-reverse"
-column        = FlexDirection "column"
 columnReverse = FlexDirection "column-reverse"
 
 flexDirection :: FlexDirection -> Css
