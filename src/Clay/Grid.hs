@@ -36,11 +36,9 @@ module Clay.Grid
   , gridTemplateAreas
   , GridTemplateAreas
   , GridTemplateNamedAreas
-  , mkGridTemplateNamedAreas
-  , unGridTemplateNamedAreas
   , InvalidGridTemplateNamedAreas(..)
   -- re exports
-  , module Data.These
+  , These(..)
   -- deprecated
   , gridGap
 
