@@ -1,10 +1,12 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE ExistentialQuantification #-}
-{-# LANGUAGE PatternSynonyms #-}
--- | Partial implementation of <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout>.
+{-# LANGUAGE
+    OverloadedStrings
+  , GeneralizedNewtypeDeriving
+  , TypeFamilies
+  , RankNTypes
+  , ExistentialQuantification
+  , PatternSynonyms
+  #-}
+-- | Implementation of <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout>.
 module Clay.Grid
   ( gap
   , rowGap
