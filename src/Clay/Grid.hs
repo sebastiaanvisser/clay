@@ -39,9 +39,6 @@ module Clay.Grid
   , InvalidGridTemplateNamedAreas(..)
   -- re exports
   , These(..)
-  -- deprecated
-  , gridGap
-
   )
   where
 
@@ -65,10 +62,6 @@ import Control.Monad (when)
 -- | Property sets the gaps (gutters) between rows and columns.
 gap :: Size a -> Css
 gap = key "gap" <> key "grid-gap"
-
-gridGap :: Size a -> Css
-gridGap = gap
-{-# DEPRECATED gridGap "Use gap, rowGap, and/or columnGap instead" #-}
 
 -- | Property sets the size of the gap (gutter) between an element's grid rows.
 rowGap :: Size a -> Css
@@ -267,4 +260,3 @@ data InvalidGridTemplateNamedAreas
   deriving (Eq, Show)
 
 instance Exception InvalidGridTemplateNamedAreas
-------------------------------------------------------------------------------
