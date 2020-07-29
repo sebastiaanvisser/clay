@@ -60,14 +60,23 @@ import Control.Monad (when)
 
 
 -- | Property sets the gaps (gutters) between rows and columns.
+-- Sets both "gap" & "grid-gap"
+-- to quote: https://developer.mozilla.org/en-US/docs/Web/CSS/gap
+-- "CSS Grid Layout initially defined the grid-gap property. This prefixed property is being replaced by gap. However, in order to support browsers that implemented grid-gap and not gap for grid, you will need to use the prefixed property"
 gap :: Size a -> Css
 gap = key "gap" <> key "grid-gap"
 
 -- | Property sets the size of the gap (gutter) between an element's grid rows.
+-- Sets both "row-gap" & "grid-row-gap"
+-- to quote: https://developer.mozilla.org/en-US/docs/Web/CSS/row-gap
+-- "CSS Grid Layout initially defined the grid-row-gap property. This prefixed property is being replaced by row-gap. However, in order to support browsers that implemented grid-row-gap and not row-gap for grid, you will need to use the prefixed property."
 rowGap :: Size a -> Css
 rowGap = key "row-gap" <> key "grid-row-gap"
 
 -- | Property sets the size of the gap (gutter) between an element's grid columns.
+-- Sets both "column-gap" & "grid-column-gap"
+-- to quote: https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap
+-- "CSS Grid Layout initially defined the grid-column-gap property. This prefixed property is being replaced by column-gap. However, in order to support bcolumnsers that implemented grid-column-gap and not column-gap for grid, you will need to use the prefixed property."
 columnGap :: Size a -> Css
 columnGap = key "column-gap" <> key "grid-column-gap"
 
