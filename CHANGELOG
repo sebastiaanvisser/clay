@@ -1,6 +1,10 @@
 CHANGELOG
 
-  0.15.0:
+  0.14.0:
+    - Drop support for GHC 8.2
+    - Added `text-align-last`
+    - Fix typo in `stepsStart`
+    Thanks to Vasiliy Yorkin and Florian Grignon.
     - 'Clay.Grid':
       new properties:
         gap: `gap` & `grid-gap`
@@ -11,12 +15,10 @@ CHANGELOG
         gridAutoColumns: `grid-auto-columns`
         gridAutoFlow: `grid-auto-flow`
         gridTemplateRows: `grid-template-rows`
-        gridTemplateColumns: `grid-template-columns` (already existed, but now handles more cases)
+        gridTemplateColumns: `grid-template-columns`
         gridTemplateAreas: `grid-template-areas`
-      deprecate: 'Clay.Grid.gridGap' in favor of 'Clay.Grid.gap'
     - 'Clay.Size':
       AnyUnit, a size parameter for lists of mixed units
-      upcast :: Size a -> Size AnyUnit
       minmax :: Size a -> Size a -> Size AnyUnit
       remove `available`, `normal`: not valid css sizes
       include `initial`, `unset` keyword values
@@ -25,12 +27,6 @@ CHANGELOG
         https://drafts.csswg.org/css-sizing-3/#valdef-width-fit-content-length-percentage
 
       drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at nearly 98% for unprefixed calc)
-
-  0.14.0:
-    - Drop support for GHC 8.2
-    - Added `text-align-last`
-    - Fix typo in `stepsStart`
-    Thanks to Vasiliy Yorkin and Florian Grignon.
 
   0.13.3:
     - Improve README
