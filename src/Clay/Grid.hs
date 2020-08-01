@@ -250,7 +250,7 @@ mkGridTemplateNamedAreas rows = do
       counts = fmap length (coerce rows :: [[GridArea]])
       longest = maximum counts
 
-    when (null rows ) $
+    when (null rows) $
       Left GridTemplateNamedAreas_Empty
 
     when (any (== 0) counts)  $
