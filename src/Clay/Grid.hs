@@ -238,10 +238,6 @@ instance IsList GridTemplateNamedAreas where
   type Item GridTemplateNamedAreas = [GridArea]
   toList = unGridTemplateNamedAreas
   fromList = either throw id . mkGridTemplateNamedAreas
-    where
-      fromRightOrThrow :: Exception e => Either e a -> a
-      fromRightOrThrow (Right a) = a
-      fromRightOrThrow (Left e) = throw e
 
 -- | Smart constructor for GridTemplateNamedAreas
 mkGridTemplateNamedAreas :: [[GridArea]] -> Either InvalidGridTemplateNamedAreas GridTemplateNamedAreas
