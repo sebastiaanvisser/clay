@@ -237,7 +237,7 @@ instance Val GridTemplateNamedAreas where
 instance IsList GridTemplateNamedAreas where
   type Item GridTemplateNamedAreas = [GridArea]
   toList = unGridTemplateNamedAreas . coerce
-  fromList = fromRightOrThrow . mkGridTemplateNamedAreas
+  fromList = either throw id . mkGridTemplateNamedAreas
     where
       fromRightOrThrow :: Exception e => Either e a -> a
       fromRightOrThrow (Right a) = a
