@@ -236,7 +236,7 @@ instance Val GridTemplateNamedAreas where
 -- | toList will throw when your grid template areas are invalid
 instance IsList GridTemplateNamedAreas where
   type Item GridTemplateNamedAreas = [GridArea]
-  toList = unGridTemplateNamedAreas . coerce
+  toList = unGridTemplateNamedAreas
   fromList = either throw id . mkGridTemplateNamedAreas
     where
       fromRightOrThrow :: Exception e => Either e a -> a
