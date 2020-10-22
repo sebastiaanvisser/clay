@@ -56,7 +56,7 @@ outset = Stroke "outset"
 
 -------------------------------------------------------------------------------
 
-border, borderTop, borderLeft, borderBottom, borderRight :: Stroke -> Size LengthUnit -> Color -> Css
+border, borderTop, borderLeft, borderBottom, borderRight :: Size LengthUnit -> Stroke -> Color -> Css
 
 border        a b c = key "border"        (a ! b ! c)
 borderTop     a b c = key "border-top"    (a ! b ! c)
