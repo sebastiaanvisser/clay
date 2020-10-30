@@ -8,6 +8,7 @@ import Data.List.NonEmpty (NonEmpty, toList)
 import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
+import Data.These (These(..))
 
 data Prefixed = Prefixed { unPrefixed :: [(Text, Text)] } | Plain { unPlain :: Text }
   deriving (Show, Eq)
@@ -99,6 +100,11 @@ instance Val a => Val [a] where
 
 instance Val a => Val (NonEmpty a) where
   value = value . toList
+
+instance (Val a, Val b) => Val (These a b) where
+  value (This a) = value a
+  value (That b) = value b
+  value (These a b) = value (a, b)
 
 intercalate :: Monoid a => a -> [a] -> a
 intercalate _ []     = mempty

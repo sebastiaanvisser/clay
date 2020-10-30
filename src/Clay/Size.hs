@@ -14,6 +14,8 @@ module Clay.Size
   Size
 , LengthUnit
 , Percentage
+, AnyUnit
+, upcast
 , nil
 , unitless
 
@@ -36,8 +38,8 @@ module Clay.Size
 , fr
 , maxContent
 , minContent
-, available
 , fitContent
+, minmax
 
 -- * Calculation operators for calc
 
@@ -74,6 +76,7 @@ where
 import Data.Monoid
 import Prelude hiding (rem)
 import Data.Text (Text)
+import Data.Coerce (coerce)
 
 import Clay.Common
 import Clay.Property
@@ -88,12 +91,19 @@ data LengthUnit
 data Percentage
 
 -- | When combining percentages with units using calc, we get a combination
-data Combination
+-- | Any unit or combination of units
+data AnyUnit
+
+-- | Upcast a size unit
+upcast :: Size a -> Size AnyUnit
+upcast = coerce
 
 data Size a =
   SimpleSize Text |
   forall b c. SumSize (Size b) (Size c) |
   forall b c. DiffSize (Size b) (Size c) |
+  forall b c. MinMaxSize (Size b) (Size c) |
+  forall b. FitContentSize (Size b) |
   MultSize Double (Size a) |
   DivSize Double (Size a) |
   OtherSize Value
@@ -106,17 +116,26 @@ sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
 sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
 sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
 sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
+sizeToText (MinMaxSize a b) = mconcat ["minmax(", sizeToText a, ",", sizeToText b, ")"]
+sizeToText (FitContentSize a) = mconcat ["fit-content(", sizeToText a, ")"]
 sizeToText (OtherSize a) = plain $ unValue a
 
 instance Val (Size a) where
   value (SimpleSize a) = value a
   value (OtherSize a) = a
-  value s = Value $ browsers <> Plain ("calc" <> sizeToText s)
+  value s@(MinMaxSize _ _) = Value $ Plain $ sizeToText s
+  value s@(FitContentSize _) = Value $ Plain $ sizeToText s
+  value s = Value $ Plain ("calc" <> sizeToText s)
 
-instance Auto (Size a) where auto = OtherSize Clay.Common.autoValue
-instance Normal (Size a) where normal = OtherSize Clay.Common.normalValue
-instance Inherit (Size a) where inherit = OtherSize Clay.Common.inheritValue
-instance None (Size a) where none = OtherSize Clay.Common.noneValue
+-- Keywords
+instance Auto       (Size a) where auto       = OtherSize auto
+instance Inherit    (Size a) where inherit    = OtherSize inherit
+instance Initial    (Size a) where initial    = OtherSize initial
+instance Unset      (Size a) where unset      = OtherSize inherit
+instance None       (Size a) where none       = OtherSize none
+instance MinContent (Size a) where minContent = OtherSize minContent
+instance MaxContent (Size a) where maxContent = OtherSize maxContent
+
 instance Other (Size a) where other a = OtherSize a
 
 -- | Zero size.
@@ -173,21 +192,13 @@ vmax i = SimpleSize (cssDoubleText i <> "vmax")
 -- | 'SimpleSize' in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
 fr i = SimpleSize (cssDoubleText i <> "fr")
 
--- | SimpleSize for the intrinsic preferred width.
-maxContent :: Size LengthUnit
-maxContent = SimpleSize "max-content"
-
--- | SimpleSize for the intrinsic minimum width.
-minContent :: Size LengthUnit
-minContent = SimpleSize "min-content"
-
--- | SimpleSize for the containing block width minus horizontal margin, border, and padding.
-available :: Size LengthUnit
-available = SimpleSize "available"
-
 -- | The larger of the intrinsic minimum width or the smaller of the intrinsic preferred width and the available width.
-fitContent :: Size LengthUnit
-fitContent = SimpleSize "fit-content"
+fitContent :: Size a -> Size a
+fitContent = FitContentSize
+
+-- | A mixed size range; only valid within grid-template-rows, grid-template-columns, grid-auto-rows, or grid-auto-columns.
+minmax :: Size a -> Size b -> Size AnyUnit
+minmax = MinMaxSize
 
 -- | SimpleSize in percents.
 pct :: Double -> Size Percentage
@@ -222,7 +233,7 @@ instance Fractional (Size Percentage) where
 type family SizeCombination sa sb where
   SizeCombination Percentage Percentage = Percentage
   SizeCombination LengthUnit LengthUnit = LengthUnit
-  SizeCombination a b = Combination
+  SizeCombination a b = AnyUnit
 
 -- | Plus operator to combine sizes into calc function
 infixl 6 @+@
