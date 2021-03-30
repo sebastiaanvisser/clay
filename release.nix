@@ -1,4 +1,4 @@
-{ compiler }:
+{ compiler ? "ghc884" }:
 
 let
   # Disable tests for these packages
@@ -57,10 +57,11 @@ let
     };
   };
 
-  pkgs = import <nixpkgs> { inherit config; };
+  pkgs = import (builtins.fetchTarball (import ./nix/nixpkgs.nix)) { inherit config; };
 
 in
   { clay = pkgs.haskell.packages.${compiler}.clay;
+    examples = pkgs.haskell.packages.${compiler}.callCabal2nix "examples" ./examples {};
     cabal = pkgs.haskellPackages.cabal-install;
     pkgs = pkgs;
   }
