@@ -1,4 +1,4 @@
-{ mkDerivation, base, hspec, hspec-discover, mtl, stdenv, text }:
+{ mkDerivation, base, hspec, hspec-discover, mtl, stdenv, lib, text }:
 mkDerivation {
   pname = "clay";
   version = "0.14.0";
@@ -7,5 +7,5 @@ mkDerivation {
   testHaskellDepends = [ base hspec hspec-discover mtl text ];
   homepage = "http://fvisser.nl/clay";
   description = "CSS preprocessor as embedded Haskell";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }
