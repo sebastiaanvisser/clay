@@ -7,5 +7,5 @@ examples/*/*.css
 cabal.sandbox.config
 .stack-work
 *.sublime-*
-result
+result*
 *.code-*
