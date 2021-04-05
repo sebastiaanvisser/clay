@@ -7,6 +7,18 @@ module Clay.Transform
   Transformation
 , transform
 , transforms
+, TransformStyle
+, transformStyle
+, flat
+, preserve3d
+, TransformBox
+, transformBox
+, transformContentBox
+, transformBorderBox
+, fillBox
+, strokeBox
+, viewBox
+, transformOrigin
 
 -- * Translating.
 
@@ -54,6 +66,38 @@ transform = prefixed (browsers <> "transform")
 
 transforms :: [Transformation] -> Css
 transforms xs = prefixed (browsers <> "transform") (noCommas xs)
+
+-------------------------------------------------------------------------------
+
+newtype TransformStyle = TransformStyle Value
+  deriving (Val, Inherit, Initial, Unset)
+
+transformStyle :: TransformStyle -> Css
+transformStyle = prefixed (browsers <> "transform-style")
+
+flat, preserve3d :: TransformStyle
+flat = TransformStyle "flat"
+preserve3d = TransformStyle "preserve-3d"
+
+-------------------------------------------------------------------------------
+
+newtype TransformBox = TransformBox Value
+  deriving (Val, Inherit, Initial, Unset)
+
+transformBox :: TransformBox -> Css
+transformBox = prefixed (browsers <> "transform-box")
+
+transformContentBox, transformBorderBox, fillBox, strokeBox, viewBox :: TransformBox
+transformContentBox = TransformBox "contentBox"
+transformBorderBox = TransformBox "borderBox"
+fillBox = TransformBox "fillBox"
+strokeBox = TransformBox "strokeBox"
+viewBox = TransformBox "viewBox"
+
+-------------------------------------------------------------------------------
+
+transformOrigin :: [Size a] -> Css
+transformOrigin = prefixed (browsers <> "transform-origin") . noCommas
 
 -------------------------------------------------------------------------------
 
