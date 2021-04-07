@@ -9,3 +9,5 @@ cabal.sandbox.config
 *.sublime-*
 result*
 *.code-*
+tags
+TAGS
