@@ -41,3 +41,13 @@ and deprecation of that version will be considered.
 
 If you fix an important bug or contribute a new feature,
 consider adding a line to `CHANGELOG` describing what you have changed.
+
+# Running tests locally
+
+Tests will be run with the above `nix-build` calls, but if you want to run them
+without doing a full nix build, you can do so with cabal:
+
+```
+nix-shell
+cabal test
+```
