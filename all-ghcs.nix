@@ -1,5 +1,3 @@
-{ nixpkgs ? import <nixpkgs> {} }:
-
 let
   travisJobEnvAssignments = (builtins.fromJSON (builtins.readFile ./.travis.yml)).env.jobs;
   getGHCVersionFromEnvAssignment = envAssignment: builtins.elemAt (builtins.split "=" envAssignment) 2;
