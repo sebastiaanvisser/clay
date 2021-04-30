@@ -16,11 +16,11 @@ set the `GHC_VERSION` environment variable:
 GHC_VERSION=ghc881 nix-build
 ```
 
-To find out which GHC versions your nix setup provides:
+To find out which GHC versions our nix setup provides:
 
 ```
-$ nix eval '(builtins.attrNames ((import <nixpkgs> {}).haskell.compiler))'
-[ "ghc822Binary" "ghc844" "ghc863Binary" "ghc865" "ghc881" "ghcHEAD" "ghcjs" "ghcjs86" "integer-simple" ]
+$ nix eval '(builtins.attrNames (import (builtins.fetchTarball (import ./nix/nixpkgs.nix)) {}).haskell.compiler)'
+[ "ghc8102Binary" "ghc8102BinaryMinimal" "ghc8104" "ghc865Binary" "ghc884" "ghc901" "ghcHEAD" "integer-simple" "native-bignum" ]
 ```
 
 # Building your pull request
@@ -41,3 +41,13 @@ and deprecation of that version will be considered.
 
 If you fix an important bug or contribute a new feature,
 consider adding a line to `CHANGELOG` describing what you have changed.
+
+# Running tests locally
+
+Tests will be run with the above `nix-build` calls, but if you want to run them
+without doing a full nix build, you can do so with cabal:
+
+```
+nix-shell
+cabal test
+```

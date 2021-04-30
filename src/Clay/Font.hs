@@ -102,7 +102,8 @@ data Required a =
   [GenericFontFamily]
 
 instance Val (Required a) where
-  value (Required a Nothing  c d) = value (a ! (Literal <$> c) ! d)
+  value (Required a Nothing  c d) = value a <> " " <> (value $ Literal <$> c) <> sep <> value d
+    where sep = if null c || null d then "" else ","
   value (Required a (Just b) c d) = value ((value a <> "/" <> value b) ! (Literal <$> c) ! d)
 
 instance Font (          Required a)

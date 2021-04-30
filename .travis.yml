@@ -2,9 +2,10 @@
   "language": "nix",
   "env": {
     "jobs":
-      [ "GHC_VERSION=ghc844"
-      , "GHC_VERSION=ghc865"
-      , "GHC_VERSION=ghc883"
+      [ "GHC_VERSION=ghc8104"
+      , "GHC_VERSION=ghc884"
+      , "GHC_VERSION=ghc901"
+      , "GHC_VERSION=ghcHEAD"
       ]
   },
   "nix": "2.3.3"
