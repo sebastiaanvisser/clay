@@ -14,19 +14,21 @@ class FlexEnd      a where flexEnd      :: a
 class FlexStart    a where flexStart    :: a
 class SpaceAround  a where spaceAround  :: a
 class SpaceBetween a where spaceBetween :: a
+class SpaceEvenly  a where spaceEvenly  :: a
 class Stretch      a where stretch      :: a
 
 instance FlexEnd Value      where flexEnd      = "flex-end"
 instance FlexStart Value    where flexStart    = "flex-start"
 instance SpaceAround Value  where spaceAround  = "space-around"
 instance SpaceBetween Value where spaceBetween = "space-between"
+instance SpaceEvenly Value  where spaceEvenly  = "space-evenly"
 instance Stretch Value      where stretch      = "stretch"
 
 -------------------------------------------------------------------------------
 
 newtype AlignContentValue = AlignContentValue Value
   deriving (Val, Other, Inherit, FlexStart, FlexEnd
-          , Center, SpaceBetween, SpaceAround, Stretch)
+          , Center, SpaceBetween, SpaceAround, SpaceEvenly, Stretch)
 
 alignContent :: AlignContentValue -> Css
 alignContent = key "align-content"
@@ -107,7 +109,7 @@ flexWrap = key "flex-wrap"
 
 newtype JustifyContentValue = JustifyContentValue Value
   deriving (Val, Other, Inherit, Center, FlexEnd
-          , FlexStart, SpaceAround, SpaceBetween)
+          , FlexStart, SpaceAround, SpaceBetween, SpaceEvenly)
 
 justifyContent :: JustifyContentValue -> Css
 justifyContent = key "justify-content"
