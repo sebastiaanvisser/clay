@@ -74,7 +74,7 @@ listStyleType :: ListStyleType -> Css
 listStyleType = key "list-style-type"
 
 newtype ListStylePosition = ListStylePosition Value
-  deriving (Val, Initial, Inherit, None, Other)
+  deriving (Val, Initial, Inherit, Other)
 
 inside, outside :: ListStylePosition
 
