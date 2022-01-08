@@ -14,9 +14,11 @@ module Clay.Grid
   , gridTemplateRows
   , gridTemplateColumns
   , GridTrackList
+  , mkGridTrackList
   , gridAutoRows
   , gridAutoColumns
   , GridAutoTrackList
+  , mkGridAutoTrackList
   , gridAutoFlow
   , row
   , column
@@ -110,10 +112,8 @@ gridAutoColumns = key "grid-auto-columns"
 newtype GridAutoTrackList a = GridAutoTrackList Value
   deriving (Val, Auto, MinContent, MaxContent, Inherit, Initial, Unset)
 
-instance IsList (GridAutoTrackList a) where
-  type Item (GridAutoTrackList a) = Size a
-  toList = error ""
-  fromList = GridAutoTrackList . noCommas
+mkGridAutoTrackList :: [Size a] -> GridAutoTrackList
+mkGridAutoTrackList = GridAutoTrackList . noCommas
 
 -------------------------------------------------------------------------------
 gridAutoFlow :: GridAutoFlow -> Css
@@ -190,18 +190,6 @@ instance Val GridLocationData where
 pattern GridIndex :: Integer -> GridLocation
 pattern GridIndex n = GridLocationData (MkGridLocationData NoSpan (This n))
 
-instance Num GridLocation where
-  -- for index literals
-  fromInteger = GridIndex
-  -- for negative index literals
-  negate (GridIndex index) = GridIndex $ negate index
-  -- in general we don't support arithmetic on this type
-  negate _ = error "negate not defined for GridLocation"
-  abs = error "abs not defined for GridLocation"
-  signum = error "abs not defined for GridLocation"
-  (+) = error "addition not defined for GridLocation"
-  (*) = error "multiplication not defined for GridLocation"
-
 -------------------------------------------------------------------------------
 
 -- | Property defines the template for grid layout
@@ -233,12 +221,6 @@ instance Val GridTemplateNamedAreas where
       Text.intercalate "\n" $
       fmap convertRow $
       rows
-
--- | toList will throw when your grid template areas are invalid
-instance IsList GridTemplateNamedAreas where
-  type Item GridTemplateNamedAreas = [GridArea]
-  toList = unGridTemplateNamedAreas
-  fromList = either throw id . mkGridTemplateNamedAreas
 
 -- | Smart constructor for GridTemplateNamedAreas
 mkGridTemplateNamedAreas :: [[GridArea]] -> Either InvalidGridTemplate GridTemplateNamedAreas
