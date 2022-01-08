@@ -23,11 +23,9 @@ CHANGELOG
       remove `available`, `normal`: not valid css sizes
       include `initial`, `unset` keyword values
       upgrade `fitContent` from value to function, it's not valid without an argument:
+         https://drafts.csswg.org/css-sizing-3/#valdef-width-fit-content-length-percentage
       minContent & maxContent are now type class overloaded values
-        https://drafts.csswg.org/css-sizing-3/#valdef-width-fit-content-length-percentage
-
-      drop browser prefixes from `calc` ((caniuse)[https://caniuse.com/#feat=calc] is at nearly 98% for unprefixed calc)
-
+  
   0.13.3:
     - Improve README
     - Relax types for `sym2` and `sym3` combinators
