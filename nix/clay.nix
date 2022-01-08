@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 { mkDerivation, base, hspec, hspec-discover, mtl, stdenv, lib, text, these }:
 mkDerivation {
   pname = "clay";
