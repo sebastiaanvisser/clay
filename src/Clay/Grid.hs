@@ -247,5 +247,3 @@ data InvalidGridTemplate
   | InvalidGridTemplateEmptyRow
   | InvalidGridTemplateNotRectangular
   deriving (Eq, Show)
-
-instance Exception InvalidGridTemplate
