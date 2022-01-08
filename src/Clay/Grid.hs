@@ -93,10 +93,9 @@ gridTemplateColumns = key "grid-template-columns"
 newtype GridTrackList a = GridTrackList Value
   deriving (Val, None, Inherit, Initial, Unset)
 
-instance IsList (GridTrackList a) where
-  type Item (GridTrackList a) = Size a
-  toList = error ""
-  fromList = GridTrackList . noCommas
+-- | Create a GridTrackList from a list of sizes
+mkGridTrackList :: [Size a] -> GridTrackList a
+mkGridTrackList = GridTrackList . noCommas
 
 -------------------------------------------------------------------------------
 
