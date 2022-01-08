@@ -157,37 +157,39 @@ gridColumnEnd :: GridLocation -> Css
 gridColumnEnd = key "grid-column-end"
 
 gridLocation :: IsSpan -> These Integer GridArea -> GridLocation
-gridLocation isSpan = GridLocation_Data . GridLocationData isSpan
+gridLocation isSpan = GridLocationData . MkGridLocationData isSpan
 
 data IsSpan = Span | NoSpan
   deriving (Show, Eq)
 
 data GridLocation
-  = GridLocation_Keyword Value
-  | GridLocation_Data GridLocationData
+  = GridLocationKeyword Value
+  | GridLocationData GridLocationData
 
 instance Val GridLocation where
-  value (GridLocation_Keyword v) = v
-  value (GridLocation_Data d) = value d
+  value (GridLocationKeyword v) = v
+  value (GridLocationData d)    = value d
 
-instance Auto    GridLocation where auto    = GridLocation_Keyword auto
-instance Inherit GridLocation where inherit = GridLocation_Keyword inherit
-instance Initial GridLocation where initial = GridLocation_Keyword initial
-instance Unset   GridLocation where unset   = GridLocation_Keyword unset
+instance Auto    GridLocation where auto    = GridLocationKeyword auto
+instance Inherit GridLocation where inherit = GridLocationKeyword inherit
+instance Initial GridLocation where initial = GridLocationKeyword initial
+instance Unset   GridLocation where unset   = GridLocationKeyword unset
 
 -- See under syntax:
 -- https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-start
 -- either grid index and/or named grid area is required, but span is optional
-data GridLocationData = GridLocationData IsSpan (These Integer GridArea)
+-- Note: constuctor is not exported, 'GridIndex, or 'gridLocationData to fill this info in
+data GridLocationData = MkGridLocationData IsSpan (These Integer GridArea)
+
 
 instance Val GridLocationData where
-  value (GridLocationData isSpan indexAndOrGridArea) =
+  value (MkGridLocationData isSpan indexAndOrGridArea) =
     if isSpan == Span
     then value (span :: Value, indexAndOrGridArea)
     else value indexAndOrGridArea
 
 pattern GridIndex :: Integer -> GridLocation
-pattern GridIndex n = GridLocation_Data (GridLocationData NoSpan (This n))
+pattern GridIndex n = GridLocationData (MkGridLocationData NoSpan (This n))
 
 instance Num GridLocation where
   -- for index literals
