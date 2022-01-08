@@ -36,7 +36,7 @@ module Clay.Grid
   , gridTemplateAreas
   , GridTemplateAreas
   , GridTemplateNamedAreas
-  , InvalidGridTemplateNamedAreas(..)
+  , InvalidGridTemplate(..)
   -- re exports
   , These(..)
   )
@@ -242,28 +242,29 @@ instance IsList GridTemplateNamedAreas where
   fromList = either throw id . mkGridTemplateNamedAreas
 
 -- | Smart constructor for GridTemplateNamedAreas
-mkGridTemplateNamedAreas :: [[GridArea]] -> Either InvalidGridTemplateNamedAreas GridTemplateNamedAreas
+mkGridTemplateNamedAreas :: [[GridArea]] -> Either InvalidGridTemplate GridTemplateNamedAreas
 mkGridTemplateNamedAreas rows = do
     let
       counts = fmap length (coerce rows :: [[GridArea]])
-      longest = maximum counts
+      shortestRowLength = minimum counts
 
     when (null rows) $
-      Left GridTemplateNamedAreas_Empty
+      Left InvalidGridTemplateEmpty
 
-    when (any (== 0) counts)  $
-      Left GridTemplateNamedAreas_EmptyRow
+    when (shortestRowLength == 0) $
+      Left InvalidGridTemplateEmptyRow
 
-    when (any (/= longest) counts)  $
-      Left GridTemplateNamedAreas_NotRectangular
+    when (any (/= shortestRowLength) counts)  $
+      Left InvalidGridTemplateNotRectangular
 
     Right $ GridTemplateNamedAreas rows
 
--- | Failure modes for the smart constructor
-data InvalidGridTemplateNamedAreas
-  = GridTemplateNamedAreas_Empty
-  | GridTemplateNamedAreas_EmptyRow
-  | GridTemplateNamedAreas_NotRectangular
+
+-- | Possible failure modes for 'mkGridTemplateNamedAreas
+data InvalidGridTemplate
+  = InvalidGridTemplateEmpty
+  | InvalidGridTemplateEmptyRow
+  | InvalidGridTemplateNotRectangular
   deriving (Eq, Show)
 
-instance Exception InvalidGridTemplateNamedAreas
+instance Exception InvalidGridTemplate

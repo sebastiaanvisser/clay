@@ -146,7 +146,7 @@ spec = do
         area_c = "c"
         area_blank = blankGridArea
 
-      GridTemplateNamedAreas_NotRectangular
+      InvalidGridTemplateNotRectangular
         `shouldErrorFromRender`
         gridTemplateAreas
           [ [ area_blank]                 -- length 1
@@ -155,11 +155,11 @@ spec = do
           ]
 
     describe "empty template should error" $ do
-      GridTemplateNamedAreas_Empty
+      InvalidGridTemplateEmpty
         `shouldErrorFromRender`
         gridTemplateAreas []
 
     describe "template with empty row(s) should error" $ do
-      GridTemplateNamedAreas_EmptyRow
+      InvalidGridTemplateEmptyRow
         `shouldErrorFromRender`
         gridTemplateAreas [[], []]
