@@ -177,7 +177,7 @@ instance Unset   GridLocation where unset   = GridLocationKeyword unset
 -- See under syntax:
 -- https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-start
 -- either grid index and/or named grid area is required, but span is optional
--- Note: constuctor is not exported, 'GridIndex, or 'gridLocationData to fill this info in
+-- Note: constructor is not exported, 'GridIndex, or 'gridLocationData to fill this info in
 data GridLocationData = MkGridLocationData IsSpan (These Integer GridArea)
 
 
