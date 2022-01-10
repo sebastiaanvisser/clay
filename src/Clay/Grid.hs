@@ -110,7 +110,7 @@ gridAutoColumns :: GridAutoTrackList a -> Css
 gridAutoColumns = key "grid-auto-columns"
 
 newtype GridAutoTrackList a = GridAutoTrackList Value
-  deriving (Val, Auto, MinContent, MaxContent, Inherit, Initial, Unset)
+  deriving (Val, Auto, MinContent, MaxContent)
 
 mkGridAutoTrackList :: [Size a] -> GridAutoTrackList
 mkGridAutoTrackList = GridAutoTrackList . noCommas
