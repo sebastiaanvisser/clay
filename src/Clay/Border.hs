@@ -27,6 +27,8 @@ module Clay.Border
 , borderBottomLeftRadius, borderBottomRightRadius
 
 -- * Collapsing borders model for a table
+, BorderCollapse
+, separate
 , borderCollapse
 , borderSpacing, borderSpacing2
 )
@@ -37,7 +39,6 @@ import Clay.Stylesheet
 import Clay.Color
 import Clay.Common
 import Clay.Size
-import Clay.Display
 
 newtype Stroke = Stroke Value
   deriving (Val, Other, Inherit, Auto, None)
@@ -158,19 +159,13 @@ borderBottomRightRadius a b = key "border-bottom-right-radius" (a ! b)
 
 -------------------------------------------------------------------------------
 
-{- newtype Collapse = Collapse Value
-  deriving (Val, Initial, Inherit, Other)
+newtype BorderCollapse = BorderCollapse Value
+  deriving (Val, Other, Inherit, Initial, Unset, Collapse)
 
-collapseCollapse, collapseSeparate :: Collapse
+separate :: BorderCollapse
+separate = BorderCollapse "separate"
 
-collapseCollapse = Collapse "collapse"
-collapseSeparate  = Collapse "separate" -}
-
-{-  Due conflict with Visibility collapse
-    Preferred just to add separate to Visibility
-    Because (borderCollapse collapseCollapse) sounds bad -}
-
-borderCollapse :: Visibility -> Css
+borderCollapse :: BorderCollapse -> Css
 borderCollapse = key "border-collapse"
 
 borderSpacing :: Size a -> Css
