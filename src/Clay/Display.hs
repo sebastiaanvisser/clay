@@ -186,7 +186,7 @@ overflowY = key "overflow-y"
 -------------------------------------------------------------------------------
 
 newtype Visibility = Visibility Value
-  deriving (Val, Other, Auto, Inherit, Hidden, Visible)
+  deriving (Val, Other, Inherit, Hidden, Unset, Visible)
 
 separate, collapse :: Visibility
 
