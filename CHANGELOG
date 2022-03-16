@@ -4,7 +4,9 @@ CHANGELOG
     - Drop support for GHC 8.2
     - Added `text-align-last`
     - Fix typo in `stepsStart`
-    Thanks to Vasiliy Yorkin and Florian Grignon.
+    - Added clay-examples
+    - Fix `cubicBezier` and other issues
+    Thanks to Vasiliy Yorkin, Florian Grignon, Nick Saunders, David Fox, Ben Sima, Murakami Kennzo, Owen Shepherd, Anton Gushcha, Temur Saidkhodjaev, Rob Bassi, Alex Sayers, and further contributors.
 
   0.13.3:
     - Improve README
