@@ -15,8 +15,6 @@ jobs:
         id: setup-haskell-build
         with:
           ghc-version: ${{ matrix.ghc }}
-      - name: Cabal update
-        run: cabal update
       - name: Cache Cabal build artifacts
         uses: actions/cache@v2
         with:
