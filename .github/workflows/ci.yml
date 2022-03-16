@@ -1,0 +1,38 @@
+on: [push, pull_request]
+name: build
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        ghc: ['8.8.4','8.10.7','9.0.2']
+        os: [ubuntu-latest]
+    name: Haskell GHC ${{ matrix.ghc }} cabal + stack
+    env:
+      cabal_project_freeze: cabal.project.${{ matrix.ghc }}.freeze
+    steps:
+      - uses: actions/checkout@v2
+      - uses: haskell/actions/setup@v1.2.9
+        id: setup-haskell-build
+        with:
+          ghc-version: ${{ matrix.ghc }}
+      - name: Cabal update
+        run: cabal update
+      - name: Cache Cabal build artifacts
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.setup-haskell-build.outputs.cabal-store }}
+            dist-newstyle
+          key: ${{ runner.os }}-cabal-${{ matrix.ghc }}-${{ hashFiles(env.cabal_project_freeze) }}
+          restore-keys: |
+            ${{ runner.os }}-cabal-${{ matrix.ghc }}
+      - name: Cabal build dependencies
+        run: |
+          cabal build all  --enable-tests --only-dependencies --project-file=cabal.project.${{ matrix.ghc }}
+      - name: Cabal build packages
+        run: |
+          cabal build all --enable-tests --project-file=cabal.project.${{ matrix.ghc }}
+      - name: Cabal test
+        run: |
+          cabal test all --enable-tests --test-show-details=Always --project-file=cabal.project.${{ matrix.ghc }}
