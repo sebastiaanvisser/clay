@@ -1,13 +1,12 @@
-on: [push, pull_request]
+on: [pull_request]
 name: build
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         ghc: ['8.8.4','8.10.7','9.0.2']
-        os: [ubuntu-latest]
-    name: Haskell GHC ${{ matrix.ghc }} cabal + stack
+    name: Haskell GHC ${{ matrix.ghc }} cabal
     env:
       cabal_project_freeze: cabal.project.${{ matrix.ghc }}.freeze
     steps:
