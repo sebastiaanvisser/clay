@@ -31,7 +31,8 @@ Tested-With:
   GHC==8.6.5,
   GHC==8.8.4,
   GHC==8.10.7,
-  GHC==9.0.2
+  GHC==9.0.2,
+  GHC==9.2.2
 
 Source-Repository head
   Type:     git
@@ -75,7 +76,7 @@ Library
     Clay.Transition
 
   Build-Depends:
-    base  >= 4.11 && < 4.16,
+    base  >= 4.11 && < 4.17,
     mtl   >= 1,
     text  >= 0.11
   GHC-Options: -Wall -Wcompat
@@ -87,7 +88,7 @@ Test-Suite Test-Clay
   Build-Tools: hspec-discover
   main-is: Spec.hs
   Build-Depends:
-    base                 >= 4.11  && < 4.16,
+    base                 >= 4.11  && < 4.17,
     mtl                  >= 1,
     text                 >= 0.11,
     hspec                >= 2.2.0,
