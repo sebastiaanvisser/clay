@@ -73,9 +73,9 @@ Library
     Clay.Transition
 
   Build-Depends:
-    base  >= 4.11 && < 5,
-    mtl   >= 1    && < 2.3,
-    text  >= 0.11 && < 1.3
+    base  >= 4.13 && < 4.16,
+    mtl   >= 1,
+    text  >= 0.11
   GHC-Options: -Wall -Wcompat
 
 Test-Suite Test-Clay
@@ -84,9 +84,9 @@ Test-Suite Test-Clay
   Build-Tools: hspec-discover
   main-is: Spec.hs
   Build-Depends:
-    base                 >= 4.11  && < 5,
-    mtl                  >= 1     && < 2.3,
-    text                 >= 0.11  && < 1.3,
-    hspec                >= 2.2.0 && < 2.8,
-    hspec-discover       >= 2.2.0 && < 2.8
+    base                 >= 4.13  && < 4.16,
+    mtl                  >= 1,
+    text                 >= 0.11,
+    hspec                >= 2.2.0,
+    hspec-discover       >= 2.2.0
   GHC-Options: -Wall -Wcompat
