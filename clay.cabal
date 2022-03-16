@@ -20,7 +20,7 @@ Bug-Reports:   http://github.com/sebastiaanvisser/clay/issues
 License:       BSD3
 License-File:  LICENSE
 Category:      Web, Graphics
-Cabal-Version: >= 1.8
+Cabal-Version: >= 1.10
 Build-Type:    Simple
 
 Extra-Source-Files:
@@ -79,6 +79,7 @@ Library
     mtl   >= 1,
     text  >= 0.11
   GHC-Options: -Wall -Wcompat
+  Default-Language: Haskell2010
 
 Test-Suite Test-Clay
   Type: exitcode-stdio-1.0
@@ -92,3 +93,4 @@ Test-Suite Test-Clay
     hspec                >= 2.2.0,
     hspec-discover       >= 2.2.0
   GHC-Options: -Wall -Wcompat
+  Default-Language: Haskell2010
