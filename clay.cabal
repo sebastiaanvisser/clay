@@ -20,7 +20,7 @@ Bug-Reports:   http://github.com/sebastiaanvisser/clay/issues
 License:       BSD3
 License-File:  LICENSE
 Category:      Web, Graphics
-Cabal-Version: >= 1.8
+Cabal-Version: >= 1.10
 Build-Type:    Simple
 
 Extra-Source-Files:
@@ -29,7 +29,9 @@ Extra-Source-Files:
 Tested-With:
   GHC==8.4.4,
   GHC==8.6.5,
-  GHC==8.8.1
+  GHC==8.8.4,
+  GHC==8.10.7,
+  GHC==9.0.2
 
 Source-Repository head
   Type:     git
@@ -73,10 +75,11 @@ Library
     Clay.Transition
 
   Build-Depends:
-    base  >= 4.13 && < 4.16,
+    base  >= 4.11 && < 4.16,
     mtl   >= 1,
     text  >= 0.11
   GHC-Options: -Wall -Wcompat
+  Default-Language: Haskell2010
 
 Test-Suite Test-Clay
   Type: exitcode-stdio-1.0
@@ -84,9 +87,10 @@ Test-Suite Test-Clay
   Build-Tools: hspec-discover
   main-is: Spec.hs
   Build-Depends:
-    base                 >= 4.13  && < 4.16,
+    base                 >= 4.11  && < 4.16,
     mtl                  >= 1,
     text                 >= 0.11,
     hspec                >= 2.2.0,
     hspec-discover       >= 2.2.0
   GHC-Options: -Wall -Wcompat
+  Default-Language: Haskell2010
