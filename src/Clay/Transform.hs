@@ -158,7 +158,7 @@ perspective :: Double -> Transformation
 perspective p = Transformation ("perspective(" <> value p <> ")")
 
 matrix :: Double -> Double -> Double -> Double -> Double -> Double -> Transformation
-matrix u v w x y z = Transformation ("matrix3d(" <> value [ u, v, w, x, y, z ] <> ")")
+matrix u v w x y z = Transformation ("matrix(" <> value [ u, v, w, x, y, z ] <> ")")
 
 matrix3d :: Double -> Double -> Double -> Double
          -> Double -> Double -> Double -> Double
