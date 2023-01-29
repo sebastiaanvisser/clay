@@ -6,8 +6,9 @@ module Clay.Media
 
   all, screen, print
 
--- | The media types which follow were defined in CSS2.1 and Media Queries 3,
--- but they were deprecated in Media Queries 4 and should not be used.
+-- ** Deprecated.
+
+-- | These media types were deprecated by Media Queries 4.
 , aural, braille, handheld, projection, tty, tv, embossed
 
 -- * Geometrical features.
