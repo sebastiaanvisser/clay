@@ -37,6 +37,16 @@ module Clay.Media
 , Resolution
 , dpi
 , dppx
+
+-- * Preference related features.
+
+, prefersColorScheme
+
+-- ** Preference related values.
+
+, ColorScheme
+, light
+, dark
 )
 
 where
@@ -140,3 +150,20 @@ dpi i = Resolution (value (pack (show i) <> "dpi"))
 dppx :: Integer -> Resolution
 dppx i = Resolution (value (pack (show i) <> "dppx"))
 
+-------------------------------------------------------------------------------
+
+-- | Feature detecting whether user prefers light or dark color scheme.
+prefersColorScheme :: ColorScheme -> Feature
+prefersColorScheme = with "prefers-color-scheme"
+
+-- | A color scheme preferred by a user.
+newtype ColorScheme = ColorScheme Value
+  deriving (Val, Other)
+
+-- | User indicates that they prefer a light theme with their interface.
+light :: ColorScheme
+light = ColorScheme (value (pack "light"))
+
+-- | User indicates that they prefer a dark theme with their interface.
+dark :: ColorScheme
+dark = ColorScheme (value (pack "dark"))
