@@ -160,7 +160,8 @@ prefersColorScheme = with "prefers-color-scheme"
 newtype ColorScheme = ColorScheme Value
   deriving (Val, Other)
 
--- | User indicates that they prefer a light theme with their interface.
+-- | User indicates that they prefer a light theme with their interface,
+-- or that they have not indicated a preference.
 light :: ColorScheme
 light = ColorScheme (value (pack "light"))
 
