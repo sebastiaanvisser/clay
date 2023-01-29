@@ -4,8 +4,11 @@ module Clay.Media
 
 -- * Media types.
 
-  aural, braille, handheld, print, projection
-, screen, tty, tv, embossed
+  all, screen, print
+
+-- | The media types which follow were defined in CSS2.1 and Media Queries 3,
+-- but they were deprecated in Media Queries 4 and should not be used.
+, aural, braille, handheld, projection, tty, tv, embossed
 
 -- * Geometrical features.
 
@@ -40,7 +43,7 @@ where
 import Data.Text (Text, pack)
 import Data.Monoid
 
-import Clay.Common
+import Clay.Common hiding (all)
 import Clay.Size
 import Clay.Property
 import Clay.Stylesheet
@@ -49,14 +52,18 @@ import Prelude hiding (all, print)
 
 -------------------------------------------------------------------------------
 
-aural, braille, handheld, print, projection
+all, aural, braille, handheld, print, projection
   , screen, tty, tv, embossed :: MediaType
 
+-- | Suitable for all devices.
+all        = MediaType "all"
 aural      = MediaType "aural"
 braille    = MediaType "braille"
 handheld   = MediaType "handheld"
+-- | Intended primarily for printed material or in a print layout.
 print      = MediaType "print"
 projection = MediaType "projection"
+-- | Intended primarily for screen-based devices.
 screen     = MediaType "screen"
 tty        = MediaType "tty"
 tv         = MediaType "tv"
