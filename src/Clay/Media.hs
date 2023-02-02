@@ -4,8 +4,12 @@ module Clay.Media
 
 -- * Media types.
 
-  aural, braille, handheld, print, projection
-, screen, tty, tv, embossed
+  all, screen, print
+
+-- ** Deprecated.
+
+-- | These media types were deprecated by Media Queries 4.
+, aural, braille, handheld, projection, tty, tv, embossed
 
 -- * Geometrical features.
 
@@ -33,6 +37,16 @@ module Clay.Media
 , Resolution
 , dpi
 , dppx
+
+-- * Preference related features.
+
+, prefersColorScheme
+
+-- ** Preference related values.
+
+, ColorScheme
+, light
+, dark
 )
 
 where
@@ -40,7 +54,7 @@ where
 import Data.Text (Text, pack)
 import Data.Monoid
 
-import Clay.Common
+import Clay.Common hiding (all)
 import Clay.Size
 import Clay.Property
 import Clay.Stylesheet
@@ -49,14 +63,18 @@ import Prelude hiding (all, print)
 
 -------------------------------------------------------------------------------
 
-aural, braille, handheld, print, projection
+all, aural, braille, handheld, print, projection
   , screen, tty, tv, embossed :: MediaType
 
+-- | Suitable for all devices.
+all        = MediaType "all"
 aural      = MediaType "aural"
 braille    = MediaType "braille"
 handheld   = MediaType "handheld"
+-- | Intended primarily for printed material or in a print layout.
 print      = MediaType "print"
 projection = MediaType "projection"
+-- | Intended primarily for screen-based devices.
 screen     = MediaType "screen"
 tty        = MediaType "tty"
 tv         = MediaType "tv"
@@ -132,3 +150,21 @@ dpi i = Resolution (value (pack (show i) <> "dpi"))
 dppx :: Integer -> Resolution
 dppx i = Resolution (value (pack (show i) <> "dppx"))
 
+-------------------------------------------------------------------------------
+
+-- | Feature detecting whether user prefers light or dark color scheme.
+prefersColorScheme :: ColorScheme -> Feature
+prefersColorScheme = with "prefers-color-scheme"
+
+-- | A color scheme preferred by a user.
+newtype ColorScheme = ColorScheme Value
+  deriving (Val, Other)
+
+-- | User indicates that they prefer a light theme with their interface,
+-- or that they have not indicated a preference.
+light :: ColorScheme
+light = ColorScheme (value (pack "light"))
+
+-- | User indicates that they prefer a dark theme with their interface.
+dark :: ColorScheme
+dark = ColorScheme (value (pack "dark"))

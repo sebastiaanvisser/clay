@@ -1,5 +1,9 @@
 CHANGELOG
 
+  Unreleased:
+    - Add `all` media type.
+    - Support `prefers-color-scheme` media feature.
+
   0.14.0:
     - Drop support for GHC 8.2
     - Added `text-align-last`
