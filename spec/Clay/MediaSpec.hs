@@ -49,11 +49,10 @@ spec = do
     "max-device-aspect-ratio: 6/7" `shouldRenderFromFeature` maxDeviceAspectRatio (6, 7)
 
   describe "color features" $ do
-    xdescribe "features must be surrounded by parantheses" $ do
-      "color" `shouldRenderFromFeature` color
-      "monochrome" `shouldRenderFromFeature` monochrome
-      "scan" `shouldRenderFromFeature` scan
-      "grid" `shouldRenderFromFeature` grid
+    "color" `shouldRenderFromFeature` color
+    "monochrome" `shouldRenderFromFeature` monochrome
+    "scan" `shouldRenderFromFeature` scan
+    "grid" `shouldRenderFromFeature` grid
     "min-color: 23" `shouldRenderFromFeature` minColor 23
     "max-color: 25" `shouldRenderFromFeature` maxColor 25
     "color-index: 15" `shouldRenderFromFeature` colorIndex 15
