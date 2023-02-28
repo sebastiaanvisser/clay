@@ -178,10 +178,10 @@ lerp factor startColor boundColor =
 instance Val Color where
   value clr =
     case clr of
-      Rgba r g b 1.0 -> Value $mconcat ["#",  p' r, p' g, p' b]
-      Rgba r g b a   -> Value $mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
-      Hsla h s l 1.0 -> Value $mconcat ["hsl(",  p h, ",", f s, ",", f l,            ")"]
-      Hsla h s l a   -> Value $mconcat ["hsla(", p h, ",", f s, ",", f l, ",", ah a, ")"]
+      Rgba r g b 1.0 -> Value $ mconcat ["#",  p' r, p' g, p' b]
+      Rgba r g b a   -> Value $ mconcat ["rgba(", p r, ",", p g, ",", p b, ",", ah a, ")"]
+      Hsla h s l 1.0 -> Value $ mconcat ["hsl(",  p h, ",", f s, ",", f l,            ")"]
+      Hsla h s l a   -> Value $ mconcat ["hsla(", p h, ",", f s, ",", f l, ",", ah a, ")"]
       Other o        -> o
     where p  = fromString . show
           p' = fromString . printf "%02x"
