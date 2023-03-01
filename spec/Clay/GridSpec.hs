@@ -47,7 +47,7 @@ spec = do
   describe "grid area" $ do
     "{grid-area:3}"
       `shouldRenderFrom`
-      gridArea $ 3
+      gridArea 3
 
     "{grid-area:2 / nav}"
       `shouldRenderFrom`
