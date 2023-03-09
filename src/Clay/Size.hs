@@ -27,12 +27,23 @@ module Clay.Size
 , pc
 , em
 , ex
+, ch
 , pct
 , rem
+, lh
+, rlh
 , vw
 , vh
 , vmin
 , vmax
+, vb
+, vi
+, svw
+, svh
+, lvw
+, lvh
+, dvw
+, dvh
 , fr
 , maxContent
 , minContent
@@ -147,7 +158,7 @@ pt i = SimpleSize (cssDoubleText i <> "pt")
 -- | Size in picas (1pc = 12pt).
 pc i = SimpleSize (cssDoubleText i <> "pc")
 
-em, ex, rem, vw, vh, vmin, vmax, fr :: Double -> Size LengthUnit
+em, ex, ch, rem, lh, rlh, vw, vh, vmin, vmax, vb, vi, svw, svh, lvw, lvh, dvw, dvh, fr :: Double -> Size LengthUnit
 
 -- | Size in em's (computed cssDoubleText of the font-size).
 em i = SimpleSize (cssDoubleText i <> "em")
@@ -155,8 +166,17 @@ em i = SimpleSize (cssDoubleText i <> "em")
 -- | SimpleSize in ex'es (x-height of the first avaliable font).
 ex i = SimpleSize (cssDoubleText i <> "ex")
 
+-- | SimpleSize in ch's (The width of the glyph "0" of the element's font).
+ch i = SimpleSize (cssDoubleText i <> "ch")
+
 -- | SimpleSize in rem's (em's, but always relative to the root element).
 rem i = SimpleSize (cssDoubleText i <> "rem")
+
+-- | SimpleSize in lh's (Line height of the element).
+lh i = SimpleSize (cssDoubleText i <> "lh")
+
+-- | SimpleSize in rlh's (lh's, but always relative to the root element).
+rlh i = SimpleSize (cssDoubleText i <> "rlh")
 
 -- | SimpleSize in vw's (1vw = 1% of viewport width).
 vw i = SimpleSize (cssDoubleText i <> "vw")
@@ -169,6 +189,30 @@ vmin i = SimpleSize (cssDoubleText i <> "vmin")
 
 -- | SimpleSize in vmax's (the larger of vw or vh).
 vmax i = SimpleSize (cssDoubleText i <> "vmax")
+
+-- | SimpleSize in vb's (1vb = 1% of the parent's size in the direction of the root element's block axis).
+vb i = SimpleSize (cssDoubleText i <> "vb")
+
+-- | SimpleSize in vi's (1vi = 1% of the parent's size in the direction of the root element's inline axis).
+vi i = SimpleSize (cssDoubleText i <> "vi")
+
+-- | SimpleSize in svw's (1svw = 1% of the small viewport's width).
+svw i = SimpleSize (cssDoubleText i <> "svw")
+
+-- | SimpleSize in svh's (1svh = 1% of the small viewport's height).
+svh i = SimpleSize (cssDoubleText i <> "svh")
+
+-- | SimpleSize in lvw's (1lvw = 1% of the large viewport's width).
+lvw i = SimpleSize (cssDoubleText i <> "lvw")
+
+-- | SimpleSize in lvh's (1lvh = 1% of the large viewport's height).
+lvh i = SimpleSize (cssDoubleText i <> "lvh")
+
+-- | SimpleSize in dvw's (1dvw = 1% of the dynamic viewport's width).
+dvw i = SimpleSize (cssDoubleText i <> "dvw")
+
+-- | SimpleSize in dvh's (1dvh = 1% of the dynamic viewport's height).
+dvh i = SimpleSize (cssDoubleText i <> "dvh")
 
 -- | 'SimpleSize' in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
 fr i = SimpleSize (cssDoubleText i <> "fr")
