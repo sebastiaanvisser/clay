@@ -33,3 +33,43 @@ spec = do
         textIndent initial
       "{text-indent:unset}" `shouldRenderFrom`
         textIndent unset
+
+  describe "hyphens" $ do
+    "{hyphens:none}" `shouldRenderFrom`
+      hyphens none
+    "{hyphens:manual}" `shouldRenderFrom`
+      hyphens manual
+    "{hyphens:auto}" `shouldRenderFrom`
+      hyphens auto
+    "{hyphens:initial}" `shouldRenderFrom`
+      hyphens initial
+    "{hyphens:inherit}" `shouldRenderFrom`
+      hyphens inherit
+    "{hyphens:unset}" `shouldRenderFrom`
+      hyphens unset
+    "{hyphens:nonsense}" `shouldRenderFrom`
+      hyphens (other "nonsense")
+
+  describe "hyphenate-character" $ do
+    "{hyphenate-character:\"hyphen\"}" `shouldRenderFrom`
+      hyphenateCharacter "hyphen"
+    "{hyphenate-character:\"\\\"quoted\\\"\"}" `shouldRenderFrom`
+      hyphenateCharacter "\"quoted\""
+    "{hyphenate-character:auto}" `shouldRenderFrom`
+      hyphenateCharacter auto
+    "{hyphenate-character:initial}" `shouldRenderFrom`
+      hyphenateCharacter initial
+    "{hyphenate-character:inherit}" `shouldRenderFrom`
+      hyphenateCharacter inherit
+    "{hyphenate-character:unset}" `shouldRenderFrom`
+      hyphenateCharacter unset
+    "{hyphenate-character:nonsense}" `shouldRenderFrom`
+      hyphenateCharacter (other "nonsense")
+
+  describe "hyphenate-limit-chars" $ do
+    "{hyphenate-limit-chars:10 11 12}" `shouldRenderFrom`
+      hyphenateLimitChars 10 11 12
+    "{hyphenate-limit-chars:auto 11 unset}" `shouldRenderFrom`
+      hyphenateLimitChars auto 11 unset
+    "{hyphenate-limit-chars:nonsense initial inherit}" `shouldRenderFrom`
+      hyphenateLimitChars (other "nonsense") initial inherit

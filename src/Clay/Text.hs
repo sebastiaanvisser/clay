@@ -73,14 +73,24 @@ module Clay.Text
 , wordBreak
 , breakAll
 , keepAll
-  
+
 -- * Overflow-wrap (and Word-wrap).
 
 , OverflowWrap
 , overflowWrap
 , wordWrap
 , breakWord
-  
+
+-- * Hyphenation.
+
+, hyphens
+, hyphenateCharacter
+, hyphenateLimitChars
+, manual
+, Hyphens
+, HyphenateCharacter
+, HyphenateLimit
+
 -- * Content.
 
 , Content
@@ -96,7 +106,7 @@ module Clay.Text
 where
 
 import Data.String
-import Data.Text (Text)
+import Data.Text (Text, pack)
 
 import Clay.Background
 import Clay.Border
@@ -305,6 +315,99 @@ overflowEllipsis = TextOverflow "ellipsis"
 
 textOverflow :: TextOverflow -> Css
 textOverflow = key "text-overflow"
+
+-------------------------------------------------------------------------------
+
+-- | Type for values which can be provided to 'hyphens'.
+newtype Hyphens = Hyphens Value
+  deriving (Val, None, Auto, Initial, Inherit, Unset, Other)
+
+-- | Specifies how words should be hyphenated.
+--
+-- Possible values are:
+--
+--  ['none']: No hyphenation.
+--  Words will not be hyphenated even if it is explicitly suggested for a word.
+--
+--  ['manual']: Manual hyphenation.
+--  Specific characters such as @&shy;@ in a word will suggest break points.
+--  This is the default.
+--
+--  ['auto']: Automatic hyphenation.
+--  The browser is free to hyphenate words as it sees fit.
+--  However, explicitly suggested break points will take precedence.
+--
+-- For example,
+--
+-- >>> hyphens auto
+--
+-- The hyphenation rules depend on the language,
+-- which must be specified by the @lang@ attribute.
+--
+-- For reference, see
+-- [@hyphens@](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens).
+hyphens :: Hyphens -> Css
+hyphens = key "hyphens"
+
+-- | Value for 'hyphens' specifying that hyphenation be manual.
+manual :: Hyphens
+manual = Hyphens "manual"
+-- 'manual' feels like it should be a function and type class in Clay.Common,
+-- but @hyphens@ is the only CSS property which uses it as a specified value.
+
+-- | Type for values which can be provided to 'hyphenateCharacter'.
+newtype HyphenateCharacter = HyphenateCharacter Value
+  deriving (Val, Auto, Initial, Inherit, Unset, Other)
+
+-- Allow a 'HyphenateCharacter' value to be specified directly with a string.
+instance IsString HyphenateCharacter where
+  fromString = HyphenateCharacter . Value . Plain . quote . pack
+
+-- | Customizes the character used for hyphenation.
+--
+-- For example,
+--
+-- >>> hyphenateCharacter "~"
+--
+-- For reference, see
+-- [@hyphenate-character@](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphenate-character).
+hyphenateCharacter :: HyphenateCharacter -> Css
+hyphenateCharacter = key "hyphenate-character"
+
+-- | Type for values which can be provded to 'hyphenateLimitChars'.
+newtype HyphenateLimit = HyphenateLimit Value
+  deriving (Val, Auto, Initial, Inherit, Unset, Other)
+
+-- Allow a 'HyphenateLimit' value to be specified directly with a number.
+instance Num HyphenateLimit where
+  fromInteger = HyphenateLimit . value
+  (+) = error "plus not implemented for HyphenateLimit"
+  (*) = error "times not implemented for HyphenateLimit"
+  abs = error "abs not implemented for HyphenateLimit"
+  signum = error "signum not implemented for HyphenateLimit"
+  negate = error "negate not implemented for HyphenateLimit"
+
+-- | Adjusts the minumum number of characters involved in hyphenation.
+--
+-- I.e., specifies the minumum number of characters allowed in a breakable word,
+-- before a break point, and after a break point when hyphenating a word.
+--
+-- For example,
+--
+-- >>> hyphenateLimitChars 14 auto auto
+--
+-- For reference, see
+-- [@hyphenate-limit-chars@](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphenate-limit-chars).
+hyphenateLimitChars
+  -- | Minimum length of a word which can be hyphenated.
+  :: HyphenateLimit
+  -- | Minimum number of characters allowed before a break point.
+  -> HyphenateLimit
+  -- | Minimum number of characters allowed after a break point.
+  -> HyphenateLimit
+  -> Css
+hyphenateLimitChars word before after =
+  key "hyphenate-limit-chars" (word ! before ! after)
 
 -------------------------------------------------------------------------------
 
