@@ -199,57 +199,57 @@ instance ToGridLines2 (String, Integer) where
 data GridLines4
 
     -- | One `grid-line` value.
-  = One OneGridLine
+  = One4 OneGridLine
 
     -- | Two `grid-line` values.
-  | Two TwoGridLines
+  | Two4 TwoGridLines
 
     -- | Three `grid-line` values.
-  | Three ThreeGridLines
+  | Three4 ThreeGridLines
 
     -- | Four `grid-line` values.
-  | Four FourGridLines
+  | Four4 FourGridLines
 
 class ToGridLines4 a where
   -- | Convert the provided type to 'GridLines4'
   -- (one, two, three or four `grid-line` values).
-  toGridLines :: a -> GridLines4
+  toGridLines4 :: a -> GridLines4
 
 instance ToGridLines4 GridLine where
   -- | One `grid-line` value.
-  toGridLines = One . OneGridLine
+  toGridLines4 = One4 . OneGridLine
 
 instance ToGridLines4 OneGridLine where
   -- | One `grid-line` value.
-  toGridLines = One
+  toGridLines4 = One4
 
 instance ToGridLines4 TwoGridLines where
   -- | Two `grid-line` values.
-  toGridLines = Two
+  toGridLines4 = Two4
 
 instance ToGridLines4 ThreeGridLines where
   -- | Three `grid-line` values.
-  toGridLines = Three
+  toGridLines4 = Three4
 
 instance ToGridLines4 FourGridLines where
   -- | Four `grid-line` values.
-  toGridLines = Four
+  toGridLines4 = Four4
 
 instance ToGridLines4 GridLines4 where
   -- | One, two, three or four `grid-line` values.
-  toGridLines = id
+  toGridLines4 = id
 
 instance ToGridLines4 Integer where
   -- | One 'Integer' value.
-  toGridLines = toGridLines . toGridLine
+  toGridLines4 = toGridLines4 . toGridLine
 
 instance ToGridLines4 String where
   -- | One `custom-ident` value.
-  toGridLines = toGridLines . toGridLine
+  toGridLines4 = toGridLines4 . toGridLine
 
 instance ToGridLines4 (String, Integer) where
   -- | One time both a `custom-ident` and 'Integer' values, provided as a pair.
-  toGridLines = toGridLines . toGridLine
+  toGridLines4 = toGridLines4 . toGridLine
 
 -- | One 'GridLine' value.
 newtype OneGridLine = OneGridLine GridLine
@@ -436,10 +436,10 @@ instance Val GridLines2 where
   value (Two2 x) = value x
 
 instance Val GridLines4 where
-  value (One x)   = value x
-  value (Two x)   = value x
-  value (Three x) = value x
-  value (Four x)  = value x
+  value (One4 x)   = value x
+  value (Two4 x)   = value x
+  value (Three4 x) = value x
+  value (Four4 x)  = value x
 
 -- | Private partial function checking a 'GridLine'.
 --
@@ -517,11 +517,11 @@ partialToGridLines2 x = partialGridLine' gridLines
 partialToGridLines4 :: ToGridLines4 a => a -> GridLines4
 partialToGridLines4 x = partialGridLine' gridLines
   where
-    gridLines = toGridLines x
-    partialGridLine' (One gl)   = One (partialCheckOneGridLine gl)
-    partialGridLine' (Two gl)   = Two (partialCheckTwoGridLines gl)
-    partialGridLine' (Three gl) = Three (partialCheckThreeGridLines gl)
-    partialGridLine' (Four gl)  = Four (partialCheckFourGridLines gl)
+    gridLines = toGridLines4 x
+    partialGridLine' (One4 gl)   = One4 (partialCheckOneGridLine gl)
+    partialGridLine' (Two4 gl)   = Two4 (partialCheckTwoGridLines gl)
+    partialGridLine' (Three4 gl) = Three4 (partialCheckThreeGridLines gl)
+    partialGridLine' (Four4 gl)  = Four4 (partialCheckFourGridLines gl)
 
 -- | Private utility function to show 'Text' instead of 'String'.
 tshow :: Show a => a -> Text
