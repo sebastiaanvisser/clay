@@ -197,12 +197,16 @@ instance ToGridLines2 (String, Integer) where
 -- NOTE: although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax using the 'ToGridLines4' instances.
 data GridLines4
+
     -- | One `grid-line` value.
   = One OneGridLine
+
     -- | Two `grid-line` values.
   | Two TwoGridLines
+
     -- | Three `grid-line` values.
   | Three ThreeGridLines
+
     -- | Four `grid-line` values.
   | Four FourGridLines
 
@@ -265,7 +269,8 @@ data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
 -- One to four `grid-line` values can be specified.
 -- Grid-line values must be separated by a '(//)' operator.
 --
--- WARNING: this function is partial. TODO report cases.
+-- WARNING: this function is partial.
+--
 --
 -- ==== __Examples__
 --
@@ -275,26 +280,26 @@ data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
 --
 -- >>> gridArea $ ("nav", 2) // span_ 3 // 4
 gridArea :: ToGridLines4 a => a -> Css
-gridArea x = key "grid-area" (toGridLines x)
+gridArea x = key "grid-area" (partialToGridLines4 x)
 
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid column.
 --
 -- TODO write doc.
 gridColumn :: ToGridLines2 a => a -> Css
-gridColumn x = key "grid-column" (toGridLines2 x)
+gridColumn x = key "grid-column" (partialToGridLines2 x)
 
 -- | Property specifies a grid item's start position within the grid column.
 --
 -- TODO: write doc.
 gridColumnStart :: ToGridLine a => a -> Css
-gridColumnStart x = key "grid-column-start" (toGridLine x)
+gridColumnStart x = key "grid-column-start" (partialToGridLine x)
 
 -- | Property specifies a grid item's end position within the grid column.
 --
 -- TODO: write doc.
 gridColumnEnd :: ToGridLine a => a -> Css
-gridColumnEnd x = key "grid-column-end" (toGridLine x)
+gridColumnEnd x = key "grid-column-end" (partialToGridLine x)
 
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid row.
@@ -302,7 +307,7 @@ gridColumnEnd x = key "grid-column-end" (toGridLine x)
 -- One or two `grid-line` values can be specified.
 -- `grid-line` values must be separated by a '(//)' operator.
 --
--- WARNING: this function is partial. TODO provide cases.
+-- WARNING: this function is partial, see above documentation.
 --
 -- ==== __Examples__
 --
@@ -310,12 +315,12 @@ gridColumnEnd x = key "grid-column-end" (toGridLine x)
 --
 -- >>> gridRow $ 3 // span_ 2
 gridRow :: ToGridLines2 a => a -> Css
-gridRow x = key "grid-row" (toGridLines2 x)
+gridRow x = key "grid-row" (partialToGridLines2 x)
 
 -- | Property specifies a grid item's start position within the grid row.
 --
--- WARNING: this function is partial, the following are invalid:
---
+-- WARNING: this function is partial, see above documentation.
+-- TODO: move this up in a global comment.
 -- - an 'Integer' value of 0
 -- - a pair with an 'Integer' component of value 0
 -- - a 'span_' function provided with an 'Integer' value of 0 or negative
@@ -327,13 +332,7 @@ gridRowStart x = key "grid-row-start" (partialToGridLine x)
 
 -- | Property specifies a grid item's end position within the grid row.
 --
--- WARNING: this function is partial, the following arguments are invalid:
--- - an 'Integer' value of 0
--- - a pair with an 'Integer' component of value 0
--- - a 'span_' function provided with an 'Integer' value of 0 or negative
--- - a 'span_' function provided with a pair value with
--- an 'Integer' component of 0 or negative
--- - a 'GridLine' value representing one of the above.
+-- WARNING: this function is partial, see above documentation.
 gridRowEnd :: ToGridLine a => a -> Css
 gridRowEnd x = key "grid-row-end" (partialToGridLine x)
 
@@ -442,21 +441,87 @@ instance Val GridLines4 where
   value (Three x) = value x
   value (Four x)  = value x
 
--- | Private partial function converting its argument to 'GridLine'.
+-- | Private partial function checking a 'GridLine'.
 --
 -- An error is raised when:
 -- - An 'Integer' value of 0 is provided.
 -- - A negative 'Integer' value is provided for a 'Span' constructor.
-partialToGridLine :: ToGridLine a => a -> GridLine
-partialToGridLine x = case toGridLine x of
+--
+-- Otherwise, the initially provided 'GridLine' value is returned.
+partialCheckGridLine :: GridLine -> GridLine
+partialCheckGridLine gridLine = case gridLine of
   Coordinate 0            -> errorValue 0
   CustomIndent _ (Just 0) -> errorValue 0
   s@(Span _ (Just n))     -> if n < 1
                              then errorValue n
                              else s
-  gridLine                -> gridLine
+  _                       -> gridLine
   where
     errorValue n = error ("Value " ++ show n ++ " is invalid")
+
+-- | Private partial function checking 'OneGridLine'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialCheckOneGridLine :: OneGridLine -> OneGridLine
+partialCheckOneGridLine (OneGridLine gridLine) =
+  OneGridLine (partialCheckGridLine gridLine)
+
+-- | Private partial function checking 'TwoGridLines'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialCheckTwoGridLines :: TwoGridLines -> TwoGridLines
+partialCheckTwoGridLines (TwoGridLines gridLine1 gridLine2) =
+  TwoGridLines (partialCheckGridLine gridLine1) (partialCheckGridLine gridLine2)
+
+-- | Private partial function checking 'ThreeGridLines'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialCheckThreeGridLines :: ThreeGridLines -> ThreeGridLines
+partialCheckThreeGridLines (ThreeGridLines gridLine1 gridLine2 gridLine3) =
+  ThreeGridLines
+    (partialCheckGridLine gridLine1)
+    (partialCheckGridLine gridLine2)
+    (partialCheckGridLine gridLine3)
+
+-- | Private partial function checking 'FourGridLines'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialCheckFourGridLines :: FourGridLines -> FourGridLines
+partialCheckFourGridLines
+  (FourGridLines gridLine1 gridLine2 gridLine3 gridLine4) =
+    FourGridLines
+      (partialCheckGridLine gridLine1)
+      (partialCheckGridLine gridLine2)
+      (partialCheckGridLine gridLine3)
+      (partialCheckGridLine gridLine4)
+
+-- | Private partial function converting its argument to 'GridLine'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialToGridLine :: ToGridLine a => a -> GridLine
+partialToGridLine = partialCheckGridLine . toGridLine
+
+-- | Private partial function converting its argument to 'GridLines2'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialToGridLines2 :: ToGridLines2 a => a -> GridLines2
+partialToGridLines2 x = partialGridLine' gridLines
+  where
+    gridLines = toGridLines2 x
+    partialGridLine' (One2 gl) = One2 (partialCheckOneGridLine gl)
+    partialGridLine' (Two2 gl) = Two2 (partialCheckTwoGridLines gl)
+
+-- | Private partial function converting its argument to 'GridLines4'.
+--
+-- An error is raised if an invalid value is found, see 'partialCheckGridLine'.
+partialToGridLines4 :: ToGridLines4 a => a -> GridLines4
+partialToGridLines4 x = partialGridLine' gridLines
+  where
+    gridLines = toGridLines x
+    partialGridLine' (One gl)   = One (partialCheckOneGridLine gl)
+    partialGridLine' (Two gl)   = Two (partialCheckTwoGridLines gl)
+    partialGridLine' (Three gl) = Three (partialCheckThreeGridLines gl)
+    partialGridLine' (Four gl)  = Four (partialCheckFourGridLines gl)
 
 -- | Private utility function to show 'Text' instead of 'String'.
 tshow :: Show a => a -> Text
