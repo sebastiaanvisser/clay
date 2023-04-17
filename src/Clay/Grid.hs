@@ -5,52 +5,17 @@
 {-# OPTIONS_GHC -Wno-type-defaults #-}
 
 -- | Partial implementation of <https://alligator.io/css/css-grid-layout-grid-areas grid area CSS API>.
---
--- For instance, you want to generate the following CSS:
---
--- @
--- .grid1 {
---   display: grid;
---   width: max-content;
--- }
---
--- .grid3 {
---   display: grid;
---   width: max-content;
--- }
---
--- \@media (min-width: 40.0rem) {
---   .grid3 {
---     display: grid;
---     grid-template-columns: 1fr 1fr 1fr;
---     grid-gap: 1rem;
---     width: max-content;
---   }
--- }
--- @
---
--- The corresponding clay code:
---
--- @
---  ".grid1" ? do
---    display grid
---    width maxContent
---  ".grid3" ? do
---    display grid
---    width maxContent
---  query M.screen [M.minWidth (rem 40)] $ ".grid3" ? do
---    display grid
---    gridTemplateColumns [fr 1, fr 1, fr 1]
---    gridGap $ rem 1
---    width maxContent
--- @
 module Clay.Grid
 (
     -- * Grid
+    --
+    -- $gridIntro
     gridGap
   , gridTemplateColumns
 
     -- * Size and location
+    --
+    -- $sizeAndLocationIntro
 
     -- ** Data types and type classes
   , GridLine (..)
@@ -93,6 +58,48 @@ import           Data.Text (Text)
 import qualified Data.Text as T
 import           Prelude
 
+-- $gridIntro
+-- @grid-gap@ and @grid-template@ CSS properties.
+--
+-- For instance, you want to generate the following CSS:
+--
+-- @
+-- .grid1 {
+--   display: grid;
+--   width: max-content;
+-- }
+--
+-- .grid3 {
+--   display: grid;
+--   width: max-content;
+-- }
+--
+-- \@media (min-width: 40.0rem) {
+--   .grid3 {
+--     display: grid;
+--     grid-template-columns: 1fr 1fr 1fr;
+--     grid-gap: 1rem;
+--     width: max-content;
+--   }
+-- }
+-- @
+--
+-- The corresponding clay code:
+--
+-- @
+--  ".grid1" ? do
+--    display grid
+--    width maxContent
+--  ".grid3" ? do
+--    display grid
+--    width maxContent
+--  query M.screen [M.minWidth (rem 40)] $ ".grid3" ? do
+--    display grid
+--    gridTemplateColumns [fr 1, fr 1, fr 1]
+--    gridGap $ rem 1
+--    width maxContent
+-- @
+
 -- | Property sets the gaps (gutters) between rows and columns.
 gridGap :: Size a -> Css
 gridGap = key "grid-gap"
@@ -101,27 +108,67 @@ gridGap = key "grid-gap"
 gridTemplateColumns :: [Size a] -> Css
 gridTemplateColumns = key "grid-template-columns" . noCommas
 
+-- $sizeAndLocationIntro
+--
+-- == CSS documentation
+-- The below functions are based on
+-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS)
+-- CSS documentation.
+--
+-- #pragma#
+--
+-- == Pragma
+-- If you want to avoid specifying the types of the arguments, enable
+-- the @ExtendedDefaultRules@ GHC language pragma as well as the
+-- @-Wno-type-defaults@ GHC option to avoid compilation warnings.
+--
+-- @
+-- {-# LANGUAGE ExtendedDefaultRules #-}
+-- {-# OPTIONS_GHC -Wno-type-defaults #-}
+-- @
+--
+-- With the above enabled, you can for example write:
+--
+-- >> gridRowStart 2
+--
+-- >> gridRowStart "somegridarea"
+--
+-- If you do not enable those, then you must write:
+--
+-- >> gridRowStart (2 :: Integer)
+--
+-- >> gridRowStart ("somegridarea" :: String)
+--
+-- If you decide to enable the above, it is advisable to have your Clay
+-- CSS code in its own module, so the behaviour of the rest of your code
+-- is not affected.
+--
+-- == Examples
+-- Examples are provided through the documentation for the various functions.
+-- Further examples can be found in the source code of the test suite
+-- in the GridSpec.hs module.
+
 -- | A @grid-line@ value.
 --
 -- A @grid-line@ value specifies a size and location in a grid.
 --
--- NOTE: although you can use the below constructors, it's also possible
+-- __NOTE:__ although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax taking advantage of the 'ToGridLine' instances.
 data GridLine
 
   -- | 'Integer' value.
   --
-  -- NOTE: 'Integer' value of 0 is invalid.
+  -- __NOTE:__ 'Integer' value of 0 is invalid.
   = Coordinate Integer
 
   -- | @custom-ident@ with an optional 'Integer' value.
   --
-  -- NOTE: 'Integer' value of 0 is invalid.
+  -- __NOTE:__ 'Integer' value of 0 is invalid.
   | CustomIndent String (Maybe Integer)
 
   -- | @span@ CSS keyword with an optional @custom-ident@ and/or 'Integer' value.
   --
-  -- NOTE: negative 'Integer' or 0 are invalid.
+  -- __NOTE:__ negative 'Integer' or 0 are invalid.
   | Span (Maybe String) (Maybe Integer)
 
   -- | @auto@ CSS keyword.
@@ -145,7 +192,7 @@ instance ToGridLine GridLine where
   toGridLine = id
 
 instance ToGridLine Integer where
-  -- | NOTE: 'Integer' value of 0 is invalid.
+  -- | __NOTE:__ 'Integer' value of 0 is invalid.
   toGridLine = Coordinate
 
 -- | @custom-ident@ value.
@@ -154,13 +201,13 @@ instance ToGridLine String where
 
 -- | Both @custom-ident@ and `Integer` values, provided as a pair.
 --
--- NOTE: 'Integer' value of 0 is invalid.
+-- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLine (String, Integer) where
   toGridLine (x, y) = CustomIndent x (Just y)
 
 -- | One or two @grid-line@ values.
 --
--- NOTE: although you can use the below constructors, it's also possible
+-- __NOTE:__ although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax using the 'ToGridLines2' instances.
 data GridLines2
     -- | One @grid-line@ value.
@@ -191,7 +238,7 @@ instance ToGridLines2 GridLines2 where
 
 -- | One 'Integer' value.
 --
--- NOTE: 'Integer' value of 0 is invalid.
+-- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLines2 Integer where
   toGridLines2 = toGridLines2 . toGridLine
 
@@ -201,13 +248,13 @@ instance ToGridLines2 String where
 
 -- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
 --
--- NOTE: 'Integer' value of 0 is invalid.
+-- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLines2 (String, Integer) where
   toGridLines2 = toGridLines2 . toGridLine
 
 -- | One, two, three or four @grid-line@ values.
 --
--- NOTE: although you can use the below constructors, it's also possible
+-- __NOTE:__ although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax using the 'ToGridLines4' instances.
 data GridLines4
 
@@ -278,7 +325,7 @@ data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
 
 -- $invalidValues
 --
--- #Partial
+-- #partial#
 -- The below functions are partial. They will raise an error if
 -- provided with a @grid-line@ value which is:
 --
@@ -294,34 +341,78 @@ data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
 -- One to four @grid-line@ values can be specified.
 -- Grid-line values must be separated by a '(//)' operator.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
 --
 -- ==== __Examples__
 --
--- >>> gridArea 3
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
 --
--- >>> gridArea2 $ 2 // "nav"
+-- > gridArea (auto :: GridLine)
 --
--- >>> gridArea $ ("nav", 2) // span_ 3 // 4
+-- > gridArea "somegridarea"
+--
+-- > gridArea $ ("somegridarea", 4) // ("someothergridarea", 2)
+--
+-- > gridArea $ 1 // 3 // 4
 gridArea :: ToGridLines4 a => a -> Css
 gridArea x = key "grid-area" (partialToGridLines4 x)
 
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid column.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
+--
+-- ==== __Examples__
+--
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
+--
+-- > gridColumn (auto :: GridLine)
+--
+-- > gridColumn $ span_ 3
+--
+-- > gridColumn $ span_ ("somegridarea", 5)
+--
+-- > gridColumn $ span_ 3 // 6
 gridColumn :: ToGridLines2 a => a -> Css
 gridColumn x = key "grid-column" (partialToGridLines2 x)
 
 -- | Property specifies a grid item's start position within the grid column.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
+--
+-- ==== __Examples__
+--
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
+--
+-- > gridColumnStart (inherit :: GridLine)
+--
+-- > gridColumnStart 2
+--
+-- > gridColumnStart ("somegridarea", 4)
+--
+-- > gridColumnStart $ span_ ("somegridarea", 5)
 gridColumnStart :: ToGridLine a => a -> Css
 gridColumnStart x = key "grid-column-start" (partialToGridLine x)
 
 -- | Property specifies a grid item's end position within the grid column.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
+--
+-- ==== __Examples__
+--
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
+--
+-- > gridColumnEnd (initial :: GridLine)
+--
+-- > gridColumnEnd 2
+--
+-- > gridColumnEnd "somegridarea"
+--
+-- > gridColumnEnd $ span_ "somegridarea"
 gridColumnEnd :: ToGridLine a => a -> Css
 gridColumnEnd x = key "grid-column-end" (partialToGridLine x)
 
@@ -331,25 +422,58 @@ gridColumnEnd x = key "grid-column-end" (partialToGridLine x)
 -- One or two @grid-line@ values can be specified.
 -- @grid-line@ values must be separated by a '(//)' operator.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
 --
 -- ==== __Examples__
 --
--- >>> gridRow "nav"
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
 --
--- >>> gridRow $ 3 // span_ 2
+-- > gridRow (unset :: GridLine)
+--
+-- > gridRow $ span_ 3
+--
+-- > gridRow $ span_ 3 // 6
+--
+-- > gridRow $ span_ ("somegridarea", 5) // span_ 2
 gridRow :: ToGridLines2 a => a -> Css
 gridRow x = key "grid-row" (partialToGridLines2 x)
 
 -- | Property specifies a grid item's start position within the grid row.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
+--
+-- ==== __Examples__
+--
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
+--
+-- > gridRowStart (initial :: GridLine)
+--
+-- > gridRowStart (-2)
+--
+-- > gridRowStart $ span_ "somegridarea"
+--
+-- > gridRowStart "somegridarea"
 gridRowStart :: ToGridLine a => a -> Css
 gridRowStart x = key "grid-row-start" (partialToGridLine x)
 
 -- | Property specifies a grid item's end position within the grid row.
 --
--- WARNING: this function is partial. See above "Clay.Grid#Partial".
+-- __WARNING:__ this function is partial. See above "Clay.Grid#partial".
+--
+-- ==== __Examples__
+--
+-- The below examples assume that the @ExtendedDefaultRules@ GHC language
+-- pragma is enabled. See above "Clay.Grid#pragma".
+--
+-- > gridRowEnd (auto :: GridLine)
+--
+-- > gridRowEnd (-2)
+--
+-- > gridRowEnd ("somegridarea", 4)
+--
+-- > gridRowEnd $ span_ 3
 gridRowEnd :: ToGridLine a => a -> Css
 gridRowEnd x = key "grid-row-end" (partialToGridLine x)
 
@@ -383,7 +507,7 @@ class ToSpan a where
 
 -- | Contributes the nth grid line to the grid item's placement.
 --
--- NOTE: negative 'Integer' or 0 values are invalid.
+-- __NOTE:__ negative 'Integer' or 0 values are invalid.
 instance ToSpan Integer where
   span_ x = Span Nothing (Just x)
 
@@ -393,7 +517,7 @@ instance ToSpan String where
 
 -- | Nth lines from the provided name are counted.
 --
--- NOTE: negative 'Integer' or 0 values are invalid.
+-- __NOTE:__ negative 'Integer' or 0 values are invalid.
 instance ToSpan (String, Integer) where
   span_ (x, y) = Span (Just x) (Just y)
 
