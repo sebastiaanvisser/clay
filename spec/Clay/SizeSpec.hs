@@ -13,7 +13,7 @@ import Clay.Stylesheet
 import Test.Hspec
 import Data.Text
 import Data.Text.Lazy (toStrict)
-import Data.List
+import Data.List (sort)
 
 sizeRepr :: Size a -> Text
 sizeRepr = plain . unValue . value
