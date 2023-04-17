@@ -55,8 +55,22 @@ module Clay.Grid
     -- ** Data types and type classes
   , GridLine (..)
   , ToGridLine
+  , toGridLine
+  , GridLines2 (..)
+  , ToGridLines2
+  , toGridLines2
+  , GridLines4 (..)
+  , ToGridLines4
+  , toGridLines4
+  , OneGridLine
+  , TwoGridLines
+  , ThreeGridLines
+  , FourGridLines
+  , ToSpan
 
     -- ** Style properties
+    --
+    -- $invalidValues
   , gridArea
   , gridColumn
   , gridColumnStart
@@ -77,7 +91,7 @@ import           Clay.Size (Size)
 import           Clay.Stylesheet (Css, key)
 import           Data.Text (Text)
 import qualified Data.Text as T
-import           Prelude hiding (span)
+import           Prelude
 
 -- | Property sets the gaps (gutters) between rows and columns.
 gridGap :: Size a -> Css
@@ -87,10 +101,9 @@ gridGap = key "grid-gap"
 gridTemplateColumns :: [Size a] -> Css
 gridTemplateColumns = key "grid-template-columns" . noCommas
 
--- | A `grid-line` value.
+-- | A @grid-line@ value.
 --
--- A grid-line value specifies a size and location in a grid.
--- the following are invalid:
+-- A @grid-line@ value specifies a size and location in a grid.
 --
 -- NOTE: although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax taking advantage of the 'ToGridLine' instances.
@@ -101,26 +114,26 @@ data GridLine
   -- NOTE: 'Integer' value of 0 is invalid.
   = Coordinate Integer
 
-  -- | `custom-ident` with an optional 'Integer' value.
+  -- | @custom-ident@ with an optional 'Integer' value.
   --
   -- NOTE: 'Integer' value of 0 is invalid.
   | CustomIndent String (Maybe Integer)
 
-  -- | `span` CSS keyword with an optional `custom-ident` and/or 'Integer' value.
+  -- | @span@ CSS keyword with an optional @custom-ident@ and/or 'Integer' value.
   --
   -- NOTE: negative 'Integer' or 0 are invalid.
   | Span (Maybe String) (Maybe Integer)
 
-  -- | `auto` CSS keyword.
+  -- | @auto@ CSS keyword.
   | Auto
 
-  -- | `inherit` CSS keyword.
+  -- | @inherit@ CSS keyword.
   | Inherit
 
-  -- | `initial` CSS keyword.
+  -- | @initial@ CSS keyword.
   | Initial
 
-  -- | `unset` CSS keyword.
+  -- | @unset@ CSS keyword.
   | Unset
   deriving (Eq, Show)
 
@@ -135,120 +148,120 @@ instance ToGridLine Integer where
   -- | NOTE: 'Integer' value of 0 is invalid.
   toGridLine = Coordinate
 
--- | `custom-ident` value.
+-- | @custom-ident@ value.
 instance ToGridLine String where
   toGridLine x = CustomIndent x Nothing
 
--- | Both `custom-ident` and `Integer` values, provided as a pair.
+-- | Both @custom-ident@ and `Integer` values, provided as a pair.
 --
 -- NOTE: 'Integer' value of 0 is invalid.
 instance ToGridLine (String, Integer) where
   toGridLine (x, y) = CustomIndent x (Just y)
 
--- | One or two `grid-line` values.
+-- | One or two @grid-line@ values.
 --
 -- NOTE: although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax using the 'ToGridLines2' instances.
 data GridLines2
-    -- | One `grid-line` value.
+    -- | One @grid-line@ value.
   = One2 OneGridLine
-    -- | Two `grid-line` values.
+    -- | Two @grid-line@ values.
   | Two2 TwoGridLines
 
 class ToGridLines2 a where
 
-  -- | Convert the provided type to 'GridLines2' (one or two `grid-line` values).
+  -- | Convert the provided type to 'GridLines2' (one or two @grid-line@ values).
   toGridLines2 :: a -> GridLines2
 
+-- | One @grid-line@ value.
 instance ToGridLines2 GridLine where
-  -- | One `grid-line` value.
   toGridLines2 = One2 . OneGridLine
 
+-- | One @grid-line@ value.
 instance ToGridLines2 OneGridLine where
-  -- | One `grid-line` value.
   toGridLines2 = One2
 
+-- | Two @grid-line@ values.
 instance ToGridLines2 TwoGridLines where
-  -- | Two `grid-line` values.
   toGridLines2 = Two2
 
+-- | One or two @grid-line@ values.
 instance ToGridLines2 GridLines2 where
-  -- | One or two `grid-line` values.
   toGridLines2 = id
 
+-- | One 'Integer' value.
+--
+-- NOTE: 'Integer' value of 0 is invalid.
 instance ToGridLines2 Integer where
-  -- | One 'Integer' value.
-  --
-  -- NOTE: 'Integer' value of 0 is invalid.
   toGridLines2 = toGridLines2 . toGridLine
 
+-- | One @custom-ident@ value.
 instance ToGridLines2 String where
-  -- | One `custom-ident` value.
   toGridLines2 = toGridLines2 . toGridLine
 
+-- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
+--
+-- NOTE: 'Integer' value of 0 is invalid.
 instance ToGridLines2 (String, Integer) where
-  -- | One time both a `custom-ident` and 'Integer' values, provided as a pair.
-  --
-  -- NOTE: 'Integer' value of 0 is invalid.
   toGridLines2 = toGridLines2 . toGridLine
 
--- | One, two, three or four `grid-line` values.
+-- | One, two, three or four @grid-line@ values.
 --
 -- NOTE: although you can use the below constructors, it's also possible
 -- to use a closer CSS syntax using the 'ToGridLines4' instances.
 data GridLines4
 
-    -- | One `grid-line` value.
+    -- | One @grid-line@ value.
   = One4 OneGridLine
 
-    -- | Two `grid-line` values.
+    -- | Two @grid-line@ values.
   | Two4 TwoGridLines
 
-    -- | Three `grid-line` values.
+    -- | Three @grid-line@ values.
   | Three4 ThreeGridLines
 
-    -- | Four `grid-line` values.
+    -- | Four @grid-line@ values.
   | Four4 FourGridLines
 
 class ToGridLines4 a where
   -- | Convert the provided type to 'GridLines4'
-  -- (one, two, three or four `grid-line` values).
+  -- (one, two, three or four @grid-line@ values).
   toGridLines4 :: a -> GridLines4
 
+-- | One @grid-line@ value.
 instance ToGridLines4 GridLine where
-  -- | One `grid-line` value.
   toGridLines4 = One4 . OneGridLine
 
+-- | One @grid-line@ value.
 instance ToGridLines4 OneGridLine where
-  -- | One `grid-line` value.
   toGridLines4 = One4
 
+-- | Two @grid-line@ values.
 instance ToGridLines4 TwoGridLines where
-  -- | Two `grid-line` values.
   toGridLines4 = Two4
 
+-- | Three @grid-line@ values.
 instance ToGridLines4 ThreeGridLines where
-  -- | Three `grid-line` values.
   toGridLines4 = Three4
 
+-- | Four @grid-line@ values.
 instance ToGridLines4 FourGridLines where
-  -- | Four `grid-line` values.
   toGridLines4 = Four4
 
+-- | One, two, three or four @grid-line@ values.
 instance ToGridLines4 GridLines4 where
-  -- | One, two, three or four `grid-line` values.
   toGridLines4 = id
 
+-- | One 'Integer' value.
 instance ToGridLines4 Integer where
-  -- | One 'Integer' value.
   toGridLines4 = toGridLines4 . toGridLine
 
+-- | One @custom-ident@ value.
 instance ToGridLines4 String where
-  -- | One `custom-ident` value.
   toGridLines4 = toGridLines4 . toGridLine
 
+-- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
 instance ToGridLines4 (String, Integer) where
-  -- | One time both a `custom-ident` and 'Integer' values, provided as a pair.
   toGridLines4 = toGridLines4 . toGridLine
 
 -- | One 'GridLine' value.
@@ -263,14 +276,25 @@ data ThreeGridLines = ThreeGridLines GridLine GridLine GridLine
 -- | Four 'GridLine' values.
 data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
 
+-- $invalidValues
+--
+-- #Partial
+-- The below functions are partial. They will raise an error if
+-- provided with a @grid-line@ value which is:
+--
+-- * an 'Integer' value of 0
+-- * a pair with an 'Integer' component of value 0
+-- * a 'span_' function provided with an 'Integer' value of 0 or negative
+-- * a 'span_' function provided with a pair value with
+-- an 'Integer' component of 0 or negative.
+
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid.
 --
--- One to four `grid-line` values can be specified.
+-- One to four @grid-line@ values can be specified.
 -- Grid-line values must be separated by a '(//)' operator.
 --
--- WARNING: this function is partial.
---
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 --
 -- ==== __Examples__
 --
@@ -285,29 +309,29 @@ gridArea x = key "grid-area" (partialToGridLines4 x)
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid column.
 --
--- TODO write doc.
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 gridColumn :: ToGridLines2 a => a -> Css
 gridColumn x = key "grid-column" (partialToGridLines2 x)
 
 -- | Property specifies a grid item's start position within the grid column.
 --
--- TODO: write doc.
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 gridColumnStart :: ToGridLine a => a -> Css
 gridColumnStart x = key "grid-column-start" (partialToGridLine x)
 
 -- | Property specifies a grid item's end position within the grid column.
 --
--- TODO: write doc.
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 gridColumnEnd :: ToGridLine a => a -> Css
 gridColumnEnd x = key "grid-column-end" (partialToGridLine x)
 
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid row.
 --
--- One or two `grid-line` values can be specified.
--- `grid-line` values must be separated by a '(//)' operator.
+-- One or two @grid-line@ values can be specified.
+-- @grid-line@ values must be separated by a '(//)' operator.
 --
--- WARNING: this function is partial, see above documentation.
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 --
 -- ==== __Examples__
 --
@@ -319,26 +343,19 @@ gridRow x = key "grid-row" (partialToGridLines2 x)
 
 -- | Property specifies a grid item's start position within the grid row.
 --
--- WARNING: this function is partial, see above documentation.
--- TODO: move this up in a global comment.
--- - an 'Integer' value of 0
--- - a pair with an 'Integer' component of value 0
--- - a 'span_' function provided with an 'Integer' value of 0 or negative
--- - a 'span_' function provided with a pair value with
--- an 'Integer' component of 0 or negative.
--- - a 'GridLine' value representing one of the above.
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 gridRowStart :: ToGridLine a => a -> Css
 gridRowStart x = key "grid-row-start" (partialToGridLine x)
 
 -- | Property specifies a grid item's end position within the grid row.
 --
--- WARNING: this function is partial, see above documentation.
+-- WARNING: this function is partial. See above "Clay.Grid#Partial".
 gridRowEnd :: ToGridLine a => a -> Css
 gridRowEnd x = key "grid-row-end" (partialToGridLine x)
 
 class Slash a r | a -> r where
   -- | `/` CSS operator.
-  -- Separates `grid-line` values.
+  -- Separates @grid-line@ values.
   (//) :: ToGridLine b => a -> b -> r
 
 instance Slash GridLine TwoGridLines where
@@ -361,26 +378,23 @@ instance Slash ThreeGridLines FourGridLines where
 
 class ToSpan a where
 
-  -- | Contributes to the grid item's placement.
+  -- | @span@ CSS keyword, contributes to the grid item's placement.
   span_ :: a -> GridLine
 
+-- | Contributes the nth grid line to the grid item's placement.
+--
+-- NOTE: negative 'Integer' or 0 values are invalid.
 instance ToSpan Integer where
-
-  -- | Contributes the nth grid line to the grid item's placement.
-  --
-  -- NOTE: negative 'Integer' or 0 values are invalid.
   span_ x = Span Nothing (Just x)
 
+-- | One line from the provided name is counted.
 instance ToSpan String where
-
-  -- | One line from the provided name is counted.
   span_ x = Span (Just x) Nothing
 
+-- | Nth lines from the provided name are counted.
+--
+-- NOTE: negative 'Integer' or 0 values are invalid.
 instance ToSpan (String, Integer) where
-
-  -- | Nth lines from the provided name are counted.
-  --
-  -- NOTE: negative 'Integer' or 0 values are invalid.
   span_ (x, y) = Span (Just x) (Just y)
 
 -- | Keyword indicating that the property contributes nothing to the grid item's
