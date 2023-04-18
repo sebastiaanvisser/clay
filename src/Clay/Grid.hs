@@ -31,6 +31,7 @@ module Clay.Grid
   , TwoGridLines
   , ThreeGridLines
   , FourGridLines
+  , CustomIdentGrid
   , ToSpan
 
     -- ** Style properties
@@ -175,12 +176,12 @@ data GridLine
   -- | @custom-ident@ with an optional 'Integer' value.
   --
   -- __NOTE:__ 'Integer' value of 0 is invalid.
-  | CustomIndent String (Maybe Integer)
+  | GridLineCustomIdent CustomIdentGrid (Maybe Integer)
 
   -- | @span@ CSS keyword with an optional @custom-ident@ and/or 'Integer' value.
   --
   -- __NOTE:__ negative 'Integer' or 0 are invalid.
-  | Span (Maybe String) (Maybe Integer)
+  | Span (Maybe CustomIdentGrid) (Maybe Integer)
 
   -- | @auto@ CSS keyword.
   | Auto
@@ -207,14 +208,24 @@ instance ToGridLine Integer where
   toGridLine = Coordinate
 
 -- | @custom-ident@ value.
+instance ToGridLine CustomIdentGrid where
+  toGridLine x = GridLineCustomIdent x Nothing
+
+-- | @custom-ident@ value.
 instance ToGridLine String where
-  toGridLine x = CustomIndent x Nothing
+  toGridLine = toGridLine . CustomIdentGrid . T.pack
+
+-- | Both @custom-ident@ and `Integer` values, provided as a pair.
+--
+-- __NOTE:__ 'Integer' value of 0 is invalid.
+instance ToGridLine (CustomIdentGrid, Integer) where
+  toGridLine (x, y) = GridLineCustomIdent x (Just y)
 
 -- | Both @custom-ident@ and `Integer` values, provided as a pair.
 --
 -- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLine (String, Integer) where
-  toGridLine (x, y) = CustomIndent x (Just y)
+  toGridLine (x, y) = toGridLine (CustomIdentGrid $ T.pack x, y)
 
 -- | One or two @grid-line@ values.
 --
@@ -254,7 +265,17 @@ instance ToGridLines2 Integer where
   toGridLines2 = toGridLines2 . toGridLine
 
 -- | One @custom-ident@ value.
+instance ToGridLines2 CustomIdentGrid where
+  toGridLines2 = toGridLines2 . toGridLine
+
+-- | One @custom-ident@ value.
 instance ToGridLines2 String where
+  toGridLines2 = toGridLines2 . toGridLine
+
+-- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
+--
+-- __NOTE:__ 'Integer' value of 0 is invalid.
+instance ToGridLines2 (CustomIdentGrid, Integer) where
   toGridLines2 = toGridLines2 . toGridLine
 
 -- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
@@ -311,7 +332,13 @@ instance ToGridLines4 GridLines4 where
   toGridLines4 = id
 
 -- | One 'Integer' value.
+--
+-- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLines4 Integer where
+  toGridLines4 = toGridLines4 . toGridLine
+
+-- | One @custom-ident@ value.
+instance ToGridLines4 CustomIdentGrid where
   toGridLines4 = toGridLines4 . toGridLine
 
 -- | One @custom-ident@ value.
@@ -319,6 +346,14 @@ instance ToGridLines4 String where
   toGridLines4 = toGridLines4 . toGridLine
 
 -- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
+--
+-- __NOTE:__ 'Integer' value of 0 is invalid.
+instance ToGridLines4 (CustomIdentGrid, Integer) where
+  toGridLines4 = toGridLines4 . toGridLine
+
+-- | One time both a @custom-ident@ and 'Integer' values, provided as a pair.
+--
+-- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLines4 (String, Integer) where
   toGridLines4 = toGridLines4 . toGridLine
 
@@ -333,6 +368,19 @@ data ThreeGridLines = ThreeGridLines GridLine GridLine GridLine
 
 -- | Four 'GridLine' values.
 data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
+
+-- | CSS @custom-ident@.
+--
+-- The data constructor is not exported. Use the 'partialMkCustomIdentGrid'
+-- smart constructor to create a 'CustomIdentGrid'.
+--
+-- == __Notes__
+-- In CSS, some values for @custom-ident@ are invalid depending on the CSS
+-- property the @custom-ident@ is used with.
+-- Consequently, the @custom-ident@ is only for CSS grid.
+newtype CustomIdentGrid = CustomIdentGrid
+  { customIdentToText :: Text
+  } deriving (Eq, Ord, Read, Show)
 
 -- $invalidValues
 --
@@ -524,13 +572,13 @@ instance ToSpan Integer where
 
 -- | One line from the provided name is counted.
 instance ToSpan String where
-  span_ x = Span (Just x) Nothing
+  span_ x = Span (Just . CustomIdentGrid $ T.pack x) Nothing
 
 -- | Nth lines from the provided name are counted.
 --
 -- __NOTE:__ negative 'Integer' or 0 values are invalid.
 instance ToSpan (String, Integer) where
-  span_ (x, y) = Span (Just x) (Just y)
+  span_ (x, y) = Span (Just . CustomIdentGrid $ T.pack x) (Just y)
 
 -- | Keyword indicating that the property contributes nothing to the grid item's
 -- placement.
@@ -556,9 +604,9 @@ instance Val GridLine where
   value Initial            = "initial"
   value Unset              = "unset"
   value (Coordinate x)     = value x
-  value (CustomIndent x y) = value $ T.pack x <> foldMap ((" " <>) . tshow) y
+  value (GridLineCustomIdent x y) = value $ customIdentToText x <> foldMap ((" " <>) . tshow) y
   value (Span x y) =
-    value $ "span" <> foldMap ((" " <>) . T.pack) x <> foldMap ((" " <>) . tshow) y
+    value $ "span" <> foldMap ((" " <>) . customIdentToText) x <> foldMap ((" " <>) . tshow) y
 
 instance Val OneGridLine where
   value (OneGridLine x) = value x
@@ -599,12 +647,12 @@ instance Val GridLines4 where
 -- Otherwise, the initially provided 'GridLine' value is returned.
 partialCheckGridLine :: GridLine -> GridLine
 partialCheckGridLine gridLine = case gridLine of
-  Coordinate 0            -> errorValue 0
-  CustomIndent _ (Just 0) -> errorValue 0
-  s@(Span _ (Just n))     -> if n < 1
-                             then errorValue n
-                             else s
-  _                       -> gridLine
+  Coordinate 0                   -> errorValue 0
+  GridLineCustomIdent _ (Just 0) -> errorValue 0
+  s@(Span _ (Just n))            -> if n < 1
+                                    then errorValue n
+                                    else s
+  _                              -> gridLine
   where
     errorValue n = error ("Value " ++ show n ++ " is invalid")
 
