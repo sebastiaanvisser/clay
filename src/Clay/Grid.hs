@@ -61,8 +61,6 @@ import           Prelude
 -- $gridIntro
 -- @grid-gap@ and @grid-template@ CSS properties.
 --
--- For instance, you want to generate the following CSS:
---
 -- @
 -- .grid1 {
 --   display: grid;
@@ -84,7 +82,7 @@ import           Prelude
 -- }
 -- @
 --
--- The corresponding clay code:
+-- The corresponding clay code is:
 --
 -- @
 --  ".grid1" ? do
@@ -115,6 +113,14 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 -- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS)
 -- CSS documentation.
 --
+-- === __Naming note__
+-- In this documentation, as the functions are polymorphic we sometimes
+-- refer to the CSS types as used in the
+-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS)
+-- rather than the Haskell types.
+-- For example, @grid-line@ is used instead of 'GridLine' as a the argument
+-- might be provided as a 'GridLine' but also as an 'Integer', 'String', etc.
+--
 -- #pragma#
 --
 -- == Pragma
@@ -127,7 +133,8 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 -- {-# OPTIONS_GHC -Wno-type-defaults #-}
 -- @
 --
--- With the above enabled, you can for example write:
+-- === __Examples__
+-- With the above enabled, you can write:
 --
 -- >> gridRowStart 2
 --
@@ -139,6 +146,7 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 --
 -- >> gridRowStart ("somegridarea" :: String)
 --
+-- === __Note__
 -- If you decide to enable the above, it is advisable to have your Clay
 -- CSS code in its own module, so the behaviour of the rest of your code
 -- is not affected.
