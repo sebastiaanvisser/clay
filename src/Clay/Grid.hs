@@ -61,6 +61,9 @@ import           Prelude
 -- $gridIntro
 -- @grid-gap@ and @grid-template@ CSS properties.
 --
+-- === Example
+-- For the below CSS code:
+--
 -- @
 -- .grid1 {
 --   display: grid;
