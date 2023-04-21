@@ -18,15 +18,12 @@ module Clay.Grid
     -- $sizeAndLocationIntro
 
     -- ** Data types and type classes
-  , GridLine (..)
+  , GridLine
   , ToGridLine
-  , toGridLine
-  , GridLines2 (..)
+  , GridLines2
   , ToGridLines2
-  , toGridLines2
-  , GridLines4 (..)
+  , GridLines4
   , ToGridLines4
-  , toGridLines4
   , OneGridLine
   , TwoGridLines
   , ThreeGridLines
@@ -128,9 +125,8 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 -- For example, @grid-line@ is used instead of 'GridLine' as a the argument
 -- might be provided as a 'GridLine' but also as an 'Integer', 'String', etc.
 --
--- #pragma#
---
 -- == Pragma
+-- #pragma#
 -- If you want to avoid specifying the types of the arguments, enable
 -- the @ExtendedDefaultRules@ GHC language pragma as well as the
 -- @-Wno-type-defaults@ GHC option to avoid compilation warnings.
@@ -166,9 +162,6 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 -- | A @grid-line@ value.
 --
 -- A @grid-line@ value specifies a size and location in a grid.
---
--- __NOTE:__ although you can use the below constructors, it's also possible
--- to use a closer CSS syntax taking advantage of the 'ToGridLine' instances.
 data GridLine
 
   -- | 'Integer' value.
@@ -231,9 +224,6 @@ instance ToGridLine (String, Integer) where
   toGridLine (x, y) = toGridLine (CustomIdentGrid $ T.pack x, y)
 
 -- | One or two @grid-line@ values.
---
--- __NOTE:__ although you can use the below constructors, it's also possible
--- to use a closer CSS syntax using the 'ToGridLines2' instances.
 data GridLines2
     -- | One @grid-line@ value.
   = One2 OneGridLine
@@ -288,9 +278,6 @@ instance ToGridLines2 (String, Integer) where
   toGridLines2 = toGridLines2 . toGridLine
 
 -- | One, two, three or four @grid-line@ values.
---
--- __NOTE:__ although you can use the below constructors, it's also possible
--- to use a closer CSS syntax using the 'ToGridLines4' instances.
 data GridLines4
 
     -- | One @grid-line@ value.
