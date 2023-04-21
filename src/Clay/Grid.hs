@@ -32,6 +32,8 @@ module Clay.Grid
   , ThreeGridLines
   , FourGridLines
   , CustomIdentGrid
+  , customIdentToText
+  , partialMkCustomIdentGrid
   , ToSpan
 
     -- ** Style properties
@@ -55,6 +57,7 @@ import qualified Clay.Common as Com
 import           Clay.Property (Val, noCommas, value)
 import           Clay.Size (Size)
 import           Clay.Stylesheet (Css, key)
+import           Data.Char (isNumber)
 import           Data.Text (Text)
 import qualified Data.Text as T
 import           Prelude
@@ -120,7 +123,7 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 -- === __Naming note__
 -- In this documentation, as the functions are polymorphic we sometimes
 -- refer to the CSS types as used in the
--- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS)
+-- [mdm web docs_](https://developer.mozilla.org/en-US/docs/Web/CSS)
 -- rather than the Haskell types.
 -- For example, @grid-line@ is used instead of 'GridLine' as a the argument
 -- might be provided as a 'GridLine' but also as an 'Integer', 'String', etc.
@@ -374,13 +377,69 @@ data FourGridLines = FourGridLines GridLine GridLine GridLine GridLine
 -- The data constructor is not exported. Use the 'partialMkCustomIdentGrid'
 -- smart constructor to create a 'CustomIdentGrid'.
 --
--- == __Notes__
+-- === __Note__
 -- In CSS, some values for @custom-ident@ are invalid depending on the CSS
 -- property the @custom-ident@ is used with.
 -- Consequently, the @custom-ident@ is only for CSS grid.
-newtype CustomIdentGrid = CustomIdentGrid
-  { customIdentToText :: Text
-  } deriving (Eq, Ord, Read, Show)
+newtype CustomIdentGrid = CustomIdentGrid Text deriving (Eq, Ord, Read, Show)
+
+-- | Convert a 'CustomIdentGrid' to 'Text'.
+--
+-- === __Note__
+-- The function is defined on its own as the newtype constructor
+-- of 'CustomIdentGrid'is not exported.
+customIdentToText :: CustomIdentGrid -> Text
+customIdentToText (CustomIdentGrid x) = x
+
+-- | Create a 'CustomIdentGrid'.
+--
+-- __WARNING__: this function is partial. An error will be raised if:
+--
+-- * "span" is provided as a value (this is a reserved keyword in this context)
+-- * a number is provided as first character
+-- * __If__ a hyphen (-) is provided as first character:
+--
+--     ** a number is provided as second character
+--     ** a hyphen (-) is provided as second character.
+--
+-- === __Note__
+-- The above is a partial implementation of the CSS custom-ident naming rules.
+-- If you stick to the following charset @[a-zA-z0-9-_]@ the checks will be effective
+-- and your CSS custom-ident will be a valid one.
+-- On the other hand, the following will not be checked:
+--
+-- * character escaping (for example @\?@) or unicode
+-- * characters provided as hexadecimal number (for example @\0x03BB@)
+-- * characters outside of the above charset.
+--
+-- More information regarding this topic can be found on
+-- [mdm web docs_](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
+partialMkCustomIdentGrid :: Text -> CustomIdentGrid
+partialMkCustomIdentGrid "span" = error "Custom-ident for a grid property cannot be named span"
+partialMkCustomIdentGrid txt = checkText
+  where
+    checkText = checkHead (fst unconsTxt)
+
+    checkHead :: Char -> CustomIdentGrid
+    checkHead c
+      | isNumber c = error "Custom-ident cannot start with a number"
+      | c == '-'   = checkSecond second
+      | otherwise  = CustomIdentGrid txt
+
+    checkSecond (Just s)
+      | s == '-' =
+          error "Custom-ident cannot start with two hyphens"
+      | isNumber s =
+          error "Custom-ident cannot start with a hyphen followed by a number"
+      | otherwise = CustomIdentGrid txt
+    checkSecond Nothing = CustomIdentGrid txt
+
+    unconsTxt = case T.uncons txt of
+      Nothing -> error "Custom-ident cannot be empty"
+      Just (f, r) -> (f, r)
+
+    second :: Maybe Char
+    second = fst <$> T.uncons (snd unconsTxt)
 
 -- $invalidValues
 --
@@ -547,7 +606,13 @@ instance Slash GridLine TwoGridLines where
 instance Slash Integer TwoGridLines where
   x // y = TwoGridLines (toGridLine x) (toGridLine y)
 
+instance Slash CustomIdentGrid TwoGridLines where
+  x // y = TwoGridLines (toGridLine x) (toGridLine y)
+
 instance Slash String TwoGridLines where
+  x // y = TwoGridLines (toGridLine x) (toGridLine y)
+
+instance Slash (CustomIdentGrid, Integer) TwoGridLines where
   x // y = TwoGridLines (toGridLine x) (toGridLine y)
 
 instance Slash (String, Integer) TwoGridLines where

@@ -6,6 +6,7 @@ module Clay.GridSpec where
 
 import Test.Hspec
 import Common
+import Control.Exception (evaluate)
 import Clay
 
 spec :: Spec
@@ -19,6 +20,10 @@ spec = do
     "{grid-row-start:somegridarea}"
       `shouldRenderFrom`
       gridRowStart "somegridarea"
+
+    "{grid-row-start:somegridarea}"
+      `shouldRenderFrom`
+      gridRowStart (partialMkCustomIdentGrid "somegridarea")
 
     "{grid-row-start:2}"
       `shouldRenderFrom`
@@ -399,6 +404,14 @@ spec = do
       `shouldRenderFrom`
       gridArea $ "somegridarea" // "someothergridarea"
 
+    ("{grid-area:somegridarea / someothergridarea /"
+      <> " someothergridarea / someothergridarea}")
+      `shouldRenderFrom`
+      gridArea $ partialMkCustomIdentGrid "somegridarea"
+              // partialMkCustomIdentGrid "someothergridarea"
+              // partialMkCustomIdentGrid "someothergridarea"
+              // partialMkCustomIdentGrid "someothergridarea"
+
     "{grid-area:somegridarea 4}"
       `shouldRenderFrom`
       gridArea ("somegridarea", 4)
@@ -441,3 +454,35 @@ spec = do
 
     -- Must not compile as grid-area only accepts up to 4 arguments.
     -- gridArea $ 1 // 2 // 3 // 4 // 5
+
+  describe "partialMkCustomIdentGrid errors" $ do
+
+    it "throw error when value is span" $ do
+      partialMkCustomIdentGrid "span"
+        `shouldThrowCustomIdentError`
+        "Custom-ident for a grid property cannot be named span"
+
+    it "throw error when value is mempty" $ do
+      partialMkCustomIdentGrid mempty
+        `shouldThrowCustomIdentError`
+        "Custom-ident cannot be empty"
+
+    it "throw error when value starts with number" $ do
+      partialMkCustomIdentGrid "1test"
+        `shouldThrowCustomIdentError`
+        "Custom-ident cannot start with a number"
+
+    it "throw error when value starts with two hyphens" $ do
+      partialMkCustomIdentGrid "--test"
+        `shouldThrowCustomIdentError`
+        "Custom-ident cannot start with two hyphens"
+
+    it "throw error when value starts hyphen followed by number" $ do
+      partialMkCustomIdentGrid "-2test"
+        `shouldThrowCustomIdentError`
+        "Custom-ident cannot start with a hyphen followed by a number"
+
+shouldThrowCustomIdentError :: CustomIdentGrid -> String -> Expectation
+shouldThrowCustomIdentError customIdent txt =
+  evaluate (customIdentToText customIdent) `shouldThrow` errorCall txt
+infixr 0 `shouldThrowCustomIdentError`
