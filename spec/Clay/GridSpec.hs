@@ -41,9 +41,9 @@ spec = do
       `shouldRenderFrom`
       gridRowStart $ span_ 3
 
-    "{grid-row-start:span somegridarea}"
+    "{grid-row-start:span -somegridarea}"
       `shouldRenderFrom`
-      gridRowStart $ span_ "somegridarea"
+      gridRowStart $ span_ "-somegridarea"
 
     "{grid-row-start:span somegridarea 5}"
       `shouldRenderFrom`
@@ -72,6 +72,16 @@ spec = do
       gridRowStart ("somegridarea", 0)
         `shouldThrowErrorCall`
         "Value 0 is invalid"
+
+    it "throw error when custom-ident start with number" $ do
+      gridRowStart "0test"
+        `shouldThrowErrorCall`
+        "Custom-ident cannot start with a number"
+
+    it "throw error when custom-ident start with number in span_" $ do
+      gridRowStart (span_ "2test")
+        `shouldThrowErrorCall`
+        "Custom-ident cannot start with a number"
 
   describe "grid row end" $ do
 

@@ -209,7 +209,7 @@ instance ToGridLine CustomIdentGrid where
 
 -- | @custom-ident@ value.
 instance ToGridLine String where
-  toGridLine = toGridLine . CustomIdentGrid . T.pack
+  toGridLine = toGridLine . partialMkCustomIdentGrid . T.pack
 
 -- | Both @custom-ident@ and `Integer` values, provided as a pair.
 --
@@ -221,7 +221,7 @@ instance ToGridLine (CustomIdentGrid, Integer) where
 --
 -- __NOTE:__ 'Integer' value of 0 is invalid.
 instance ToGridLine (String, Integer) where
-  toGridLine (x, y) = toGridLine (CustomIdentGrid $ T.pack x, y)
+  toGridLine (x, y) = toGridLine (partialMkCustomIdentGrid $ T.pack x, y)
 
 -- | One or two @grid-line@ values.
 data GridLines2
@@ -624,13 +624,13 @@ instance ToSpan Integer where
 
 -- | One line from the provided name is counted.
 instance ToSpan String where
-  span_ x = Span (Just . CustomIdentGrid $ T.pack x) Nothing
+  span_ x = Span (Just . partialMkCustomIdentGrid $ T.pack x) Nothing
 
 -- | Nth lines from the provided name are counted.
 --
 -- __NOTE:__ negative 'Integer' or 0 values are invalid.
 instance ToSpan (String, Integer) where
-  span_ (x, y) = Span (Just . CustomIdentGrid $ T.pack x) (Just y)
+  span_ (x, y) = Span (Just . partialMkCustomIdentGrid $ T.pack x) (Just y)
 
 -- | Keyword indicating that the property contributes nothing to the grid item's
 -- placement.
