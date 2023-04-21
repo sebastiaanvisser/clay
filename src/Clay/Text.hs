@@ -398,9 +398,9 @@ instance Num HyphenateLimit where
 --
 -- For reference, see
 -- [@hyphenate-limit-chars@](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphenate-limit-chars).
-hyphenateLimitChars
+hyphenateLimitChars ::
   -- | Minimum length of a word which can be hyphenated.
-  :: HyphenateLimit
+     HyphenateLimit
   -- | Minimum number of characters allowed before a break point.
   -> HyphenateLimit
   -- | Minimum number of characters allowed after a break point.
