@@ -1,6 +1,7 @@
 CHANGELOG
 
   Unreleased:
+    - Add grid size and location support.
     - Add `all` media type.
     - Support `prefers-color-scheme` media feature.
 
