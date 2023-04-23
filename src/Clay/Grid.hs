@@ -439,6 +439,7 @@ partialMkCustomIdentGrid txt = checkText
 -- * a 'span_' function provided with an 'Integer' value of 0 or negative
 -- * a 'span_' function provided with a pair value with
 -- an 'Integer' component of 0 or negative.
+-- * an invalid @custom-ident@ value, see 'partialMkCustomIdentGrid'.
 
 -- | Property shorthand specifies a grid item's size and location
 -- within a grid.
