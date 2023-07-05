@@ -71,15 +71,6 @@ instance Val Integer where
 data E5 = E5
 instance HasResolution E5 where resolution _ = 100000
 
-instance Val Double where
-  value = Value . Plain . cssDoubleText
-
-cssDoubleText :: Double -> Text
-cssDoubleText = fromString . showFixed' . realToFrac
-    where
-      showFixed' :: Fixed E5 -> String
-      showFixed' = showFixed True
-
 instance Val Value where
   value = id
 
@@ -103,6 +94,17 @@ instance Val a => Val (NonEmpty a) where
 intercalate :: Monoid a => a -> [a] -> a
 intercalate _ []     = mempty
 intercalate s (x:xs) = foldl (\a b -> a `mappend` s `mappend` b) x xs
+
+-------------------------------------------------------------------------------
+
+newtype Number = Number { unNumber :: Fixed E5 }
+  deriving (Enum, Eq, Fractional, Num, Ord, Read, Real, RealFrac, Show)
+
+instance Val Number where
+  value = Value . Plain . cssNumberText
+
+cssNumberText :: Number -> Text
+cssNumberText = fromString . showFixed True . unNumber
 
 -------------------------------------------------------------------------------
 
