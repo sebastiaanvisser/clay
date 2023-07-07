@@ -15,6 +15,8 @@ import Data.Text
 import Data.Text.Lazy (toStrict)
 import Data.List
 
+import Prelude hiding (rem)
+
 sizeRepr :: Size a -> Text
 sizeRepr = plain . unValue . value
 
@@ -42,6 +44,8 @@ spec = do
       sizeRepr (px 1) `shouldBe` "1px"
     it "return 50% for (pct 50)" $
       sizeRepr (pct 50) `shouldBe` "50%"
+    it "returns 0.6rem for (rem 0.6)" $
+      sizeRepr (rem 0.6) `shouldBe` "0.6rem"
   describe "calc addition" $ do
     it "returns proper calc for simple sum" $
       sizeRepr (em 2 @+@ px 1) `shouldBe` "calc(2em + 1px)"

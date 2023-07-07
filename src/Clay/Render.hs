@@ -147,7 +147,7 @@ kframe cfg (Keyframes ident xs) =
     )
     (unPrefixed browsers)
 
-frame :: Config -> (Double, [Rule]) -> Builder
+frame :: Config -> (Number, [Rule]) -> Builder
 frame cfg (p, rs) =
   mconcat
     [ fromText (pack (show p))

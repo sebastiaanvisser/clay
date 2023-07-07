@@ -209,7 +209,7 @@ rect t r b l = Clip (mconcat ["rect(", value t, ",", value r, ",", value b, ",",
 
 -------------------------------------------------------------------------------
 
-opacity :: Double -> Css
+opacity :: Number -> Css
 opacity = key "opacity"
 
 zIndex :: Integer -> Css

@@ -13,8 +13,8 @@ main :: IO ()
 main = putCss logo
 
   where
-    s = 80 :: Double
-    m = 30 :: Double
+    s = 80 :: Number
+    m = 30 :: Number
     cs = [ "#78e700"
          , "#00b454"
          , "#ff3900"

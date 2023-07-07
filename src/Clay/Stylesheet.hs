@@ -55,7 +55,7 @@ data App
   | Sub    Selector
   deriving Show
 
-data Keyframes = Keyframes Text [(Double, [Rule])]
+data Keyframes = Keyframes Text [(Number, [Rule])]
   deriving Show
 
 data Rule
@@ -165,7 +165,7 @@ queryOnly ty fs rs = rule $ Query (MediaQuery (Just Only) ty fs) (runS rs)
 
 -------------------------------------------------------------------------------
 
-keyframes :: Text -> [(Double, Css)] -> Css
+keyframes :: Text -> [(Number, Css)] -> Css
 keyframes n xs = rule $ Keyframe (Keyframes n (map (second runS) xs))
 
 keyframesFromTo :: Text -> Css -> Css -> Css
