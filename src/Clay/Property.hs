@@ -97,6 +97,8 @@ intercalate s (x:xs) = foldl (\a b -> a `mappend` s `mappend` b) x xs
 
 -------------------------------------------------------------------------------
 
+-- | A number type to represent the CSS @number@ type.
+--   It has fixed precision, supporting up to 5 decimal places.
 newtype Number = Number { unNumber :: Fixed E5 }
   deriving (Enum, Eq, Fractional, Num, Ord, Read, Real, RealFrac, Show)
 
