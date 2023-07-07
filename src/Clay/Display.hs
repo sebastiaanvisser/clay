@@ -186,7 +186,7 @@ overflowY = key "overflow-y"
 -------------------------------------------------------------------------------
 
 newtype Visibility = Visibility Value
-  deriving (Val, Other, Auto, Inherit, Hidden, Visible)
+  deriving (Val, Other, Inherit, Hidden, Unset, Visible)
 
 separate, collapse :: Visibility
 
@@ -209,7 +209,7 @@ rect t r b l = Clip (mconcat ["rect(", value t, ",", value r, ",", value b, ",",
 
 -------------------------------------------------------------------------------
 
-opacity :: Double -> Css
+opacity :: Number -> Css
 opacity = key "opacity"
 
 zIndex :: Integer -> Css

@@ -147,7 +147,7 @@ kframe cfg (Keyframes ident xs) =
     )
     (unPrefixed browsers)
 
-frame :: Config -> (Double, [Rule]) -> Builder
+frame :: Config -> (Number, [Rule]) -> Builder
 frame cfg (p, rs) =
   mconcat
     [ fromText (pack (show p))
@@ -184,7 +184,7 @@ mediaType (MediaType (Value v)) = fromText (plain v)
 feature :: Feature -> Builder
 feature (Feature k mv) =
   case mv of
-    Nothing        -> fromText k
+    Nothing        -> mconcat [ "(", fromText k, ")" ]
     Just (Value v) -> mconcat
       [ "(" , fromText k , ": " , fromText (plain v) , ")" ]
 

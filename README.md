@@ -1,6 +1,6 @@
 # Clay
 
-[![Build Status](https://travis-ci.org/sebastiaanvisser/clay.png)](https://travis-ci.org/sebastiaanvisser/clay)
+[![build](https://github.com/sebastiaanvisser/clay/actions/workflows/ci.yml/badge.svg)](https://github.com/sebastiaanvisser/clay/actions/workflows/ci.yml)
 [![Hackage](https://img.shields.io/hackage/v/clay.svg)](https://hackage.haskell.org/package/clay)
 
 Clay is a CSS preprocessor like LESS and Sass, but implemented as an embedded

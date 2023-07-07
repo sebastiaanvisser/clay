@@ -142,7 +142,7 @@ animationIterationCounts = prefixed (browsers <> "animation-iteration-count")
 infinite :: IterationCount
 infinite = IterationCount "infinite"
 
-iterationCount :: Double -> IterationCount
+iterationCount :: Number -> IterationCount
 iterationCount = IterationCount . value
 
 -------------------------------------------------------------------------------
