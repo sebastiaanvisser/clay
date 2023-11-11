@@ -2,11 +2,12 @@
 
 module Clay.MediaSpec (spec) where
 
-import Clay (Css, em, query)
+import Clay (Css, em, hidden, pretty, query, renderWith, visible, visibility)
 import Clay.Media
-import Clay.Stylesheet (Feature, MediaType)
+import Clay.Render (Config(..))
+import Clay.Stylesheet (Feature, keyframes, MediaType)
 import Common
-import Data.Text.Lazy (Text, unpack)
+import Data.Text.Lazy as Text (Text, toStrict, unlines, unpack)
 import Test.Hspec
 import Prelude hiding (all, print)
 
@@ -72,6 +73,48 @@ spec = do
   describe "preference features" $ do
     "prefers-color-scheme: light" `shouldRenderFromFeature` prefersColorScheme light
     "prefers-color-scheme: dark" `shouldRenderFromFeature` prefersColorScheme dark
+
+  describe "keyframes tests" $ do
+    it "keyframes test 1" $
+      (renderWith custom [] $ keyframes "blink-animation" [(0, visibility visible), (100, visibility hidden)])
+        `shouldBe` (Text.unlines
+                    [ ""
+                    , "@-webkit-keyframes blink-animation", "{"
+                    -- without fix for the rendering of the Clay.Property.Number type:
+                    -- , "Number {unNumber = 0.00000}% ", "{", "visibility:visible;", "}", ""
+                    -- , "Number {unNumber = 100.00000}% ", "{", "visibility:hidden;", "}", ""
+                    , "0% ", "{", "visibility:visible;", "}", ""
+                    , "100% ", "{", "visibility:hidden;", "}", "", "}"
+                    , ""
+                    , "@-moz-keyframes blink-animation", "{"
+                    , "0% ", "{", "visibility:visible;", "}", ""
+                    , "100% ", "{", "visibility:hidden;", "}", "", "}"
+                    , ""
+                    , "@-ms-keyframes blink-animation", "{"
+                    , "0% ", "{", "visibility:visible;", "}", ""
+                    , "100% ", "{", "visibility:hidden;", "}", "", "}"
+                    , ""
+                    , "@-o-keyframes blink-animation", "{"
+                    , "0% ", "{", "visibility:visible;", "}", ""
+                    , "100% ", "{", "visibility:hidden;", "}", "", "}"
+                    , ""
+                    , "@keyframes blink-animation", "{"
+                    , "0% ", "{", "visibility:visible;", "}", ""
+                    , "100% ", "{", "visibility:hidden;", "}", "", "}"
+                    , ""])
+
+custom =
+  pretty
+  {
+    indentation = ""
+  -- newline = "\n"
+  , sep = ""
+  -- , finalSemicolon = True -- False
+  , warn = False
+  , align = False
+  , banner = False
+  , comments = False
+  }
 
 -- | Empty CSS for when CSS is needed but we don't care about it.
 emptyStyle :: Css

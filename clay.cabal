@@ -79,6 +79,7 @@ Library
   Build-Depends:
     base  >= 4.11 && < 4.18,
     mtl   >= 1,
+    pretty >= 1,
     text  >= 0.11
   GHC-Options: -Wall -Wcompat
   Default-Language: Haskell2010
@@ -93,6 +94,7 @@ Test-Suite Test-Clay
     mtl                  >= 1,
     text                 >= 0.11,
     hspec                >= 2.2.0,
-    hspec-discover       >= 2.2.0
+    hspec-discover       >= 2.2.0,
+    pretty               >= 1
   GHC-Options: -Wall -Wcompat
   Default-Language: Haskell2010

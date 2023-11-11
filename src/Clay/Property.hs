@@ -8,6 +8,7 @@ import Data.List.NonEmpty (NonEmpty, toList)
 import Data.Maybe
 import Data.String
 import Data.Text (Text, replace)
+import Text.PrettyPrint.HughesPJClass (Pretty(pPrint), text)
 
 data Prefixed = Prefixed { unPrefixed :: [(Text, Text)] } | Plain { unPlain :: Text }
   deriving (Show, Eq)
@@ -101,6 +102,9 @@ intercalate s (x:xs) = foldl (\a b -> a `mappend` s `mappend` b) x xs
 --   It has fixed precision, supporting up to 5 decimal places.
 newtype Number = Number { unNumber :: Fixed E5 }
   deriving (Enum, Eq, Fractional, Num, Ord, Read, Real, RealFrac, Show)
+
+instance Pretty Number where
+  pPrint = text . showFixed True . unNumber
 
 instance Val Number where
   value = Value . Plain . cssNumberText
