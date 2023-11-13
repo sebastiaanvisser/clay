@@ -19,7 +19,6 @@ import           Data.Maybe
 import           Data.Text              (Text, pack)
 import           Data.Text.Lazy.Builder
 import           Prelude                hiding ((**))
-import           Text.PrettyPrint.HughesPJClass (pPrint)
 
 import qualified Data.Text              as Text
 import qualified Data.Text.Lazy         as Lazy
@@ -151,7 +150,7 @@ kframe cfg (Keyframes ident xs) =
 frame :: Config -> (Number, [Rule]) -> Builder
 frame cfg (p, rs) =
   mconcat
-    [ fromText (pack (show (pPrint p)))
+    [ fromText (cssNumberText p)
     , "% "
     , rules cfg [] rs
     ]
