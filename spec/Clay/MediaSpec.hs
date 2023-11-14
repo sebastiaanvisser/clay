@@ -4,7 +4,6 @@ module Clay.MediaSpec (spec) where
 
 import Clay (compact, Css, em, opacity, query, renderWith)
 import Clay.Media
-import Clay.Render (Config(..))
 import Clay.Stylesheet (Feature, keyframes, MediaType)
 import Common
 import Data.Text.Lazy (Text, unpack)
