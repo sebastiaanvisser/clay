@@ -7,7 +7,7 @@ import Clay.Media
 import Clay.Render (Config(..))
 import Clay.Stylesheet (Feature, keyframes, MediaType)
 import Common
-import Data.Text.Lazy as Text (Text, toStrict, unlines, unpack)
+import Data.Text.Lazy (Text, unpack)
 import Test.Hspec
 import Prelude hiding (all, print)
 
