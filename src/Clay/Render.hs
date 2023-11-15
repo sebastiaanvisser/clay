@@ -16,7 +16,7 @@ import           Control.Applicative
 import           Control.Monad.Writer
 import           Data.List              (sort)
 import           Data.Maybe
-import           Data.Text              (Text, pack)
+import           Data.Text              (Text)
 import           Data.Text.Lazy.Builder
 import           Prelude                hiding ((**))
 
