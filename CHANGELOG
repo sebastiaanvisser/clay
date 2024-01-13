@@ -1,8 +1,15 @@
 CHANGELOG
 
-  Unreleased:
+  0.15.0:
     - Add `all` media type.
     - Support `prefers-color-scheme` media feature.
+    - Use `matrix` rather than `matrix3d`
+    - Add media type `all`
+    - Add some relative units
+    - Add CSS properties related to hyphenation
+    - Use `Number` type instead of `Double` as an argument type in many places
+    - Fix rendering of `Number` type
+    Thanks to Yoo Chung, Charles Bayley and David Fox
 
   0.14.0:
     - Drop support for GHC 8.2
