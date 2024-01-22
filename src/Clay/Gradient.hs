@@ -48,7 +48,12 @@ type Ramp = [(Color, Size Percentage)]
 
 linearGradient :: Direction -> Ramp -> BackgroundImage
 linearGradient d xs = other $ Value $
-  let Value v = "linear-gradient(" <> value d <> "," <> ramp xs <> ")"
+  let Value v = "linear-gradient(" <> f (value d) <> "," <> ramp xs <> ")"
+      f (Value "top") = value (angular (deg 0))
+      f (Value "bottom") = value (angular (deg 180))
+      f (Value "left") = value (angular (deg 270))
+      f (Value "right") = value (angular (deg 90))
+      f a = a
    in browsers <> v
 
 hGradient, vGradient :: Color -> Color -> BackgroundImage
