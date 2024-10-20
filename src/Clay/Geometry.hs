@@ -99,7 +99,7 @@ instance Val AspectRatio where
 -- At least one of the width or height must be of automatic size,
 -- otherwise the aspect ratio will be ignored.
 --
--- It can be given a fixed ratio of the width and to the height:
+-- It can be given a fixed ratio of the width to the height:
 --
 -- >>> renderWith compact [] $ aspectRatio (4%3)
 -- "{aspect-ratio:4/3}"
