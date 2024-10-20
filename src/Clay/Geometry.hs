@@ -1,6 +1,5 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 module Clay.Geometry
 (
 -- * Positioning.
