@@ -110,7 +110,7 @@ instance Val AspectRatio where
 -- "{aspect-ratio:auto}"
 --
 -- It can be told to use the intrinsic aspect ratio for the element,
--- but to use a fixed ratio while it is unknown or does not have one:
+-- but to use a fixed ratio while it is unknown or if the element does not have one:
 --
 -- >>> renderWith compact [] $ aspectRatio $ auto `withFallback` (4%3)
 -- "{aspect-ratio:auto 4/3}"
