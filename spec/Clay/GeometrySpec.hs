@@ -49,5 +49,5 @@ spec = do
       evaluate (compactRender $ aspectRatio $ auto `withFallback` auto) `shouldThrow` anyErrorCall
       evaluate (compactRender $ aspectRatio $ (4%3) `withFallback` (4%3)) `shouldThrow` anyErrorCall
 
-    it "has arbtrary other value" $ do
+    it "has arbitrary other value" $ do
       compactRender (aspectRatio $ other "not valid") `shouldBe` "{aspect-ratio:not valid}"
