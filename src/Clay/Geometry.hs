@@ -132,26 +132,16 @@ aspectRatio = key "aspect-ratio"
 -- The same as the normal % operator.
 infixl 7 %
 
--- | A type class for which a type can have a value with another value as a fallback.
--- Basically, a type class for types which can use 'withFallback'.
---
--- 'withFallback' was defined for 'AspectRatio', but this is a type class
--- because 'withFallback' is a generic name which we may want to reuse
--- for other types in the future.
-class WithFallback a where
-  -- | Returns a value where one value has another value as a fallback.
-  --
-  -- * For 'AspectRatio', it can be used to specify that the intrinsic aspect
-  --   ratio should be used, but a fixed ratio can be used as a fallback.
-  withFallback :: a -> a -> a
-
-instance WithFallback AspectRatio where
-  withFallback x@(AspectRatioValue "auto") y@(AspectRatio _) =
-    AspectRatioWithFallback (x, y)
-  withFallback x@(AspectRatio _) y@(AspectRatioValue "auto") =
-    AspectRatioWithFallback (x, y)
-  withFallback _ _ =
-    error "Arguments for aspectRatio . withFallback must be auto and a ratio in either order"
+-- | Returns an aspect ratio specifying that the intrinsic aspect
+-- ratio should be used, but when it is unknown or there is none,
+-- a fixed ratio can be used as a fallback.
+withFallback :: AspectRatio -> AspectRatio -> AspectRatio
+withFallback x@(AspectRatioValue "auto") y@(AspectRatio _) =
+  AspectRatioWithFallback (x, y)
+withFallback x@(AspectRatio _) y@(AspectRatioValue "auto") =
+  AspectRatioWithFallback (x, y)
+withFallback _ _ =
+  error "Arguments for aspectRatio . withFallback must be auto and a ratio in either order"
 
 -------------------------------------------------------------------------------
 
