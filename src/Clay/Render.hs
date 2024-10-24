@@ -8,6 +8,7 @@ module Clay.Render
 , putCss
 , renderWith
 , renderSelector
+, renderRefinement
 , withBanner
 )
 where
@@ -119,6 +120,10 @@ renderWith cfg top
 
 renderSelector :: Selector -> Lazy.Text
 renderSelector = toLazyText . selector compact
+
+-- | Render a CSS `Refinement`.
+renderRefinement :: Refinement -> [Lazy.Text]
+renderRefinement r = toLazyText . predicate <$> unFilter r
 
 -------------------------------------------------------------------------------
 
