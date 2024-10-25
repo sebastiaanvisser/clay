@@ -109,7 +109,7 @@ flexWrap = key "flex-wrap"
 
 newtype JustifyContentValue = JustifyContentValue Value
   deriving (Val, Other, Inherit, Center, FlexEnd
-          , FlexStart, SpaceAround, SpaceBetween, SpaceEvenly)
+          , FlexStart, SpaceAround, SpaceBetween, SpaceEvenly, Stretch)
 
 justifyContent :: JustifyContentValue -> Css
 justifyContent = key "justify-content"
