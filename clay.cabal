@@ -77,7 +77,7 @@ Library
     Clay.Transition
 
   Build-Depends:
-    base  >= 4.11 && < 4.21,
+    base  >= 4.11 && < 4.22,
     mtl   >= 1,
     text  >= 0.11
   GHC-Options: -Wall -Wcompat
@@ -89,7 +89,7 @@ Test-Suite Test-Clay
   Build-Tools: hspec-discover
   main-is: Spec.hs
   Build-Depends:
-    base                 >= 4.11  && < 4.21,
+    base                 >= 4.11  && < 4.22,
     mtl                  >= 1,
     text                 >= 0.11,
     hspec                >= 2.2.0,
