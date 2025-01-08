@@ -3,4 +3,5 @@
 let
   compilerWithDefault = if compiler == "" then "ghc884" else compiler;
   release = import ./release.nix { compiler = compilerWithDefault; };
-in { inherit (release) clay examples; }
+in
+{ inherit (release) clay examples; }
