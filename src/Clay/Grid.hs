@@ -4,7 +4,8 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
 {-# OPTIONS_GHC -Wno-type-defaults #-}
 
--- | Partial implementation of <https://alligator.io/css/css-grid-layout-grid-areas grid area CSS API>.
+-- | Partial implementation of
+-- | <https://alligator.io/css/css-grid-layout-grid-areas grid area CSS API>.
 module Clay.Grid
 (
     -- * Grid
@@ -51,7 +52,7 @@ module Clay.Grid
 where
 
 import qualified Clay.Common as Com
-import           Clay.Property (Val, noCommas, value)
+import           Clay.Property (Val, Value, noCommas, value)
 import           Clay.Size (Size)
 import           Clay.Stylesheet (Css, key)
 import           Data.Char (isNumber)
@@ -174,22 +175,14 @@ data GridLine
   -- __NOTE:__ 'Integer' value of 0 is invalid.
   | GridLineCustomIdent CustomIdentGrid (Maybe Integer)
 
-  -- | @span@ CSS keyword with an optional @custom-ident@ and/or 'Integer' value.
+  -- | @span@ CSS keyword with an optional @custom-ident@
+  -- | and/or 'Integer' value.
   --
   -- __NOTE:__ negative 'Integer' or 0 are invalid.
   | Span (Maybe CustomIdentGrid) (Maybe Integer)
 
-  -- | @auto@ CSS keyword.
-  | Auto
-
-  -- | @inherit@ CSS keyword.
-  | Inherit
-
-  -- | @initial@ CSS keyword.
-  | Initial
-
-  -- | @unset@ CSS keyword.
-  | Unset
+  -- | Other grid line values: @auto@, @inherit@, @initial@, @unset@.
+  | OtherGridLine Value
   deriving (Eq, Show)
 
 class ToGridLine a where
@@ -633,33 +626,32 @@ instance ToSpan String where
 instance ToSpan (String, Integer) where
   span_ (x, y) = Span (Just . partialMkCustomIdentGrid $ T.pack x) (Just y)
 
--- | Keyword indicating that the property contributes nothing to the grid item's
--- placement.
+-- | Keyword indicating that the property contributes nothing
+-- to the grid item's placement.
 instance Com.Auto GridLine where
-  auto = Auto
+  auto = OtherGridLine $ value ("auto" :: Text)
 
 -- | Keyword `inherit` applied to a 'GridLine'.
 instance Com.Inherit GridLine where
-  inherit = Inherit
+  inherit = OtherGridLine $ value ("inherit" :: Text)
 
 -- | Keyword `initial` applied to a 'GridLine'.
 instance Com.Initial GridLine where
-  initial = Initial
+  initial = OtherGridLine $ value ("initial" :: Text)
 
 -- | Keyword `unset` applied to a 'GridLine'.
 instance Com.Unset GridLine where
-  unset = Unset
+  unset = OtherGridLine $ value ("unset" :: Text)
 
 -- | Convertion of 'GridLine' to 'Clay.Property.Value'.
 instance Val GridLine where
-  value Auto               = "auto"
-  value Inherit            = "inherit"
-  value Initial            = "initial"
-  value Unset              = "unset"
-  value (Coordinate x)     = value x
-  value (GridLineCustomIdent x y) = value $ customIdentToText x <> foldMap ((" " <>) . tshow) y
+  value (OtherGridLine val)       = val
+  value (Coordinate x)            = value x
+  value (GridLineCustomIdent x y) =
+    value $ customIdentToText x <> foldMap ((" " <>) . tshow) y
   value (Span x y) =
-    value $ "span" <> foldMap ((" " <>) . customIdentToText) x <> foldMap ((" " <>) . tshow) y
+    value $ "span" <> foldMap ((" " <>)
+    . customIdentToText) x <> foldMap ((" " <>) . tshow) y
 
 instance Val OneGridLine where
   value (OneGridLine x) = value x
