@@ -163,6 +163,11 @@ gridTemplateColumns = key "grid-template-columns" . noCommas
 -- | A @grid-line@ value.
 --
 -- A @grid-line@ value specifies a size and location in a grid.
+--
+-- === __Note__
+-- To know more about @grid-line@ value, see for example the documentation of
+-- the [grid-row-start](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-start)
+-- CSS property.
 data GridLine
 
   -- | 'Integer' value.
