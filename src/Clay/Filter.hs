@@ -52,7 +52,7 @@ url u = Filter ("url(" <> value u <> ")")
 blur :: Size LengthUnit -> Filter
 blur i = Filter ("blur(" <> value i <> ")")
 
-brightness :: Double -> Filter
+brightness :: Number -> Filter
 brightness i = Filter ("brightness(" <> value i <> ")")
 
 contrast :: Size Percentage -> Filter

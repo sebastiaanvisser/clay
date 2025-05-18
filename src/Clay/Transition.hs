@@ -92,7 +92,7 @@ stepsStart, stepsStop :: Integer -> TimingFunction
 stepsStart s = other ("steps(" <> value s <> ", start)")
 stepsStop  s = other ("steps(" <> value s <> ", end)")
 
-cubicBezier :: Double -> Double -> Double -> Double -> TimingFunction
+cubicBezier :: Number -> Number -> Number -> Number -> TimingFunction
 cubicBezier a b c d = other ("cubic-bezier(" <> value [a, b, c, d] <> ")")
 
 transitionTimingFunction :: TimingFunction -> Css

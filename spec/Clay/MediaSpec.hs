@@ -2,9 +2,9 @@
 
 module Clay.MediaSpec (spec) where
 
-import Clay (Css, em, query)
+import Clay (compact, Css, em, opacity, query, renderWith)
 import Clay.Media
-import Clay.Stylesheet (Feature, MediaType)
+import Clay.Stylesheet (Feature, keyframes, MediaType)
 import Common
 import Data.Text.Lazy (Text, unpack)
 import Test.Hspec
@@ -72,6 +72,15 @@ spec = do
   describe "preference features" $ do
     "prefers-color-scheme: light" `shouldRenderFromFeature` prefersColorScheme light
     "prefers-color-scheme: dark" `shouldRenderFromFeature` prefersColorScheme dark
+
+  describe "keyframes tests" $ do
+    it "keyframes test 1" $
+      (renderWith compact [] $ keyframes "blink-animation" [(0, opacity 0), (100, opacity 1)])
+        `shouldBe` ("@-webkit-keyframes blink-animation{0% {opacity:0}100% {opacity:1}}" <>
+                    "@-moz-keyframes blink-animation{0% {opacity:0}100% {opacity:1}}" <>
+                    "@-ms-keyframes blink-animation{0% {opacity:0}100% {opacity:1}}" <>
+                    "@-o-keyframes blink-animation{0% {opacity:0}100% {opacity:1}}" <>
+                    "@keyframes blink-animation{0% {opacity:0}100% {opacity:1}}")
 
 -- | Empty CSS for when CSS is needed but we don't care about it.
 emptyStyle :: Css

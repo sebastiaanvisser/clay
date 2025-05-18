@@ -8,6 +8,7 @@ module Clay.Render
 , putCss
 , renderWith
 , renderSelector
+, renderRefinement
 , withBanner
 )
 where
@@ -16,7 +17,7 @@ import           Control.Applicative
 import           Control.Monad.Writer
 import           Data.List              (sort)
 import           Data.Maybe
-import           Data.Text              (Text, pack)
+import           Data.Text              (Text)
 import           Data.Text.Lazy.Builder
 import           Prelude                hiding ((**))
 
@@ -120,6 +121,10 @@ renderWith cfg top
 renderSelector :: Selector -> Lazy.Text
 renderSelector = toLazyText . selector compact
 
+-- | Render a CSS `Refinement`.
+renderRefinement :: Refinement -> [Lazy.Text]
+renderRefinement r = toLazyText . predicate <$> unFilter r
+
 -------------------------------------------------------------------------------
 
 renderBanner :: Config -> Lazy.Text -> Lazy.Text
@@ -147,10 +152,10 @@ kframe cfg (Keyframes ident xs) =
     )
     (unPrefixed browsers)
 
-frame :: Config -> (Double, [Rule]) -> Builder
+frame :: Config -> (Number, [Rule]) -> Builder
 frame cfg (p, rs) =
   mconcat
-    [ fromText (pack (show p))
+    [ fromText (cssNumberText p)
     , "% "
     , rules cfg [] rs
     ]

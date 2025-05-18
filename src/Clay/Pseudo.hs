@@ -1,9 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
 module Clay.Pseudo where
 
 import Data.Text (Text)
 
-import Clay.Render (renderSelector)
+import Clay.Render (renderSelector, renderRefinement)
 import Clay.Selector
 
 import qualified Data.Text.Lazy as Lazy
@@ -64,5 +66,19 @@ nthLastChild  n = func "nth-last-child"   [n]
 nthLastOfType n = func "nth-last-of-type" [n]
 nthOfType     n = func "nth-of-type"      [n]
 
-not :: Selector -> Refinement
-not r = func "not" [Lazy.toStrict (renderSelector r)]
+-- | The 'not' pseudo selector can be applied to both a 'Refinement'
+--
+-- > input # not checked
+-- 
+-- or a 'Selector'
+--
+-- > not p
+
+class Not a where
+  not :: a -> Refinement
+
+instance Not Selector where
+  not r = func "not" [Lazy.toStrict (renderSelector r)]
+
+instance Not Refinement where
+  not r = func "not" (Lazy.toStrict <$> renderRefinement r)

@@ -105,8 +105,8 @@ data Size a =
   SimpleSize Text |
   forall b c. SumSize (Size b) (Size c) |
   forall b c. DiffSize (Size b) (Size c) |
-  MultSize Double (Size a) |
-  DivSize Double (Size a) |
+  MultSize Number (Size a) |
+  DivSize Number (Size a) |
   OtherSize Value
 
 deriving instance Show (Size a)
@@ -115,8 +115,8 @@ sizeToText :: Size a -> Text
 sizeToText (SimpleSize txt) = txt
 sizeToText (SumSize a b) = mconcat ["(", sizeToText a, " + ", sizeToText b, ")"]
 sizeToText (DiffSize a b) = mconcat ["(", sizeToText a, " - ", sizeToText b, ")"]
-sizeToText (MultSize a b) = mconcat ["(", cssDoubleText a, " * ", sizeToText b, ")"]
-sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssDoubleText a, ")"]
+sizeToText (MultSize a b) = mconcat ["(", cssNumberText a, " * ", sizeToText b, ")"]
+sizeToText (DivSize a b) = mconcat ["(", sizeToText b, " / ", cssNumberText a, ")"]
 sizeToText (OtherSize a) = plain $ unValue a
 
 instance Val (Size a) where
@@ -135,87 +135,87 @@ nil :: Size a
 nil = SimpleSize "0"
 
 -- | Unitless size (as recommended for line-height).
-unitless :: Double -> Size a
+unitless :: Number -> Size a
 unitless i = SimpleSize ((plain . unValue . value) i)
 
-cm, mm, inches, px, pt, pc :: Double -> Size LengthUnit
+cm, mm, inches, px, pt, pc :: Number -> Size LengthUnit
 
 -- | Size in centimeters.
-cm i = SimpleSize (cssDoubleText i <> "cm")
+cm i = SimpleSize (cssNumberText i <> "cm")
 
 -- | Size in millimeters.
-mm i = SimpleSize (cssDoubleText i <> "mm")
+mm i = SimpleSize (cssNumberText i <> "mm")
 
 -- | Size in inches (1in = 2.54 cm).
-inches i = SimpleSize (cssDoubleText i <> "in")
+inches i = SimpleSize (cssNumberText i <> "in")
 
 -- | Size in pixels.
-px i = SimpleSize (cssDoubleText i <> "px")
+px i = SimpleSize (cssNumberText i <> "px")
 
 -- | Size in points (1pt = 1/72 of 1in).
-pt i = SimpleSize (cssDoubleText i <> "pt")
+pt i = SimpleSize (cssNumberText i <> "pt")
 
 -- | Size in picas (1pc = 12pt).
-pc i = SimpleSize (cssDoubleText i <> "pc")
+pc i = SimpleSize (cssNumberText i <> "pc")
 
-em, ex, ch, rem, lh, rlh, vw, vh, vmin, vmax, vb, vi, svw, svh, lvw, lvh, dvw, dvh, fr :: Double -> Size LengthUnit
+em, ex, ch, rem, lh, rlh, vw, vh, vmin, vmax, vb, vi, svw, svh, lvw, lvh, dvw, dvh, fr :: Number -> Size LengthUnit
 
--- | Size in em's (computed cssDoubleText of the font-size).
-em i = SimpleSize (cssDoubleText i <> "em")
+-- | Size in em's (computed cssNumberText of the font-size).
+em i = SimpleSize (cssNumberText i <> "em")
 
 -- | SimpleSize in ex'es (x-height of the first avaliable font).
-ex i = SimpleSize (cssDoubleText i <> "ex")
+ex i = SimpleSize (cssNumberText i <> "ex")
 
 -- | SimpleSize in ch's (The width of the glyph "0" of the element's font).
-ch i = SimpleSize (cssDoubleText i <> "ch")
+ch i = SimpleSize (cssNumberText i <> "ch")
 
 -- | SimpleSize in rem's (em's, but always relative to the root element).
-rem i = SimpleSize (cssDoubleText i <> "rem")
+rem i = SimpleSize (cssNumberText i <> "rem")
 
 -- | SimpleSize in lh's (Line height of the element).
-lh i = SimpleSize (cssDoubleText i <> "lh")
+lh i = SimpleSize (cssNumberText i <> "lh")
 
 -- | SimpleSize in rlh's (lh's, but always relative to the root element).
-rlh i = SimpleSize (cssDoubleText i <> "rlh")
+rlh i = SimpleSize (cssNumberText i <> "rlh")
 
 -- | SimpleSize in vw's (1vw = 1% of viewport width).
-vw i = SimpleSize (cssDoubleText i <> "vw")
+vw i = SimpleSize (cssNumberText i <> "vw")
 
 -- | SimpleSize in vh's (1vh = 1% of viewport height).
-vh i = SimpleSize (cssDoubleText i <> "vh")
+vh i = SimpleSize (cssNumberText i <> "vh")
 
 -- | SimpleSize in vmin's (the smaller of vw or vh).
-vmin i = SimpleSize (cssDoubleText i <> "vmin")
+vmin i = SimpleSize (cssNumberText i <> "vmin")
 
 -- | SimpleSize in vmax's (the larger of vw or vh).
-vmax i = SimpleSize (cssDoubleText i <> "vmax")
+vmax i = SimpleSize (cssNumberText i <> "vmax")
 
 -- | SimpleSize in vb's (1vb = 1% of the parent's size in the direction of the root element's block axis).
-vb i = SimpleSize (cssDoubleText i <> "vb")
+vb i = SimpleSize (cssNumberText i <> "vb")
 
 -- | SimpleSize in vi's (1vi = 1% of the parent's size in the direction of the root element's inline axis).
-vi i = SimpleSize (cssDoubleText i <> "vi")
+vi i = SimpleSize (cssNumberText i <> "vi")
 
 -- | SimpleSize in svw's (1svw = 1% of the small viewport's width).
-svw i = SimpleSize (cssDoubleText i <> "svw")
+svw i = SimpleSize (cssNumberText i <> "svw")
 
 -- | SimpleSize in svh's (1svh = 1% of the small viewport's height).
-svh i = SimpleSize (cssDoubleText i <> "svh")
+svh i = SimpleSize (cssNumberText i <> "svh")
 
 -- | SimpleSize in lvw's (1lvw = 1% of the large viewport's width).
-lvw i = SimpleSize (cssDoubleText i <> "lvw")
+lvw i = SimpleSize (cssNumberText i <> "lvw")
 
 -- | SimpleSize in lvh's (1lvh = 1% of the large viewport's height).
-lvh i = SimpleSize (cssDoubleText i <> "lvh")
+lvh i = SimpleSize (cssNumberText i <> "lvh")
 
 -- | SimpleSize in dvw's (1dvw = 1% of the dynamic viewport's width).
-dvw i = SimpleSize (cssDoubleText i <> "dvw")
+dvw i = SimpleSize (cssNumberText i <> "dvw")
 
 -- | SimpleSize in dvh's (1dvh = 1% of the dynamic viewport's height).
-dvh i = SimpleSize (cssDoubleText i <> "dvh")
+dvh i = SimpleSize (cssNumberText i <> "dvh")
 
 -- | 'SimpleSize' in fr's (a fractional unit and 1fr is for 1 part of the available space in grid areas).
-fr i = SimpleSize (cssDoubleText i <> "fr")
+fr i = SimpleSize (cssNumberText i <> "fr")
 
 -- | SimpleSize for the intrinsic preferred width.
 maxContent :: Size LengthUnit
@@ -234,8 +234,8 @@ fitContent :: Size LengthUnit
 fitContent = SimpleSize "fit-content"
 
 -- | SimpleSize in percents.
-pct :: Double -> Size Percentage
-pct i = SimpleSize (cssDoubleText i <> "%")
+pct :: Number -> Size Percentage
+pct i = SimpleSize (cssNumberText i <> "%")
 
 instance Num (Size LengthUnit) where
   fromInteger = px . fromInteger
@@ -280,17 +280,17 @@ a @-@ b = DiffSize a b
 
 -- | Times operator to combine sizes into calc function
 infixl 7 *@
-(*@) :: Double -> Size a -> Size a
+(*@) :: Number -> Size a -> Size a
 a *@ b = MultSize a b
 
 -- | Reversed times operator to combine sizes into calc function
 infixl 7 @*
-(@*) :: Size a -> Double -> Size a
+(@*) :: Size a -> Number -> Size a
 a @* b = MultSize b a
 
 -- | Division operator to combine sizes into calc function
 infixl 7 @/
-(@/) :: Size a -> Double -> Size a
+(@/) :: Size a -> Number -> Size a
 a @/ b = DivSize b a
 
 -------------------------------------------------------------------------------
@@ -315,19 +315,19 @@ newtype Angle a = Angle Value
   deriving (Val, Auto, Inherit, Other)
 
 -- | Angle in degrees.
-deg :: Double -> Angle Deg
+deg :: Number -> Angle Deg
 deg i = Angle (value i <> "deg")
 
 -- | Angle in radians.
-rad :: Double -> Angle Rad
+rad :: Number -> Angle Rad
 rad i = Angle (value i <> "rad")
 
 -- | Angle in gradians (also knows as gons or grades).
-grad :: Double -> Angle Grad
+grad :: Number -> Angle Grad
 grad i = Angle (value i <> "grad")
 
 -- | Angle in turns.
-turn :: Double -> Angle Turn
+turn :: Number -> Angle Turn
 turn i = Angle (value i <> "turn")
 
 instance Num (Angle Deg) where

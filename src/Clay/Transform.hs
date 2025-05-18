@@ -101,16 +101,16 @@ transformOrigin = prefixed (browsers <> "transform-origin") . noCommas
 
 -------------------------------------------------------------------------------
 
-scale :: Double -> Double -> Transformation
+scale :: Number -> Number -> Transformation
 scale x y = Transformation ("scale(" <> value [x, y] <> ")")
 
-scaleX, scaleY, scaleZ :: Double -> Transformation
+scaleX, scaleY, scaleZ :: Number -> Transformation
 
 scaleX x = Transformation ("scaleX(" <> value x <> ")")
 scaleY y = Transformation ("scaleY(" <> value y <> ")")
 scaleZ z = Transformation ("scaleZ(" <> value z <> ")")
 
-scale3d :: Double -> Double -> Double -> Transformation
+scale3d :: Number -> Number -> Number -> Transformation
 scale3d x y z = Transformation ("scale3d(" <> value [x, y, z] <> ")")
 
 -------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ rotateX x = Transformation ("rotateX(" <> value x <> ")")
 rotateY y = Transformation ("rotateY(" <> value y <> ")")
 rotateZ z = Transformation ("rotateZ(" <> value z <> ")")
 
-rotate3d :: Double -> Double -> Double -> Angle a -> Transformation
+rotate3d :: Number -> Number -> Number -> Angle a -> Transformation
 rotate3d x y z a = Transformation ("rotate3d(" <> value [value x, value y, value z, value a] <> ")")
 
 -------------------------------------------------------------------------------
@@ -154,16 +154,16 @@ skewY y = Transformation ("skewY(" <> value y <> ")")
 
 -------------------------------------------------------------------------------
 
-perspective :: Double -> Transformation
+perspective :: Number -> Transformation
 perspective p = Transformation ("perspective(" <> value p <> ")")
 
-matrix :: Double -> Double -> Double -> Double -> Double -> Double -> Transformation
+matrix :: Number -> Number -> Number -> Number -> Number -> Number -> Transformation
 matrix u v w x y z = Transformation ("matrix(" <> value [ u, v, w, x, y, z ] <> ")")
 
-matrix3d :: Double -> Double -> Double -> Double
-         -> Double -> Double -> Double -> Double
-         -> Double -> Double -> Double -> Double
-         -> Double -> Double -> Double -> Double
+matrix3d :: Number -> Number -> Number -> Number 
+         -> Number -> Number -> Number -> Number
+         -> Number -> Number -> Number -> Number
+         -> Number -> Number -> Number -> Number
          -> Transformation
 matrix3d w0 x0 y0 z0
          w1 x1 y1 z1
