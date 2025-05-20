@@ -1,7 +1,13 @@
 CHANGELOG
 
-  Unreleased:
+  0.16.0:
     - Add grid size and location support.
+    - Derive `Stretch` for justified content
+    - Add `AspectRatio`
+    - Promote `not` to a type class
+    - Render CSS refinements
+    - Bugfixes & improved test suite
+    Thanks to Leonard Monnier, Yoo Chung, Skyfold, qwbarch, David Fox
 
   0.15.0:
     - Add `all` media type.
