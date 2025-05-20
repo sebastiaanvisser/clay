@@ -16,28 +16,27 @@ let
   generatedOverrides = haskellPackagesNew: haskellPackagesOld:
     let
       toPackage = file: _: {
-        name  = builtins.replaceStrings [ ".nix" ] [ "" ] file;
+        name = builtins.replaceStrings [ ".nix" ] [ "" ] file;
         value = haskellPackagesNew.callPackage (./. + "/nix/${file}") { };
       };
     in
-      pkgs.lib.mapAttrs' toPackage (builtins.readDir ./nix);
+    pkgs.lib.mapAttrs' toPackage (builtins.readDir ./nix);
 
   makeOverrides =
     function: names: haskellPackagesNew: haskellPackagesOld:
-      let
-        toPackage = name: {
-          inherit name;
-          value = function haskellPackagesOld.${name};
-        };
-      in
-        builtins.listToAttrs (map toPackage names);
+    let
+      toPackage = name: {
+        inherit name;
+        value = function haskellPackagesOld.${name};
+      };
+    in
+    builtins.listToAttrs (map toPackage names);
 
   composeExtensionsList =
-    pkgs.lib.fold pkgs.lib.composeExtensions (_: _: {});
+    pkgs.lib.fold pkgs.lib.composeExtensions (_: _: { });
 
   # More exotic overrides go here
-  manualOverrides = haskellPackagesNew: haskellPackagesOld: {
-  };
+  manualOverrides = haskellPackagesNew: haskellPackagesOld: { };
 
   config = {
     packageOverrides = pkgs: rec {
@@ -46,7 +45,7 @@ let
           "${compiler}" = pkgs.haskell.packages."${compiler}".override {
             overrides = composeExtensionsList [
               generatedOverrides
-              (makeOverrides pkgs.haskell.lib.dontCheck   dontCheckPackages  )
+              (makeOverrides pkgs.haskell.lib.dontCheck dontCheckPackages)
               (makeOverrides pkgs.haskell.lib.doJailbreak doJailbreakPackages)
               (makeOverrides pkgs.haskell.lib.dontHaddock dontHaddockPackages)
               manualOverrides
@@ -60,8 +59,9 @@ let
   pkgs = import (builtins.fetchTarball (import ./nix/nixpkgs.nix)) { inherit config; };
 
 in
-  { clay = pkgs.haskell.packages.${compiler}.clay;
-    examples = pkgs.haskell.packages.${compiler}.callCabal2nix "examples" ./examples {};
-    cabal = pkgs.haskellPackages.cabal-install;
-    pkgs = pkgs;
-  }
+{
+  clay = pkgs.haskell.packages.${compiler}.clay;
+  examples = pkgs.haskell.packages.${compiler}.callCabal2nix "examples" ./examples { };
+  cabal = pkgs.haskellPackages.cabal-install;
+  pkgs = pkgs;
+}

@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ghc: ['8.4.4', '8.6.5', '8.8.4', '8.10.7', '9.0.2', '9.2.2', '9.4.2', '9.6.3', '9.8.1', '9.10.1', '9.12.1']
+        # Always keep in sync with the tested-with section in the cabal file
+        ghc: ['8.4.4', '8.6.5', '8.8.4', '8.10.7', '9.0.2', '9.2.2', '9.4.2', '9.6.6', '9.8.1', '9.10.1', '9.12.1']
     name: Haskell GHC ${{ matrix.ghc }} cabal
     env:
       cabal_project_freeze: cabal.project.${{ matrix.ghc }}.freeze
@@ -33,3 +34,48 @@ jobs:
       - name: Cabal test
         run: |
           cabal test all --enable-tests --test-show-details=Always --project-file=cabal.project.${{ matrix.ghc }}
+
+  generate-flake-ghc-matrix:
+    name: Generate GHC versions for nix flake build matrix
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.generate-versions.outputs.versions }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - name: Generate versions
+        id: generate-versions
+        run: |
+          echo -n "versions=" >> "$GITHUB_OUTPUT"
+          nix eval .#supportedGhcs --json >> "$GITHUB_OUTPUT"
+
+  check-flake:
+    name: Check Flake
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - run: nix flake check
+      - name: Check whether .nix files are formatted
+        run: |
+          nix fmt
+          git diff --exit-code
+
+  build-flake:
+    name: Nix Flake
+    needs:
+      - generate-flake-ghc-matrix
+    strategy:
+      matrix:
+        version: ${{ fromJSON(needs.generate-flake-ghc-matrix.outputs.versions) }}
+        os:
+          - ubuntu-latest
+          - macos-latest
+      fail-fast: false # So the cache is still filled
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - run: nix build .#${{ matrix.version }}.clay-all
+      - run: nix develop .#${{ matrix.version }} -c cabal update
+      - run: nix develop .#${{ matrix.version }} -c cabal test
