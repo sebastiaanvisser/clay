@@ -15,17 +15,20 @@ import Data.String (IsString)
 
 -------------------------------------------------------------------------------
 
-class All      a where all      :: a
-class Auto     a where auto     :: a
-class Baseline a where baseline :: a
-class Center   a where center   :: a
-class Inherit  a where inherit  :: a
-class None     a where none     :: a
-class Normal   a where normal   :: a
-class Visible  a where visible  :: a
-class Hidden   a where hidden   :: a
-class Initial  a where initial  :: a
-class Unset    a where unset    :: a
+class All         a where all         :: a
+class Auto        a where auto        :: a
+class Baseline    a where baseline    :: a
+class Center      a where center      :: a
+class Inherit     a where inherit     :: a
+class None        a where none        :: a
+class Normal      a where normal      :: a
+class Visible     a where visible     :: a
+class Hidden      a where hidden      :: a
+class Initial     a where initial     :: a
+class Unset       a where unset       :: a
+class Contain     a where contain     :: a
+class Revert      a where revert      :: a
+class RevertLayer a where revertLayer :: a
 
 -- | The other type class is used to escape from the type safety introduced by
 -- embedding CSS properties into the typed world of Clay. `Other` allows you to
@@ -55,19 +58,28 @@ initialValue :: Value
 initialValue = "initial"
 unsetValue :: Value
 unsetValue = "unset"
+containValue :: Value
+containValue = "contain"
+revertValue :: Value
+revertValue = "revert"
+revertLayerValue :: Value
+revertLayerValue = "revert-layer"
 
-instance All      Value where all      = allValue
-instance Auto     Value where auto     = autoValue
-instance Baseline Value where baseline = baselineValue
-instance Center   Value where center   = centerValue
-instance Inherit  Value where inherit  = inheritValue
-instance Normal   Value where normal   = normalValue
-instance None     Value where none     = noneValue
-instance Visible  Value where visible  = visibleValue
-instance Hidden   Value where hidden   = hiddenValue
-instance Other    Value where other    = id
-instance Initial  Value where initial  = initialValue
-instance Unset    Value where unset    = unsetValue
+instance All         Value where all         = allValue
+instance Auto        Value where auto        = autoValue
+instance Baseline    Value where baseline    = baselineValue
+instance Center      Value where center      = centerValue
+instance Inherit     Value where inherit     = inheritValue
+instance Normal      Value where normal      = normalValue
+instance None        Value where none        = noneValue
+instance Visible     Value where visible     = visibleValue
+instance Hidden      Value where hidden      = hiddenValue
+instance Other       Value where other       = id
+instance Initial     Value where initial     = initialValue
+instance Unset       Value where unset       = unsetValue
+instance Contain     Value where contain     = containValue
+instance Revert      Value where revert      = revertValue
+instance RevertLayer Value where revertLayer = revertLayerValue
 
 -------------------------------------------------------------------------------
 
