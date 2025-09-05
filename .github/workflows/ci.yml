@@ -1,12 +1,24 @@
 on: [pull_request]
 name: build
 jobs:
+  generateMatrix:
+    name: "Generate build matrix from cabal"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kleidukos/get-tested@v0.1.7.0
+        id: set-matrix
+        with:
+          cabal-file: "clay.cabal"
+          ubuntu: true
+          version: 0.1.6.0
+
   build:
     runs-on: ubuntu-latest
+    needs: generateMatrix
     strategy:
-      matrix:
-        # Always keep in sync with the tested-with section in the cabal file
-        ghc: ['8.4.4', '8.6.5', '8.8.4', '8.10.7', '9.0.2', '9.2.2', '9.4.2', '9.6.6', '9.8.1', '9.10.1', '9.12.1']
+      matrix: ${{ fromJSON(needs.generateMatrix.outputs.matrix) }}
     name: Haskell GHC ${{ matrix.ghc }} cabal
     env:
       cabal_project_freeze: cabal.project.${{ matrix.ghc }}.freeze
