@@ -145,13 +145,12 @@ backgroundPositions = key "background-position"
 -------------------------------------------------------------------------------
 
 newtype BackgroundSize = BackgroundSize Value
-  deriving (Val, Other, Inherit)
+  deriving (Val, Other, Inherit, Contain)
 
 instance Auto BackgroundSize where auto = auto `by` auto
 
-contain, cover :: BackgroundSize
+cover :: BackgroundSize
 
-contain = BackgroundSize "contain"
 cover   = BackgroundSize "cover"
 
 by :: Size a -> Size b -> BackgroundSize

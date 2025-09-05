@@ -34,6 +34,15 @@ module Clay.Display
 , scroll
 , overflow, overflowX, overflowY
 
+-- * Overscroll
+, Overscroll
+, overscrollBehavior
+, overscrollBehavior2
+, overscrollBehaviorX
+, overscrollBehaviorY
+, overscrollBehaviorBlock
+, overscrollBehaviorInline
+
 -- * Visibility.
 
 , Visibility
@@ -182,6 +191,30 @@ overflow, overflowX, overflowY :: Overflow -> Css
 overflow  = key "overflow"
 overflowX = key "overflow-x"
 overflowY = key "overflow-y"
+
+-------------------------------------------------------------------------------
+
+newtype Overscroll = Overscroll Value
+  deriving (Val, Other, None, Auto, Contain, Inherit, Initial, Unset, Revert, RevertLayer)
+
+-- | Specify both X and Y overscroll at once
+overscrollBehavior :: Overscroll -> Css
+overscrollBehavior = key "overscroll-behavior"
+
+overscrollBehavior2 :: Overscroll -> Overscroll -> Css
+overscrollBehavior2 x y = key "overscroll-behavior" (x ! y)
+
+overscrollBehaviorX :: Overscroll -> Css
+overscrollBehaviorX = key "overscroll-behavior-x"
+
+overscrollBehaviorY :: Overscroll -> Css
+overscrollBehaviorY = key "overscroll-behavior-y"
+
+overscrollBehaviorBlock :: Overscroll -> Css
+overscrollBehaviorBlock = key "overscroll-behavior-block"
+
+overscrollBehaviorInline :: Overscroll -> Css
+overscrollBehaviorInline = key "overscroll-behavior-inline"
 
 -------------------------------------------------------------------------------
 
