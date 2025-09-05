@@ -1,5 +1,9 @@
 CHANGELOG
 
+  0.16.1:
+    - Add support for overscroll-behaviour
+    Thanks to Sylvain Henry
+
   0.16.0:
     - Add grid size and location support.
     - Derive `Stretch` for justified content
